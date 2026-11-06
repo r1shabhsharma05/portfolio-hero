@@ -21,8 +21,6 @@ gsap.registerPlugin(SplitText)
  */
 export function createHeroTimeline(refs) {
   const ctx = gsap.context(() => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
     // Split the big word and the name into characters.
     const wordSplit = new SplitText(refs.word.querySelector('h1'), {
       type: 'chars',
@@ -33,8 +31,11 @@ export function createHeroTimeline(refs) {
     const topLabels = gsap.utils.toArray(refs.top.querySelectorAll('span'))
     const shine = refs.word.querySelector('.hero-shine')
 
-    // Reduced motion: leave everything in its final, visible state.
-    if (reduceMotion) return
+    // NOTE (2026-11-07, owner's explicit order): the entrance ALWAYS plays.
+    // The reduced-motion shortcut used to skip it entirely, so on laptops
+    // with "reduce motion" on, the hero appeared fully formed with no
+    // animation at all (mobile, where it is off, animated fine). The owner
+    // wants the cinematic entrance on every open, so we play it regardless.
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
@@ -48,8 +49,8 @@ export function createHeroTimeline(refs) {
         clipPath: 'inset(0% 100% 0% 0%)',
         opacity: 0,
         y: 26,
-        duration: 0.55,
-        stagger: 0.07,
+        duration: 0.7,
+        stagger: 0.09,
       },
       0.25,
     )
