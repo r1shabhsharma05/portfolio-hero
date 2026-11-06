@@ -15,24 +15,23 @@ gsap.registerPlugin(SplitText)
  *   6. experience badge settles in
  *   7. summary card slides in from the left
  *   8. skill tags appear one by one with a coloured highlight sweep
- *   9. settle: slow cinematic push-in, running under the whole entrance
+ *   9. settle: everything stays still (no zoom, no float — owner's order,
+ *      2026-11-07: the reference video's zoom is deliberately ignored).
  *
  * Smoothness first (owner's order, 2026-11-07 — match the reference
- * video's motion): professional easings (expo.out for entrances,
- * power2.inOut for sweeps and the push-in), gentle moves with no abrupt
+ * video's motion, minus its zoom): professional easings (expo.out for
+ * entrances, power2.inOut for sweeps), gentle moves with no abrupt
  * jumps, transform + opacity only (never layout properties), GPU
  * compositing via translate3d (force3D), fonts + portrait preloaded
  * before the entrance starts (capped at 2s so a slow network never
- * holds the hero blank), no continuous idle motion, and the push-in
- * skipped when the OS asks for reduced motion. The entrance itself
- * ALWAYS plays, per the owner's explicit order — his laptop has
+ * holds the hero blank), and no continuous idle motion. The entrance
+ * itself ALWAYS plays, per the owner's explicit order — his laptop has
  * reduce-motion on and the entrance must show there.
  *
  * Returns a cleanup function (kills the timeline, reverts the SplitText
  * wrapping and the gsap context).
  */
 export function createHeroTimeline(refs) {
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   let cancelled = false
 
   const wordSplit = new SplitText(refs.word.querySelector('h1'), {
@@ -61,7 +60,6 @@ export function createHeroTimeline(refs) {
       gsap.set(row.querySelector('.tag-sweep'), { scaleX: 0 })
       gsap.set(row.querySelectorAll('.star, .tag-text, .caret'), { opacity: 0 })
     })
-    gsap.set(refs.root, { scale: 1 })
 
     // Fonts + portrait first, then the entrance. Never wait forever.
     const fonts = document.fonts
@@ -142,16 +140,8 @@ export function createHeroTimeline(refs) {
       tl.to(sweep, { opacity: 0, duration: 0.4 }, at + 0.4)
     })
 
-    // PHASE 9 — slow cinematic push-in, running under the whole entrance
-    // like the reel's continuous zoom. Skipped when the OS asks for
-    // reduced motion (the entrance itself still plays).
-    if (!reduceMotion) {
-      tl.to(
-        refs.root,
-        { scale: 1.03, duration: 12, ease: 'power2.inOut', transformOrigin: '50% 100%' },
-        0,
-      )
-    }
+    // No zoom, no float after the entrance (owner's order 2026-11-07):
+    // the hero settles and stays exactly still.
   }
 
   return () => {
