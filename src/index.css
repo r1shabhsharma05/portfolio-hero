@@ -6,11 +6,19 @@ body,
   height: 100%;
 }
 
+/* Prevent horizontal overflow: the hero's slow cinematic push-in
+   (scale 1 -> 1.02) makes it slightly wider than the viewport, which
+   otherwise leaves a 1-3px horizontal scroll. clip (not hidden) so no
+   scroll container is created. */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   background: #04070a;
   color: #fff;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  overflow-x: hidden;
 }
 
 ::selection {
