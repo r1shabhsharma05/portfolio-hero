@@ -100,14 +100,20 @@
 .hero-word {
   position: absolute;
   z-index: 1;
-  top: 11%;
+  /* Line-height must contain Anton's full glyphs: with 0.78 the baseline
+     fell below the line box and background-clip: text cut the letter
+     bottoms flat at the box edge. 1.1 contains them. Measured shift when
+     the line box grows: the glyphs move down 0.106em, so the top is
+     pulled up by the same 0.106em (0.106 x 22.4vw = 2.37vw) and the
+     letters stay exactly where they were. */
+  top: calc(11% - 2.37vw);
   left: 50%;
   /* No vertical stretching: natural Anton proportions. The word is sized
      by font-size only, so it can never collide with the header above it. */
   transform: translateX(-50%);
   width: 100%;
   text-align: center;
-  line-height: 0.78;
+  line-height: 1.1;
   white-space: nowrap;
   pointer-events: none;
 }
@@ -354,7 +360,7 @@
   }
 
   .hero-word {
-    top: 10.5%;
+    top: calc(10.5% - 2.37vw);
   }
 
   .hero-word h1 {
