@@ -167,7 +167,12 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: 78svh;
+  /* Capped by viewport width as well as height: on tall/narrow screens
+     78svh alone makes the portrait so wide that the character slides
+     under the badge and the skill tags. The cap keeps the character
+     centred and clear of both at every aspect ratio. On 16:9 desktops
+     78svh is the smaller value, so the desktop look is unchanged. */
+  height: min(78svh, 52vw);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -322,7 +327,10 @@
   display: flex;
   align-items: center;
   gap: 0.7em;
-  font-size: clamp(16px, 2vw, 34px);
+  /* Slightly smaller than before (owner's order 2026-11-07): the text
+     was a touch too big, and the narrower tags sit clear of the
+     character's shoulder instead of touching it. */
+  font-size: clamp(14px, 1.7vw, 28px);
   font-weight: 600;
   color: #fff;
   padding: 0.1em 0.3em;
