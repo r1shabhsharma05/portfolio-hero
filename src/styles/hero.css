@@ -1,0 +1,420 @@
+/* ------------------------------------------------------------------ */
+/*  Portfolio Hero — cinematic dark / neon-lime composition            */
+/*  Layer order: 1 bg · 2 glow · 3 secondary type · 4 PORTFOLIO ·      */
+/*  5 portrait · 6 floating cards · 7 small labels                    */
+/* ------------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 640px;
+  overflow: hidden;
+  background: #04070a;
+  isolation: isolate;
+}
+
+/* --- z-2: green radial lighting ---------------------------------- */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-glow-a {
+  position: absolute;
+  width: 90vmax;
+  height: 90vmax;
+  left: -25vmax;
+  top: -38vmax;
+  background: radial-gradient(
+    circle,
+    rgba(120, 200, 40, 0.26),
+    rgba(40, 90, 10, 0.12) 45%,
+    transparent 70%
+  );
+}
+
+.hero-glow-b {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  right: -20vmax;
+  bottom: -32vmax;
+  background: radial-gradient(circle, rgba(90, 180, 20, 0.18), transparent 65%);
+}
+
+.hero-glow-c {
+  position: absolute;
+  left: 50%;
+  top: 6%;
+  width: 62vmax;
+  height: 42vmax;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(163, 230, 53, 0.13), transparent 70%);
+}
+
+/* --- z-7: top labels ---------------------------------------------- */
+.hero-top {
+  position: absolute;
+  z-index: 7;
+  top: 3.2%;
+  left: 4.5%;
+  right: 4.5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  pointer-events: none;
+}
+
+.hero-top span {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: clamp(18px, 2.5vw, 42px);
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+}
+
+.hero-top .amp {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* --- z-4: PORTFOLIO background typography -------------------------- */
+.hero-word {
+  position: absolute;
+  z-index: 4;
+  top: 11.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 99vw;
+  text-align: center;
+  line-height: 0.78;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.hero-word h1 {
+  font-family: 'Anton', 'Arial Narrow', sans-serif;
+  font-size: min(21vw, 400px);
+  letter-spacing: 0.005em;
+  margin: 0;
+  font-weight: 400;
+}
+
+.portfolio-char {
+  display: inline-block;
+  background: linear-gradient(
+    180deg,
+    #f2ff7a 0%,
+    #d4f93a 22%,
+    #a5e10c 48%,
+    #5da800 74%,
+    #2e6b00 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(163, 230, 53, 0.26));
+}
+
+.hero-shine {
+  position: absolute;
+  inset: -5% -10%;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 58%
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* --- z-5: portrait ------------------------------------------------- */
+.hero-portrait {
+  position: absolute;
+  z-index: 5;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 78svh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.hero-portrait img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 26px rgba(163, 230, 53, 0.3))
+    drop-shadow(0 -6px 30px rgba(120, 200, 40, 0.16));
+}
+
+.hero-halo {
+  position: absolute;
+  left: 50%;
+  bottom: -8%;
+  width: 44vmax;
+  height: 44vmax;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(140, 220, 40, 0.26), transparent 62%);
+  filter: blur(8px);
+  z-index: -1;
+}
+
+/* --- z-6: name ------------------------------------------------------ */
+.hero-name {
+  position: absolute;
+  z-index: 6;
+  left: 5.5%;
+  top: 47%;
+  pointer-events: none;
+}
+
+.hero-name .iam {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: #fff;
+  font-size: clamp(18px, 2.1vw, 36px);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+}
+
+.hero-name .name {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 900;
+  color: #dcff2e;
+  font-size: clamp(30px, 4.4vw, 76px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 26px rgba(220, 255, 46, 0.32);
+  white-space: nowrap;
+}
+
+/* --- z-6: experience badge ----------------------------------------- */
+.hero-badge {
+  position: absolute;
+  z-index: 6;
+  left: 65%;
+  top: 33%;
+}
+
+.badge-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  background: linear-gradient(90deg, #ffffff 0 58%, #c8f542 58% 100%);
+  border-radius: 14px;
+  padding: 0.7em 1.1em;
+  color: #0a0f05;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    0 0 24px rgba(163, 230, 53, 0.32);
+}
+
+.badge-num {
+  font-weight: 800;
+  font-size: clamp(20px, 2vw, 34px);
+  line-height: 0.9;
+}
+
+.badge-num small {
+  display: block;
+  font-size: 0.55em;
+  font-weight: 600;
+}
+
+.badge-sep {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.badge-label {
+  font-weight: 600;
+  font-size: clamp(14px, 1.35vw, 24px);
+}
+
+/* --- z-6: summary card --------------------------------------------- */
+.hero-summary {
+  position: absolute;
+  z-index: 6;
+  left: 3.5%;
+  bottom: 4.5%;
+  width: min(34vw, 560px);
+  background: linear-gradient(135deg, rgba(140, 200, 50, 0.32), rgba(60, 120, 10, 0.22));
+  border: 1px solid rgba(190, 255, 90, 0.35);
+  border-radius: 18px;
+  padding: 18px 18px 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.hero-summary h2 {
+  color: #fff;
+  font-weight: 800;
+  font-size: clamp(16px, 1.6vw, 28px);
+  margin: 0 0 10px;
+}
+
+.hero-summary p {
+  background: #fff;
+  color: #111;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 0;
+  font-size: clamp(12px, 0.95vw, 16.5px);
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+/* --- z-6: skill tags ----------------------------------------------- */
+.hero-tags {
+  position: absolute;
+  z-index: 6;
+  right: 3.5%;
+  top: 56%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.1vh;
+}
+
+.skill-tag {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  font-size: clamp(15px, 1.5vw, 26px);
+  font-weight: 600;
+  color: #fff;
+  padding: 0.1em 0.3em;
+  white-space: nowrap;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+}
+
+.skill-tag .star {
+  width: 0.95em;
+  height: 0.95em;
+  flex: none;
+}
+
+.skill-tag .caret {
+  color: #c8f542;
+  font-weight: 300;
+  margin-left: 0.15em;
+}
+
+.tag-sweep {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  border-radius: 4px;
+  opacity: 0.85;
+}
+
+/* --- mobile -------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-top {
+    top: 2.2%;
+    left: 4%;
+    right: 4%;
+  }
+
+  .hero-top span {
+    font-size: clamp(14px, 4.6vw, 22px);
+  }
+
+  .hero-word {
+    top: 7.5%;
+  }
+
+  .hero-word h1 {
+    font-size: 19vw;
+  }
+
+  .hero-portrait {
+    height: 36svh;
+    top: 30%;
+    bottom: auto;
+  }
+
+  .hero-name {
+    left: 5%;
+    top: 19%;
+  }
+
+  .hero-name .iam {
+    font-size: 16px;
+  }
+
+  .hero-name .name {
+    font-size: clamp(24px, 7.5vw, 36px);
+  }
+
+  .hero-badge {
+    left: auto;
+    right: 4%;
+    top: 27%;
+  }
+
+  .badge-card {
+    padding: 0.55em 0.8em;
+    border-radius: 10px;
+  }
+
+  .hero-tags {
+    right: 4%;
+    left: 4%;
+    top: 66%;
+    bottom: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .skill-tag {
+    font-size: 13px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    padding: 5px 10px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    text-shadow: none;
+  }
+
+  .skill-tag .caret {
+    display: none;
+  }
+
+  .hero-summary {
+    left: 4%;
+    right: 4%;
+    width: auto;
+    bottom: 2.5%;
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .hero-summary h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .hero-summary p {
+    font-size: 12.5px;
+    padding: 10px 12px;
+  }
+}
