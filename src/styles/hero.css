@@ -141,7 +141,10 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 0 20px rgba(163, 230, 53, 0.3));
+  /* text-shadow, not a drop-shadow filter: the glow looks the same but
+     it paints with the text instead of forcing a filter pass on every
+     frame while the chars reveal. */
+  text-shadow: 0 0 20px rgba(163, 230, 53, 0.35);
 }
 
 .hero-shine {
@@ -175,8 +178,10 @@
   height: 100%;
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 26px rgba(163, 230, 53, 0.3))
-    drop-shadow(0 -6px 30px rgba(120, 200, 40, 0.16));
+  /* One glow pass only (was two): the portrait animates, and each
+     drop-shadow is a filter pass per frame. The halo behind it carries
+     the broader glow. */
+  filter: drop-shadow(0 0 26px rgba(163, 230, 53, 0.3));
 }
 
 .hero-halo {
@@ -186,8 +191,9 @@
   width: 44vmax;
   height: 44vmax;
   transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(140, 220, 40, 0.26), transparent 62%);
-  filter: blur(8px);
+  /* No blur filter: the gradient itself fades out softly, so there is
+     nothing to re-rasterize while the portrait moves. */
+  background: radial-gradient(circle, rgba(140, 220, 40, 0.22) 0%, rgba(140, 220, 40, 0.08) 45%, transparent 70%);
   z-index: -1;
 }
 
@@ -272,12 +278,13 @@
   left: 2.5%;
   bottom: 6%;
   width: min(42vw, 680px);
-  background: linear-gradient(135deg, rgba(140, 200, 50, 0.32), rgba(60, 120, 10, 0.22));
+  background: linear-gradient(135deg, rgba(140, 200, 50, 0.42), rgba(60, 120, 10, 0.32));
   border: 1px solid rgba(190, 255, 90, 0.35);
   border-radius: 18px;
   padding: 19px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  /* No backdrop-filter: it re-samples the backdrop on every frame while
+     the card slides in. A slightly stronger translucent fill keeps the
+     glass look without the per-frame cost. */
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
 }
 
@@ -414,8 +421,6 @@
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 999px;
     padding: 5px 10px;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
     text-shadow: none;
   }
 
