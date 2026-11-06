@@ -165,8 +165,17 @@
   position: absolute;
   z-index: 2;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  /* Full-width container, image centred by flexbox — NOT by a
+     percentage translate on this element. GSAP owns this element's
+     `transform` (it animates y/scale on entrance), and any percentage
+     centring on the animated element itself is a race: GSAP reads the
+     offset while the portrait image is still loading, bakes in a
+     too-small pixel value, and the character ends up ~400px right of
+     centre on the live site (badge on the face, tags on the shirt).
+     A full-width container is centred by construction, so no
+     transform-based centring is needed and load timing can't shift it. */
+  left: 0;
+  right: 0;
   /* Capped by viewport width as well as height: on tall/narrow screens
      78svh alone makes the portrait so wide that the character slides
      under the badge and the skill tags. The cap keeps the character
