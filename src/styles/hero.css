@@ -1,7 +1,6 @@
 /* ------------------------------------------------------------------ */
 /*  Portfolio Hero — cinematic dark / neon-lime composition            */
-/*  Layer order: 1 bg · 2 glow · 3 secondary type · 4 PORTFOLIO ·      */
-/*  5 portrait · 6 floating cards · 7 small labels                    */
+/*  Layer order (typography fix): 0 glow · 1 PORTFOLIO · 2 portrait · 3 foreground  */
 /* ------------------------------------------------------------------ */
 
 .hero {
@@ -13,11 +12,11 @@
   isolation: isolate;
 }
 
-/* --- z-2: green radial lighting ---------------------------------- */
+/* --- z-0: green radial lighting (behind everything) ---------------- */
 .hero-glow {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 0;
   pointer-events: none;
 }
 
@@ -54,10 +53,10 @@
   background: radial-gradient(ellipse, rgba(163, 230, 53, 0.13), transparent 70%);
 }
 
-/* --- z-7: top labels ---------------------------------------------- */
+/* --- z-3: top labels (foreground) ---------------------------------- */
 .hero-top {
   position: absolute;
-  z-index: 7;
+  z-index: 3;
   top: 3.2%;
   left: 4.5%;
   right: 4.5%;
@@ -82,14 +81,14 @@
   font-weight: 500;
 }
 
-/* --- z-4: PORTFOLIO background typography -------------------------- */
+/* --- z-1: PORTFOLIO background typography (85–90% of hero width) ---- */
 .hero-word {
   position: absolute;
-  z-index: 4;
+  z-index: 1;
   top: 11.5%;
   left: 50%;
   transform: translateX(-50%);
-  width: 99vw;
+  width: 100%;
   text-align: center;
   line-height: 0.78;
   white-space: nowrap;
@@ -98,7 +97,9 @@
 
 .hero-word h1 {
   font-family: 'Anton', 'Arial Narrow', sans-serif;
-  font-size: min(21vw, 400px);
+  /* Anton renders PORTFOLIO at 3.886x the font-size; 87 / 3.886 = 22.4vw
+     puts the word at ~87% of the hero width on every viewport. */
+  font-size: clamp(6rem, 22.4vw, 30rem);
   letter-spacing: 0.005em;
   margin: 0;
   font-weight: 400;
@@ -108,16 +109,16 @@
   display: inline-block;
   background: linear-gradient(
     180deg,
-    #f2ff7a 0%,
-    #d4f93a 22%,
-    #a5e10c 48%,
-    #5da800 74%,
-    #2e6b00 100%
+    #f4ff5e 0%,
+    #d9fb2e 25%,
+    #a8e810 50%,
+    #65b800 75%,
+    #2f6e00 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 0 18px rgba(163, 230, 53, 0.26));
+  filter: drop-shadow(0 0 20px rgba(163, 230, 53, 0.3));
 }
 
 .hero-shine {
@@ -133,10 +134,10 @@
   pointer-events: none;
 }
 
-/* --- z-5: portrait ------------------------------------------------- */
+/* --- z-2: portrait (overlaps the centre of PORTFOLIO) -------------- */
 .hero-portrait {
   position: absolute;
-  z-index: 5;
+  z-index: 2;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -167,10 +168,10 @@
   z-index: -1;
 }
 
-/* --- z-6: name ------------------------------------------------------ */
+/* --- z-3: name (foreground) ---------------------------------------- */
 .hero-name {
   position: absolute;
-  z-index: 6;
+  z-index: 3;
   left: 5.5%;
   top: 47%;
   pointer-events: none;
@@ -197,10 +198,10 @@
   white-space: nowrap;
 }
 
-/* --- z-6: experience badge ----------------------------------------- */
+/* --- z-3: experience badge (foreground) ---------------------------- */
 .hero-badge {
   position: absolute;
-  z-index: 6;
+  z-index: 3;
   left: 65%;
   top: 33%;
 }
@@ -241,10 +242,10 @@
   font-size: clamp(14px, 1.35vw, 24px);
 }
 
-/* --- z-6: summary card --------------------------------------------- */
+/* --- z-3: summary card (foreground) -------------------------------- */
 .hero-summary {
   position: absolute;
-  z-index: 6;
+  z-index: 3;
   left: 3.5%;
   bottom: 4.5%;
   width: min(34vw, 560px);
@@ -275,10 +276,10 @@
   font-weight: 500;
 }
 
-/* --- z-6: skill tags ----------------------------------------------- */
+/* --- z-3: skill tags (foreground) ---------------------------------- */
 .hero-tags {
   position: absolute;
-  z-index: 6;
+  z-index: 3;
   right: 3.5%;
   top: 56%;
   display: flex;
@@ -340,7 +341,7 @@
   }
 
   .hero-word h1 {
-    font-size: 19vw;
+    font-size: clamp(2.5rem, 22.4vw, 11rem);
   }
 
   .hero-portrait {
