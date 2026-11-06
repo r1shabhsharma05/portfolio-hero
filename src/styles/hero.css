@@ -57,9 +57,9 @@
 .hero-top {
   position: absolute;
   z-index: 3;
-  top: 3.2%;
-  left: 4.5%;
-  right: 4.5%;
+  top: 3%;
+  left: 7.5%;
+  right: 7.9%;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -67,9 +67,9 @@
 }
 
 .hero-top span {
-  font-weight: 800;
+  font-weight: 400;
   letter-spacing: -0.02em;
-  font-size: clamp(18px, 2.5vw, 42px);
+  font-size: clamp(20px, 3.3vw, 58px);
   color: #fff;
   text-shadow: 0 2px 24px rgba(0, 0, 0, 0.65);
   white-space: nowrap;
@@ -77,17 +77,22 @@
 
 .hero-top .amp {
   font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 400;
 }
 
 /* --- z-1: PORTFOLIO background typography (85–90% of hero width) ---- */
 .hero-word {
   position: absolute;
   z-index: 1;
-  top: 11.5%;
+  top: 11%;
   left: 50%;
-  transform: translateX(-50%);
+  /* Tall cinematic letters like the reference: the word is stretched
+     vertically (scaleY) so it spans ~54% of the hero height and reaches
+     down behind the name and the character. Origin top keeps the top
+     edge where `top` puts it. */
+  transform: translateX(-50%) scaleY(1.75);
+  transform-origin: 50% 0;
   width: 100%;
   text-align: center;
   line-height: 0.78;
@@ -97,9 +102,9 @@
 
 .hero-word h1 {
   font-family: 'Anton', 'Arial Narrow', sans-serif;
-  /* Anton renders PORTFOLIO at 3.886x the font-size; 87 / 3.886 = 22.4vw
-     puts the word at ~87% of the hero width on every viewport. */
-  font-size: clamp(6rem, 22.4vw, 30rem);
+  /* Anton renders PORTFOLIO at 3.886x the font-size; 22.1vw puts the
+     word's ink at ~85% of the hero width, as in the reference. */
+  font-size: clamp(6rem, 22.1vw, 30rem);
   letter-spacing: 0.005em;
   margin: 0;
   font-weight: 400;
@@ -172,8 +177,8 @@
 .hero-name {
   position: absolute;
   z-index: 3;
-  left: 5.5%;
-  top: 47%;
+  left: 6.8%;
+  top: 44%;
   pointer-events: none;
 }
 
@@ -246,13 +251,13 @@
 .hero-summary {
   position: absolute;
   z-index: 3;
-  left: 3.5%;
-  bottom: 4.5%;
-  width: min(34vw, 560px);
+  left: 2.5%;
+  bottom: 6%;
+  width: min(45vw, 740px);
   background: linear-gradient(135deg, rgba(140, 200, 50, 0.32), rgba(60, 120, 10, 0.22));
   border: 1px solid rgba(190, 255, 90, 0.35);
   border-radius: 18px;
-  padding: 18px 18px 20px;
+  padding: 28px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
@@ -261,17 +266,17 @@
 .hero-summary h2 {
   color: #fff;
   font-weight: 800;
-  font-size: clamp(16px, 1.6vw, 28px);
-  margin: 0 0 10px;
+  font-size: clamp(20px, 2.6vw, 46px);
+  margin: 0 0 16px;
 }
 
 .hero-summary p {
   background: #fff;
   color: #111;
   border-radius: 12px;
-  padding: 12px 14px;
+  padding: 20px;
   margin: 0;
-  font-size: clamp(12px, 0.95vw, 16.5px);
+  font-size: clamp(14px, 1.5vw, 26px);
   line-height: 1.45;
   font-weight: 500;
 }
@@ -280,11 +285,11 @@
 .hero-tags {
   position: absolute;
   z-index: 3;
-  right: 3.5%;
-  top: 56%;
+  right: 2.5%;
+  top: 62.5%;
   display: flex;
   flex-direction: column;
-  gap: 2.1vh;
+  gap: 1.2vh;
 }
 
 .skill-tag {
@@ -292,7 +297,7 @@
   display: flex;
   align-items: center;
   gap: 0.7em;
-  font-size: clamp(15px, 1.5vw, 26px);
+  font-size: clamp(16px, 2vw, 34px);
   font-weight: 600;
   color: #fff;
   padding: 0.1em 0.3em;
@@ -337,11 +342,11 @@
   }
 
   .hero-word {
-    top: 7.5%;
+    top: 9.5%;
   }
 
   .hero-word h1 {
-    font-size: clamp(2.5rem, 22.4vw, 11rem);
+    font-size: clamp(2.5rem, 22.5vw, 11rem);
   }
 
   .hero-portrait {
