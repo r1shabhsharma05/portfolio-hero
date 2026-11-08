@@ -7,7 +7,7 @@ export default function FloatingLabels({ topRef, nameRef }) {
         <span>Problem Solver</span>
       </div>
       <div ref={nameRef} className="hero-name">
-        <div className="iam">#I Am</div>
+        <div className="iam">I am</div>
         <div className="name">Rishabh Sharma</div>
       </div>
     </>
