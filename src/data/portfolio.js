@@ -104,7 +104,7 @@ export const FEATURED_PROJECTS = [
   {
     name: 'RailSync 2.0',
     icon: 'TrainFront',
-    tagline: 'AI-powered railway block planning',
+    tagline: 'ML-assisted railway block planning',
     problem:
       'Planning railway blocks by hand is slow and error-prone. RailSync 2.0 (a team project) plans blocks from real timetable data with an ML module that keeps the schedule consistent.',
     stack: ['React', 'FastAPI', 'Python ML'],
