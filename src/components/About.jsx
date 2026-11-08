@@ -27,8 +27,7 @@ export default function About() {
               I&rsquo;m Rishabh Sharma, a Computer Science undergraduate at GLA University,
               Mathura, and a full-stack developer from Bulandshahr, India. I build real,
               working software: a live vulnerability scanner, a safety app with SOS
-              confirmed working on real phones, and an AI-powered railway planning
-              tool — all shipped, tested and measured, not just started.
+              confirmed working on real phones, and a railway block planning tool with ML-assisted scheduling — all shipped, tested and measured, not just started.
             </p>
             <p>
               My stack is React and React Native up front, Node.js, Express and FastAPI
