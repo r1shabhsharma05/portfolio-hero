@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import BackgroundGlow from './BackgroundGlow'
 import PortfolioTypography from './PortfolioTypography'
 import CharacterPortrait from './CharacterPortrait'
 import FloatingLabels from './FloatingLabels'
@@ -10,7 +9,6 @@ import { createHeroTimeline } from '../animations/heroTimeline'
 
 export default function HeroSection() {
   const rootRef = useRef(null)
-  const glowRef = useRef(null)
   const wordRef = useRef(null)
   const portraitRef = useRef(null)
   const topRef = useRef(null)
@@ -22,7 +20,6 @@ export default function HeroSection() {
   useEffect(() => {
     const cleanup = createHeroTimeline({
       root: rootRef.current,
-      glow: glowRef.current,
       word: wordRef.current,
       portrait: portraitRef.current,
       top: topRef.current,
@@ -36,7 +33,6 @@ export default function HeroSection() {
 
   return (
     <section ref={rootRef} className="hero" aria-label="Rishabh Sharma — Portfolio">
-      <BackgroundGlow ref={glowRef} />
       <PortfolioTypography ref={wordRef} />
       <CharacterPortrait ref={portraitRef} />
       <FloatingLabels topRef={topRef} nameRef={nameRef} />
