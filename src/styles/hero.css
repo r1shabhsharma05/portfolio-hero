@@ -1,6 +1,6 @@
 /* ------------------------------------------------------------------ */
 /*  Portfolio Hero — cinematic dark / neon-lime composition            */
-/*  Layer order (typography fix): 0 glow · 1 PORTFOLIO · 2 portrait · 3 foreground  */
+/*  Layer order (typography fix): 1 PORTFOLIO · 2 portrait · 3 foreground  */
 /* ------------------------------------------------------------------ */
 
 .hero {
@@ -8,49 +8,8 @@
   height: 100svh;
   min-height: 640px;
   overflow: hidden;
-  background: #04070a;
+  background: #161513;
   isolation: isolate;
-}
-
-/* --- z-0: green radial lighting (behind everything) ---------------- */
-.hero-glow {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-glow-a {
-  position: absolute;
-  width: 90vmax;
-  height: 90vmax;
-  left: -25vmax;
-  top: -38vmax;
-  background: radial-gradient(
-    circle,
-    rgba(120, 200, 40, 0.26),
-    rgba(40, 90, 10, 0.12) 45%,
-    transparent 70%
-  );
-}
-
-.hero-glow-b {
-  position: absolute;
-  width: 70vmax;
-  height: 70vmax;
-  right: -20vmax;
-  bottom: -32vmax;
-  background: radial-gradient(circle, rgba(90, 180, 20, 0.18), transparent 65%);
-}
-
-.hero-glow-c {
-  position: absolute;
-  left: 50%;
-  top: 6%;
-  width: 62vmax;
-  height: 42vmax;
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse, rgba(163, 230, 53, 0.13), transparent 70%);
 }
 
 /* --- z-3: top labels (foreground) ---------------------------------- */
@@ -126,38 +85,7 @@
   letter-spacing: 0.005em;
   margin: 0;
   font-weight: 400;
-}
-
-.portfolio-char {
-  display: inline-block;
-  background: linear-gradient(
-    180deg,
-    #f4ff5e 0%,
-    #d9fb2e 25%,
-    #a8e810 50%,
-    #65b800 75%,
-    #2f6e00 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  /* text-shadow, not a drop-shadow filter: the glow looks the same but
-     it paints with the text instead of forcing a filter pass on every
-     frame while the chars reveal. */
-  text-shadow: 0 0 20px rgba(163, 230, 53, 0.35);
-}
-
-.hero-shine {
-  position: absolute;
-  inset: -5% -10%;
-  background: linear-gradient(
-    105deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.55) 50%,
-    transparent 58%
-  );
-  mix-blend-mode: overlay;
-  pointer-events: none;
+  color: #a3e635;
 }
 
 /* --- z-2: portrait (overlaps the centre of PORTFOLIO) -------------- */
@@ -192,23 +120,6 @@
   height: 100%;
   width: auto;
   object-fit: contain;
-  /* One glow pass only (was two): the portrait animates, and each
-     drop-shadow is a filter pass per frame. The halo behind it carries
-     the broader glow. */
-  filter: drop-shadow(0 0 26px rgba(163, 230, 53, 0.3));
-}
-
-.hero-halo {
-  position: absolute;
-  left: 50%;
-  bottom: -8%;
-  width: 44vmax;
-  height: 44vmax;
-  transform: translateX(-50%);
-  /* No blur filter: the gradient itself fades out softly, so there is
-     nothing to re-rasterize while the portrait moves. */
-  background: radial-gradient(circle, rgba(140, 220, 40, 0.22) 0%, rgba(140, 220, 40, 0.08) 45%, transparent 70%);
-  z-index: -1;
 }
 
 /* --- z-3: name (foreground) ---------------------------------------- */
@@ -222,7 +133,6 @@
 
 .hero-name .iam {
   font-family: 'Playfair Display', serif;
-  font-style: italic;
   font-weight: 500;
   color: #fff;
   font-size: clamp(18px, 2.1vw, 36px);
@@ -231,13 +141,11 @@
 
 .hero-name .name {
   font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-weight: 900;
-  color: #dcff2e;
+  font-weight: 500;
+  color: #a3e635;
   font-size: clamp(30px, 4.4vw, 76px);
   line-height: 0.95;
   letter-spacing: -0.01em;
-  text-shadow: 0 0 26px rgba(220, 255, 46, 0.32);
   white-space: nowrap;
 }
 
@@ -252,26 +160,25 @@
 .badge-card {
   display: flex;
   align-items: center;
-  gap: 0.9em;
-  background: linear-gradient(90deg, #ffffff 0 58%, #c8f542 58% 100%);
+  gap: 12px;
+  background: #ffffff;
   border-radius: 14px;
-  padding: 0.7em 1.1em;
+  padding: 12px 20px;
   color: #0a0f05;
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.5),
-    0 0 24px rgba(163, 230, 53, 0.32);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 .badge-num {
-  font-weight: 800;
+  font-weight: 500;
   font-size: clamp(20px, 2vw, 34px);
   line-height: 0.9;
+  font-variant-numeric: tabular-nums;
 }
 
 .badge-num small {
   display: block;
   font-size: 0.55em;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .badge-sep {
@@ -281,7 +188,7 @@
 }
 
 .badge-label {
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(14px, 1.35vw, 24px);
 }
 
@@ -292,19 +199,16 @@
   left: 2.5%;
   bottom: 6%;
   width: min(42vw, 680px);
-  background: linear-gradient(135deg, rgba(140, 200, 50, 0.42), rgba(60, 120, 10, 0.32));
-  border: 1px solid rgba(190, 255, 90, 0.35);
-  border-radius: 18px;
-  padding: 19px;
-  /* No backdrop-filter: it re-samples the backdrop on every frame while
-     the card slides in. A slightly stronger translucent fill keeps the
-     glass look without the per-frame cost. */
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  background: #1c1a18;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 .hero-summary h2 {
   color: #fff;
-  font-weight: 800;
+  font-weight: 500;
   font-size: clamp(20px, 2vw, 32px);
   margin: 0 0 12px;
 }
@@ -312,7 +216,7 @@
 .hero-summary p {
   background: #fff;
   color: #111;
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 16px;
   margin: 0;
   font-size: clamp(14px, 1.1vw, 18px);
@@ -328,14 +232,14 @@
   top: 62.5%;
   display: flex;
   flex-direction: column;
-  gap: 1.2vh;
+  gap: 12px;
 }
 
 .skill-tag {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0.7em;
+  gap: 8px;
   /* Slightly smaller than before (owner's order 2026-11-07): the text
      was a touch too big, and the narrower tags sit clear of the
      character's shoulder instead of touching it. */
@@ -351,20 +255,13 @@
   width: 0.95em;
   height: 0.95em;
   flex: none;
+  color: #a3e635;
 }
 
 .skill-tag .caret {
-  color: #c8f542;
+  color: #a3e635;
   font-weight: 300;
   margin-left: 0.15em;
-}
-
-.tag-sweep {
-  position: absolute;
-  inset: 0;
-  transform-origin: left;
-  border-radius: 4px;
-  opacity: 0.85;
 }
 
 /* --- mobile -------------------------------------------------------- */
@@ -417,7 +314,7 @@
   }
 
   .badge-card {
-    padding: 0.55em 0.8em;
+    padding: 8px 12px;
     border-radius: 10px;
   }
 
@@ -436,7 +333,7 @@
     font-size: 13px;
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 999px;
+    border-radius: 6px;
     padding: 5px 10px;
     text-shadow: none;
   }
