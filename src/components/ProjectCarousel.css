@@ -1,0 +1,326 @@
+/* Opening-cards carousel — bounded stage inside the Projects section.
+   The demo's fullscreen takeover is adapted to a fixed-height stage;
+   all card positions are set by GSAP from the stage's own size. */
+
+/* Fixed heights per breakpoint (not vh-based): the details panel is
+   ~330px tall and the thumb row is 270px, so the stage must clear ~750px
+   on desktop or the two overlap on short viewports. */
+/* The wrap holds the stage + pagination. On desktop the pagination is
+   absolutely positioned over the stage's bottom-left; on mobile it drops
+   below the stage so it never covers the details text. */
+.project-carousel-wrap {
+  position: relative;
+  margin-bottom: 56px;
+}
+
+.project-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: 780px;
+  border-radius: 20px;
+  background: #0d0f0e;
+}
+
+.project-stage-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 60;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.project-stage-progress-fill {
+  height: 100%;
+  background: #a3e635;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* Cards — GSAP sets x/y/width/height; the button reset keeps them clean. */
+.project-stage-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0;
+  border: 0;
+  background-position: center;
+  background-size: cover;
+  box-shadow: 6px 6px 10px 2px rgba(0, 0, 0, 0.6);
+  text-align: left;
+}
+
+.project-stage-card.is-active {
+  box-shadow: none;
+  cursor: default;
+}
+
+.project-stage-card:not(.is-active) {
+  cursor: pointer;
+}
+
+.project-stage-card:focus-visible {
+  outline: 2px solid #a3e635;
+  outline-offset: 2px;
+}
+
+/* Legibility gradient at the bottom of thumb cards. */
+.project-stage-card:not(.is-active)::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 55%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+/* Soft left shade behind the details panel on the active card. */
+.project-stage-card.is-active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.28) 45%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+}
+
+/* Thumb label — place + name over the photo, like the demo's card-content. */
+.project-stage-thumb-label {
+  position: absolute;
+  left: 14px;
+  right: 10px;
+  bottom: 12px;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.92);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.project-stage-thumb-rule {
+  width: 26px;
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.project-stage-thumb-place {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.project-stage-thumb-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 19px;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Details panel — left side of the stage, over the active card. */
+.project-stage-details {
+  position: absolute;
+  z-index: 22;
+  left: 48px;
+  top: 56px;
+  max-width: 540px;
+  color: #fff;
+}
+
+.project-stage-tagline {
+  position: relative;
+  padding-top: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #a3e635;
+  margin: 0 0 10px;
+}
+
+.project-stage-tagline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 4px;
+  border-radius: 99px;
+  background: #a3e635;
+}
+
+.project-stage-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 52px;
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+  text-wrap: balance;
+}
+
+.project-stage-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0 0 16px;
+  max-width: 500px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-stage-features {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.project-stage-features li {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+  padding-left: 18px;
+  position: relative;
+}
+
+.project-stage-features li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #a3e635;
+}
+
+.project-stage-chips {
+  margin-bottom: 20px;
+}
+
+/* Pagination — arrows + slide numbers, bottom-left on desktop. */
+.project-stage-pagination {
+  position: absolute;
+  z-index: 60;
+  left: 48px;
+  bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.project-stage-arrow {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.25);
+  color: rgba(255, 255, 255, 0.85);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.project-stage-arrow:hover {
+  border-color: #a3e635;
+  color: #a3e635;
+}
+
+.project-stage-numbers {
+  font-family: 'Anton', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: #fff;
+  margin-left: 8px;
+}
+
+@media (max-width: 1023px) {
+  .project-stage {
+    height: 700px;
+  }
+
+  .project-stage-details {
+    left: 32px;
+    top: 44px;
+    max-width: 480px;
+  }
+
+  .project-stage-title {
+    font-size: 44px;
+  }
+
+  .project-stage-pagination {
+    left: 32px;
+    bottom: 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  .project-carousel-wrap {
+    margin-bottom: 44px;
+  }
+
+  .project-stage {
+    height: 560px;
+  }
+
+  .project-stage-details {
+    left: 20px;
+    right: 20px;
+    top: 24px;
+    max-width: none;
+  }
+
+  .project-stage-title {
+    font-size: 34px;
+    margin-bottom: 10px;
+  }
+
+  .project-stage-desc {
+    -webkit-line-clamp: 2;
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+
+  .project-stage-features,
+  .project-stage-chips {
+    display: none;
+  }
+
+  /* Below the stage on mobile — the thumb row owns the stage bottom,
+     and the arrows must never cover the details text. */
+  .project-stage-pagination {
+    position: static;
+    margin-top: 12px;
+    justify-content: flex-end;
+  }
+
+  .project-stage-arrow {
+    width: 40px;
+    height: 40px;
+    border-color: rgba(255, 255, 255, 0.35);
+    background: transparent;
+  }
+
+  .project-stage-numbers {
+    display: block;
+  }
+
+  .project-stage-thumb-label {
+    left: 8px;
+    right: 6px;
+    bottom: 8px;
+  }
+
+  .project-stage-thumb-place {
+    display: none;
+  }
+
+  .project-stage-thumb-title {
+    font-size: 12px;
+  }
+}
