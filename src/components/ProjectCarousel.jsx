@@ -28,8 +28,23 @@ import './ProjectCarousel.css'
  *    card's own size, so mixed widths fan fine).
  *  - the demo's own ring-and-dot cursor is NOT ported — the portfolio
  *    already has the WaterCursor; two cursors would fight
- *  - the demo listens for wheel/drag on the whole document; here both are
- *    scoped to the stage, so scrolling the rest of the page is untouched
+ *  - WHEEL IS FOCUS-GATED (bug found 2026-11-10 by live check, proven by
+ *    local probe repro-details-drift.js): the demo binds wheel to the
+ *    whole document and this port scoped it to the stage — but scrolling
+ *    the PAGE with the cursor over the stage still hijacked the scroll
+ *    (preventDefault) and moved the fan, so the fan drifted away from the
+ *    project the user was looking at and Details opened the drifted
+ *    project (wrong project, different each time — never a stale Details
+ *    button; the probe went LocalKart 05/07 -> wheel-up over the stage
+ *    -> RailSync 03/07 -> Details opened RailSync). Wheel now moves the
+ *    fan only while the stage (or a card in it) has focus — click a card
+ *    or tab into the fan first; otherwise the wheel scrolls the page and
+ *    the fan stays put. Drag, click, arrows and keyboard are unchanged
+ *    (keyboard already needed focus).
+ *  - the Details button reads the fan's current project from a ref
+ *    (activeIndexRef, updated in setProgress) instead of the render
+ *    closure, so it can never open a stale project even if a re-render
+ *    is still pending when it is clicked
  *  - the demo's click math (progress = i/len*100 + 10) lands one short on
  *    7 items; click-to-focus uses progress = i/(n-1)*100 instead
  *  - NO autoplay: the fan is manual by design (the old 7s timer is gone)
@@ -73,6 +88,12 @@ export default function ProjectCarousel({ items }) {
   const stageRef = useRef(null)
   const cardRefs = useRef([])
   const progressRef = useRef(0)
+  // The fan's current project as a ref (updated in setProgress alongside
+  // the state) — the Details button reads this, never a render closure.
+  const activeIndexRef = useRef(0)
+  // Wheel moves the fan only while the stage (or a card in it) has focus
+  // — see the focus-gating note in the header comment.
+  const stageFocusedRef = useRef(false)
   const dragRef = useRef(null)
   const lastDragMovedRef = useRef(0)
   const lastDragEndRef = useRef(0)
@@ -161,6 +182,7 @@ export default function ProjectCarousel({ items }) {
     (value) => {
       progressRef.current = Math.max(0, Math.min(100, value))
       const active = applyProgress()
+      activeIndexRef.current = active
       setActiveIndex((prev) => (prev === active ? prev : active))
     },
     [applyProgress],
@@ -191,6 +213,10 @@ export default function ProjectCarousel({ items }) {
     if (!stage) return undefined
 
     const onWheel = (e) => {
+      // Focus-gated (see header): a wheel over an unfocused stage is a
+      // page scroll — let it through untouched, so the fan never drifts
+      // away from the project the user is looking at.
+      if (!stageFocusedRef.current) return
       e.preventDefault()
       setProgress(progressRef.current + e.deltaY * SPEED_WHEEL)
     }
@@ -287,9 +313,15 @@ export default function ProjectCarousel({ items }) {
         className="fan-stage"
         ref={stageRef}
         role="region"
-        aria-label="Featured projects carousel — drag, scroll or use the arrow keys to browse"
+        aria-label="Featured projects carousel — drag or use the arrow keys to browse; scrolling moves the fan once it has focus"
         tabIndex={0}
         onKeyDown={onKeyDown}
+        onFocus={() => {
+          stageFocusedRef.current = true
+        }}
+        onBlur={() => {
+          stageFocusedRef.current = false
+        }}
         style={{ '--items': n, visibility: ready ? 'visible' : 'hidden' }}
       >
         {items.map((item, idx) => (
@@ -332,7 +364,7 @@ export default function ProjectCarousel({ items }) {
             <button
               type="button"
               className="fan-action-btn fan-action-btn-primary"
-              onClick={() => openDetail(activeIndex)}
+              onClick={() => openDetail(activeIndexRef.current)}
             >
               <Info size={17} aria-hidden="true" />
               Details
