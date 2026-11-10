@@ -8,7 +8,7 @@
   height: 100svh;
   min-height: 640px;
   overflow: hidden;
-  background: #161513;
+  background: var(--page-bg);
   isolation: isolate;
 }
 
@@ -44,8 +44,8 @@
   letter-spacing: -0.02em;
   font-size: clamp(20px, 3.3vw, 58px);
   line-height: 1;
-  color: #fff;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.65);
+  color: var(--page-fg);
+  text-shadow: 0 2px 24px color-mix(in srgb, var(--page-bg) 65%, transparent);
   white-space: nowrap;
 }
 
@@ -85,7 +85,7 @@
   letter-spacing: 0.005em;
   margin: 0;
   font-weight: 400;
-  color: #a3e635;
+  color: var(--lime);
 }
 
 /* --- z-2: portrait (overlaps the centre of PORTFOLIO) -------------- */
@@ -134,15 +134,15 @@
 .hero-name .iam {
   font-family: 'Playfair Display', serif;
   font-weight: 500;
-  color: #fff;
+  color: var(--page-fg);
   font-size: clamp(18px, 2.1vw, 36px);
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 2px 18px color-mix(in srgb, var(--page-bg) 60%, transparent);
 }
 
 .hero-name .name {
   font-family: 'Playfair Display', serif;
   font-weight: 500;
-  color: #a3e635;
+  color: var(--lime);
   font-size: clamp(30px, 4.4vw, 76px);
   line-height: 0.95;
   letter-spacing: -0.01em;
@@ -199,15 +199,15 @@
   left: 2.5%;
   bottom: 6%;
   width: min(42vw, 680px);
-  background: #1c1a18;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg-2);
+  border: 1px solid color-mix(in srgb, var(--page-fg) 8%, transparent);
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 .hero-summary h2 {
-  color: #fff;
+  color: var(--page-fg);
   font-weight: 500;
   font-size: clamp(20px, 2vw, 32px);
   margin: 0 0 12px;
@@ -245,21 +245,21 @@
      character's shoulder instead of touching it. */
   font-size: clamp(14px, 1.7vw, 28px);
   font-weight: 600;
-  color: #fff;
+  color: var(--page-fg);
   padding: 0.1em 0.3em;
   white-space: nowrap;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 2px 14px color-mix(in srgb, var(--page-bg) 60%, transparent);
 }
 
 .skill-tag .star {
   width: 0.95em;
   height: 0.95em;
   flex: none;
-  color: #a3e635;
+  color: var(--lime);
 }
 
 .skill-tag .caret {
-  color: #a3e635;
+  color: var(--lime);
   font-weight: 300;
   margin-left: 0.15em;
 }
@@ -335,11 +335,16 @@
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 6px;
     padding: 5px 10px;
+    color: #fff;
     text-shadow: none;
   }
 
   .skill-tag .caret {
     display: none;
+  }
+
+  .skill-tag .star {
+    color: #a3e635;
   }
 
   .hero-summary {

@@ -11,7 +11,7 @@ html {
 }
 
 :focus-visible {
-  outline: 2px solid #a3e635;
+  outline: 2px solid var(--lime);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -22,8 +22,8 @@ html {
   left: 16px;
   top: -64px;
   z-index: 100;
-  background: #a3e635;
-  color: #04070a;
+  background: var(--lime);
+  color: var(--on-lime);
   font-weight: 500;
   font-size: 14px;
   padding: 10px 16px;
@@ -40,11 +40,11 @@ html {
 .section {
   padding: 80px 24px;
   scroll-margin-top: 76px;
-  background: #161513;
+  background: var(--page-bg);
 }
 
 .section + .section {
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid color-mix(in srgb, var(--page-fg) 5%, transparent);
 }
 
 .section-inner {
@@ -58,7 +58,7 @@ html {
 
 .section-eyebrow {
   margin: 0 0 12px;
-  color: #a3e635;
+  color: var(--lime);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -70,7 +70,7 @@ html {
   font-weight: 500;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 .section-sub {
@@ -78,7 +78,7 @@ html {
   max-width: 640px;
   font-size: 16px;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.65);
+  color: color-mix(in srgb, var(--page-fg) 65%, transparent);
 }
 
 /* --- scroll reveal (transform/opacity only) ------------------------ */
@@ -100,7 +100,7 @@ html {
   max-width: 780px;
   font-size: 17px;
   line-height: 1.75;
-  color: rgba(255, 255, 255, 0.78);
+  color: color-mix(in srgb, var(--page-fg) 78%, transparent);
 }
 
 .about-body p {
@@ -123,15 +123,15 @@ html {
   gap: 12px;
   align-items: flex-start;
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid color-mix(in srgb, var(--page-fg) 9%, transparent);
   border-radius: 14px;
-  background: #1c1a18;
+  background: var(--card-bg-2);
 }
 
 .fact-card svg {
   flex: none;
   margin-top: 2px;
-  color: #a3e635;
+  color: var(--lime);
 }
 
 .fact-label {
@@ -139,7 +139,7 @@ html {
   font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.5);
+  color: color-mix(in srgb, var(--page-fg) 50%, transparent);
 }
 
 .fact-value {
@@ -147,7 +147,7 @@ html {
   font-size: 14.5px;
   font-weight: 600;
   line-height: 1.45;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 /* --- skills --------------------------------------------------------- */
@@ -159,14 +159,14 @@ html {
 
 .skill-card {
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid color-mix(in srgb, var(--page-fg) 9%, transparent);
   border-radius: 16px;
-  background: #1c1a18;
+  background: var(--card-bg-2);
   transition: border-color 0.25s ease;
 }
 
 .skill-card:hover {
-  border-color: rgba(163, 230, 53, 0.35);
+  border-color: color-mix(in srgb, var(--lime) 35%, transparent);
 }
 
 .skill-card-head {
@@ -183,16 +183,16 @@ html {
   height: 40px;
   flex: none;
   border-radius: 10px;
-  background: rgba(163, 230, 53, 0.1);
-  border: 1px solid rgba(163, 230, 53, 0.22);
-  color: #a3e635;
+  background: color-mix(in srgb, var(--lime) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lime) 22%, transparent);
+  color: var(--lime);
 }
 
 .skill-card h3 {
   margin: 0;
   font-size: 16.5px;
   font-weight: 500;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 .chip-row {
@@ -205,9 +205,9 @@ html {
   display: inline-flex;
   padding: 6px 12px;
   border-radius: 6px;
-  background: rgba(163, 230, 53, 0.08);
-  border: 1px solid rgba(163, 230, 53, 0.2);
-  color: #d9f99d;
+  background: color-mix(in srgb, var(--lime) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lime) 20%, transparent);
+  color: var(--lime-text);
   font-size: 13px;
   font-weight: 600;
   line-height: 1.3;
@@ -227,15 +227,15 @@ html {
   flex-direction: column;
   height: 100%;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid color-mix(in srgb, var(--page-fg) 9%, transparent);
   border-radius: 16px;
-  background: #1c1a18;
+  background: var(--card-bg-2);
   transition: border-color 0.25s ease;
 }
 
 .project-card:hover,
 .more-card:hover {
-  border-color: rgba(163, 230, 53, 0.35);
+  border-color: color-mix(in srgb, var(--lime) 35%, transparent);
 }
 
 .project-head {
@@ -252,9 +252,9 @@ html {
   height: 44px;
   flex: none;
   border-radius: 12px;
-  background: rgba(163, 230, 53, 0.1);
-  border: 1px solid rgba(163, 230, 53, 0.22);
-  color: #a3e635;
+  background: color-mix(in srgb, var(--lime) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lime) 22%, transparent);
+  color: var(--lime);
 }
 
 .project-head h3 {
@@ -262,21 +262,21 @@ html {
   font-size: 20px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 .project-tagline {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
-  color: #a3e635;
+  color: var(--lime);
 }
 
 .project-problem {
   margin: 0 0 16px;
   font-size: 15px;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.72);
+  color: color-mix(in srgb, var(--page-fg) 72%, transparent);
 }
 
 .project-features {
@@ -291,7 +291,7 @@ html {
   padding-left: 18px;
   font-size: 14.5px;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.78);
+  color: color-mix(in srgb, var(--page-fg) 78%, transparent);
 }
 
 .project-features li::before {
@@ -302,7 +302,7 @@ html {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #a3e635;
+  background: var(--lime);
 }
 
 .project-features li:last-child {
@@ -327,8 +327,8 @@ html {
   gap: 7px;
   padding: 9px 15px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--page-fg) 14%, transparent);
+  color: var(--page-fg);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
@@ -338,8 +338,8 @@ html {
 }
 
 .project-links a:hover {
-  border-color: rgba(163, 230, 53, 0.55);
-  background: rgba(163, 230, 53, 0.08);
+  border-color: color-mix(in srgb, var(--lime) 55%, transparent);
+  background: color-mix(in srgb, var(--lime) 8%, transparent);
 }
 
 .more-heading {
@@ -347,7 +347,7 @@ html {
   font-size: 22px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 .more-grid {
@@ -364,7 +364,7 @@ html {
   margin: 48px 0 16px;
   font-size: 19px;
   font-weight: 500;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 .exp-group-title:first-of-type {
@@ -372,7 +372,7 @@ html {
 }
 
 .exp-group-title svg {
-  color: #a3e635;
+  color: var(--lime);
 }
 
 .exp-list {
@@ -386,37 +386,37 @@ html {
   justify-content: space-between;
   gap: 24px;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid color-mix(in srgb, var(--page-fg) 9%, transparent);
   border-radius: 16px;
-  background: #1c1a18;
+  background: var(--card-bg-2);
 }
 
 .exp-card h4 {
   margin: 0 0 4px;
   font-size: 17px;
   font-weight: 500;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 .exp-org {
   margin: 0 0 8px;
   font-size: 15px;
   font-weight: 600;
-  color: #a3e635;
+  color: var(--lime);
 }
 
 .exp-detail {
   margin: 0;
   font-size: 15px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.72);
+  color: color-mix(in srgb, var(--page-fg) 72%, transparent);
 }
 
 .exp-period {
   margin: 0 0 4px;
   font-size: 14px;
   font-weight: 600;
-  color: #fff;
+  color: var(--page-fg);
   white-space: nowrap;
 }
 
@@ -424,7 +424,7 @@ html {
   margin: 0;
   font-size: 13.5px;
   font-weight: 600;
-  color: #a3e635;
+  color: var(--lime);
   white-space: nowrap;
 }
 
@@ -432,7 +432,7 @@ html {
   margin: 12px 0 0;
   font-size: 15px;
   font-weight: 600;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 .exp-link {
@@ -443,8 +443,8 @@ html {
   flex: none;
   padding: 9px 15px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--page-fg) 14%, transparent);
+  color: var(--page-fg);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
@@ -454,8 +454,8 @@ html {
 }
 
 .exp-link:hover {
-  border-color: rgba(163, 230, 53, 0.55);
-  background: rgba(163, 230, 53, 0.08);
+  border-color: color-mix(in srgb, var(--lime) 55%, transparent);
+  background: color-mix(in srgb, var(--lime) 8%, transparent);
 }
 
 .oss-card {
@@ -466,7 +466,7 @@ html {
   margin: 0 0 16px;
   font-size: 14.5px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
+  color: color-mix(in srgb, var(--page-fg) 60%, transparent);
 }
 
 .sim-grid {
@@ -477,16 +477,16 @@ html {
 
 .sim-card {
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid color-mix(in srgb, var(--page-fg) 9%, transparent);
   border-radius: 14px;
-  background: #1c1a18;
+  background: var(--card-bg-2);
 }
 
 .sim-card h4 {
   margin: 0 0 4px;
   font-size: 16.5px;
   font-weight: 500;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 .sim-card .exp-detail {
@@ -505,16 +505,16 @@ html {
   flex-direction: column;
   gap: 6px;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid color-mix(in srgb, var(--page-fg) 9%, transparent);
   border-radius: 16px;
-  background: #1c1a18;
-  color: #fff;
+  background: var(--card-bg-2);
+  color: var(--page-fg);
   text-decoration: none;
   transition: border-color 0.25s ease;
 }
 
 .contact-card:hover {
-  border-color: rgba(163, 230, 53, 0.4);
+  border-color: color-mix(in srgb, var(--lime) 40%, transparent);
 }
 
 .contact-icon {
@@ -524,16 +524,16 @@ html {
   height: 40px;
   margin-bottom: 6px;
   border-radius: 10px;
-  background: rgba(163, 230, 53, 0.1);
-  border: 1px solid rgba(163, 230, 53, 0.22);
-  color: #a3e635;
+  background: color-mix(in srgb, var(--lime) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lime) 22%, transparent);
+  color: var(--lime);
 }
 
 .contact-label {
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.5);
+  color: color-mix(in srgb, var(--page-fg) 50%, transparent);
 }
 
 .contact-value {
@@ -554,8 +554,8 @@ html {
   gap: 9px;
   padding: 14px 26px;
   border-radius: 10px;
-  background: #a3e635;
-  color: #04070a;
+  background: var(--lime);
+  color: var(--on-lime);
   text-decoration: none;
   font-size: 15.5px;
   font-weight: 500;
@@ -563,14 +563,14 @@ html {
 }
 
 .btn-primary:hover {
-  background: #bef264;
+  background: var(--lime-hover);
 }
 
 /* --- footer --------------------------------------------------------- */
 .site-footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--page-fg) 8%, transparent);
   padding: 32px 24px;
-  background: #161513;
+  background: var(--page-bg);
 }
 
 .footer-inner {
@@ -590,13 +590,13 @@ html {
   margin: 0 0 2px;
   font-size: 16px;
   font-weight: 500;
-  color: #fff;
+  color: var(--page-fg);
 }
 
 .footer-role {
   margin: 0;
   font-size: 13.5px;
-  color: rgba(255, 255, 255, 0.55);
+  color: color-mix(in srgb, var(--page-fg) 55%, transparent);
 }
 
 .footer-social {
@@ -609,37 +609,37 @@ html {
   place-items: center;
   width: 38px;
   height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid color-mix(in srgb, var(--page-fg) 12%, transparent);
   border-radius: 10px;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--page-fg) 75%, transparent);
   transition:
     color 0.2s ease,
     border-color 0.2s ease;
 }
 
 .footer-social a:hover {
-  color: #a3e635;
-  border-color: rgba(163, 230, 53, 0.5);
+  color: var(--lime);
+  border-color: color-mix(in srgb, var(--lime) 50%, transparent);
 }
 
 .footer-copy {
   margin: 0;
   font-size: 13.5px;
-  color: rgba(255, 255, 255, 0.5);
+  color: color-mix(in srgb, var(--page-fg) 50%, transparent);
 }
 
 .back-to-top {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--page-fg) 75%, transparent);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
 }
 
 .back-to-top:hover {
-  color: #a3e635;
+  color: var(--lime);
 }
 
 /* --- responsive ------------------------------------------------------ */
