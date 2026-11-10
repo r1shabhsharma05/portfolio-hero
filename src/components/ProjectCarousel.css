@@ -243,6 +243,15 @@
     height: 700px;
   }
 
+  /* Smaller thumbs: place line hidden, title only. */
+  .project-stage-thumb-place {
+    display: none;
+  }
+
+  .project-stage-thumb-title {
+    font-size: 14px;
+  }
+
   .project-stage-details {
     left: 32px;
     top: 44px;
@@ -321,6 +330,6 @@
   }
 
   .project-stage-thumb-title {
-    font-size: 12px;
+    font-size: 11px;
   }
 }

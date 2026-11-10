@@ -10,6 +10,7 @@ import railsyncImg from '../assets/projects/railsync.jpg'
 import farmerImg from '../assets/projects/farmer.jpg'
 import localkartImg from '../assets/projects/localkart.jpg'
 import healthcareImg from '../assets/projects/healthcare.jpg'
+import morphaiImg from '../assets/projects/morphai.jpg'
 
 const CAROUSEL_IMAGES = {
   SecureGaurd: secureguardImg,
@@ -56,6 +57,18 @@ const CAROUSEL_ITEMS = [
     live: null,
     image: healthcareImg,
   },
+  {
+    name: 'MorphAI',
+    icon: 'Sparkles',
+    tagline: 'Education-focused 3D learning landing page',
+    problem:
+      'Learn visually: Three.js 3D models, animated concept lessons and an image-to-3D workflow on an education landing page.',
+    features: ['Three.js 3D models', 'Animated concept lessons', 'Image-to-3D workflow'],
+    stack: ['TypeScript', 'Three.js', 'Express', 'tRPC', 'MySQL', 'Drizzle'],
+    github: 'https://github.com/r1shabhsharma05/MorphAi',
+    live: null,
+    image: morphaiImg,
+  },
 ]
 
 export default function Projects() {
@@ -74,35 +87,39 @@ export default function Projects() {
           <ProjectCarousel items={CAROUSEL_ITEMS} />
         </Reveal>
 
-        <Reveal>
-          <h3 className="more-heading">More projects</h3>
-        </Reveal>
-        <div className="more-grid">
-          {MORE_PROJECTS.map((p, i) => (
-            <Reveal key={p.name} delay={(i % 2) * 80}>
-              <article className="more-card">
-                <div className="project-head">
-                  <span className="project-icon">
-                    <DataIcon name={p.icon} size={20} />
-                  </span>
-                  <div>
-                    <h3>{p.name}</h3>
-                    <p className="project-tagline">{p.tagline}</p>
-                  </div>
-                </div>
-                <p className="project-problem">{p.description}</p>
-                <div className="chip-row">
-                  {p.stack.map((s) => (
-                    <span key={s} className="chip">
-                      {s}
-                    </span>
-                  ))}
-                </div>
-                <ProjectLinks github={p.github} live={null} />
-              </article>
+        {MORE_PROJECTS.length > 0 && (
+          <>
+            <Reveal>
+              <h3 className="more-heading">More projects</h3>
             </Reveal>
-          ))}
-        </div>
+            <div className="more-grid">
+              {MORE_PROJECTS.map((p, i) => (
+                <Reveal key={p.name} delay={(i % 2) * 80}>
+                  <article className="more-card">
+                    <div className="project-head">
+                      <span className="project-icon">
+                        <DataIcon name={p.icon} size={20} />
+                      </span>
+                      <div>
+                        <h3>{p.name}</h3>
+                        <p className="project-tagline">{p.tagline}</p>
+                      </div>
+                    </div>
+                    <p className="project-problem">{p.description}</p>
+                    <div className="chip-row">
+                      {p.stack.map((s) => (
+                        <span key={s} className="chip">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                    <ProjectLinks github={p.github} live={null} />
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   )

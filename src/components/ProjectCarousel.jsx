@@ -29,14 +29,15 @@ const EASE = 'sine.inOut'
 function layoutFor(width, height) {
   // Thumb rows are sized to fit fully inside the stage (the demo lets the
   // last card slide off the right edge; here that read as a broken layout).
-  // offsetTop leaves the details panel clear above the row.
+  // 7 items = 6 rest thumbs; offsetTop leaves the details panel clear
+  // above the row.
   if (width >= 1024) {
-    return { cardW: 180, cardH: 270, gap: 28, offsetTop: height - 390, offsetLeft: width - 1032 }
+    return { cardW: 160, cardH: 240, gap: 24, offsetTop: height - 360, offsetLeft: width - 1100 }
   }
   if (width >= 768) {
-    return { cardW: 110, cardH: 165, gap: 12, offsetTop: height - 265, offsetLeft: width - 614 }
+    return { cardW: 96, cardH: 144, gap: 10, offsetTop: height - 244, offsetLeft: width - 642 }
   }
-  return { cardW: 64, cardH: 96, gap: 8, offsetTop: height - 116, offsetLeft: Math.max(0, width - 360) }
+  return { cardW: 52, cardH: 78, gap: 6, offsetTop: height - 98, offsetLeft: Math.max(0, width - 350) }
 }
 
 function loadImage(src) {
