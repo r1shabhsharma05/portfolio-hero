@@ -7,7 +7,7 @@ import SummaryCard from './SummaryCard'
 import SkillTags from './SkillTags'
 import { createHeroTimeline } from '../animations/heroTimeline'
 
-export default function HeroSection() {
+export default function HeroSection({ introReady = true }) {
   const rootRef = useRef(null)
   const wordRef = useRef(null)
   const portraitRef = useRef(null)
@@ -16,8 +16,13 @@ export default function HeroSection() {
   const badgeRef = useRef(null)
   const summaryRef = useRef(null)
   const tagsRef = useRef(null)
+  // The entrance runs once, when the loader lifts (introReady flips
+  // true) — never behind the loader overlay, where nobody could see it.
+  const startedRef = useRef(false)
 
   useEffect(() => {
+    if (!introReady || startedRef.current) return undefined
+    startedRef.current = true
     const cleanup = createHeroTimeline({
       root: rootRef.current,
       word: wordRef.current,
@@ -29,7 +34,7 @@ export default function HeroSection() {
       tags: tagsRef.current,
     })
     return cleanup
-  }, [])
+  }, [introReady])
 
   return (
     <section ref={rootRef} className="hero" aria-label="Rishabh Sharma — Portfolio">
