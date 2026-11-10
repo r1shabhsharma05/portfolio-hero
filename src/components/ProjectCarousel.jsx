@@ -18,14 +18,14 @@ import './ProjectCarousel.css'
  *  - the demo's white background becomes the portfolio's dark stage, its
  *    unloaded 'Orelo' font becomes Anton + Inter, its gold nothing
  *    becomes the portfolio's lime in the details panel
- *  - EACH CARD TAKES ITS OWN PHOTO'S RATIO (Rishabh's order 2026-11-10 —
- *    "jitna bdi image utni bda card, space na rahe"): the card height is
- *    fixed per breakpoint, the width is height x the photo's natural
- *    ratio (16:9 photos -> wide cards, 3:2 -> 3:2 cards, the portrait
- *    farmer photo -> a narrow portrait card), so the photo fills the card
- *    edge-to-edge with zero bands and zero crop. No blurred fill anymore.
- *    The fan motion math is unchanged (translate % is relative to each
- *    card's own size, so mixed widths fan fine).
+ *  - CARDS ARE UNIFORM 16:9 AGAIN (Rishabh's order 2026-11-10 — mixed
+ *    ratios "acha nhi lga rha", all cards identical): the per-photo
+ *    ratio fit (push #8) is reverted; every card is 360x203 desktop /
+ *    300x169 tablet / 240x135 mobile, the photo inside is object-fit:
+ *    contain over a blurred copy of itself, so NO image is ever cropped
+ *    (16:9 photos fill the card exactly, 3:2 photos get slim blurred
+ *    sides, the portrait farmer photo stands full-height with blurred
+ *    sides). The fan motion math is unchanged.
  *  - the demo's own ring-and-dot cursor is NOT ported — the portfolio
  *    already has the WaterCursor; two cursors would fight
  *  - WHEEL IS FOCUS-GATED (bug found 2026-11-10 by live check, proven by
@@ -47,7 +47,17 @@ import './ProjectCarousel.css'
  *    is still pending when it is clicked
  *  - the demo's click math (progress = i/len*100 + 10) lands one short on
  *    7 items; click-to-focus uses progress = i/(n-1)*100 instead
- *  - NO autoplay: the fan is manual by design (the old 7s timer is gone)
+ *  - AUTOPLAY + SMOOTH GLIDE (Rishabh's order 2026-11-10 — "project
+ *    section me smoothness nhi h... carousel chalte rehne chaiye, 1 time
+ *    ho uske bad next apne aap dikhe"): the fan advances on its own
+ *    every 7s (the old timed-cards carousel's interval), looping back to
+ *    the first card after the last. It pauses while the user hovers the
+ *    section, focuses the fan, drags, has the detail page open, or the
+ *    tab is hidden — and every manual move buys a full 7s dwell before
+ *    the next automatic step. The card glide is 1.1s on a soft ease
+ *    (was 0.8s on the demo's snappy curve) and the details panel fades
+ *    in over 0.7s, so nothing jumps. No autoplay for reduced-motion
+ *    users — the fan stays manual for them.
  *  - prefers-reduced-motion: the fan still works, but cards jump cut
  *    (no 0.8s transition) and the details panel does not animate in
  *
@@ -60,6 +70,8 @@ import './ProjectCarousel.css'
 
 const SPEED_WHEEL = 0.02
 const SPEED_DRAG = -0.1
+// Autoplay interval — 7s, the old timed-cards carousel's interval.
+const AUTOPLAY_MS = 7000
 const CLICK_SLOP_PX = 6
 // Float guard (bug found 2026-11-10 by live probe): (1/6)*100 is
 // 16.666666666666664, and 16.666666666666664/100*6 is 0.9999999999999999,
@@ -99,11 +111,28 @@ export default function ProjectCarousel({ items }) {
   const lastDragEndRef = useRef(0)
   const [activeIndex, setActiveIndex] = useState(0)
   const [ready, setReady] = useState(false)
-  // Each card's width/height ratio, read from its photo's natural size
-  // (16/9 until its photo has loaded). Drives the card's aspect-ratio.
-  const [ratios, setRatios] = useState(() => items.map(() => 16 / 9))
   const [detailIndex, setDetailIndex] = useState(null)
   const detailPushedRef = useRef(false)
+
+  // Autoplay pause reasons — the fan only advances on its own while NOBODY
+  // is using it: hovering the section, focus inside the fan, a drag in
+  // progress, the detail page open, or the tab hidden. Any one reason
+  // pauses; the timer restarts from a full AUTOPLAY_MS when the last
+  // reason clears.
+  const pauseReasonsRef = useRef(new Set())
+  const [autoPaused, setAutoPaused] = useState(false)
+  const setPauseReason = useCallback((reason, on) => {
+    const reasons = pauseReasonsRef.current
+    if (on) reasons.add(reason)
+    else reasons.delete(reason)
+    setAutoPaused(reasons.size > 0)
+  }, [])
+  // No autoplay for reduced-motion users — the fan stays manual for them.
+  const [reducedMotion] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
 
   /* Detail page (?project=<slug>): open/close + back-button support. */
   const openDetail = useCallback(
@@ -166,6 +195,19 @@ export default function ProjectCarousel({ items }) {
     }
   }, [detailIndex])
 
+  /* Autoplay pauses while the detail page is open, and while the tab is
+     hidden (a hidden tab must not burn through the queue). */
+  useEffect(() => {
+    setPauseReason('detail', detailIndex !== null)
+  }, [detailIndex, setPauseReason])
+
+  useEffect(() => {
+    const onVisibility = () => setPauseReason('hidden', document.hidden)
+    onVisibility()
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
+  }, [setPauseReason])
+
   const applyProgress = useCallback(() => {
     const active = Math.floor((progressRef.current / 100) * (n - 1) + 1e-9)
     items.forEach((_, index) => {
@@ -204,6 +246,20 @@ export default function ProjectCarousel({ items }) {
     [goTo, n],
   )
 
+  /* Autoplay: advance to the next project every AUTOPLAY_MS, looping back
+     to the first card after the last. The effect re-runs (fresh full
+     timer) on every navigation, so a manual click/drag/arrow always buys
+     a full AUTOPLAY_MS dwell before the next automatic step. */
+  const autoAdvance = useCallback(() => {
+    goTo((activeIndexRef.current + 1) % n)
+  }, [goTo, n])
+
+  useEffect(() => {
+    if (autoPaused || reducedMotion || n <= 1) return undefined
+    const id = setInterval(autoAdvance, AUTOPLAY_MS)
+    return () => clearInterval(id)
+  }, [autoPaused, reducedMotion, activeIndex, autoAdvance, n])
+
   /* Wheel + drag, scoped to the stage (the demo binds them to document).
      Drag uses window-level move/up listeners instead of pointer capture:
      with capture, the click after a drag would retarget to the stage and
@@ -239,12 +295,14 @@ export default function ProjectCarousel({ items }) {
         lastDragEndRef.current = Date.now()
       }
       dragRef.current = null
+      setPauseReason('drag', false)
       stage.classList.remove('is-dragging')
       window.removeEventListener('pointermove', onPointerMove)
     }
     const onPointerDown = (e) => {
       dragRef.current = { x: e.clientX, moved: 0 }
       lastDragMovedRef.current = 0
+      setPauseReason('drag', true)
       stage.classList.add('is-dragging')
       window.addEventListener('pointermove', onPointerMove)
       window.addEventListener('pointerup', onPointerUp, { once: true })
@@ -260,23 +318,14 @@ export default function ProjectCarousel({ items }) {
       window.removeEventListener('pointerup', onPointerUp)
       window.removeEventListener('pointercancel', onPointerUp)
     }
-  }, [setProgress])
+  }, [setProgress, setPauseReason])
 
-  /* Init: preload photos, read each photo's natural ratio for its card,
-     then reveal the fan. */
+  /* Init: preload photos, then reveal the fan. */
   useEffect(() => {
     let cancelled = false
     applyProgress()
-    Promise.all(
-      items.map((item) =>
-        loadImage(item.image)
-          .then((img) => img.naturalWidth / img.naturalHeight)
-          .catch(() => 16 / 9),
-      ),
-    ).then((loadedRatios) => {
-      if (cancelled) return
-      setRatios(loadedRatios)
-      setReady(true)
+    Promise.all(items.map((item) => loadImage(item.image).catch(() => null))).then(() => {
+      if (!cancelled) setReady(true)
     })
     return () => {
       cancelled = true
@@ -308,7 +357,11 @@ export default function ProjectCarousel({ items }) {
   const active = items[activeIndex]
 
   return (
-    <div className="fan-wrap">
+    <div
+      className="fan-wrap"
+      onMouseEnter={() => setPauseReason('hover', true)}
+      onMouseLeave={() => setPauseReason('hover', false)}
+    >
       <div
         className="fan-stage"
         ref={stageRef}
@@ -318,9 +371,11 @@ export default function ProjectCarousel({ items }) {
         onKeyDown={onKeyDown}
         onFocus={() => {
           stageFocusedRef.current = true
+          setPauseReason('focus', true)
         }}
         onBlur={() => {
           stageFocusedRef.current = false
+          setPauseReason('focus', false)
         }}
         style={{ '--items': n, visibility: ready ? 'visible' : 'hidden' }}
       >
@@ -331,13 +386,13 @@ export default function ProjectCarousel({ items }) {
               cardRefs.current[idx] = el
             }}
             type="button"
-            className={`fan-card${idx === activeIndex ? ' is-active' : ''}${ratios[idx] < 1 ? ' fan-card--portrait' : ''}`}
-            style={{ '--ratio': ratios[idx] }}
+            className={`fan-card${idx === activeIndex ? ' is-active' : ''}`}
             onClick={() => onCardClick(idx)}
             aria-label={`Show ${item.name}`}
             aria-current={idx === activeIndex}
           >
             <span className="fan-card-box">
+              <img className="fan-card-bg" src={item.image} alt="" draggable={false} aria-hidden="true" />
               <img className="fan-card-img" src={item.image} alt="" draggable={false} />
               <span className="fan-card-num" aria-hidden="true">
                 {String(idx + 1).padStart(2, '0')}
