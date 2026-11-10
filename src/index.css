@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* shadcn theme tokens (Tailwind v4 @theme) so components/ui classes
+   like bg-background / text-foreground / border-border resolve.
+   Values match this portfolio's palette: warm-dark background #161513,
+   solid lime accent, no gradients. */
+@theme {
+  --color-background: #161513;
+  --color-foreground: #ffffff;
+  --color-card: #1e1c19;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-muted-foreground: #a1a1aa;
+  --color-accent: #262422;
+  --color-ring: #a3e635;
+  /* zinc-850 is not a stock Tailwind shade; the notch nav uses it for
+     a hover tint between zinc-800 and zinc-900. */
+  --color-zinc-850: #1f1f23;
+}
+
 html,
 body,
 #root {
