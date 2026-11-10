@@ -1,7 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Theme: dark by default; restore the saved choice before first
+      // paint so the page never flashes the wrong theme.
+      try {
+        var t = localStorage.getItem('portfolio-theme')
+        if (t === 'light') {
+          document.documentElement.classList.remove('dark')
+          document.documentElement.style.colorScheme = 'light'
+        } else {
+          document.documentElement.classList.add('dark')
+          document.documentElement.style.colorScheme = 'dark'
+        }
+      } catch (e) {}
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rishabh Sharma — Software Engineer</title>
     <meta
