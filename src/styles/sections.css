@@ -215,7 +215,7 @@ html {
   border-radius: 10px;
   background: transparent;
   color: #fff;
-  cursor: pointer;
+  cursor: url('/cursors/hand2.png') 12 7, pointer;
 }
 
 .mobile-menu {
