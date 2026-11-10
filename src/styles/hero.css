@@ -8,7 +8,9 @@
   height: 100svh;
   min-height: 640px;
   overflow: hidden;
-  background: var(--page-bg);
+  /* Transparent so the site-wide DotField (App.jsx) shows through; the
+     page background itself comes from <body>. */
+  background: transparent;
   isolation: isolate;
 }
 

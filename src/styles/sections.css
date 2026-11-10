@@ -40,7 +40,9 @@ html {
 .section {
   padding: 80px 24px;
   scroll-margin-top: 76px;
-  background: var(--page-bg);
+  /* Transparent so the site-wide DotField (App.jsx) shows through; the
+     page background itself comes from <body>. Cards keep their own bg. */
+  background: transparent;
 }
 
 .section + .section {
@@ -81,19 +83,8 @@ html {
   color: color-mix(in srgb, var(--page-fg) 65%, transparent);
 }
 
-/* --- scroll reveal (transform/opacity only) ------------------------ */
-.reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
+/* (Scroll reveals are GSAP-driven now — see components/Reveal.jsx.
+   The old .reveal CSS classes were removed with it.) */
 
 /* --- about ---------------------------------------------------------- */
 .about-body {
@@ -570,7 +561,8 @@ html {
 .site-footer {
   border-top: 1px solid color-mix(in srgb, var(--page-fg) 8%, transparent);
   padding: 32px 24px;
-  background: var(--page-bg);
+  /* Transparent so the site-wide DotField (App.jsx) shows through. */
+  background: transparent;
 }
 
 .footer-inner {
@@ -724,12 +716,6 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 
   .skill-card,
