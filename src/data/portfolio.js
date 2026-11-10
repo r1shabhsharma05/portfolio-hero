@@ -133,25 +133,10 @@ export const FEATURED_PROJECTS = [
   },
 ]
 
-export const MORE_PROJECTS = [
-  {
-    name: 'MorphAI',
-    icon: 'Sparkles',
-    tagline: 'Education-focused 3D learning landing page',
-    description:
-      'Learn visually: Three.js 3D models, animated concept lessons and an image-to-3D workflow on an education landing page.',
-    stack: ['TypeScript', 'Three.js', 'Express', 'tRPC', 'MySQL', 'Drizzle'],
-    github: 'https://github.com/r1shabhsharma05/MorphAi',
-  },
-  {
-    name: 'GLA Nexus',
-    icon: 'Globe',
-    tagline: 'Next.js app',
-    description: 'A Next.js application built with TypeScript and Prisma.',
-    stack: ['Next.js', 'TypeScript', 'Prisma'],
-    github: 'https://github.com/r1shabhsharma05/Gla-NexusM',
-  },
-]
+// Every project now has a photo and lives in the carousel; GLA Nexus was
+// removed from the section on Rishabh's order (2026-11-10). The block
+// renders only when this list is non-empty (see Projects.jsx).
+export const MORE_PROJECTS = []
 
 export const EDUCATION = [
   {
