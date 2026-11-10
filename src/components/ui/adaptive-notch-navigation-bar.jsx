@@ -358,7 +358,9 @@ export function NotchNav({
   return (
     <div
       className={cn(
-        "fixed inset-0 h-screen w-screen overflow-hidden bg-zinc-200 p-0 md:p-2 transition-colors duration-200 dark:bg-zinc-950",
+        // Transparent shell so the site-wide DotField (App.jsx) shows
+        // through; the page background itself comes from <body>.
+        "fixed inset-0 h-screen w-screen overflow-hidden bg-transparent p-0 md:p-2 transition-colors duration-200",
         className
       )}
       {...props}
@@ -553,7 +555,10 @@ export function NotchNav({
         </div>
 
         {/* Scrollable Content Viewport */}
+        {/* data-notch-viewport: the GSAP ScrollTrigger scroller (the page
+            scrolls inside this viewport, not the window). */}
         <div
+          data-notch-viewport
           className={cn(
             "relative flex w-full items-center h-full justify-center overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-6",
             isBottom ? "pt-3 pb-17.5" : "pt-17.5 pb-3"
