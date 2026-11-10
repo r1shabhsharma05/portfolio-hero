@@ -7,8 +7,18 @@ import './WaterCursor.css'
  * Adapted for the portfolio:
  *  - the demo's Giyu character background image is NOT used (copyrighted
  *    art); only the two trail canvases mount, over the site's own content
- *  - no touch handlers: the component only mounts on fine-pointer devices
+ *  - no touch handlers: the effect only draws on mouse movement, so it
+ *    stays invisible on pure-touch devices
  *  - prefers-reduced-motion: not mounted at all
+ *  - MOUSE DETECTION (fixed 2026-11-10 — the cursor did not show on
+ *    Rishabh's laptop): the old gate required pointer:fine, but a
+ *    touchscreen laptop can report the touch screen as the primary
+ *    pointer (pointer:coarse) even with a mouse/trackpad in use, so the
+ *    component never mounted there and only the normal cursor showed.
+ *    Now it enables at once on fine pointers, and on any other device
+ *    it enables on the first real mousemove — which proves a
+ *    mouse/trackpad exists. Pure-touch devices never fire mousemove,
+ *    so they stay untouched.
  *  - the native cursor returns over text fields (same rule as the
  *    SecureGaurd flame cursor) so form inputs stay usable
  *  - click anywhere fires the "First Form: Water Surface Slash" burst
@@ -19,14 +29,16 @@ export default function WaterCursor() {
   const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {
-    if (
-      !window.matchMedia('(pointer: fine)').matches ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return undefined
     }
-    setEnabled(true)
-    return undefined
+    if (window.matchMedia('(pointer: fine)').matches) {
+      setEnabled(true)
+      return undefined
+    }
+    const onMove = () => setEnabled(true)
+    window.addEventListener('mousemove', onMove, { once: true })
+    return () => window.removeEventListener('mousemove', onMove)
   }, [])
 
   useEffect(() => {
