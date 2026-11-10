@@ -19,17 +19,18 @@ import './Loader.css'
  * (workspace/user/files/Anime.js-3D-logo-animation.zip).
  *
  * What changed from the demo (everything else is 1:1):
- *  - the logo reads "rishabh" instead of "anime": the letters are SVG
- *    paths, not text, so the word was redrawn from Inter ExtraBold
- *    (the portfolio's own body font) into the same coordinate space —
- *    see rishabh-logo.svg + the generator in
- *    ~/workspace/tmp-work/fontgen/gen-rishabh-logo.js. The ".js" and
- *    "3D" lockup is copied verbatim from the original.
+ *  - the logo reads "Rishabh" instead of "anime.js 3D": the letters
+ *    are SVG paths, not text, so the word was redrawn from Inter
+ *    ExtraBold (the portfolio's own body font) into the same
+ *    coordinate space — see rishabh-logo.svg + the generator in
+ *    ~/workspace/tmp-work/fontgen/gen-rishabh-logo.js. The demo's
+ *    ".js" and "3D" are gone entirely (Rishabh's order 2026-11-10).
  *  - the two geometry-tuned constants are re-derived from the new
  *    word at runtime: the cube sweep (was 16.4 — the cube starts over
- *    the i and sweeps to the end of the word, and "rishabh" is longer
- *    from its i to its end) and the logo recenter (was 8.7 — half the
- *    extra width the ".js 3D" lockup adds).
+ *    the i and sweeps toward the end of the word) and the logo
+ *    recenter (was 8.7 — the shift that centers the word on the
+ *    camera axis, since the word extends further right of the i
+ *    than left of it).
  *  - the demo loops forever; the loader plays ONCE (~13.5s) and then
  *    fades out and calls onDone. Click (or Enter/Escape) skips it.
  *  - prefers-reduced-motion and a failed WebGL init skip the loader
@@ -41,9 +42,7 @@ import './Loader.css'
  * once the loader lifts, so the hero animates in as the reveal.
  */
 
-const LETTER_IDS = ['r', 'i-bar', 's1', 'h1', 'a', 'b', 'h2']
-const JS_IDS = ['j', 's']
-const THREED_IDS = ['three', 'd']
+const LETTER_IDS = ['R', 'i-bar', 's1', 'h1', 'a', 'b', 'h2']
 const DEPTH = 0.2565
 const ITALIC_SKEW = 8
 
@@ -106,7 +105,7 @@ export default function Loader({ onDone }) {
 
       const meshes = {}
       const logoGroup = new Group()
-      for (const id of [...LETTER_IDS, 'i-dot', ...JS_IDS, ...THREED_IDS]) {
+      for (const id of [...LETTER_IDS, 'i-dot']) {
         const { geom, center, size, color } = parsed[id]
         const mesh = new Mesh(geom, new MeshStandardMaterial({
           color: new Color(color), roughness: 0.4, metalness: 0.1,
@@ -135,20 +134,27 @@ export default function Loader({ onDone }) {
       // Land the logo pop at the floor instead of 5 above, the intro is untouched since the logo is hidden until POP.
       wrapper.position.y = -5
 
-      // Geometry-derived constants for the "rishabh" word.
+      // Geometry-derived constants for the "Rishabh" word.
       // Cube sweep: in the original the cube ends at 16.4 world units,
       // which is 78.5% of the distance from the i-dot to the lockup's
-      // right edge (the "d") — the cube sweeps past the word toward the
-      // ".js 3D" block, not just to the last letter. Deriving it from
-      // the lockup keeps the cube on-frame for any word length; scaling
-      // by the word span instead overshoots (33.5 here) and the cube
-      // flies off-screen.
+      // right edge (the "d" of the "3D" block) — the cube sweeps past
+      // the word toward the block. With the block gone, the lockup's
+      // right edge is the last letter ("h2"), so the same 78.5% of
+      // the i-dot -> "h2" distance lands the cube just right of the
+      // word's middle, on-frame. Deriving it from the lockup keeps the
+      // cube on-frame for any word length; scaling by the word span
+      // instead overshoots (33.5 here) and the cube flies off-screen.
       const rightOf = (id) => parsed[id].center.x + parsed[id].size.x / 2
       const leftOf = (id) => parsed[id].center.x - parsed[id].size.x / 2
-      const lockupRightWorld = (rightOf('d') - parsed['i-dot'].center.x) * scale
+      const lockupRightWorld = (rightOf('h2') - parsed['i-dot'].center.x) * scale
       const sweepX = 0.785 * lockupRightWorld
+      // Recenter: the logo group starts with the i-dot on the camera
+      // axis (x=0), but the word extends further right of the i than
+      // left of it, so the word's center sits right of the axis. Slide
+      // the group left by that offset so the word is centered on the
+      // end card. (The original's 8.7 did the same for "anime.js 3D".)
       const recenterShift =
-        ((rightOf('d') - leftOf('r')) - (rightOf('h2') - leftOf('r'))) / 2 * scale
+        (((leftOf('R') + rightOf('h2')) / 2) - parsed['i-dot'].center.x) * scale
 
       const SCENE_GREY = '#b5b5ba'
       const HORIZON_GREY = '#cfcfd4'
@@ -277,17 +283,6 @@ export default function Loader({ onDone }) {
         transformOrigin: bottomOrigin(m),
       }))
 
-      const jsLetters = [...JS_IDS, ...THREED_IDS].map((id) => meshes[id])
-      // Baseline align the js row with where the letters settle, then keep them hidden until the sweep.
-      const jsBaselineShift = 1.9 - meshes['h2'].position.y
-      // Start the js behind the camera and tilted, the plug animation flies them onto the logo plane.
-      jsLetters.forEach((m) => utils.set(m, {
-        y: m.position.y + jsBaselineShift,
-        z: 6.5,
-        rotateX: 20,
-        transformOrigin: bottomOrigin(m),
-      }))
-
       utils.set(dot, {
         x: dotRestX - 0.045,
         y: 15,
@@ -331,7 +326,7 @@ export default function Loader({ onDone }) {
       // that moment (the render loop holds framing as fov changes, so
       // fov drops out). Desktop aspects already fit, so the factor is
       // 1 there and the animation is untouched.
-      const lockupHalfWorld = ((rightOf('d') - leftOf('r')) / 2) * scale
+      const lockupHalfWorld = ((rightOf('h2') - leftOf('R')) / 2) * scale
       let fitFactor = 1
       const updateFit = () => {
         const aspect = innerWidth / innerHeight
@@ -385,7 +380,6 @@ export default function Loader({ onDone }) {
       })
 
       utils.set(logoGroup, {
-        x: -10.922,
         y: -0.31,
         z: -0.5,
       })
@@ -427,7 +421,7 @@ export default function Loader({ onDone }) {
 
       // Master timeline
       const tl = createTimeline({
-        id: 'Rishabh 3D logo',
+        id: 'Rishabh logo',
         autoplay: false,
       })
         .add(renderer.domElement, {
@@ -680,29 +674,21 @@ export default function Loader({ onDone }) {
         .add(cube, {
           id: 'cube sweep',
           // 2D dot SWEECH swoosh, cube sweeps sideways past the word
-          // toward the ".js 3D" block and leans into the italic. The
-          // distance is 78.5% of the i-dot -> lockup-right distance
-          // (see the sweepX derivation above) so the cube lands
-          // on-frame, just right of the lockup's middle.
+          // and leans into the italic. The distance is 78.5% of the
+          // i-dot -> lockup-right ("h2") distance (see the sweepX
+          // derivation above) so the cube lands on-frame, just right
+          // of the lockup's middle.
           x: { to: sweepX, duration: 1350 },
           skewX: { to: 8, duration: 1350 },
           duration: 1450,
           ease: 'outElastic(1.1,1.7)',
         }, 'POP+=1050')
-        .add(jsLetters, {
-          id: 'js plug',
-          // Fly in from behind the camera and level the tilt as they plug onto the logo.
-          z: { from: -2, to: 0.12825, duration: 1295 },
-          rotateX: { from: -120, to: 0, duration: 1295 },
-          delay: stagger(50),
-          ease: 'outElastic(1.1, .9)',
-          scale: { from: 0, to: 1, duration: 549 },
-        }, 'POP+=1055')
         .add(logoGroup, {
           id: 'logo recenter',
-          // Slide the lockup left to re-center now that js widened it;
-          // the cube sweep lands pre-shifted to match. The shift is half
-          // the extra width the ".js 3D" lockup adds over the word.
+          // Slide the lockup left so the word is centered on the camera
+          // axis (it starts with the i-dot on the axis, and the word
+          // extends further right of the i than left of it). The cube
+          // sweep lands pre-shifted to match.
           x: { to: `-=${recenterShift.toFixed(2)}`, duration: 1350, ease: 'outElastic(1.1, .9)' },
           duration: 1250,
           ease: 'inOutQuint',
@@ -736,7 +722,7 @@ export default function Loader({ onDone }) {
           fov: 35,
           duration: 1500, ease: 'out(2)',
         }, 11000)
-        .add([...letters, ...jsLetters, cube], {
+        .add([...letters, cube], {
           id: 'outro burst',
           // Fly forward and up at the lens, staggered from the end.
           z: 62.1,
