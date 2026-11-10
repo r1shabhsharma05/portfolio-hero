@@ -75,10 +75,64 @@ export function createHeroTimeline(refs) {
     })
   }
 
+  // Cursor tracking: the portrait turns its face toward the mouse
+  // while the hero is on screen. Guard is "not coarse" (not "fine"):
+  // environments with no pointer at all report neither, and with no
+  // cursor no mousemove ever fires, so enabling there is harmless.
+  // shortcut: flat PNG — perspective tilt only, no true head turn;
+  // upgrade: layered/3D portrait.
+  let track = null
+  if (
+    refs.portrait &&
+    refs.root &&
+    !window.matchMedia('(pointer: coarse)').matches
+  ) {
+    const el = refs.portrait
+    gsap.set(el, { transformPerspective: 800 })
+    const rotY = gsap.quickTo(el, 'rotationY', {
+      duration: 0.5,
+      ease: 'power3.out',
+    })
+    const rotX = gsap.quickTo(el, 'rotationX', {
+      duration: 0.5,
+      ease: 'power3.out',
+    })
+    const shiftX = gsap.quickTo(el, 'x', {
+      duration: 0.5,
+      ease: 'power3.out',
+    })
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect()
+      const nx = Math.max(
+        -1,
+        Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width / 2)),
+      )
+      const ny = Math.max(
+        -1,
+        Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height / 2)),
+      )
+      rotY(nx * 14)
+      rotX(ny * 9)
+      shiftX(nx * 8)
+    }
+    const onLeave = () => {
+      rotY(0)
+      rotX(0)
+      shiftX(0)
+    }
+    refs.root.addEventListener('mousemove', onMove)
+    refs.root.addEventListener('mouseleave', onLeave)
+    track = { onMove, onLeave }
+  }
+
   return () => {
     tl.kill()
     parallax?.scrollTrigger?.kill()
     parallax?.kill()
     split?.revert()
+    if (track && refs.root) {
+      refs.root.removeEventListener('mousemove', track.onMove)
+      refs.root.removeEventListener('mouseleave', track.onLeave)
+    }
   }
 }
