@@ -21,11 +21,14 @@ import './ProjectCarousel.css'
  *  - CARDS ARE UNIFORM 16:9 AGAIN (Rishabh's order 2026-11-10 — mixed
  *    ratios "acha nhi lga rha", all cards identical): the per-photo
  *    ratio fit (push #8) is reverted; every card is 360x203 desktop /
- *    300x169 tablet / 240x135 mobile, the photo inside is object-fit:
- *    contain over a blurred copy of itself, so NO image is ever cropped
- *    (16:9 photos fill the card exactly, 3:2 photos get slim blurred
- *    sides, the portrait farmer photo stands full-height with blurred
- *    sides). The fan motion math is unchanged.
+ *    300x169 tablet / 240x135 mobile. The fan motion math is unchanged.
+ *  - PHOTOS FILL THE CARD (Rishabh's order 2026-11-10 — "image fill
+ *    honi chaiye card me, space na bache"): object-fit: cover, no blurred
+ *    fill behind. 16:9 photos (SecureGaurd, RailSync, the new Farmer
+ *    Marketplace image) fill exactly with zero crop; the 3:2 photos
+ *    (SafeLife, LocalKart, Healthcare Hub, MorphAI) fill too, losing a
+ *    slim band top and bottom (~8%). The full photo is still visible on
+ *    the detail page (object-fit: contain there).
  *  - the demo's own ring-and-dot cursor is NOT ported — the portfolio
  *    already has the WaterCursor; two cursors would fight
  *  - WHEEL IS FOCUS-GATED (bug found 2026-11-10 by live check, proven by
@@ -392,7 +395,6 @@ export default function ProjectCarousel({ items }) {
             aria-current={idx === activeIndex}
           >
             <span className="fan-card-box">
-              <img className="fan-card-bg" src={item.image} alt="" draggable={false} aria-hidden="true" />
               <img className="fan-card-img" src={item.image} alt="" draggable={false} />
               <span className="fan-card-num" aria-hidden="true">
                 {String(idx + 1).padStart(2, '0')}
