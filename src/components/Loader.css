@@ -7,7 +7,7 @@
   z-index: 1000;
   background: #252423;
   overflow: hidden;
-  cursor: pointer;
+  cursor: url('/cursors/hand2.png') 12 7, pointer;
   transition: opacity 650ms ease;
 }
 
