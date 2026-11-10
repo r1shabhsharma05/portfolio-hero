@@ -8,7 +8,6 @@ import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import WaterCursor from './components/WaterCursor'
 
 export default function App() {
   // The 3D logo loader plays first; the portfolio (and the hero
@@ -35,7 +34,6 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
-      <WaterCursor />
     </>
   )
 }
