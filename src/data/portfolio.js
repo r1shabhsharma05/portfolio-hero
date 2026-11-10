@@ -129,20 +129,11 @@ export const FEATURED_PROJECTS = [
       'Group buying, community deals and reward points',
     ],
     github: 'https://github.com/r1shabhsharma05/Farmer-Market-Place',
-    live: 'https://farmer-market-place-mu.vercel.app',
+    live: 'https://farmer-market-place-six.vercel.app',
   },
 ]
 
 export const MORE_PROJECTS = [
-  {
-    name: 'LocalKart',
-    icon: 'Boxes',
-    tagline: 'Campus marketplace',
-    description:
-      'A marketplace for campus — list, chat, sell. JWT auth with email verification codes, 5 photos max per listing, sold flow and 120 demo seed listings.',
-    stack: ['React', 'Vite', 'Node.js', 'Express', 'MongoDB Atlas'],
-    github: 'https://github.com/r1shabhsharma05/LocalKart',
-  },
   {
     name: 'MorphAI',
     icon: 'Sparkles',
@@ -151,15 +142,6 @@ export const MORE_PROJECTS = [
       'Learn visually: Three.js 3D models, animated concept lessons and an image-to-3D workflow on an education landing page.',
     stack: ['TypeScript', 'Three.js', 'Express', 'tRPC', 'MySQL', 'Drizzle'],
     github: 'https://github.com/r1shabhsharma05/MorphAi',
-  },
-  {
-    name: 'Healthcare Hub',
-    icon: 'Stethoscope',
-    tagline: 'Nearby hospitals, appointments, AI chat',
-    description:
-      'Find nearby hospitals on a map, book appointments and ask a Gemini-powered AI assistant — with Supabase Auth and row-level security.',
-    stack: ['React', 'Vite', 'Axios', 'Leaflet', 'Node.js', 'Express', 'Supabase', 'Gemini AI'],
-    github: 'https://github.com/r1shabhsharma05/Mini-Project',
   },
   {
     name: 'GLA Nexus',
