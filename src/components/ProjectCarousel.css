@@ -76,12 +76,15 @@
   pointer-events: none;
 }
 
-/* Soft left shade behind the details panel on the active card. */
+/* Strong left shade behind the details panel on the active card. The photos
+   carry their own embedded headlines, so the text zone must be near-opaque
+   or the panel text collides with them (caught on the live site 2026-11-10:
+   SafeLife desc printed across the photo's own headline). */
 .project-stage-card.is-active::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.28) 45%, rgba(0, 0, 0, 0) 70%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.72) 40%, rgba(0, 0, 0, 0.35) 62%, rgba(0, 0, 0, 0) 78%);
   pointer-events: none;
 }
 
@@ -120,13 +123,20 @@
   text-transform: uppercase;
 }
 
-/* Details panel — left side of the stage, over the active card. */
+/* Details panel — left side of the stage, over the active card. Solid dark
+   block, not just a gradient: the photos carry their own big headlines in
+   this exact zone (SafeLife's "Emergency help, faster and closer." sat
+   behind the panel text), and only an opaque background guarantees the
+   panel reads clean at every breakpoint. */
 .project-stage-details {
   position: absolute;
   z-index: 22;
   left: 48px;
   top: 56px;
   max-width: 540px;
+  padding: 22px 26px 24px;
+  border-radius: 12px;
+  background: #101211;
   color: #fff;
 }
 
