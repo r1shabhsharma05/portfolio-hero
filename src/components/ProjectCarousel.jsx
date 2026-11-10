@@ -23,7 +23,9 @@ import './ProjectCarousel.css'
  *  - the gold accent becomes the portfolio's lime
  *  - prefers-reduced-motion: no auto-play, no intro, instant transitions
  */
-const AUTOPLAY_MS = 4500
+/* 7s per slide (Rishabh's order 2026-11-10: 4.5s switched too fast to read
+   the details). The progress bar and the timer both read this value. */
+const AUTOPLAY_MS = 7000
 const EASE = 'sine.inOut'
 
 function layoutFor(width, height) {
