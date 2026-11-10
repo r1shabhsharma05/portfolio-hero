@@ -5,7 +5,6 @@ import FloatingLabels from './FloatingLabels'
 import ExperienceBadge from './ExperienceBadge'
 import SummaryCard from './SummaryCard'
 import SkillTags from './SkillTags'
-import DotField from './ui/dot-field'
 import { createHeroTimeline } from '../animations/heroTimeline'
 
 export default function HeroSection({ introReady = true }) {
@@ -37,27 +36,18 @@ export default function HeroSection({ introReady = true }) {
     return cleanup
   }, [introReady])
 
-  // DotField is the hero background: an interactive halftone dot membrane
-  // (swipe leaves a wake, click sends a shockwave). The hero content is
-  // passed as its children so pointer events bubble to the field's root.
-  // className overrides the demo's light look: transparent so the hero's
-  // #161513 shows through, light dots, fills the hero (z-0, behind the
-  // z-1/2/3 hero layers). The hero children are absolutely positioned, so
-  // the field's flex centering never moves them.
+  // The dot background is site-wide now (one DotField wraps the whole
+  // NotchNav shell in App.jsx), so the hero no longer needs its own
+  // field — the hero section is transparent and the dots show through.
+  // The hero children are absolutely positioned, anchored to the section.
   return (
     <section ref={rootRef} className="hero" aria-label="Rishabh Sharma — Portfolio">
-      <DotField
-        className="absolute inset-0 z-0 min-h-0 bg-transparent text-zinc-500 dark:text-zinc-300"
-        interactive
-        seed={7}
-      >
-        <PortfolioTypography ref={wordRef} />
-        <CharacterPortrait ref={portraitRef} />
-        <FloatingLabels topRef={topRef} nameRef={nameRef} />
-        <ExperienceBadge ref={badgeRef} />
-        <SummaryCard ref={summaryRef} />
-        <SkillTags ref={tagsRef} />
-      </DotField>
+      <PortfolioTypography ref={wordRef} />
+      <CharacterPortrait ref={portraitRef} />
+      <FloatingLabels topRef={topRef} nameRef={nameRef} />
+      <ExperienceBadge ref={badgeRef} />
+      <SummaryCard ref={summaryRef} />
+      <SkillTags ref={tagsRef} />
     </section>
   )
 }
