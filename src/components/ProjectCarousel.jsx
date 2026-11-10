@@ -18,12 +18,14 @@ import './ProjectCarousel.css'
  *  - the demo's white background becomes the portfolio's dark stage, its
  *    unloaded 'Orelo' font becomes Anton + Inter, its gold nothing
  *    becomes the portfolio's lime in the details panel
- *  - CARDS ARE LANDSCAPE 16:9 (Rishabh's order 2026-11-10 — long-form
- *    video ratio, NOT the demo's portrait 3:4), and the photo inside is
- *    object-fit: contain over a blurred copy of itself, so NO image is
- *    ever cropped: 16:9 photos fill the card exactly, 3:2 photos get
- *    slim blurred sides, the portrait farmer photo stands full-height
- *    with blurred sides. The fan motion math is unchanged.
+ *  - EACH CARD TAKES ITS OWN PHOTO'S RATIO (Rishabh's order 2026-11-10 —
+ *    "jitna bdi image utni bda card, space na rahe"): the card height is
+ *    fixed per breakpoint, the width is height x the photo's natural
+ *    ratio (16:9 photos -> wide cards, 3:2 -> 3:2 cards, the portrait
+ *    farmer photo -> a narrow portrait card), so the photo fills the card
+ *    edge-to-edge with zero bands and zero crop. No blurred fill anymore.
+ *    The fan motion math is unchanged (translate % is relative to each
+ *    card's own size, so mixed widths fan fine).
  *  - the demo's own ring-and-dot cursor is NOT ported — the portfolio
  *    already has the WaterCursor; two cursors would fight
  *  - the demo listens for wheel/drag on the whole document; here both are
@@ -76,6 +78,9 @@ export default function ProjectCarousel({ items }) {
   const lastDragEndRef = useRef(0)
   const [activeIndex, setActiveIndex] = useState(0)
   const [ready, setReady] = useState(false)
+  // Each card's width/height ratio, read from its photo's natural size
+  // (16/9 until its photo has loaded). Drives the card's aspect-ratio.
+  const [ratios, setRatios] = useState(() => items.map(() => 16 / 9))
   const [detailIndex, setDetailIndex] = useState(null)
   const detailPushedRef = useRef(false)
 
@@ -231,12 +236,21 @@ export default function ProjectCarousel({ items }) {
     }
   }, [setProgress])
 
-  /* Init: preload photos, then reveal the fan. */
+  /* Init: preload photos, read each photo's natural ratio for its card,
+     then reveal the fan. */
   useEffect(() => {
     let cancelled = false
     applyProgress()
-    Promise.all(items.map((item) => loadImage(item.image).catch(() => null))).then(() => {
-      if (!cancelled) setReady(true)
+    Promise.all(
+      items.map((item) =>
+        loadImage(item.image)
+          .then((img) => img.naturalWidth / img.naturalHeight)
+          .catch(() => 16 / 9),
+      ),
+    ).then((loadedRatios) => {
+      if (cancelled) return
+      setRatios(loadedRatios)
+      setReady(true)
     })
     return () => {
       cancelled = true
@@ -285,13 +299,13 @@ export default function ProjectCarousel({ items }) {
               cardRefs.current[idx] = el
             }}
             type="button"
-            className={`fan-card${idx === activeIndex ? ' is-active' : ''}`}
+            className={`fan-card${idx === activeIndex ? ' is-active' : ''}${ratios[idx] < 1 ? ' fan-card--portrait' : ''}`}
+            style={{ '--ratio': ratios[idx] }}
             onClick={() => onCardClick(idx)}
             aria-label={`Show ${item.name}`}
             aria-current={idx === activeIndex}
           >
             <span className="fan-card-box">
-              <img className="fan-card-bg" src={item.image} alt="" draggable={false} aria-hidden="true" />
               <img className="fan-card-img" src={item.image} alt="" draggable={false} />
               <span className="fan-card-num" aria-hidden="true">
                 {String(idx + 1).padStart(2, '0')}

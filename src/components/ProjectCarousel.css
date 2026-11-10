@@ -4,19 +4,20 @@
    The active card's details live in a panel BELOW the fan (never on the
    photo), with Details / Live Demo / GitHub buttons. */
 
-/* Card sizes per breakpoint — all LANDSCAPE 16:9, the long-form video
-   ratio (Rishabh's order 2026-11-10, NOT the demo's portrait 3:4).
-   The photo inside is contain over a blurred copy of itself, so no
-   image is ever cropped: 16:9 photos fill the card exactly, 3:2 photos
-   get slim blurred sides, the portrait farmer photo stands full-height
-   with blurred sides. The fan motion math is unchanged. */
+/* Card sizes — height is fixed per breakpoint, WIDTH follows each photo's
+   own ratio (Rishabh's order 2026-11-10: "jitna bdi image utni bda card,
+   space na rahe"). The card's aspect-ratio comes from the photo's natural
+   size (--ratio set inline per card after preload), so the photo fills the
+   card edge-to-edge: 16:9 photos -> wide cards, 3:2 -> 3:2 cards, the
+   portrait farmer photo -> a narrow portrait card. Zero bands, zero crop.
+   The fan motion math is unchanged (translate % is relative to each
+   card's own size). */
 .fan-wrap {
   position: relative;
   margin-bottom: 56px;
 }
 
 .fan-stage {
-  --cw: 360px;
   --ch: 203px;
   position: relative;
   isolation: isolate;
@@ -47,9 +48,9 @@
   overflow: hidden;
   position: absolute;
   z-index: var(--zIndex);
-  width: var(--cw);
   height: var(--ch);
-  margin: calc(var(--ch) * -0.5) 0 0 calc(var(--cw) * -0.5);
+  aspect-ratio: var(--ratio);
+  margin: calc(var(--ch) * -0.5) 0 0 calc(var(--ch) * var(--ratio) * -0.5);
   border: 0;
   border-radius: 10px;
   top: 50%;
@@ -100,27 +101,30 @@
   );
 }
 
-/* Blurred copy of the photo fills the card behind the sharp image, so
-   contain never leaves dead empty bands — the full photo is always
-   visible, uncropped. */
-.fan-card-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(20px) brightness(0.55);
-  transform: scale(1.15);
-  pointer-events: none;
-}
-
+/* The photo fills the card exactly (card ratio == photo ratio, so cover
+   crops nothing). */
 .fan-card-img {
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   pointer-events: none;
+}
+
+/* Narrow portrait cards: shrink the overlaid number/title so they don't
+   swallow the photo. */
+.fan-card--portrait .fan-card-num {
+  font-size: 26px;
+  top: 8px;
+  left: 12px;
+}
+
+.fan-card--portrait .fan-card-title {
+  font-size: 15px;
+  bottom: 10px;
+  left: 12px;
+  right: 10px;
 }
 
 .fan-card-num {
@@ -467,7 +471,6 @@
 
 @media (max-width: 1023px) {
   .fan-stage {
-    --cw: 300px;
     --ch: 169px;
     height: 400px;
   }
@@ -483,7 +486,6 @@
   }
 
   .fan-stage {
-    --cw: 240px;
     --ch: 135px;
     height: 320px;
   }
