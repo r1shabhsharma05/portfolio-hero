@@ -21,6 +21,34 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* Smooth load + smooth in-page navigation (Rishabh's order 2026-11-10 —
+   "smoothness ke sath puri website load ho"): nav links glide to their
+   section instead of jumping, and the whole site fades in softly on load
+   instead of popping in at once. Short and subtle, so it never delays
+   the hero entrance. */
+html {
+  scroll-behavior: smooth;
+}
+
+#root {
+  animation: app-fade-in 0.7s ease-out both;
+}
+
+@keyframes app-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  #root {
+    animation: none;
+  }
+}
+
 ::selection {
   background: #a3e635;
   color: #04070a;
