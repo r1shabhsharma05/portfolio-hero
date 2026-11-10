@@ -1,10 +1,44 @@
 @import "tailwindcss";
 
+/* Class-driven dark mode: `dark:` follows the `dark` class on <html>
+   (set by the navbar switch, default dark), not the OS preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* shadcn theme tokens (Tailwind v4 @theme) so components/ui classes
    like bg-background / text-foreground / border-border resolve.
-   Values match this portfolio's palette: warm-dark background #161513,
-   solid lime accent, no gradients. */
+   :root is the LIGHT theme; .dark overrides to the portfolio's dark
+   palette (warm-dark background #161513, solid lime accent, no
+   gradients) — the site's look since day one. */
 @theme {
+  --color-background: #ffffff;
+  --color-foreground: #18181b;
+  --color-card: #ffffff;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-muted-foreground: #71717a;
+  --color-accent: #f4f4f5;
+  --color-ring: #65a30d;
+  /* zinc-850 is not a stock Tailwind shade; the notch nav uses it for
+     a hover tint between zinc-800 and zinc-900 (dark) / zinc-200 and
+     zinc-300 (light). */
+  --color-zinc-850: #e4e4e7;
+}
+
+/* Page palette for the hand-written CSS (hero/sections/carousel).
+   color-mix() with --page-fg reproduces the old rgba(255,255,255,X)
+   values exactly in dark mode, and the correct dark-on-light values
+   in light mode — so one declaration serves both themes. */
+:root {
+  --page-bg: #fafaf9;
+  --page-fg: #1c1917;
+  --card-bg: #ffffff;
+  --card-bg-2: #f5f5f4;
+  --lime: #65a30d;
+  --lime-hover: #84cc16;
+  --lime-text: #4d7c0f;
+  --on-lime: #ffffff;
+}
+
+.dark {
   --color-background: #161513;
   --color-foreground: #ffffff;
   --color-card: #1e1c19;
@@ -12,9 +46,16 @@
   --color-muted-foreground: #a1a1aa;
   --color-accent: #262422;
   --color-ring: #a3e635;
-  /* zinc-850 is not a stock Tailwind shade; the notch nav uses it for
-     a hover tint between zinc-800 and zinc-900. */
   --color-zinc-850: #1f1f23;
+
+  --page-bg: #161513;
+  --page-fg: #ffffff;
+  --card-bg: #1e1c19;
+  --card-bg-2: #1c1a18;
+  --lime: #a3e635;
+  --lime-hover: #bef264;
+  --lime-text: #d9f99d;
+  --on-lime: #04070a;
 }
 
 html,
@@ -33,8 +74,8 @@ body {
 }
 
 body {
-  background: #161513;
-  color: #fff;
+  background: var(--page-bg);
+  color: var(--page-fg);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -67,6 +108,6 @@ html {
 }
 
 ::selection {
-  background: #a3e635;
-  color: #04070a;
+  background: var(--lime);
+  color: var(--on-lime);
 }

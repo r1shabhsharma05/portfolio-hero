@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Briefcase, Code2, Download, FolderGit2, Home, Mail, User } from 'lucide-react'
+import { Braces, Briefcase, Code2, Download, FolderGit2, Home, Mail, User } from 'lucide-react'
 import HeroSection from './components/HeroSection'
 import Loader from './components/Loader'
 import About from './components/About'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
+import CodingProfiles from './components/CodingProfiles'
 import Experience from './components/Experience'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import HelpfulRating from './components/ui/helpful-rating'
+import SwitchButton from './components/ui/switch-button'
 import { NotchNav } from './components/ui/adaptive-notch-navigation-bar'
 import { NAV_LINKS, PERSON } from './data/portfolio'
 
@@ -16,6 +19,7 @@ const NAV_ICONS = {
   about: User,
   skills: Code2,
   projects: FolderGit2,
+  coding: Braces,
   experience: Briefcase,
   contact: Mail,
 }
@@ -32,6 +36,24 @@ export default function App() {
   // here — the loader shows on every fresh page load.
   const [loaded, setLoaded] = useState(false)
   const handleLoaderDone = useCallback(() => setLoaded(true), [])
+
+  // Theme: dark by default (the site's look); the navbar switch flips
+  // the `dark` class on <html> and the choice persists in localStorage.
+  // index.html restores it before first paint, so there is no flash.
+  const [theme, setTheme] = useState(() =>
+    typeof document !== 'undefined' &&
+    document.documentElement.classList.contains('dark')
+      ? 'dark'
+      : 'light',
+  )
+  const handleThemeChange = useCallback((next) => {
+    setTheme(next)
+    try {
+      localStorage.setItem('portfolio-theme', next)
+    } catch {
+      // Private mode: the theme still applies for this visit.
+    }
+  }, [])
 
   // Active section tracked with IntersectionObserver, same as the old
   // nav. Sections live inside NotchNav's scroll viewport, but the
@@ -84,14 +106,22 @@ export default function App() {
           />
         }
         rightContent={
-          <a
-            href={PERSON.resumeHref}
-            download="Rishabh_Sharma_Resume.pdf"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-lime-400/45 px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-lime-400 transition-colors hover:bg-lime-400/10"
-          >
-            <Download size={14} aria-hidden="true" />
-            Resume
-          </a>
+          <div className="flex items-center gap-2">
+            <SwitchButton
+              size="sm"
+              showLabel={false}
+              theme={theme}
+              onThemeChange={handleThemeChange}
+            />
+            <a
+              href={PERSON.resumeHref}
+              download="Rishabh_Sharma_Resume.pdf"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-lime-600/45 px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-lime-600 transition-colors hover:bg-lime-600/10 dark:border-lime-400/45 dark:text-lime-400 dark:hover:bg-lime-400/10"
+            >
+              <Download size={14} aria-hidden="true" />
+              Resume
+            </a>
+          </div>
         }
         onActiveChange={handleActiveChange}
       >
@@ -103,8 +133,17 @@ export default function App() {
             <About />
             <Skills />
             <Projects />
+            <CodingProfiles />
             <Experience />
             <Contact />
+            <section
+              className="section"
+              aria-label="Page feedback"
+            >
+              <div className="section-inner flex justify-center">
+                <HelpfulRating />
+              </div>
+            </section>
           </main>
           <Footer />
         </div>
