@@ -124,6 +124,22 @@
   object-fit: contain;
 }
 
+/* Head layer: same box as the body image (identical canvas, absolute
+   overlay), so the two layers composite exactly. GSAP owns this
+   element's transform (cursor tracking rotates it around the neck);
+   never centre it with a percentage translate. */
+.hero-portrait-head {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 100%;
+  width: auto;
+  pointer-events: none;
+}
+
 /* --- z-3: name (foreground) ---------------------------------------- */
 .hero-name {
   position: absolute;
