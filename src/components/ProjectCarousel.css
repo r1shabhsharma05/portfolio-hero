@@ -7,10 +7,11 @@
 /* Card sizes per breakpoint — all UNIFORM 16:9, the long-form video ratio
    (Rishabh's order 2026-11-10, reverted from the per-photo ratio fit —
    mixed ratios "acha nhi lga rha", all cards identical). The photo
-   inside is contain over a blurred copy of itself, so no image is ever
-   cropped: 16:9 photos fill the card exactly, 3:2 photos get slim
-   blurred sides, the portrait farmer photo stands full-height with
-   blurred sides. The fan motion math is unchanged. */
+   inside is object-fit: cover, so it fills the card edge-to-edge with
+   no space left (his order 2026-11-10 — "image fill honi chaiye card me,
+   space na bache"): 16:9 photos fill exactly with zero crop, the 3:2
+   photos lose a slim band top and bottom (~8%). No blurred fill behind
+   the photo anymore. The fan motion math is unchanged. */
 .fan-wrap {
   position: relative;
   margin-bottom: 56px;
@@ -103,26 +104,14 @@
   );
 }
 
-/* Blurred copy of the photo fills the card behind the sharp image, so
-   contain never leaves dead empty bands — the full photo is always
-   visible, uncropped. */
-.fan-card-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(20px) brightness(0.55);
-  transform: scale(1.15);
-  pointer-events: none;
-}
-
+/* The photo fills the card edge-to-edge (object-fit: cover) — no space
+   left, no blurred fill behind it. */
 .fan-card-img {
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   pointer-events: none;
 }
 
