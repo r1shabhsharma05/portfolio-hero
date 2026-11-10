@@ -1,143 +1,177 @@
-/* Opening-cards carousel — bounded stage inside the Projects section.
-   The demo's fullscreen takeover is adapted to a fixed-height stage;
-   all card positions are set by GSAP from the stage's own size. */
+/* 3D drag & wheel fan carousel — React port of the vanilla-JS demo
+   Rishabh uploaded. Cards fan out from a bottom pivot; wheel, drag,
+   click-a-card, arrows and keyboard all move one `progress` value.
+   The active card's details live in a panel BELOW the fan (never on the
+   photo), with Details / Live Demo / GitHub buttons. */
 
-/* Fixed heights per breakpoint (not vh-based): the details panel is
-   ~330px tall and the thumb row is 270px, so the stage must clear ~750px
-   on desktop or the two overlap on short viewports. */
-/* The wrap holds the stage + pagination. On desktop the pagination is
-   absolutely positioned over the stage's bottom-left; on mobile it drops
-   below the stage so it never covers the details text. */
-.project-carousel-wrap {
+/* Card sizes per breakpoint — all LANDSCAPE 16:9, the long-form video
+   ratio (Rishabh's order 2026-11-10, NOT the demo's portrait 3:4).
+   The photo inside is contain over a blurred copy of itself, so no
+   image is ever cropped: 16:9 photos fill the card exactly, 3:2 photos
+   get slim blurred sides, the portrait farmer photo stands full-height
+   with blurred sides. The fan motion math is unchanged. */
+.fan-wrap {
   position: relative;
   margin-bottom: 56px;
 }
 
-.project-stage {
+.fan-stage {
+  --cw: 360px;
+  --ch: 203px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  height: 780px;
+  height: 460px;
   border-radius: 20px;
   background: #0d0f0e;
+  cursor: grab;
+  touch-action: pan-y;
+  outline: none;
 }
 
-.project-stage-progress {
+.fan-stage.is-dragging {
+  cursor: grabbing;
+}
+
+.fan-stage:focus-visible {
+  outline: 2px solid #a3e635;
+  outline-offset: 4px;
+}
+
+/* Cards — position/size come from the demo's custom-property math:
+   --active = (index - active) / items, --zIndex = items - distance. */
+.fan-card {
+  --x: calc(var(--active) * 800%);
+  --y: calc(var(--active) * 200%);
+  --rot: calc(var(--active) * 120deg);
+  overflow: hidden;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  z-index: 60;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.project-stage-progress-fill {
-  height: 100%;
-  background: #a3e635;
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-
-/* Cards — GSAP sets x/y/width/height; the button reset keeps them clean. */
-.project-stage-card {
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 0;
+  z-index: var(--zIndex);
+  width: var(--cw);
+  height: var(--ch);
+  margin: calc(var(--ch) * -0.5) 0 0 calc(var(--cw) * -0.5);
   border: 0;
-  background-position: center;
-  background-size: cover;
-  box-shadow: 6px 6px 10px 2px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  padding: 0;
+  user-select: none;
+  transform-origin: 0% 100%;
+  box-shadow: 0 10px 50px 10px rgba(0, 0, 0, 0.5);
+  background: #000;
+  cursor: pointer;
+  transform: translate(var(--x), var(--y)) rotate(var(--rot));
+  transition: transform 0.8s cubic-bezier(0, 0.02, 0, 1);
   text-align: left;
 }
 
-.project-stage-card.is-active {
-  box-shadow: none;
-  cursor: default;
-}
-
-.project-stage-card:not(.is-active) {
-  cursor: pointer;
-}
-
-.project-stage-card:focus-visible {
+.fan-card:focus-visible {
   outline: 2px solid #a3e635;
   outline-offset: 2px;
 }
 
-/* Legibility gradient at the bottom of thumb cards. */
-.project-stage-card:not(.is-active)::after {
-  content: '';
+.fan-card-box {
+  --opacity: calc(var(--zIndex) / var(--items) * 3 - 2);
   position: absolute;
-  inset: auto 0 0 0;
-  height: 55%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0));
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.8s cubic-bezier(0, 0.02, 0, 1);
+  opacity: var(--opacity);
   pointer-events: none;
 }
 
-/* Light left shade behind the details panel on the active card — kept
-   light on Rishabh's order (2026-11-10): the photo must stay fully clear,
-   the detail floats directly on the image with no separate card. The panel
-   text carries its own shadow instead (see .project-stage-details). */
-.project-stage-card.is-active::before {
+.fan-card-box::before {
   content: '';
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.5)
+  );
+}
+
+/* Blurred copy of the photo fills the card behind the sharp image, so
+   contain never leaves dead empty bands — the full photo is always
+   visible, uncropped. */
+.fan-card-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.28) 45%, rgba(0, 0, 0, 0) 70%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(20px) brightness(0.55);
+  transform: scale(1.15);
   pointer-events: none;
 }
 
-/* Thumb label — place + name over the photo, like the demo's card-content. */
-.project-stage-thumb-label {
-  position: absolute;
-  left: 14px;
-  right: 10px;
-  bottom: 12px;
+.fan-card-img {
+  position: relative;
   z-index: 1;
-  color: rgba(255, 255, 255, 0.92);
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   pointer-events: none;
 }
 
-.project-stage-thumb-rule {
-  width: 26px;
-  height: 4px;
-  border-radius: 99px;
-  background: rgba(255, 255, 255, 0.9);
-}
-
-.project-stage-thumb-place {
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1.3;
-}
-
-.project-stage-thumb-title {
+.fan-card-num {
+  position: absolute;
+  z-index: 3;
+  color: #fff;
+  top: 10px;
+  left: 20px;
   font-family: 'Anton', sans-serif;
-  font-size: 19px;
+  font-size: clamp(20px, 6vw, 44px);
+  line-height: 1;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fan-card-title {
+  position: absolute;
+  z-index: 3;
+  color: #fff;
+  bottom: 16px;
+  left: 20px;
+  right: 16px;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(16px, 2.4vw, 24px);
   line-height: 1.05;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Details panel — left side of the stage, directly on the active card's
-   photo (Rishabh's order 2026-11-10: NO separate card, the image stays
-   fully clear). No background, no padding box — the text floats on the
-   image, kept readable by its own shadow + the light scrim above. */
-.project-stage-details {
-  position: absolute;
-  z-index: 22;
-  left: 48px;
-  top: 56px;
-  max-width: 540px;
-  color: #fff;
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.75), 0 0 3px rgba(0, 0, 0, 0.6);
+/* Details panel + pagination below the fan. */
+.fan-footer {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  margin-top: 28px;
 }
 
-.project-stage-tagline {
+.fan-details {
+  flex: 1;
+  min-width: 0;
+  animation: fan-details-in 0.45s ease both;
+}
+
+@keyframes fan-details-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.fan-details-tagline {
   position: relative;
   padding-top: 16px;
   font-size: 15px;
@@ -146,7 +180,7 @@
   margin: 0 0 10px;
 }
 
-.project-stage-tagline::before {
+.fan-details-tagline::before {
   content: '';
   position: absolute;
   top: 0;
@@ -157,38 +191,35 @@
   background: #a3e635;
 }
 
-.project-stage-title {
+.fan-details-title {
   font-family: 'Anton', sans-serif;
-  font-size: 52px;
+  font-size: 40px;
   line-height: 1.02;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   margin: 0 0 14px;
+  color: #fff;
   text-wrap: balance;
 }
 
-.project-stage-desc {
+.fan-details-desc {
   font-size: 15px;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.82);
   margin: 0 0 16px;
-  max-width: 500px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  max-width: 640px;
 }
 
-.project-stage-features {
+.fan-details-features {
   list-style: none;
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.project-stage-features li {
+.fan-details-features li {
   font-size: 14px;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.88);
@@ -196,29 +227,64 @@
   position: relative;
 }
 
-.project-stage-features li::before {
+.fan-details-features li::before {
   content: '▸';
   position: absolute;
   left: 0;
   color: #a3e635;
 }
 
-.project-stage-chips {
-  margin-bottom: 20px;
+/* Details / Live Demo / GitHub buttons. */
+.fan-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-/* Pagination — arrows + slide numbers, bottom-left on desktop. */
-.project-stage-pagination {
-  position: absolute;
-  z-index: 60;
-  left: 48px;
-  bottom: 36px;
+.fan-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.fan-action-btn:hover {
+  border-color: #a3e635;
+  color: #a3e635;
+}
+
+.fan-action-btn-primary {
+  background: #a3e635;
+  border-color: #a3e635;
+  color: #101211;
+}
+
+.fan-action-btn-primary:hover {
+  background: #bef264;
+  border-color: #bef264;
+  color: #101211;
+}
+
+/* Pagination — arrows + slide numbers. */
+.fan-pagination {
   display: flex;
   align-items: center;
   gap: 12px;
+  padding-top: 8px;
+  flex-shrink: 0;
 }
 
-.project-stage-arrow {
+.fan-arrow {
   width: 48px;
   height: 48px;
   border-radius: 999px;
@@ -229,114 +295,251 @@
   place-items: center;
   cursor: pointer;
   padding: 0;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, color 0.2s, opacity 0.2s;
 }
 
-.project-stage-arrow:hover {
+.fan-arrow:hover:not(:disabled) {
   border-color: #a3e635;
   color: #a3e635;
 }
 
-.project-stage-numbers {
+.fan-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.fan-numbers {
   font-family: 'Anton', sans-serif;
   font-size: 20px;
   letter-spacing: 0.06em;
   color: #fff;
   margin-left: 8px;
+  white-space: nowrap;
+}
+
+/* Full-screen project page (opened from Details). */
+.project-detail {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #161513;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.project-detail-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  flex-shrink: 0;
+}
+
+.project-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.project-detail-back:hover {
+  color: #a3e635;
+}
+
+.project-detail-close {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.project-detail-close:hover {
+  border-color: #a3e635;
+  color: #a3e635;
+}
+
+.project-detail-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.project-detail-hero {
+  background: #0d0f0e;
+}
+
+.project-detail-hero img {
+  display: block;
+  width: 100%;
+  max-height: 440px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.project-detail-body {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+.project-detail-tagline {
+  font-size: 15px;
+  font-weight: 500;
+  color: #a3e635;
+  margin: 0 0 10px;
+}
+
+.project-detail-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 48px;
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+  color: #fff;
+}
+
+.project-detail-desc {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 8px;
+}
+
+.project-detail-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 32px 0 12px;
+}
+
+.project-detail-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-detail-features li {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  padding-left: 20px;
+  position: relative;
+}
+
+.project-detail-features li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #a3e635;
+}
+
+.project-detail-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.project-detail-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 @media (max-width: 1023px) {
-  .project-stage {
-    height: 700px;
+  .fan-stage {
+    --cw: 300px;
+    --ch: 169px;
+    height: 400px;
   }
 
-  /* Smaller thumbs: place line hidden, title only. */
-  .project-stage-thumb-place {
-    display: none;
-  }
-
-  .project-stage-thumb-title {
-    font-size: 14px;
-  }
-
-  .project-stage-details {
-    left: 32px;
-    top: 44px;
-    max-width: 480px;
-  }
-
-  .project-stage-title {
-    font-size: 44px;
-  }
-
-  .project-stage-pagination {
-    left: 32px;
-    bottom: 28px;
+  .fan-details-title {
+    font-size: 34px;
   }
 }
 
 @media (max-width: 767px) {
-  .project-carousel-wrap {
+  .fan-wrap {
     margin-bottom: 44px;
   }
 
-  .project-stage {
-    height: 560px;
+  .fan-stage {
+    --cw: 240px;
+    --ch: 135px;
+    height: 320px;
   }
 
-  .project-stage-details {
-    left: 20px;
-    right: 20px;
-    top: 24px;
-    max-width: none;
+  .fan-card-num {
+    font-size: 24px;
+    top: 8px;
+    left: 12px;
   }
 
-  .project-stage-title {
-    font-size: 34px;
-    margin-bottom: 10px;
+  .fan-card-title {
+    font-size: 15px;
+    bottom: 10px;
+    left: 12px;
+    right: 10px;
   }
 
-  .project-stage-desc {
-    -webkit-line-clamp: 2;
-    font-size: 14px;
-    margin-bottom: 14px;
+  .fan-footer {
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
   }
 
-  .project-stage-features,
-  .project-stage-chips {
-    display: none;
+  .fan-pagination {
+    padding-top: 0;
   }
 
-  /* Below the stage on mobile — the thumb row owns the stage bottom,
-     and the arrows must never cover the details text. */
-  .project-stage-pagination {
-    position: static;
-    margin-top: 12px;
-    justify-content: flex-end;
-  }
-
-  .project-stage-arrow {
+  .fan-arrow {
     width: 40px;
     height: 40px;
-    border-color: rgba(255, 255, 255, 0.35);
-    background: transparent;
   }
 
-  .project-stage-numbers {
-    display: block;
+  .fan-details-title {
+    font-size: 30px;
   }
 
-  .project-stage-thumb-label {
-    left: 8px;
-    right: 6px;
-    bottom: 8px;
+  .project-detail-bar {
+    padding: 16px 20px;
   }
 
-  .project-stage-thumb-place {
-    display: none;
+  .project-detail-hero img {
+    max-height: 300px;
   }
 
-  .project-stage-thumb-title {
-    font-size: 11px;
+  .project-detail-title {
+    font-size: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fan-card,
+  .fan-card-box {
+    transition: none;
+  }
+
+  .fan-details {
+    animation: none;
   }
 }
