@@ -1,13 +1,12 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { SplitText } from 'gsap/SplitText'
 
-gsap.registerPlugin(ScrollTrigger, SplitText)
+gsap.registerPlugin(ScrollTrigger)
 
 /**
  * Premium hero entrance, played once when the loader lifts: the giant
- * PORTFOLIO rises letter by letter (SplitText chars, masked), the name
- * words follow, then portrait / badge / summary / tags cascade in.
+ * PORTFOLIO wordmark (halftone dots) fades in, the name words follow,
+ * then portrait / badge / summary / tags cascade in.
  * The portrait also gets a gentle scroll parallax (scrub on yPercent —
  * a different transform component from the entrance y, so the two never
  * fight). Reduced motion: nothing moves, everything stays visible.
@@ -23,17 +22,10 @@ export function createHeroTimeline(refs) {
   const viewport = document.querySelector('[data-notch-viewport]')
   const scroller = viewport || undefined
 
-  const h1 = refs.word?.querySelector('h1')
-  const split = h1 ? new SplitText(h1, { type: 'chars', mask: 'chars' }) : null
-
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-  if (split) {
-    tl.from(
-      split.chars,
-      { yPercent: 110, duration: 0.9, stagger: 0.035, ease: 'power4.out' },
-      0,
-    )
-  } else if (refs.word) {
+  // The word is a halftone canvas now (no text nodes to split) — the
+  // whole wordmark fades in as one.
+  if (refs.word) {
     tl.from(refs.word, { y: 12, opacity: 0, duration: 0.5 }, 0)
   }
   if (refs.name) {
@@ -129,7 +121,6 @@ export function createHeroTimeline(refs) {
     tl.kill()
     parallax?.scrollTrigger?.kill()
     parallax?.kill()
-    split?.revert()
     if (track && refs.root) {
       refs.root.removeEventListener('mousemove', track.onMove)
       refs.root.removeEventListener('mouseleave', track.onLeave)
