@@ -105,7 +105,7 @@ carousel
 		opacity: 0;
 		width: 100%;
 		height: 100%;
-		cursor: pointer;
+		cursor: url('/cursors/hand2.png') 12 7, pointer;
 }
 
 .ring-carousel .ring-control-button.left {
@@ -189,7 +189,7 @@ carousel
 		padding: 0;
 		border: 0;
 		background: none;
-		cursor: pointer;
+		cursor: url('/cursors/hand2.png') 12 7, pointer;
 		-webkit-tap-highlight-color: transparent;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -307,7 +307,7 @@ carousel
 		font-weight: 600;
 		line-height: 1;
 		text-decoration: none;
-		cursor: pointer;
+		cursor: url('/cursors/hand2.png') 12 7, pointer;
 		transition: border-color .2s, color .2s, background .2s;
 }
 .fan-action-btn:hover {
@@ -334,7 +334,7 @@ carousel
 		border-radius: 999px;
 		background: #00000040;
 		color: #ffffffd9;
-		cursor: pointer;
+		cursor: url('/cursors/hand2.png') 12 7, pointer;
 		transition: border-color .2s, color .2s, opacity .2s;
 }
 .fan-arrow:hover:not(:disabled) {
@@ -343,7 +343,7 @@ carousel
 }
 .fan-arrow:disabled {
 		opacity: .3;
-		cursor: default;
+		cursor: url('/cursors/left_ptr.png') 10 5, default;
 }
 .fan-numbers {
 		margin-left: 8px;
@@ -379,7 +379,7 @@ carousel
 		color: #fff;
 		font-size: 15px;
 		font-weight: 600;
-		cursor: pointer;
+		cursor: url('/cursors/hand2.png') 12 7, pointer;
 }
 .project-detail-back:hover {
 		color: #a3e635;
@@ -394,7 +394,7 @@ carousel
 		border-radius: 999px;
 		background: 0 0;
 		color: #fff;
-		cursor: pointer;
+		cursor: url('/cursors/hand2.png') 12 7, pointer;
 }
 .project-detail-close:hover {
 		color: #a3e635;
