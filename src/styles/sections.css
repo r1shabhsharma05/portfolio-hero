@@ -95,133 +95,6 @@ html {
   transform: none;
 }
 
-/* --- nav ------------------------------------------------------------ */
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  background: rgba(22, 21, 19, 0.82);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  transform: translateY(-100%);
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    transform 0.45s ease,
-    opacity 0.45s ease,
-    visibility 0s linear 0.45s;
-}
-
-/* Hidden at scroll-top so the hero's top labels are never covered. */
-.nav.is-visible {
-  transform: none;
-  opacity: 1;
-  visibility: visible;
-  transition:
-    transform 0.45s ease,
-    opacity 0.45s ease,
-    visibility 0s;
-}
-
-.nav-inner {
-  max-width: 1200px;
-  height: 64px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 15px;
-  white-space: nowrap;
-}
-
-.nav-mark {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: #a3e635;
-  color: #04070a;
-  font-weight: 500;
-  font-size: 17px;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: auto;
-}
-
-.nav-links a {
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.72);
-  text-decoration: none;
-  font-size: 14.5px;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.nav-links a:hover {
-  color: #fff;
-}
-
-.nav-links a.is-active {
-  color: #a3e635;
-  font-weight: 600;
-}
-
-.nav-resume {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 16px;
-  border: 1px solid rgba(163, 230, 53, 0.45);
-  border-radius: 10px;
-  color: #a3e635;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.nav-resume:hover {
-  background: rgba(163, 230, 53, 0.12);
-  border-color: rgba(163, 230, 53, 0.7);
-}
-
-.nav-toggle {
-  display: none;
-  margin-left: auto;
-  padding: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 10px;
-  background: transparent;
-  color: #fff;
-  cursor: url('/cursors/hand2.png') 12 7, pointer;
-}
-
-.mobile-menu {
-  display: none;
-}
-
 /* --- about ---------------------------------------------------------- */
 .about-body {
   max-width: 780px;
@@ -785,57 +658,6 @@ html {
     padding: 80px 20px;
   }
 
-  .nav-links,
-  .nav-resume {
-    display: none;
-  }
-
-  .nav-toggle {
-    display: grid;
-    place-items: center;
-  }
-
-  .mobile-menu:not([hidden]) {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    padding: 8px 24px 20px;
-    background: rgba(22, 21, 19, 0.97);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .mobile-menu a {
-    padding: 13px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    font-size: 16.5px;
-    font-weight: 500;
-  }
-
-  .mobile-menu a.is-active {
-    color: #a3e635;
-    font-weight: 600;
-  }
-
-  .mobile-menu a.mobile-resume {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 16px;
-    padding: 12px 18px;
-    border: 1px solid rgba(163, 230, 53, 0.45);
-    border-radius: 10px;
-    color: #a3e635;
-    font-weight: 600;
-  }
-
   .featured-grid,
   .more-grid {
     grid-template-columns: 1fr;
@@ -887,10 +709,6 @@ html {
     font-size: 18px;
   }
 
-  .nav-name {
-    font-size: 14px;
-  }
-
   .footer-inner {
     flex-direction: column;
     align-items: flex-start;
@@ -914,7 +732,6 @@ html {
     transition: none;
   }
 
-  .nav,
   .skill-card,
   .project-card,
   .more-card,
