@@ -75,29 +75,28 @@ export function createHeroTimeline(refs) {
     })
   }
 
-  // Cursor tracking: the portrait turns its face toward the mouse
-  // while the hero is on screen. Guard is "not coarse" (not "fine"):
-  // environments with no pointer at all report neither, and with no
-  // cursor no mousemove ever fires, so enabling there is harmless.
-  // shortcut: flat PNG — perspective tilt only, no true head turn;
-  // upgrade: layered/3D portrait.
+  // Cursor tracking: ONLY the head turns toward the mouse — the body never
+  // moves. The portrait is two layers (see CharacterPortrait.jsx); the head
+  // rotates around the neck cut (transformOrigin 50% 48% = y=510/1058) with
+  // the face centre (29% down the head layer) as the look origin. Guard is
+  // "not coarse": environments with no pointer report neither, and with no
+  // cursor no mousemove ever fires, so enabling there is harmless. Ranges
+  // stay small so the neck seam stays hidden.
+  // shortcut: flat PNG layers — the painted eyes can't move on their own;
+  // upgrade: real 3D head model.
   let track = null
   if (
-    refs.portrait &&
+    refs.head &&
     refs.root &&
     !window.matchMedia('(pointer: coarse)').matches
   ) {
-    const el = refs.portrait
-    gsap.set(el, { transformPerspective: 800 })
+    const el = refs.head
+    gsap.set(el, { transformPerspective: 800, transformOrigin: '50% 48%' })
     const rotY = gsap.quickTo(el, 'rotationY', {
       duration: 0.5,
       ease: 'power3.out',
     })
     const rotX = gsap.quickTo(el, 'rotationX', {
-      duration: 0.5,
-      ease: 'power3.out',
-    })
-    const shiftX = gsap.quickTo(el, 'x', {
       duration: 0.5,
       ease: 'power3.out',
     })
@@ -109,16 +108,17 @@ export function createHeroTimeline(refs) {
       )
       const ny = Math.max(
         -1,
-        Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height / 2)),
+        Math.min(
+          1,
+          (e.clientY - (r.top + r.height * 0.29)) / (r.height / 2),
+        ),
       )
-      rotY(nx * 14)
-      rotX(ny * 9)
-      shiftX(nx * 8)
+      rotY(nx * 12)
+      rotX(ny * 8)
     }
     const onLeave = () => {
       rotY(0)
       rotX(0)
-      shiftX(0)
     }
     refs.root.addEventListener('mousemove', onMove)
     refs.root.addEventListener('mouseleave', onLeave)
