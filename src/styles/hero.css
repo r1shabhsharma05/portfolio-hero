@@ -73,21 +73,11 @@
      by font-size only, so it can never collide with the header above it. */
   transform: translateX(-50%);
   width: 100%;
-  text-align: center;
-  line-height: 1.1;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.hero-word h1 {
-  font-family: 'Anton', 'Arial Narrow', sans-serif;
-  /* Anton renders PORTFOLIO at 3.886x the font-size; 87 / 3.886 = 22.4vw
-     puts the word at ~87% of the hero width with natural proportions. */
-  font-size: clamp(6rem, 22.4vw, 30rem);
-  letter-spacing: 0.005em;
-  margin: 0;
-  font-weight: 400;
-  color: var(--lime);
+  /* The word is a canvas now (no h1 text to size the box), so the height
+     is explicit: the old line box, font-size x 1.1. Pointer events on:
+     the dots part around the cursor and a click fires the shock ring. */
+  height: calc(clamp(6rem, 22.4vw, 30rem) * 1.1);
+  pointer-events: auto;
 }
 
 /* --- z-2: portrait (overlaps the centre of PORTFOLIO) -------------- */
@@ -300,10 +290,7 @@
 
   .hero-word {
     top: calc(10.5% - 2.37vw);
-  }
-
-  .hero-word h1 {
-    font-size: clamp(2.5rem, 22.4vw, 11rem);
+    height: calc(clamp(2.5rem, 22.4vw, 11rem) * 1.1);
   }
 
   .hero-portrait {
