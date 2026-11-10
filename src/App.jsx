@@ -76,12 +76,12 @@ export default function App() {
         activeId={active}
         position="top"
         logo={
-          <span className="flex items-center gap-2.5">
-            <span className="grid size-7 place-items-center rounded-lg bg-lime-400 text-[15px] font-medium text-zinc-950">
-              R
-            </span>
-            <span className="text-sm font-medium whitespace-nowrap">Rishabh Sharma</span>
-          </span>
+          <img
+            src="/logo.svg"
+            alt="Rishabh Sharma"
+            className="size-7"
+            draggable={false}
+          />
         }
         rightContent={
           <a
