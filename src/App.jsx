@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Braces, Briefcase, Code2, Download, FolderGit2, Home, Mail, User } from 'lucide-react'
 import HeroSection from './components/HeroSection'
 import Loader from './components/Loader'
@@ -11,6 +11,8 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import HelpfulRating from './components/ui/helpful-rating'
 import SwitchButton from './components/ui/switch-button'
+import DotField from './components/ui/dot-field'
+import { useSiteAnimations } from './animations/siteAnimations'
 import { NotchNav } from './components/ui/adaptive-notch-navigation-bar'
 import { NAV_LINKS, PERSON } from './data/portfolio'
 
@@ -36,6 +38,12 @@ export default function App() {
   // here — the loader shows on every fresh page load.
   const [loaded, setLoaded] = useState(false)
   const handleLoaderDone = useCallback(() => setLoaded(true), [])
+
+  // GSAP site animations (scroll progress bar, footer entrance) live in
+  // ./animations/siteAnimations and scope to the content wrapper below.
+  const contentRef = useRef(null)
+  const progressRef = useRef(null)
+  useSiteAnimations(contentRef, progressRef)
 
   // Theme: dark by default (the site's look); the navbar switch flips
   // the `dark` class on <html> and the choice persists in localStorage.
@@ -87,12 +95,25 @@ export default function App() {
   // container. The single wrapper div must be w-full self-start — the
   // viewport is flex with items-center, and a tall centered child
   // would clip at the top and become unreachable by scrolling.
+  //
+  // The DotField wraps the whole shell: one interactive dot membrane
+  // behind the entire portfolio (fixed, screen-sized, cheap) instead of
+  // a hero-only field. Pointer events bubble from the content up to the
+  // field's root, so swipe wakes and click shockwaves work everywhere.
+  // The shell, hero and sections are transparent so the dots show
+  // through; the page background itself comes from <body>.
   return (
     <>
       {!loaded && <Loader onDone={handleLoaderDone} />}
       <a className="skip-link" href="#main">
         Skip to content
       </a>
+      <div ref={progressRef} className="gsap-progress" aria-hidden="true" />
+      <DotField
+        className="fixed inset-0 z-0 min-h-0 bg-transparent text-zinc-500 dark:text-zinc-300"
+        interactive
+        seed={7}
+      >
       <NotchNav
         items={NOTCH_ITEMS}
         activeId={active}
@@ -125,7 +146,7 @@ export default function App() {
         }
         onActiveChange={handleActiveChange}
       >
-        <div className="w-full self-start">
+        <div ref={contentRef} className="w-full self-start">
           <main id="main" tabIndex={-1}>
             <div id="home">
               <HeroSection introReady={loaded} />
@@ -148,6 +169,7 @@ export default function App() {
           <Footer />
         </div>
       </NotchNav>
+      </DotField>
     </>
   )
 }

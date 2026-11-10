@@ -111,3 +111,22 @@ html {
   background: var(--lime);
   color: var(--on-lime);
 }
+
+/* Scroll progress bar (GSAP, see animations/siteAnimations.js): a lime
+   line across the top of the screen, scaleX driven by the viewport
+   scroll. Starts at scaleX 0 (invisible) so nothing shows before the
+   tween exists — and under reduced motion no tween is created, so it
+   simply stays hidden. z-40 sits under the notch bar (z-50), so the bar
+   shows on either side of the island, never over it. */
+.gsap-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 40;
+  pointer-events: none;
+}
