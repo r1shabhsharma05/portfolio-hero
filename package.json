@@ -19,6 +19,8 @@
     "@fontsource/inter": "^5.3.0",
     "@fontsource/playfair-display": "^5.3.0",
     "@gsap/react": "^2.1.2",
+    "@splinetool/react-spline": "^4.2.0",
+    "@splinetool/runtime": "^2.0.170",
     "animejs": "^4.5.0",
     "clsx": "^2.1.1",
     "framer-motion": "^14.12.0",
