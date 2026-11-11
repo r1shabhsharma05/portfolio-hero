@@ -1,0 +1,44 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://portfolio-hero-psi-lemon.vercel.app",
+      "service-desc": [
+        {
+          "href": "https://portfolio-hero-psi-lemon.vercel.app/openapi.json",
+          "type": "application/openapi+json",
+          "title": "portfolio-hero-psi-lemon.vercel.app public API — OpenAPI 3.1 description"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://portfolio-hero-psi-lemon.vercel.app/developers",
+          "type": "text/html",
+          "title": "Developer portal"
+        },
+        {
+          "href": "https://portfolio-hero-psi-lemon.vercel.app/developers.md",
+          "type": "text/markdown",
+          "title": "Developer portal (markdown)"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://portfolio-hero-psi-lemon.vercel.app/llms.txt",
+          "type": "text/plain",
+          "title": "Structured context for LLM agents"
+        },
+        {
+          "href": "https://portfolio-hero-psi-lemon.vercel.app/.well-known/ai-catalog.json",
+          "type": "application/json",
+          "title": "Agentic Resource Discovery catalog"
+        }
+      ],
+      "author": [
+        {
+          "href": "https://portfolio-hero-psi-lemon.vercel.app/contact",
+          "title": "Rishabh Sharma"
+        }
+      ]
+    }
+  ]
+}
