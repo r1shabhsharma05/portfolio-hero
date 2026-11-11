@@ -108,25 +108,14 @@
   pointer-events: none;
 }
 
-.hero-portrait img {
+/* Robot wrapper: square box, full slot height, centred by the flex
+   parent. GSAP owns this element's transform (cursor tracking rotates
+   it); never centre it with a percentage translate. The Spline canvas
+   fills it (w-full h-full). */
+.hero-robot {
+  position: relative;
   height: 100%;
-  width: auto;
-  object-fit: contain;
-}
-
-/* Head layer: same box as the body image (identical canvas, absolute
-   overlay), so the two layers composite exactly. GSAP owns this
-   element's transform (cursor tracking rotates it around the neck);
-   never centre it with a percentage translate. */
-.hero-portrait-head {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  height: 100%;
-  width: auto;
+  aspect-ratio: 1 / 1;
   pointer-events: none;
 }
 
