@@ -1,47 +1,169 @@
-<!doctype html>
-<html lang="en" class="dark">
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <script>
-      // Theme: dark by default; restore the saved choice before first
-      // paint so the page never flashes the wrong theme.
-      try {
-        var t = localStorage.getItem('portfolio-theme')
-        if (t === 'light') {
-          document.documentElement.classList.remove('dark')
-          document.documentElement.style.colorScheme = 'light'
-        } else {
-          document.documentElement.classList.add('dark')
-          document.documentElement.style.colorScheme = 'dark'
-        }
-      } catch (e) {}
-    </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rishabh Sharma — Software Engineer</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f3f1" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Rishabh Sharma — Full-stack Developer, Open Source Contributor, Creator</title>
+    <style>
+      html, body { margin: 0; background: #f3f3f1; }
+    </style>
     <meta
       name="description"
-      content="Rishabh Sharma — Software Engineer and full-stack developer from India. Live products: SecureGaurd, SafeLife, RailSync. Open-source contributor with 14 pull requests merged."
+      content="Rishabh Sharma — 19-year-old full-stack developer at GLA University, Mathura. 14 open-source PRs merged, LeetCode 212 solved, builder of SafeLife, SecureGaurd, LocalKart and more. Tech Reels as @cod.ehx."
     />
-    <link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://portfolio-hero-psi-lemon.vercel.app/" />
-    <meta property="og:title" content="Rishabh Sharma — Software Engineer" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app" />
     <meta
-      property="og:description"
-      content="Full-stack developer building live products: SecureGaurd, SafeLife and RailSync. Open-source contributor with 14 pull requests merged."
+      name="keywords"
+      content="Rishabh Sharma, fullstack developer, React developer, open source contributor, SafeLife, SecureGaurd, LocalKart, GLA University, tech reels cod.ehx"
     />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Rishabh Sharma — Software Engineer" />
+    <meta name="author" content="Rishabh Sharma" />
+    <link rel="llms" type="text/plain" href="/llms.txt" title="LLM context about Rishabh Sharma" />
+    <link rel="alternate" type="text/markdown" href="/index.md" title="Markdown version (also via Accept: text/markdown)" />
+    <link rel="help" href="/developers" title="Developer portal — machine-readable endpoints" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="alternate" type="application/rss+xml" href="/blog/feed.xml" title="Rishabh Sharma — Blog" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rishabh Sharma — Full-stack Developer" />
     <meta
       name="twitter:description"
-      content="Full-stack developer building live products: SecureGaurd, SafeLife and RailSync. Open-source contributor with 14 pull requests merged."
+      content="Full-stack developer, open-source contributor (14 PRs merged), LeetCode 212 solved. Builder of SafeLife, SecureGaurd, LocalKart. Tech Reels as @cod.ehx."
     />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta name="twitter:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.png" />
+    <meta name="twitter:image:alt" content="Rishabh Sharma — I build cool things with AI" />
+
+    <meta property="og:url" content="https://portfolio-hero-psi-lemon.vercel.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Rishabh Sharma — Full-stack Developer" />
+    <meta property="og:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Rishabh Sharma — I build cool things with AI" />
+    <meta
+      property="og:description"
+      content="Full-stack developer, open-source contributor (14 PRs merged), LeetCode 212 solved. Builder of SafeLife, SecureGaurd, LocalKart. Tech Reels as @cod.ehx."
+    />
+    <meta property="og:site_name" content="Rishabh Sharma" />
+
+    <meta itemprop="name" content="Rishabh Sharma" />
+    <meta
+      itemprop="description"
+      content="Full-stack developer, open-source contributor (14 PRs merged), LeetCode 212 solved. Builder of SafeLife, SecureGaurd, LocalKart. Tech Reels as @cod.ehx."
+    />
+    <meta itemprop="image" content="https://portfolio-hero-psi-lemon.vercel.app/logo512.png" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://portfolio-hero-psi-lemon.vercel.app/#person",
+          "name": "Rishabh Sharma",
+          "alternateName": ["r1shabhsharma05", "cod.ehx"],
+          "jobTitle": "Full-stack Developer",
+          "url": "https://portfolio-hero-psi-lemon.vercel.app",
+          "image": "https://portfolio-hero-psi-lemon.vercel.app/logo512.png",
+          "email": "rishabhsharma14426@gmail.com",
+          "description": "19-year-old full-stack developer at GLA University, Mathura. 14 open-source pull requests merged, LeetCode 212 solved, builder of SafeLife, SecureGaurd, LocalKart, Farmer Marketplace and more.",
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "GLA University",
+            "address": { "@type": "PostalAddress", "addressLocality": "Mathura", "addressCountry": "IN" }
+          },
+          "sameAs": [
+            "https://github.com/r1shabhsharma05",
+            "https://www.linkedin.com/in/rishabh-sharma-342575438/",
+            "https://www.instagram.com/cod.ehx",
+            "https://www.youtube.com/@UntoldHx"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://portfolio-hero-psi-lemon.vercel.app/#website",
+          "url": "https://portfolio-hero-psi-lemon.vercel.app",
+          "name": "Rishabh Sharma",
+          "author": { "@id": "https://portfolio-hero-psi-lemon.vercel.app/#person" },
+          "inLanguage": "en"
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
+    <!-- BEGIN:static-content -->
+    <style>
+      #static-content { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 4rem;
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.65; color: #1a1a2e; }
+      html[data-theme="dark"] #static-content { color: #f0f0f5; }
+      #static-content pre { overflow-x: auto; }
+      #static-content[hidden] { display: none !important; }
+    </style>
+    <div id="static-content">
+<h1>Rishabh Sharma — Full-stack Developer, Open Source Contributor, Tech Creator</h1>
+<p>Full-stack developer and B.Tech Computer Science student at GLA University,
+Mathura (2025–2028). Builds and ships real products for web and mobile,
+contributes to open source, and makes tech Reels as @cod.ehx.</p>
+<h2>What I do</h2>
+<p>I build production web and mobile products end to end — React and Next.js on
+the front, Node.js and FastAPI on the back, with Supabase and PostgreSQL for
+data. I have shipped seven products, from an AI railway block planner to an
+emergency SOS app, and I contribute to open source: 14 pull requests merged
+and 8 open across Jenkins, WordPress/Gutenberg and other projects.</p>
+<p>Alongside engineering, I create. I make tech Reels about AI tools and coding
+as @cod.ehx, and I have solved 212 LeetCode problems.</p>
+<h2>Highlights</h2>
+<ul>
+<li><strong>14 pull requests merged, 8 open</strong> — Jenkins, WordPress/Gutenberg and more</li>
+<li><strong>212 LeetCode problems solved</strong> (88 Easy, 99 Medium, 25 Hard)</li>
+<li><strong>7 products shipped</strong> — RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI</li>
+<li><strong>SafeLife</strong> — emergency SOS app with live location tracking and guardian alerts</li>
+<li><strong>Tech creator</strong> — Reels about AI tools and coding as @cod.ehx</li>
+</ul>
+<h2>This website</h2>
+<p>portfolio-hero-psi-lemon.vercel.app is a React 19 + TypeScript single-page app built with Vite
+and deployed on Vercel. It has a reels grid, project showcases, an open-source
+section, a Learn section with build write-ups, and a built-in AI chat that
+answers questions about Rishabh.</p>
+<h2>Elsewhere</h2>
+<ul>
+<li>Email: <a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></li>
+<li>GitHub: <a href="https://github.com/r1shabhsharma05">https://github.com/r1shabhsharma05</a></li>
+<li>LinkedIn: <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">https://www.linkedin.com/in/rishabh-sharma-342575438/</a></li>
+<li>Instagram: <a href="https://www.instagram.com/cod.ehx">https://www.instagram.com/cod.ehx</a></li>
+<li>YouTube: <a href="https://www.youtube.com/@UntoldHx">https://www.youtube.com/@UntoldHx</a></li>
+</ul>
+<hr>
+<p>Machine-readable index for this site:</p>
+<ul>
+<li>Full context: <a href="https://portfolio-hero-psi-lemon.vercel.app/llms.txt">https://portfolio-hero-psi-lemon.vercel.app/llms.txt</a></li>
+<li>Sitemap: <a href="https://portfolio-hero-psi-lemon.vercel.app/sitemap.xml">https://portfolio-hero-psi-lemon.vercel.app/sitemap.xml</a></li>
+<li>Developer portal: <a href="https://portfolio-hero-psi-lemon.vercel.app/developers">https://portfolio-hero-psi-lemon.vercel.app/developers</a></li>
+<li>Blog feed: <a href="https://portfolio-hero-psi-lemon.vercel.app/blog/feed.xml">https://portfolio-hero-psi-lemon.vercel.app/blog/feed.xml</a></li>
+</ul>
+<p>Every page listed above also responds to <code>Accept: text/markdown</code>.</p>
+
+      <p><a href="/about">About</a> · <a href="/contact">Contact</a> ·
+         <a href="/developers">Developers</a> · <a href="/blog/">Blog</a> ·
+         <a href="/privacy">Privacy</a> · <a href="/llms.txt">llms.txt</a></p>
+    </div>
+    <script>
+      // Progressive enhancement: no-JS clients and crawlers keep the prose
+      // above; with JS the React app takes over, so hide it immediately.
+      (function () {
+        var el = document.getElementById("static-content");
+        el.hidden = true;
+        el.style.display = "none";
+      })();
+    </script>
+    <!-- END:static-content -->
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>
