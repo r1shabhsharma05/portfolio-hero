@@ -130,3 +130,20 @@ html {
   z-index: 40;
   pointer-events: none;
 }
+
+/* SplineScene loading fallback (components/ui/splite.jsx): a small
+   spinning ring in the page accent. The Spline scene loads from
+   prod.spline.design at runtime, so the hero shows this until the
+   robot appears. */
+.loader {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--page-fg) 20%, transparent);
+  border-top-color: var(--lime);
+  animation: loader-spin 0.8s linear infinite;
+}
+
+@keyframes loader-spin {
+  to { transform: rotate(360deg); }
+}
