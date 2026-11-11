@@ -9,14 +9,16 @@ import { SplineErrorBoundary } from './ui/spline-error-boundary'
 // and self-hosted as public/robot-scene.splinecode — the Spline CDN is
 // unreachable from the verification VM's Chrome, and same-origin is
 // faster + immune to CDN outages. Same robot, no content change.
-// Cursor tracking rotates this inner wrapper (heroTimeline.js); the outer
-// .hero-portrait keeps the entrance + parallax, so the two never fight.
+// Cursor tracking removed (owner's order 2026-11-11): the robot no
+// longer turns toward the mouse — it stays still and only plays the
+// scene's own idle animation. The slot stays pointer-transparent, so
+// the halftone wordmark underneath keeps working.
 // The error boundary is load-bearing: if the scene CDN fails, Spline
 // throws during render and React would unmount the whole app without it.
-export default function HeroRobot({ ref, robotRef }) {
+export default function HeroRobot({ ref }) {
   return (
     <div ref={ref} className="hero-portrait" aria-hidden="true">
-      <div ref={robotRef} className="hero-robot">
+      <div className="hero-robot">
         <SplineErrorBoundary>
           <SplineScene
             scene="/robot-scene.splinecode"
