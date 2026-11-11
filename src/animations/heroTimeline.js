@@ -67,67 +67,9 @@ export function createHeroTimeline(refs) {
     })
   }
 
-  // Cursor tracking: the Spline robot turns toward the mouse — same
-  // ranges as the old portrait head (±12° / ±8°) so the hero feels the
-  // same. The robot wrapper is a SEPARATE element from .hero-portrait
-  // (which owns the entrance + parallax transforms), so the two never
-  // fight. Pivot is the centre (50% 50%) — a robot has no neck cut.
-  // Guard is "not coarse": environments with no pointer report neither,
-  // and with no cursor no mousemove ever fires, so enabling there is
-  // harmless.
-  // shortcut: the tilt is a CSS 3D transform on the canvas wrapper, not
-  // the model turning its own head — the Spline scene itself does not
-  // take pointer input (the slot stays pointer-transparent, like the
-  // portrait was, so the halftone wordmark underneath keeps working).
-  // upgrade: a scene authored with mouse-follow inside Spline.
-  let track = null
-  if (
-    refs.robot &&
-    refs.root &&
-    !window.matchMedia('(pointer: coarse)').matches
-  ) {
-    const el = refs.robot
-    gsap.set(el, { transformPerspective: 800, transformOrigin: '50% 50%' })
-    const rotY = gsap.quickTo(el, 'rotationY', {
-      duration: 0.5,
-      ease: 'power3.out',
-    })
-    const rotX = gsap.quickTo(el, 'rotationX', {
-      duration: 0.5,
-      ease: 'power3.out',
-    })
-    const onMove = (e) => {
-      const r = el.getBoundingClientRect()
-      const nx = Math.max(
-        -1,
-        Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width / 2)),
-      )
-      const ny = Math.max(
-        -1,
-        Math.min(
-          1,
-          (e.clientY - (r.top + r.height / 2)) / (r.height / 2),
-        ),
-      )
-      rotY(nx * 12)
-      rotX(ny * 8)
-    }
-    const onLeave = () => {
-      rotY(0)
-      rotX(0)
-    }
-    refs.root.addEventListener('mousemove', onMove)
-    refs.root.addEventListener('mouseleave', onLeave)
-    track = { onMove, onLeave }
-  }
-
   return () => {
     tl.kill()
     parallax?.scrollTrigger?.kill()
     parallax?.kill()
-    if (track && refs.root) {
-      refs.root.removeEventListener('mousemove', track.onMove)
-      refs.root.removeEventListener('mouseleave', track.onLeave)
-    }
   }
 }
