@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+<title>Rishabh Sharma — Blog</title>
+<link>https://portfolio-hero-psi-lemon.vercel.app/blog/</link>
+<description>Build write-ups by Rishabh Sharma.</description>
+<language>en</language>
+<item><title>How I got 14 open-source PRs merged</title><link>https://portfolio-hero-psi-lemon.vercel.app/blog/how-i-got-14-open-source-prs-merged/</link><guid>https://portfolio-hero-psi-lemon.vercel.app/blog/how-i-got-14-open-source-prs-merged/</guid><pubDate>Tue, 11 Nov 2026 00:00:00 +0000</pubDate><description>Small verified fixes, reproduced first, reviewed by maintainers — how a student got pull requests merged into Jenkins and WordPress Gutenberg.</description></item><item><title>Building SafeLife SOS</title><link>https://portfolio-hero-psi-lemon.vercel.app/blog/building-safelife-sos/</link><guid>https://portfolio-hero-psi-lemon.vercel.app/blog/building-safelife-sos/</guid><pubDate>Tue, 11 Nov 2026 00:00:00 +0000</pubDate><description>How I built an emergency SOS app with live location tracking, guardian alerts, and a Telegram bot — Expo, Supabase, Upstash and QStash.</description></item><item><title>My Claude Code skills setup</title><link>https://portfolio-hero-psi-lemon.vercel.app/blog/my-claude-code-skills-setup/</link><guid>https://portfolio-hero-psi-lemon.vercel.app/blog/my-claude-code-skills-setup/</guid><pubDate>Tue, 11 Nov 2026 00:00:00 +0000</pubDate><description>Skills, not prompts: how I run coding sessions with a fixed skill stack, verification before every push, and a feedback log that turns mistakes into rules.</description></item>
+</channel></rss>
