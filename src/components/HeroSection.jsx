@@ -11,7 +11,6 @@ export default function HeroSection({ introReady = true }) {
   const rootRef = useRef(null)
   const wordRef = useRef(null)
   const portraitRef = useRef(null)
-  const robotRef = useRef(null)
   const topRef = useRef(null)
   const nameRef = useRef(null)
   const badgeRef = useRef(null)
@@ -28,7 +27,6 @@ export default function HeroSection({ introReady = true }) {
       root: rootRef.current,
       word: wordRef.current,
       portrait: portraitRef.current,
-      robot: robotRef.current,
       top: topRef.current,
       name: nameRef.current,
       badge: badgeRef.current,
@@ -45,7 +43,7 @@ export default function HeroSection({ introReady = true }) {
   return (
     <section ref={rootRef} className="hero" aria-label="Rishabh Sharma — Portfolio">
       <PortfolioTypography ref={wordRef} />
-      <HeroRobot ref={portraitRef} robotRef={robotRef} />
+      <HeroRobot ref={portraitRef} />
       <FloatingLabels topRef={topRef} nameRef={nameRef} />
       <ExperienceBadge ref={badgeRef} />
       <SummaryCard ref={summaryRef} />
