@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My Claude Code skills setup</title>
+<meta name="description" content="Skills, not prompts: how I run coding sessions with a fixed skill stack, verification before every push, and a feedback log that turns mistakes into rules." />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/blog/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+a { color:inherit; }
+ul { padding-left:1.25rem; }
+.post { padding:1.5rem 0; border-top:1px solid var(--line); }
+.post h2 { margin:0 0 .3rem; }
+.post h2 a { text-decoration:none; }
+.post p { margin:.3rem 0; color:var(--muted); }
+.draft { display:inline-block; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; border:1px solid var(--line); border-radius:999px; padding:.15rem .6rem; margin-left:.5rem; vertical-align:middle; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/blog/">Blog</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<h1>My Claude Code skills setup</h1>
+<p class="meta">Rishabh Sharma · 11 November 2026 <span class="draft">Draft</span></p>
+<p>I do most of my coding with an AI agent, and the difference between chaos and shipping is a
+skill stack — small playbooks the agent follows every time, instead of improvising.</p>
+<h2>Explore → Plan → Code → Verify → Commit</h2>
+<p>That is the loop. Explore the code first, write the plan, then write the smallest complete
+change. Verification comes before every push: build, tests, a secret scan, and a check that the
+remote HEAD has not moved under me.</p>
+<h2>Feedback becomes rules</h2>
+<p>After every multi-step task I run a feedback pass: what went wrong, what the lesson is, and
+where the lesson lives so the next session reads it. A log entry alone is not a fix — a mistake
+is closed only when the lesson reaches the place it will be read next time.</p>
+<h2>What I use it for</h2>
+<p>Daily open-source PRs, the SafeLife 30-day upgrade program, my portfolio, and outreach
+automation. The agent does the repetitive work; I make the decisions.</p>
+</main>
+</div>
+</body>
+</html>
