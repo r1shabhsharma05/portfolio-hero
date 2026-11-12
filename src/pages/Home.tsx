@@ -24,15 +24,26 @@ function CountUp({ value, start }: { value: string; start: boolean }) {
   return <>{n.toLocaleString("en-US")}</>;
 }
 
-/** The hero wall — the CurvedLens card animation, restored from the
- *  pasted prompt: one WebGL canvas, centre card flat, outer cards
- *  taller and bent with a chromatic fringe at the rim. 4:5 cards,
- *  spring settle, drag / flick / arrow keys / buttons. Self-rotation
- *  is one spring step per 6.5s (not a continuous drift). Reels with a
- *  preview clip play live on the canvas; tap a card (not a drag) to
- *  open that reel on Instagram. The slides array is memoized — a fresh
- *  array identity remounts the whole WebGL stage. */
-function HeroWall({ focus }: { focus: string | null }) {
+/** The single shared scene: one lens, mounted once, positioned over the
+ *  hero frame. During loading it sits above the paper in formation (small
+ *  and tilted, like the reference's formation wall); at 100% it expands
+ *  into the hero arc as the paper fades — the same canvas, same drift, no
+ *  remount, no duplicate cards. The layer tracks the frame's box
+ *  (offsetTop/Left/Width/Height are relative to .stage, the positioned
+ *  ancestor), so it follows resizes and scrolls with the page. */
+function HeroScene({ focus, frameRef }: { focus: string | null; frameRef: React.RefObject<HTMLDivElement | null> }) {
+  const [rect, setRect] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+    const update = () => {
+      setRect({ top: frame.offsetTop, left: frame.offsetLeft, width: frame.offsetWidth, height: frame.offsetHeight });
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(frame);
+    return () => ro.disconnect();
+  }, [frameRef]);
   const slides = useMemo(
     () =>
       REELS.map((r) => ({
@@ -49,8 +60,12 @@ function HeroWall({ focus }: { focus: string | null }) {
   const onSlideClick = useCallback((i: number) => {
     window.open(REELS[i].url, "_blank", "noopener,noreferrer");
   }, []);
+  if (!rect) return null;
   return (
-    <div className="wall-wrap">
+    <div
+      className="hero-scene"
+      style={{ top: rect.top, left: rect.left, width: rect.width, height: rect.height }}
+    >
       <CurvedLensCarousel
         slides={slides}
         label="Reels — @cod.ehx"
@@ -205,6 +220,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
   const [hovered, setHovered] = useState<string | null>(null);
   const [navWorld, setNavWorld] = useState<string | null>(null);
   const sentenceRef = useRef<HTMLParagraphElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
   // Sentence hover focuses one world (live site's data-focus): the wall
   // dims only the other worlds' cards; "talk to my AI" focuses nothing.
   // Hovering a header world link focuses that world too.
@@ -342,13 +358,13 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
       <main>
         {/* hero — one viewport: sky wall + sentence strip, like the live site */}
         <section className="stage" data-stage data-focus={focusWorld ?? undefined} aria-label="Intro">
-          <div className="world-frame">
+          <div className="world-frame" ref={frameRef}>
             <div className="sky-layer">
-              <img src="/sky.jpg" alt="" aria-hidden="true" />
+              <img src="/sky.jpg" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
             </div>
-            <HeroWall focus={focusWorld} />
             <div className="cloud-layer" aria-hidden="true" />
           </div>
+          <HeroScene focus={focusWorld} frameRef={frameRef} />
           <div className={`below${entered ? " is-entered" : ""}`} aria-label="What Rishabh does, in one sentence">
           <p className="sentence" ref={sentenceRef} data-hovering={hovered ? "" : undefined}>
             {sentence}
