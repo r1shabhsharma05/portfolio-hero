@@ -54,9 +54,9 @@ or project details that are not in this file.
 - Full-stack developer: React, Next.js, React Native, TypeScript, JavaScript, Node.js,
   Express.js, FastAPI, Python, Tailwind CSS, Supabase, PostgreSQL, Prisma, Vite, Expo, GSAP,
   GitHub Actions, Vercel, Render.
-- Open source: 14 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and
+- Open source: 23 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and
   other projects.
-- LeetCode: 212 problems solved (88 Easy, 99 Medium, 25 Hard).
+- LeetCode: 213 problems solved (89 Easy, 99 Medium, 25 Hard).
 - Video Editing: makes tech Reels as @cod.ehx; runs a faceless history YouTube channel @UntoldHx.
 - No internship and no full-time employment yet — do not claim otherwise.
 
@@ -72,9 +72,9 @@ or project details that are not in this file.
 
 ## Stats
 
-- LeetCode: 212 solved
-- GitHub: 1,153 contributions in 2026
-- Open source: 14 pull requests merged, 8 open
+- LeetCode: 213 solved
+- GitHub: 1,387 contributions in 2026
+- Open source: 23 pull requests merged, 8 open
 - Instagram: tech Reels as @cod.ehx (view counts on the homepage reels grid are live per-reel totals)
 
 ## Contact
