@@ -106,7 +106,7 @@ export const PROFILE = {
     content: ["Video Editing", "Tech Reels", "Scriptwriting"],
   },
   highlights: [
-    "14 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects",
+    "20 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects",
     "212 LeetCode problems solved (88 Easy, 99 Medium, 25 Hard)",
     "Shipped 7 products: RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI",
     "Tech creator — Reels about AI tools and coding as @cod.ehx",
