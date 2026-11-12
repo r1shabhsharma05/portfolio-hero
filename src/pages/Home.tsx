@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { LEARN_POSTS, PROFILE, PROJECTS, REELS, STATS, WORLDS } from "../data/site";
 import ReelCard from "../components/ReelCard";
-import ReelRing from "../components/ReelRing";
+import CurvedLensCarousel from "../components/CurvedLensCarousel";
 
 /** Counts a stat up from 0 once `start` flips true — the live stats roll
  *  up for ~2s after the loader lifts. */
@@ -23,175 +23,32 @@ function CountUp({ value, start }: { value: string; start: boolean }) {
   return <>{n.toLocaleString("en-US")}</>;
 }
 
-/** The hero wall — the live site's reel ring. It never stops: slow
- *  auto-rotation (~1 slot per 5s), drag it to spin with momentum, scroll
- *  the wheel over it to spin it further (the wheel never scrolls the page
- *  while over the wall). A drag never follows its card link. */
+/** The hero wall — the CurvedLens card animation: one WebGL canvas, centre
+ *  card flat, outer cards taller and bent with a chromatic fringe at the
+ *  rim. Drag / flick / arrow keys / buttons, spring settle, idle
+ *  auto-rotation (~1 slot / 5s), wheel spins it. Tap a card (not a drag)
+ *  to open that reel on Instagram. Hover-play video lives in the reels
+ *  grid below — the lens renders photos only. */
 function HeroWall() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const lensRef = useRef<HTMLDivElement>(null);
-  const [rotation, setRotation] = useState(0);
-  const [pill, setPill] = useState<{ x: number; y: number } | null>(null);
-  const rotRef = useRef(0);
-  const velRef = useRef(0);
-  const dragRef = useRef<{ x: number; rot: number; moved: boolean } | null>(null);
-  const lastMoveRef = useRef({ x: 0, t: 0 });
-  const lastInteractRef = useRef(0);
-  const lastPointerRef = useRef({ x: -1, y: -1 });
-  const hoveredRef = useRef<Element | null>(null);
-  const suppressClickRef = useRef(false);
-  const reducedRef = useRef(false);
-
-  useEffect(() => {
-    reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }, []);
-
-  // Hover-play must follow the ring, not just the mouse: the ring keeps
-  // moving under a stationary pointer (live site does the same check per
-  // frame via elementFromPoint), so re-resolve the hovered card each frame.
-  const syncHover = () => {
-    const { x, y } = lastPointerRef.current;
-    if (x < 0 || dragRef.current) return;
-    const card = document.elementFromPoint(x, y)?.closest?.("[data-card]") as HTMLElement | null;
-    const prev = hoveredRef.current as HTMLElement | null;
-    if (card === prev) return;
-    if (prev) {
-      const v = prev.querySelector("video");
-      if (v) {
-        v.pause();
-        v.currentTime = 0;
-      }
-      prev.classList.remove("is-playing");
-    }
-    hoveredRef.current = card;
-    if (card) {
-      const v = card.querySelector("video");
-      if (v) {
-        if (!v.src) v.src = v.dataset.previewSrc ?? "";
-        v.play().catch(() => {});
-      }
-      card.classList.add("is-playing");
-    }
-    setPill((p) => {
-      const next = card ? { x, y } : null;
-      if (!p && !next) return p;
-      if (p && next && p.x === next.x && p.y === next.y) return p;
-      return next;
-    });
-  };
-
-  // Animation loop: idle auto-rotation + momentum glide.
-  useEffect(() => {
-    let raf = 0;
-    let last = performance.now();
-    const tick = (now: number) => {
-      const dt = Math.min(0.05, (now - last) / 1000);
-      last = now;
-      if (!dragRef.current && !reducedRef.current) {
-        const idle = now - lastInteractRef.current > 2000;
-        rotRef.current += (idle ? 2.4 : 0) * dt + velRef.current * dt;
-        velRef.current *= Math.pow(0.06, dt);
-        if (Math.abs(velRef.current) < 0.05) velRef.current = 0;
-        setRotation(rotRef.current);
-      }
-      syncHover();
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Wheel over the wall spins the ring instead of scrolling the page.
-  useEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const d = Math.max(-480, Math.min(480, Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX));
-      rotRef.current += d * 0.18;
-      if (!reducedRef.current) velRef.current = d * 0.18 * 2;
-      lastInteractRef.current = performance.now();
-      setRotation(rotRef.current);
-    };
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, []);
-
-  const onPointerDown = (e: React.PointerEvent) => {
-    if (e.button !== 0) return;
-    dragRef.current = { x: e.clientX, rot: rotRef.current, moved: false };
-    lastMoveRef.current = { x: e.clientX, t: performance.now() };
-    velRef.current = 0;
-    lastInteractRef.current = performance.now();
-    wrapRef.current?.setPointerCapture(e.pointerId);
-  };
-  const onPointerMove = (e: React.PointerEvent) => {
-    lastPointerRef.current = { x: e.clientX, y: e.clientY };
-    // Lens tilt: the wall leans toward the pointer, like the live wall.
-    const lens = lensRef.current;
-    if (lens) {
-      const r = lens.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      lens.style.transform = `rotateY(${px * 8}deg) rotateX(${py * -5}deg)`;
-    }
-    // "PLAY" pill follows the pointer over a card (the live custom cursor).
-    const card = (e.target as Element).closest?.("[data-card]");
-    setPill(card ? { x: e.clientX, y: e.clientY } : null);
-    const drag = dragRef.current;
-    if (!drag) return;
-    const now = performance.now();
-    const dx = e.clientX - drag.x;
-    if (Math.abs(dx) > 4) drag.moved = true;
-    const dt = Math.max(1, now - lastMoveRef.current.t) / 1000;
-    velRef.current = ((e.clientX - lastMoveRef.current.x) / dt) * 0.12;
-    lastMoveRef.current = { x: e.clientX, t: now };
-    rotRef.current = drag.rot + dx * 0.12;
-    lastInteractRef.current = now;
-    setRotation(rotRef.current);
-  };
-  const endDrag = () => {
-    const drag = dragRef.current;
-    if (!drag) return;
-    if (drag.moved) {
-      suppressClickRef.current = true;
-      window.setTimeout(() => (suppressClickRef.current = false), 120);
-    }
-    if (!reducedRef.current) velRef.current = Math.max(-300, Math.min(300, velRef.current));
-    else velRef.current = 0;
-    dragRef.current = null;
-    lastInteractRef.current = performance.now();
-  };
-  const onWallLeave = () => {
-    if (lensRef.current) lensRef.current.style.transform = "";
-    setPill(null);
-  };
-
+  const slides = REELS.map((r) => ({
+    title: r.title,
+    kicker: r.views ? `${r.views} views` : "New",
+    caption: "Tap to watch on Instagram ↗",
+    image: r.thumb,
+    alt: r.title,
+  }));
   return (
-    <div
-      className="wall-wrap"
-      ref={wrapRef}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={endDrag}
-      onPointerCancel={endDrag}
-      onPointerLeave={onWallLeave}
-      onClickCapture={(e) => {
-        if (suppressClickRef.current) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }}
-    >
-      <div className="wall-lens" ref={lensRef}>
-        <ReelRing rotation={rotation} />
-      </div>
-      {pill && (
-        <span className="cursor-pill" style={{ left: pill.x, top: pill.y }}>
-          Play
-        </span>
-      )}
+    <div className="wall-wrap">
+      <CurvedLensCarousel
+        slides={slides}
+        label="Reels — @cod.ehx"
+        background="transparent"
+        ink="#111111"
+        height="100%"
+        showCopy={false}
+        autoAdvanceMs={5000}
+        onSlideClick={(i) => window.open(REELS[i].url, "_blank", "noopener,noreferrer")}
+      />
     </div>
   );
 }
