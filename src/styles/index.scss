@@ -116,14 +116,33 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .cloud-layer { position: absolute; z-index: 3; height: 82%; bottom: -4%; left: -6%; right: -6%; pointer-events: none; }
 .cloud-layer img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; opacity: 0.92; }
-/* reel wall inside the hero frame */
-.wall-wrap {
-  position: absolute; z-index: 2; inset: 0;
-  padding: 0; perspective: 1400px;
-  user-select: none; -webkit-user-select: none; touch-action: pan-y;
+/* The single shared scene: one lens, mounted once, positioned over the
+ * hero frame. During loading it sits above the paper in formation — the
+ * reference's small tilted wall — and expands into the hero arc as the
+ * paper fades. The transform lists the same functions in the same order
+ * in both states so the morph interpolates; the transition lives only
+ * under "leaving", so a skip jumps straight to the hero with no morph.
+ * z-index 101 beats the paper (100) while loading; at done it drops to 2
+ * so the sentence preview (40) and chat overlay (100) paint above it.
+ * Pointer events stay off until the hero is live. */
+.hero-scene {
+  position: absolute; z-index: 101; pointer-events: none;
+  border-radius: 28px; overflow: hidden;
+  transform: translate(0px, 0px) rotateZ(-20deg) rotateX(-22deg) scale(0.6);
+  transform-origin: 50% 50%;
+}
+body[data-phase="leaving"] .hero-scene {
+  transform: translate(0px, 0px) rotateZ(0deg) rotateX(0deg) scale(1);
+  transition: transform 1.9s cubic-bezier(0.5, 0, 0.15, 1);
+}
+body[data-phase="done"] .hero-scene {
+  transform: translate(0px, 0px) rotateZ(0deg) rotateX(0deg) scale(1);
+  z-index: 2; pointer-events: auto;
 }
 /* The live wall has no counter, arrows, progress bar or top bar. */
-.wall-wrap .clc-top, .wall-wrap .clc-ctl { display: none; }
+.hero-scene .clc-top, .hero-scene .clc-ctl { display: none; }
+@media (max-width: 600px) { .hero-scene { border-radius: 20px; } }
+/* reel wall inside the hero frame */
 /* Sentence hover dims only the wall cards of the other worlds (in-shader
  *  paper overlay, like the live site's [data-focus] rule) — the sky and the
  *  matching cards stay fully sharp. No whole-frame dim, no blur. */
@@ -185,13 +204,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   from { transform: translateY(105%) rotate(8deg); }
   to { transform: translateY(0) rotate(0); }
 }
-.loader-ring {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
-  pointer-events: none;
-}
-/* The hero wall itself, drifting on the paper while loading — no
- * counter, arrows or top bar, and no pointer interaction. */
-.loader-ring .clc-top, .loader-ring .clc-ctl { display: none; }
 .loader-status {
   position: absolute; bottom: 4vh; right: 5vw;
   display: flex; flex-direction: column; align-items: flex-end;
@@ -200,6 +212,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--color-ink-soft); white-space: pre;
   margin: 0 0 4px; border-bottom: 1px solid var(--color-ink-soft); padding-bottom: 6px;
+}
+.loader-reels {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums; color: var(--color-ink-soft); margin: 0 0 4px;
 }
 .loader-count {
   font-family: var(--font-mono); letter-spacing: -0.09em;
@@ -457,7 +473,6 @@ body[data-phase="leaving"] .site-header .mode-switch {
 @media (max-width: 900px) {
   .reel-card { width: 168px; }
   .loader-brand { top: 2vh; }
-  .loader-ring { height: 55%; }
   .loader-status { top: 2vh; bottom: auto; flex-direction: column-reverse; }
   .loader-count { font-size: 72px; }
   .loader-skip { bottom: 8vh; }
