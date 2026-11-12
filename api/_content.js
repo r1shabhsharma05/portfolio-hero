@@ -34,7 +34,7 @@ contributes to open source, and makes tech Reels as @cod.ehx.
 I build production web and mobile products end to end — React and Next.js on
 the front, Node.js and FastAPI on the back, with Supabase and PostgreSQL for
 data. I have shipped seven products, from an AI railway block planner to an
-emergency SOS app, and I contribute to open source: 14 pull requests merged
+emergency SOS app, and I contribute to open source: 22 pull requests merged
 and 8 open across Jenkins, WordPress/Gutenberg and other projects.
 
 Alongside engineering, I create. I make tech Reels about AI tools and coding
@@ -42,7 +42,7 @@ as @cod.ehx, and I have solved 212 LeetCode problems.
 
 ## Highlights
 
-- **14 pull requests merged, 8 open** — Jenkins, WordPress/Gutenberg and more
+- **22 pull requests merged, 8 open** — Jenkins, WordPress/Gutenberg and more
 - **212 LeetCode problems solved** (88 Easy, 99 Medium, 25 Hard)
 - **7 products shipped** — RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI
 - **SafeLife** — emergency SOS app with live location tracking and guardian alerts
@@ -76,7 +76,7 @@ tech Reels as @cod.ehx.
 - B.Tech Computer Science, GLA University, Mathura — 2025 to 2028.
 - Full-stack developer: React, Next.js, React Native, TypeScript, Node.js,
   Express, FastAPI, Python, Supabase, PostgreSQL, Prisma, Tailwind CSS.
-- Open source: 14 pull requests merged and 8 open across Jenkins,
+- Open source: 22 pull requests merged and 8 open across Jenkins,
   WordPress/Gutenberg and other projects.
 - LeetCode: 212 problems solved (88 Easy, 99 Medium, 25 Hard).
 - Creator: tech Reels as @cod.ehx; faceless history YouTube channel @UntoldHx.
