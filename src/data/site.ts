@@ -41,6 +41,8 @@ export const REELS: Reel[] = [
   { id: "DfFAweQH_TG", title: "One prompt. Every LLM. Side by side.", views: "83", viewsRaw: 83, tag: "LEARN", url: "https://www.instagram.com/reel/DfFAweQH_TG/", thumb: "/reels/llm-comparison.webp", preview: "/reels/llm-comparison-preview.mp4" },
   { id: "github-prompt", title: "Upgrade your GitHub using this single prompt", views: null, viewsRaw: null, tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/github-prompt.webp", preview: "/reels/github-prompt-preview.mp4" },
   { id: "one-prompt", title: "One Prompt", views: null, viewsRaw: null, tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/one-prompt.webp", preview: "/reels/one-prompt-preview.mp4" },
+  { id: "macbook-7day", title: "7 day Macbook", views: "7", viewsRaw: 7, tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/macbook-7day.webp", preview: "/reels/macbook-7day-preview.mp4" },
+  { id: "alfaaz-single-prompt", title: "Alfaaz — Single prompt", views: null, viewsRaw: null, tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/alfaaz-prompt.webp", preview: "/reels/alfaaz-prompt-preview.mp4" },
 ];
 
 export const STATS = [
