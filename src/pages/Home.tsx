@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { LEARN_POSTS, PROFILE, PROJECTS, REELS, STATS, WORLDS } from "../data/site";
 import ReelCard from "../components/ReelCard";
 import CurvedLensCarousel from "../components/CurvedLensCarousel";
@@ -25,18 +25,27 @@ function CountUp({ value, start }: { value: string; start: boolean }) {
 
 /** The hero wall — the CurvedLens card animation: one WebGL canvas, centre
  *  card flat, outer cards taller and bent with a chromatic fringe at the
- *  rim. Drag / flick / arrow keys / buttons, spring settle, idle
- *  auto-rotation (~1 slot / 5s), wheel spins it. Tap a card (not a drag)
- *  to open that reel on Instagram. Hover-play video lives in the reels
- *  grid below — the lens renders photos only. */
+ *  rim. Drag / flick / arrow keys / buttons, spring settle, continuous
+ *  drift at the live wall's pace (~1 slot / 6.5s), wheel spins it. Tap a
+ *  card (not a drag) to open that reel on Instagram; hovering a card
+ *  shows the live site's PLAY pill + title strip. The slides array is
+ *  memoized — a fresh array identity remounts the whole WebGL stage. */
 function HeroWall() {
-  const slides = REELS.map((r) => ({
-    title: r.title,
-    kicker: r.views ? `${r.views} views` : "New",
-    caption: "Tap to watch on Instagram ↗",
-    image: r.thumb,
-    alt: r.title,
-  }));
+  const slides = useMemo(
+    () =>
+      REELS.map((r) => ({
+        title: r.title,
+        kicker: r.views ? `${r.views} views` : "New",
+        caption: "Tap to watch on Instagram ↗",
+        image: r.thumb,
+        alt: r.title,
+        tag: r.tag,
+      })),
+    []
+  );
+  const onSlideClick = useCallback((i: number) => {
+    window.open(REELS[i].url, "_blank", "noopener,noreferrer");
+  }, []);
   return (
     <div className="wall-wrap">
       <CurvedLensCarousel
@@ -46,8 +55,8 @@ function HeroWall() {
         ink="#111111"
         height="100%"
         showCopy={false}
-        autoAdvanceMs={5000}
-        onSlideClick={(i) => window.open(REELS[i].url, "_blank", "noopener,noreferrer")}
+        autoAdvanceMs={6500}
+        onSlideClick={onSlideClick}
       />
     </div>
   );
@@ -71,6 +80,19 @@ const SENTENCE_CHOICES: Choice[] = [
 
 export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; entered: boolean }) {
   const [hovered, setHovered] = useState<string | null>(null);
+  const [navHover, setNavHover] = useState(false);
+  // The live hero dims while a nav link or a sentence word is hovered.
+  const dimHero = hovered !== null || navHover;
+  const mergedPRs = STATS.find((s) => s.label.includes("Pull requests"))?.value ?? "";
+  // Preview card that rises from below the wall while a sentence word is
+  // hovered — the live site's behaviour. No card for "talk to my AI".
+  const PREVIEWS: Record<string, { world: string; image: string; caption: string } | null> = {
+    "01": { world: "BUILD", image: "/projects/secureguard.jpg", caption: "SecureGaurd · SafeLife · RailSync — 7 products, shipped." },
+    "02": { world: "OPEN SOURCE", image: "/reels/github-prompt.webp", caption: `${mergedPRs} PRs merged · Jenkins · WordPress/Gutenberg` },
+    "03": { world: "LEARN", image: "/reels/gemini.webp", caption: "Free roadmaps, prompts and build write-ups." },
+    "04": null,
+  };
+  const preview = hovered ? PREVIEWS[hovered] ?? null : null;
 
   // Sentence tokens, in order. Plain words roll up one by one after the
   // loader lifts; hovering a linked word fills it with its world colour
@@ -158,15 +180,15 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
           <nav className="world-nav" aria-label="Worlds">
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#2F55FF", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/projects">Build</a>
+              <a className="world-link" style={{ "--world": "#2F55FF", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/projects" onMouseEnter={() => setNavHover(true)} onMouseLeave={() => setNavHover(false)}>Build</a>
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#EF3B2D", "--world-on": "#FFFFFF" } as React.CSSProperties} href="https://github.com/r1shabhsharma05">Open Source</a>
+              <a className="world-link" style={{ "--world": "#EF3B2D", "--world-on": "#FFFFFF" } as React.CSSProperties} href="https://github.com/r1shabhsharma05" onMouseEnter={() => setNavHover(true)} onMouseLeave={() => setNavHover(false)}>Open Source</a>
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#FFC81A", "--world-on": "#111111" } as React.CSSProperties} href="/blog/">Learn</a>
+              <a className="world-link" style={{ "--world": "#FFC81A", "--world-on": "#111111" } as React.CSSProperties} href="/blog/" onMouseEnter={() => setNavHover(true)} onMouseLeave={() => setNavHover(false)}>Learn</a>
             </span>
           </nav>
         </div>
@@ -187,12 +209,22 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
 
       <main>
         {/* hero — one viewport: sky wall + sentence strip, like the live site */}
-        <section className="stage" data-stage aria-label="Intro">
+        <section className={`stage${dimHero ? " dim" : ""}${preview ? " show-preview" : ""}`} data-stage aria-label="Intro">
           <div className="world-frame">
             <div className="sky-layer">
               <img src="/sky.jpg" alt="" aria-hidden="true" />
             </div>
             <HeroWall />
+            <div className="world-preview" aria-hidden="true">
+              {preview ? (
+                <>
+                  <img src={preview.image} alt="" />
+                  <p>
+                    <b>■ {preview.world}</b> / {preview.caption}
+                  </p>
+                </>
+              ) : null}
+            </div>
             <div className="cloud-layer" aria-hidden="true" />
           </div>
           <div className={`below${entered ? " is-entered" : ""}`} aria-label="What Rishabh does, in one sentence">
@@ -235,7 +267,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
             Rishabh Sharma is a 19-year-old full-stack developer studying Computer Science at GLA
             University, Mathura. He ships real products — a safety app with live SOS, a campus
             marketplace, an escrow-backed farmer platform — and contributes to open source:{" "}
-            <strong>14 pull requests merged</strong> across Jenkins, WordPress/Gutenberg and
+            <strong>20 pull requests merged</strong> across Jenkins, WordPress/Gutenberg and
             more. He also makes tech Reels as <strong>@cod.ehx</strong> and runs a faceless
             history channel on YouTube. No internship yet — everything here is built, not claimed.
           </p>
