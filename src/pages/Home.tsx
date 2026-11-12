@@ -23,13 +23,14 @@ function CountUp({ value, start }: { value: string; start: boolean }) {
   return <>{n.toLocaleString("en-US")}</>;
 }
 
-/** The hero wall — the CurvedLens card animation: one WebGL canvas, centre
- *  card flat, outer cards taller and bent with a chromatic fringe at the
- *  rim. Drag / flick / arrow keys / buttons, spring settle, continuous
- *  drift at the live wall's pace (~1 slot / 6.5s), wheel spins it. Tap a
- *  card (not a drag) to open that reel on Instagram; hovering a card
- *  shows the live site's PLAY pill + title strip. The slides array is
- *  memoized — a fresh array identity remounts the whole WebGL stage. */
+/** The hero wall — the CurvedLens card animation, restored from the
+ *  pasted prompt: one WebGL canvas, centre card flat, outer cards
+ *  taller and bent with a chromatic fringe at the rim. 4:5 cards,
+ *  spring settle, drag / flick / arrow keys / buttons. Self-rotation
+ *  is one spring step per 6.5s (not a continuous drift). Reels with a
+ *  preview clip play live on the canvas; tap a card (not a drag) to
+ *  open that reel on Instagram. The slides array is memoized — a fresh
+ *  array identity remounts the whole WebGL stage. */
 function HeroWall() {
   const slides = useMemo(
     () =>
@@ -39,7 +40,7 @@ function HeroWall() {
         caption: "Tap to watch on Instagram ↗",
         image: r.thumb,
         alt: r.title,
-        tag: r.tag,
+        video: r.preview ?? undefined,
       })),
     []
   );
