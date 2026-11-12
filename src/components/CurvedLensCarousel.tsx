@@ -1,13 +1,10 @@
+// Restored from Rishabh's pasted 3d-curved-carousel prompt, verbatim except:
+// - "use client" dropped (Vite, no RSC); demo.tsx NOT included (Unsplash slides).
+// - Tap opens the reel (onSlideClick), big title hideable (showCopy).
+// - Self-rotation (autoAdvanceMs): one original spring step per interval.
+// - Live video (video prop): the card texture is fed from the clip each frame.
 
 import * as React from "react"
-
-// HERO-ADAPT (portfolio-live): pasted 3d-curved-carousel verbatim except:
-// - "use client" dropped (Vite, no RSC); demo.tsx NOT included (Unsplash landscapes).
-// - Added onSlideClick (tap opens the reel), autoAdvanceMs (continuous drift),
-//   wheel-to-spin; mobile: top bar hidden <=640px, counter nowrap.
-// - HERO-ADAPT 2: 9:16 cards, perspective width growth, PLAY pill + hover
-//   strip + view chips, drift at the live wall's pace (~1 slot / 6.5s).
-//   background/ink/height/label come from the hero via props.
 
 // A photo carousel seen through a curved lens. The cards sit on one WebGL canvas:
 // the middle one reads flat, and the further a card travels from the centre, the
@@ -20,11 +17,11 @@ export type LensSlide = {
   kicker?: string
   /** One short line under the title. */
   caption?: string
-  /** Photo URL. Portrait 9:16 reads best. Remote URLs need CORS. */
+  /** Photo URL. Portrait (about 4:5) reads best. Remote URLs need CORS. */
   image: string
   alt?: string
-  /** World/category tag (LEARN / NEW) — drives the hover strip colour. */
-  tag?: string
+  /** Live clip for this card; when set the texture is fed from the video. */
+  video?: string
 }
 
 export type CurvedLensCarouselProps = {
@@ -43,9 +40,9 @@ export type CurvedLensCarouselProps = {
   onChange?: (index: number) => void
   /** Tap (not drag) on the stage opens the current slide. Hero adaptation. */
   onSlideClick?: (index: number) => void
-  /** Drift pace: one slot per N ms, continuous; 0/undefined = off. Hero adaptation. */
+  /** Self-rotation: one spring step per N ms; 0/undefined = off. Hero addition. */
   autoAdvanceMs?: number
-  /** Show the big title block; false hides it (hero keeps titles on the cards). Hero adaptation. */
+  /** Show the big title block; false hides it (hero keeps titles on the cards). */
   showCopy?: boolean
 }
 
@@ -75,11 +72,10 @@ export function springStep(pos: number, vel: number, target: number, dt: number,
   return [pos + v * dt, v]
 }
 
-/** Card size in px for a stage of w × h: 9:16 portrait reels, centre card
- *  small like the live wall's (the ends grow wide + tall with distance). */
+/** Card size in px for a stage of w × h: portrait cards, smaller share of a wide stage. */
 export function cardSize(w: number, h: number): [number, number] {
-  const cw = Math.min(w < 640 ? w * 0.56 : w * 0.24, h * 0.15)
-  return [Math.round(cw), Math.round((cw * 16) / 9)]
+  const cw = Math.min(w < 640 ? w * 0.56 : w * 0.22, h * 0.34)
+  return [Math.round(cw), Math.round(cw * 1.25)]
 }
 
 /** "01" style counter. */
@@ -146,7 +142,7 @@ const CSS =
   ".clc-cap{display:block;margin-top:14px;font-size:14px;line-height:1.5;opacity:0;transform:translateY(10px);transition:opacity .7s ease .25s,transform .7s cubic-bezier(.2,.9,.1,1) .25s;max-width:34ch}" +
   ".clc-in .clc-cap{opacity:.66;transform:none}" +
   ".clc-ctl{position:absolute;right:clamp(20px,4vw,48px);bottom:clamp(22px,4vw,44px);display:flex;flex-direction:column;align-items:flex-end;gap:16px;color:var(--clc-ink)}" +
-  ".clc-count{font-size:12px;letter-spacing:.18em;font-variant-numeric:tabular-nums;opacity:.8;white-space:nowrap}" +
+  ".clc-count{font-size:12px;letter-spacing:.18em;font-variant-numeric:tabular-nums;opacity:.8}" +
   ".clc-count i{font-style:normal;opacity:.45}" +
   ".clc-bar{width:132px;height:2px;border-radius:2px;background:color-mix(in srgb,var(--clc-ink) 16%,transparent);overflow:hidden}" +
   ".clc-bar>span{display:block;height:100%;width:100%;background:var(--clc-ink);transform-origin:0 50%;transition:transform .7s cubic-bezier(.2,.9,.1,1)}" +
@@ -161,13 +157,7 @@ const CSS =
   ".clc-btn svg{width:18px;height:18px}" +
   ".clc-fallback{position:absolute;left:50%;top:50%;width:min(62vw,360px);aspect-ratio:4/5;transform:translate(-50%,-50%);object-fit:cover;border-radius:14px;max-width:none}" +
   ".clc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}" +
-  "@media (max-width:640px){.clc-top{display:none}.clc-copy{max-width:calc(100% - 40px);bottom:96px}.clc-ctl{flex-direction:row;align-items:center;left:20px;justify-content:space-between}.clc-bar{width:96px}}" +
-  ".clc-root.is-hovering .clc-canvas{cursor:default}" +
-  ".clc-chip{position:absolute;left:0;top:0;z-index:3;pointer-events:none;display:flex;align-items:center;gap:5px;color:#fff;font-size:12px;font-weight:600;letter-spacing:.02em;text-shadow:0 1px 4px rgba(0,0,0,.55);white-space:nowrap}" +
-  ".clc-dot{width:7px;height:7px;border-radius:50%;background:#ffd84d;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.25)}" +
-  ".clc-hover-card{position:absolute;left:0;top:0;z-index:4;pointer-events:none;border:2px solid #ff4d2e;border-radius:16px;overflow:hidden;opacity:0;transition:opacity .18s ease}" +
-  ".clc-strip{position:absolute;left:0;right:0;bottom:4px;padding:7px 10px;font-size:11px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}" +
-  ".clc-play{position:absolute;left:0;top:0;z-index:5;pointer-events:none;background:rgba(17,17,17,.92);color:#fff;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:6px 10px;border-radius:12px;white-space:nowrap;opacity:0;transition:opacity .15s ease}" +
+  "@media (max-width:640px){.clc-copy{max-width:calc(100% - 40px);bottom:96px}.clc-ctl{flex-direction:row;align-items:center;left:20px;justify-content:space-between}.clc-bar{width:96px}}" +
   "@media (prefers-reduced-motion:reduce){.clc-ch,.clc-cap,.clc-bar>span,.clc-btn{transition:opacity .2s ease}.clc-ch{transform:none}.clc-cap{transform:none}}"
 
 type GLState = {
@@ -176,7 +166,7 @@ type GLState = {
   buf: WebGLBuffer
   count: number
   u: Record<string, WebGLUniformLocation | null>
-  tex: { t: WebGLTexture; aspect: number; ready: boolean }[]
+  tex: { t: WebGLTexture; aspect: number; ready: boolean; video?: HTMLVideoElement }[]
 }
 
 function shader(gl: WebGLRenderingContext, type: number, src: string) {
@@ -262,13 +252,6 @@ export default function CurvedLensCarousel({
   const onSlideClickRef = React.useRef(onSlideClick)
   onSlideClickRef.current = onSlideClick
 
-  // HERO-ADAPT 2: live-wall hover — PLAY pill + outline + title strip.
-  const [hovered, setHovered] = React.useState(-1)
-  const hoverRef = React.useRef({ index: -1, x: 0, y: 0, inside: false })
-  const chipRefs = React.useRef<(HTMLDivElement | null)[]>([])
-  const hoverCardRef = React.useRef<HTMLDivElement | null>(null)
-  const playPillRef = React.useRef<HTMLDivElement | null>(null)
-
   React.useEffect(() => {
     const canvas = canvasRef.current
     const root = rootRef.current
@@ -311,7 +294,24 @@ export default function CurvedLensCarousel({
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([28, 28, 30, 255]))
       for (const [p, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]])
         gl.texParameteri(gl.TEXTURE_2D, p, v)
-      const entry = { t, aspect: 0.8, ready: false }
+      const entry: { t: WebGLTexture; aspect: number; ready: boolean; video?: HTMLVideoElement } = { t, aspect: 0.8, ready: false }
+      if (s.video) {
+        const video = document.createElement("video")
+        video.muted = true
+        video.loop = true
+        video.playsInline = true
+        video.preload = "auto"
+        video.onloadeddata = () => {
+          if (disposed) return
+          entry.aspect = video.videoWidth / video.videoHeight
+          entry.ready = true
+          void video.play().catch(() => {})
+          kick()
+        }
+        video.src = s.video
+        entry.video = video
+        return entry
+      }
       const img = new Image()
       if (!s.image.startsWith("data:")) img.crossOrigin = "anonymous"
       img.decoding = "async"
@@ -328,12 +328,11 @@ export default function CurvedLensCarousel({
     })
 
     // Stage size, measured on resize only; the frame loop reads these numbers.
-    let W = 1, H = 1, dpr = 1, cw = 1, ch = 1, gap = 1, step = 1
+    let W = 1, H = 1, dpr = 1, cw = 1, ch = 1, gap = 1
     let pos = 0, vel = 0, target = 0
-    const hoverScale: number[] = Array.from({ length: n }, () => 1)
     let intro = reduced.matches ? 1 : 0
     let introStart = -1
-    let dragging = false, dragX = 0, dragPos = 0, lastX = 0, lastT = 0, flick = 0, downX = 0, downY = 0, moved = 0, lastInteract = 0
+    let dragging = false, dragX = 0, dragPos = 0, lastX = 0, lastT = 0, flick = 0, downX = 0, downY = 0, moved = 0
     let raf = 0, last = 0, visible = true, current = 0
 
     const resize = (w: number, h: number) => {
@@ -344,58 +343,35 @@ export default function CurvedLensCarousel({
       canvas.height = Math.round(H * dpr)
       ;[cw, ch] = cardSize(W, H)
       gap = cw * 0.14
-      step = cw + gap
       gl.viewport(0, 0, canvas.width, canvas.height)
       kick()
-    }
-
-    // HERO-ADAPT 2: the live wall's perspective — outer cards grow wider
-    // with distance from the centre (taller comes from the bend shader).
-    const widthAt = (d: number) => cw * (1 + 0.5 * Math.min(Math.abs(d), 4))
-    const lift = () => (W < 640 ? 0.12 : 0.06)
-    /** Screen rect of card i at the current pos, in stage px. Mirrors the
-     *  vertex shader's bend so DOM overlays (chips, PLAY pill) sit on the card. */
-    const cardRect = (i: number) => {
-      const d = offsetOf(i, pos, n)
-      const w = widthAt(d) * (hoverScale[i] ?? 1)
-      const h = ch * (hoverScale[i] ?? 1)
-      const x = d * step
-      const xc = Math.max(-1.4, Math.min(1.4, x / (W * 0.5)))
-      const bendY = 1 + bend * xc * xc
-      const bendX = 1 - 0.06 * bend * xc * xc
-      return {
-        d,
-        x,
-        left: W / 2 + x - (w * bendX) / 2,
-        top: H / 2 - (h * bendY) / 2 - lift() * (H / 2),
-        width: w * bendX,
-        height: h * bendY,
-      }
     }
 
     const draw = () => {
       gl.clearColor(0, 0, 0, 0)
       gl.clear(gl.COLOR_BUFFER_BIT)
       gl.uniform2f(u.uRes, W, H)
+      gl.uniform2f(u.uSize, cw, ch)
       gl.uniform1f(u.uBend, bend)
       gl.uniform1f(u.uVel, reduced.matches ? 0 : Math.max(-1, Math.min(1, vel * 0.12)))
-      gl.uniform1f(u.uLift, lift())
-      const seen: { i: number; d: number }[] = []
+      gl.uniform1f(u.uLift, W < 640 ? 0.3 : 0.15)
+      const step = cw + gap
       for (let i = 0; i < n; i++) {
         const d = offsetOf(i, pos, n)
-        if (Math.abs(d * step) > W * 0.5 + widthAt(d) / 2 + step) continue
-        seen.push({ i, d })
-      }
-      // Far cards first so near cards paint over them, like the live wall.
-      seen.sort((a, b) => Math.abs(b.d) - Math.abs(a.d))
-      for (const { i, d } of seen) {
-        const hs = hoverScale[i] ?? 1
-        gl.uniform2f(u.uSize, widthAt(d) * hs, ch * hs)
+        const x = d * step
+        if (Math.abs(x) > W * 0.5 + step * 1.5) continue
         const order = Math.abs(d)
         const t = Math.max(0, Math.min(1, (intro - order * 0.12) / 0.6))
         const e = 1 - Math.pow(1 - t, 3)
+        const te = tex[i]
+        if (te.video && te.video.readyState >= 2) {
+          gl.bindTexture(gl.TEXTURE_2D, te.t)
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, te.video)
+          te.aspect = te.video.videoWidth / te.video.videoHeight
+          te.ready = true
+        }
         gl.bindTexture(gl.TEXTURE_2D, tex[i].t)
-        gl.uniform1f(u.uX, d * step)
+        gl.uniform1f(u.uX, x)
         gl.uniform1f(u.uIntro, e)
         gl.uniform1f(u.uAspect, tex[i].aspect)
         gl.uniform1f(u.uReady, tex[i].ready ? 1 : 0)
@@ -404,75 +380,14 @@ export default function CurvedLensCarousel({
       }
     }
 
-    /** Glues the DOM overlays to the canvas: view chips on every visible
-     *  card, the hover outline + title strip, and the PLAY pill at the cursor. */
-    const positionOverlays = () => {
-      const hov = hoverRef.current
-      let under = -1
-      if (hov.inside && !dragging) {
-        let bestD = -1
-        for (let i = 0; i < n; i++) {
-          const r = cardRect(i)
-          if (hov.x >= r.left && hov.x <= r.left + r.width && hov.y >= r.top && hov.y <= r.top + r.height) {
-            if (bestD < 0 || Math.abs(r.d) > bestD) {
-              bestD = Math.abs(r.d)
-              under = i
-            }
-          }
-        }
-      }
-      if (under !== hov.index) {
-        hov.index = under
-        setHovered(under)
-      }
-      for (let i = 0; i < n; i++) {
-        const el = chipRefs.current[i]
-        if (!el) continue
-        const r = cardRect(i)
-        const on = Math.abs(r.x) <= W * 0.5 + r.width / 2 + step && r.width >= 64 && !!slides[i].kicker
-        el.style.display = on ? "flex" : "none"
-        if (on) el.style.transform = `translate(${Math.round(r.left + 8)}px, ${Math.round(r.top + r.height - 22)}px)`
-      }
-      const card = hoverCardRef.current
-      if (card) {
-        if (under >= 0) {
-          const r = cardRect(under)
-          card.style.left = `${Math.round(r.left - 4)}px`
-          card.style.top = `${Math.round(r.top - 4)}px`
-          card.style.width = `${Math.round(r.width + 8)}px`
-          card.style.height = `${Math.round(r.height + 8)}px`
-          card.style.opacity = "1"
-        } else {
-          card.style.opacity = "0"
-        }
-      }
-      const pill = playPillRef.current
-      if (pill) {
-        if (under >= 0 && hov.inside) {
-          pill.style.transform = `translate(${Math.round(hov.x + 13)}px, ${Math.round(hov.y + 10)}px)`
-          pill.style.opacity = "1"
-        } else {
-          pill.style.opacity = "0"
-        }
-      }
-    }
-
     const frame = (now: number) => {
       raf = 0
-      // Drift runs on real elapsed time (capped per frame), not the spring's
-      // clamped dt — otherwise a slow device would rotate slower than live.
-      const rawDt = last ? (now - last) / 1000 : 1 / 60
-      const dt = Math.min(0.05, rawDt)
+      const dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60
       last = now
       if (intro < 1) {
         if (introStart < 0) introStart = now
         intro = Math.min(1.5, (now - introStart) / 1100)
         if (intro >= 1.5) intro = 1
-      }
-      // HERO-ADAPT 2: continuous drift at the live wall's pace — one slot
-      // per autoAdvanceMs, smooth, never stopping; resumes 2s after input.
-      if (!dragging && !reduced.matches && visible && now - lastInteract > 2000) {
-        target += Math.min(0.5, rawDt) * (1000 / (autoAdvanceMs || 6500))
       }
       if (!dragging) {
         if (reduced.matches) {
@@ -486,24 +401,13 @@ export default function CurvedLensCarousel({
         setIndex(idx)
         onChangeRef.current?.(idx)
       }
-      // Hovered card eases to 1.35×, the rest back to 1×.
-      for (let i = 0; i < n; i++) {
-        const goal = i === hoverRef.current.index ? 1.35 : 1
-        hoverScale[i] += (goal - hoverScale[i]) * Math.min(1, dt * 10)
-      }
       draw()
-      positionOverlays()
-      // With drift on the wall never settles — it rotates forever, like live.
-      const settled =
-        !dragging &&
-        Math.abs(target - pos) < 0.0005 &&
-        Math.abs(vel) < 0.001 &&
-        (intro >= 1 || reduced.matches) &&
-        (reduced.matches || !autoAdvanceMs)
-      if (settled) {
+      const videoActive =
+        visible && !reduced.matches && tex.some((e) => !!e.video && !e.video.paused && e.video.readyState >= 2)
+      const settled = !dragging && Math.abs(target - pos) < 0.0005 && Math.abs(vel) < 0.001 && (intro >= 1 || reduced.matches)
+      if (settled && !videoActive) {
         pos = target
         draw()
-        positionOverlays()
         last = 0
       } else if (visible) raf = requestAnimationFrame(frame)
     }
@@ -512,9 +416,26 @@ export default function CurvedLensCarousel({
       if (!raf && visible && !disposed) raf = requestAnimationFrame(frame)
     }
 
+    // Self-rotation: one original spring step per autoAdvanceMs, never a
+    // continuous drift. A manual step / drag restarts the wait.
+    let autoTimer: ReturnType<typeof setTimeout> | 0 = 0
+    const clearAuto = () => {
+      if (autoTimer) clearTimeout(autoTimer)
+      autoTimer = 0
+    }
+    const scheduleAuto = () => {
+      clearAuto()
+      if (!autoAdvanceMs || reduced.matches || disposed) return
+      autoTimer = setTimeout(() => {
+        if (disposed || dragging || !visible) return
+        api.current.go(1)
+      }, autoAdvanceMs)
+    }
+
     api.current.go = (dir: number) => {
       target = Math.round(target) + dir
       kick()
+      scheduleAuto()
     }
 
     const onDown = (e: PointerEvent) => {
@@ -524,7 +445,7 @@ export default function CurvedLensCarousel({
       downX = e.clientX
       downY = e.clientY
       moved = 0
-      lastInteract = e.timeStamp
+      clearAuto()
       lastT = e.timeStamp
       dragPos = pos
       flick = 0
@@ -540,7 +461,6 @@ export default function CurvedLensCarousel({
       vel = flick
       lastX = e.clientX
       moved = Math.max(moved, Math.abs(e.clientX - downX) + Math.abs(e.clientY - downY))
-      lastInteract = e.timeStamp
       lastT = e.timeStamp
       pos = p
       kick()
@@ -549,10 +469,10 @@ export default function CurvedLensCarousel({
       if (!dragging) return
       dragging = false
       if (moved < 6) onSlideClickRef.current?.(wrap(Math.round(pos), n))
-      lastInteract = performance.now()
       target = restFor(pos, flick)
       vel = flick
       kick()
+      scheduleAuto()
     }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") api.current.go(1)
@@ -567,29 +487,7 @@ export default function CurvedLensCarousel({
     canvas.addEventListener("pointerup", onUp)
     canvas.addEventListener("pointercancel", onUp)
     root.addEventListener("keydown", onKey)
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault()
-      lastInteract = e.timeStamp
-      api.current.go(e.deltaY > 0 || e.deltaX > 0 ? 1 : -1)
-    }
-    root.addEventListener("wheel", onWheel, { passive: false })
     reduced.addEventListener("change", onMotion)
-    const onHoverMove = (e: PointerEvent) => {
-      if (dragging) return
-      const r = root.getBoundingClientRect()
-      hoverRef.current.x = e.clientX - r.left
-      hoverRef.current.y = e.clientY - r.top
-      hoverRef.current.inside = true
-      kick()
-    }
-    const onHoverLeave = () => {
-      hoverRef.current.inside = false
-      hoverRef.current.index = -1
-      setHovered(-1)
-      kick()
-    }
-    canvas.addEventListener("pointermove", onHoverMove)
-    root.addEventListener("pointerleave", onHoverLeave)
 
     const ro = new ResizeObserver((entries) => {
       const r = entries[0].contentRect
@@ -600,30 +498,37 @@ export default function CurvedLensCarousel({
       visible = entries[0].isIntersecting
       if (visible) {
         setShown(true)
+        for (const e of tex) {
+          if (e.video) void e.video.play().catch(() => {})
+        }
+        scheduleAuto()
         kick()
+      } else {
+        clearAuto()
+        for (const e of tex) e.video?.pause()
       }
     })
     io.observe(root)
+    scheduleAuto()
 
     return () => {
       disposed = true
       cancelAnimationFrame(raf)
+      clearAuto()
+      for (const e of tex) e.video?.pause()
       ro.disconnect()
       io.disconnect()
       canvas.removeEventListener("pointerdown", onDown)
       canvas.removeEventListener("pointermove", onMove)
       canvas.removeEventListener("pointerup", onUp)
       canvas.removeEventListener("pointercancel", onUp)
-      canvas.removeEventListener("pointermove", onHoverMove)
-      root.removeEventListener("pointerleave", onHoverLeave)
       root.removeEventListener("keydown", onKey)
-      root.removeEventListener("wheel", onWheel)
       reduced.removeEventListener("change", onMotion)
       for (const t of tex) gl.deleteTexture(t.t)
       gl.deleteBuffer(buf)
       gl.deleteProgram(prog)
     }
-  }, [n, slides, bend])
+  }, [n, slides, bend, autoAdvanceMs])
 
   const slide = slides[index] ?? slides[0]
   if (!slide) return null
@@ -632,7 +537,7 @@ export default function CurvedLensCarousel({
   return (
     <div
       ref={rootRef}
-      className={"clc-root" + (className ? " " + className : "") + (hovered >= 0 ? " is-hovering" : "")}
+      className={"clc-root" + (className ? " " + className : "")}
       style={vars}
       tabIndex={0}
       role="region"
@@ -642,37 +547,6 @@ export default function CurvedLensCarousel({
       <style>{CSS}</style>
       <div className="clc-glow" aria-hidden="true" />
       <canvas ref={canvasRef} className="clc-canvas" aria-hidden="true" />
-      {/* HERO-ADAPT 2: live-wall hover — view chips, outline + title strip, PLAY pill. */}
-      {slides.map((s, i) => (
-        <div
-          key={i}
-          ref={(el) => {
-            chipRefs.current[i] = el
-          }}
-          className="clc-chip"
-          aria-hidden="true"
-        >
-          <span className="clc-dot" />
-          {s.kicker ?? ""}
-        </div>
-      ))}
-      <div ref={hoverCardRef} className="clc-hover-card" aria-hidden="true">
-        {hovered >= 0 ? (
-          <span
-            className="clc-strip"
-            style={
-              slides[hovered].tag === "NEW"
-                ? { background: "#2F55FF", color: "#FFFFFF" }
-                : { background: "#FFC81A", color: "#111111" }
-            }
-          >
-            {slides[hovered].tag ?? ""} / {slides[hovered].title}
-          </span>
-        ) : null}
-      </div>
-      <div ref={playPillRef} className="clc-play" aria-hidden="true">
-        Play
-      </div>
       {noGL ? <img className="clc-fallback" src={slide.image} alt={slide.alt ?? slide.title} /> : null}
       <div className="clc-grain" aria-hidden="true" />
       <div className="clc-top">
