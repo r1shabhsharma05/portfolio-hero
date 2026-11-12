@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { LEARN_POSTS, PROFILE, PROJECTS, REELS, STATS, WORLDS } from "../data/site";
 import ReelCard from "../components/ReelCard";
 import CurvedLensCarousel from "../components/CurvedLensCarousel";
@@ -57,91 +57,147 @@ interface Choice {
   label: string;
   sup: string;
   world: string;
+  on: string;
   href?: string;
   action?: "chat";
 }
 
 const SENTENCE_CHOICES: Choice[] = [
-  { label: "products that solve real problems", sup: "01", world: "var(--world-build)", href: "/projects" },
-  { label: "open source for everyone", sup: "02", world: "var(--world-opensource)", href: "https://github.com/r1shabhsharma05" },
-  { label: "free roadmaps for students", sup: "03", world: "var(--world-learn)", href: "/blog/" },
-  { label: "talk to my AI", sup: "04", world: "var(--world-opensource)", action: "chat" },
+  { label: "founders", sup: "01", world: "#2F55FF", on: "#FFFFFF", href: "/projects" },
+  { label: "open source", sup: "02", world: "#EF3B2D", on: "#FFFFFF", href: "https://github.com/r1shabhsharma05" },
+  { label: "students", sup: "03", world: "#FFC81A", on: "#111111", href: "/blog/" },
+  { label: "talk to my AI", sup: "04", world: "var(--color-ink)", on: "var(--color-paper)", action: "chat" },
 ];
 
 export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; entered: boolean }) {
+  const [hovered, setHovered] = useState<string | null>(null);
+
+  // Sentence tokens, in order. Plain words roll up one by one after the
+  // loader lifts; hovering a linked word fills it with its world colour
+  // while the rest of the sentence dims — the live site's exact behaviour.
+  let wordIndex = 0;
+  const word = (w: string): ReactNode => {
+    const d = wordIndex * 45;
+    wordIndex += 1;
+    return (
+      <span className="wordMask" key={`w-${wordIndex}`}>
+        <span style={{ "--d": `${d}ms` } as React.CSSProperties}>{w}</span>
+      </span>
+    );
+  };
+  const renderChoice = (c: Choice): ReactNode => {
+    const labelWords = c.label.split(" ");
+    const label = (
+      <span className="choice-label">
+        <span className="marker" aria-hidden="true" />
+        {labelWords.map((w, j) => (
+          <span key={`c-${c.sup}-${j}`}>
+            {word(w)}
+            {j < labelWords.length - 1 ? " " : null}
+          </span>
+        ))}
+        <span className="underline" aria-hidden="true" />
+      </span>
+    );
+    const props = {
+      className: "choice",
+      "data-active": hovered === c.sup ? "" : undefined,
+      style: { "--world": c.world, "--on": c.on } as React.CSSProperties,
+      onMouseEnter: () => setHovered(c.sup),
+      onMouseLeave: () => setHovered(null),
+      onFocus: () => setHovered(c.sup),
+      onBlur: () => setHovered(null),
+    };
+    return c.action === "chat" ? (
+      <button type="button" key={c.sup} {...props} onClick={onOpenChat}>
+        {label}
+        <sup>{c.sup}</sup>
+      </button>
+    ) : (
+      <a key={c.sup} {...props} href={c.href}>
+        {label}
+        <sup>{c.sup}</sup>
+      </a>
+    );
+  };
+  const sentence: ReactNode[] = [];
+  const plain = (text: string) => {
+    text.split(" ").forEach((w, j, arr) => {
+      sentence.push(word(w));
+      if (j < arr.length - 1) sentence.push(" ");
+    });
+  };
+  plain("I build products for");
+  sentence.push(" ");
+  sentence.push(renderChoice(SENTENCE_CHOICES[0]));
+  sentence.push(", ");
+  sentence.push(renderChoice(SENTENCE_CHOICES[1]));
+  sentence.push(" ");
+  plain("for everyone and free roadmaps for");
+  sentence.push(" ");
+  sentence.push(renderChoice(SENTENCE_CHOICES[2]));
+  sentence.push(". ");
+  plain("Or just");
+  sentence.push(" ");
+  sentence.push(renderChoice(SENTENCE_CHOICES[3]));
+  sentence.push(".");
+
   return (
     <>
-      <header className="site-header">
-        <a className="site-mark" href="/" aria-label="Rishabh Sharma — home">
-          <span className="wordmark-name">
-            Rishabh<span className="wordmark-last"> Sharma</span>
+      <header className="site-header" data-home>
+        <div className="site-left" data-home>
+          <a className="site-mark" href="/" aria-label="Rishabh Sharma, home">
+            <span className="site-wordmark" aria-hidden="true">
+              <span className="wordmark-name">
+                <span className="wordmark-first">Rishabh</span>
+                <span className="wordmark-last"> Sharma</span>.
+              </span>
+              <span className="wordmark-name wordmark-line">I build cool things with AI.</span>
+            </span>
+          </a>
+          <nav className="world-nav" aria-label="Worlds">
+            <span className="world-option">
+              <span className="mode-slash" aria-hidden="true">/</span>
+              <a className="world-link" style={{ "--world": "#2F55FF", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/projects">Build</a>
+            </span>
+            <span className="world-option">
+              <span className="mode-slash" aria-hidden="true">/</span>
+              <a className="world-link" style={{ "--world": "#EF3B2D", "--world-on": "#FFFFFF" } as React.CSSProperties} href="https://github.com/r1shabhsharma05">Open Source</a>
+            </span>
+            <span className="world-option">
+              <span className="mode-slash" aria-hidden="true">/</span>
+              <a className="world-link" style={{ "--world": "#FFC81A", "--world-on": "#111111" } as React.CSSProperties} href="/blog/">Learn</a>
+            </span>
+          </nav>
+        </div>
+        <div className="mode-switch" data-mode="human" role="group" aria-label="View this page as">
+          <span className="mode-option">
+            <button type="button" aria-pressed="true" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+              Human
+            </button>
           </span>
-        </a>
-        <nav className="world-nav" aria-label="Worlds">
-          <span>/</span>
-          <a href="/projects">Build</a>
-          <span>/</span>
-          <a href="https://github.com/r1shabhsharma05">Open Source</a>
-          <span>/</span>
-          <a href="/blog/">Learn</a>
-        </nav>
-        <div className="mode-switch">
-          <button data-active="true" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-            Human
-          </button>
-          <span>/</span>
-          <button data-active="false" onClick={onOpenChat}>
-            Agent
-          </button>
+          <span className="mode-option">
+            <span className="mode-slash" aria-hidden="true">/</span>
+            <button type="button" aria-pressed="false" onClick={onOpenChat}>
+              Agent
+            </button>
+          </span>
         </div>
       </header>
 
       <main>
-        {/* hero */}
-        <section className="stage" aria-label="Intro">
+        {/* hero — one viewport: sky wall + sentence strip, like the live site */}
+        <section className="stage" data-stage aria-label="Intro">
           <div className="world-frame">
             <div className="sky-layer">
               <img src="/sky.jpg" alt="" aria-hidden="true" />
             </div>
-            <div className="hero-copy">
-              <h1 className="hero-name">
-                <span>Rishabh.</span>
-              </h1>
-              <p className="hero-tagline">
-                I build <em>cool things</em> with AI.
-              </p>
-            </div>
             <HeroWall />
             <div className="cloud-layer" aria-hidden="true" />
           </div>
-        </section>
-
-        {/* sentence + stats */}
-        <section className={`below${entered ? " is-entered" : ""}`} aria-label="What Rishabh does, in one sentence">
-          <p className="sentence">
-            I build{" "}
-            {SENTENCE_CHOICES.map((c, i) => (
-              <span key={c.sup}>
-                {c.action === "chat" ? (
-                  <button className="choice" style={{ "--world": c.world } as React.CSSProperties} onClick={onOpenChat}>
-                    <span className="choice-label">
-                      {c.label}
-                      <span className="underline" />
-                    </span>
-                    <sup>{c.sup}</sup>
-                  </button>
-                ) : (
-                  <a className="choice" style={{ "--world": c.world } as React.CSSProperties} href={c.href}>
-                    <span className="choice-label">
-                      {c.label}
-                      <span className="underline" />
-                    </span>
-                    <sup>{c.sup}</sup>
-                  </a>
-                )}
-                {i < SENTENCE_CHOICES.length - 1 ? ", " : "."}
-              </span>
-            ))}
+          <div className={`below${entered ? " is-entered" : ""}`} aria-label="What Rishabh does, in one sentence">
+          <p className="sentence" data-hovering={hovered ? "" : undefined}>
+            {sentence}
           </p>
           <dl className="meta">
             {STATS.map((s) => (
@@ -153,6 +209,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
               </div>
             ))}
           </dl>
+          </div>
         </section>
 
         {/* reels grid */}
