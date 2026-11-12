@@ -24,6 +24,9 @@ export type LensSlide = {
   alt?: string
   /** Live clip for this card; when set the texture is fed from the video. */
   video?: string
+  /** World the card belongs to ("build" | "open-source" | "learn") — drives
+   *  the sentence-hover focus dim and the hover outline colour. */
+  world?: string
 }
 
 export type CurvedLensCarouselProps = {
@@ -44,6 +47,9 @@ export type CurvedLensCarouselProps = {
   onSlideClick?: (index: number) => void
   /** Show the big title block; false hides it (hero keeps titles on the cards). */
   showCopy?: boolean
+  /** Sentence-hover focus world (live site's data-focus): cards of other
+   *  worlds dim to a paper veil; null = no dim. */
+  focus?: string | null
 }
 
 // #region motion
@@ -86,22 +92,23 @@ export function pad2(n: number): string {
 
 const VERT =
   "attribute vec2 aPos;" +
-  "uniform vec2 uRes;uniform vec2 uSize;uniform float uX;uniform float uBend;uniform float uVel;uniform float uIntro;uniform float uLift;" +
+  "uniform vec2 uRes;uniform vec2 uSize;uniform float uX;uniform float uBend;uniform float uVel;uniform float uIntro;uniform float uLift;uniform float uScale;" +
   "varying vec2 vUv;varying float vX;" +
   "void main(){" +
-  "vec2 p=vec2(uX+(aPos.x-.5)*uSize.x,(aPos.y-.5)*uSize.y);" +
+  "vec2 ap=(aPos-.5)*uScale+.5;" +
+  "vec2 p=vec2(uX+(ap.x-.5)*uSize.x,(ap.y-.5)*uSize.y);" +
   "p.y-=(1.-uIntro)*uSize.y*.9;" +
   "vec2 n=p/(uRes*.5);" +
   "float x=clamp(n.x,-1.4,1.4);" +
   "n.y*=1.+uBend*x*x;" +
-  "n.y+=uVel*.05*sin(aPos.x*3.14159)*(aPos.y-.5);" +
+  "n.y+=uVel*.05*sin(ap.x*3.14159)*(ap.y-.5);" +
   "n.x*=1.-.06*uBend*x*x;n.y+=uLift;" +
   "vUv=aPos;vX=x;" +
   "gl_Position=vec4(n,0.,1.);}"
 
 const FRAG =
   "precision highp float;" +
-  "uniform sampler2D uTex;uniform vec2 uSize;uniform float uAspect;uniform float uVel;uniform float uIntro;uniform float uShift;uniform float uReady;" +
+  "uniform sampler2D uTex;uniform vec2 uSize;uniform float uAspect;uniform float uVel;uniform float uIntro;uniform float uShift;uniform float uReady;uniform float uDim;uniform float uOutline;uniform vec3 uOutlineColor;" +
   "varying vec2 vUv;varying float vX;" +
   "float box(vec2 q,vec2 b,float r){vec2 d=abs(q)-b+r;return length(max(d,0.))+min(max(d.x,d.y),0.)-r;}" +
   "void main(){" +
@@ -116,7 +123,9 @@ const FRAG =
   "float rim=smoothstep(-5.,0.,d);" +
   "c+=rim*.10;" +
   "c+=.07*smoothstep(.55,1.,vUv.y)*(1.-abs(vX));" +
+  "c=mix(c,vec3(.953,.953,.945),uDim);" +
   "float al=smoothstep(.75,-.75,d)*uIntro;" +
+  "if(uOutline>.5)c=uOutlineColor;" +
   "gl_FragColor=vec4(c*al,al);}"
 
 const FONT =
@@ -238,6 +247,7 @@ export default function CurvedLensCarousel({
   onChange,
   onSlideClick,
   showCopy = true,
+  focus = null,
 }: CurvedLensCarouselProps) {
   const n = slides.length
   const rootRef = React.useRef(null as HTMLDivElement | null)
@@ -250,6 +260,13 @@ export default function CurvedLensCarousel({
   onChangeRef.current = onChange
   const onSlideClickRef = React.useRef(onSlideClick)
   onSlideClickRef.current = onSlideClick
+  // Focus is read inside the GL effect without re-initialising it.
+  const focusRef = React.useRef(focus)
+  focusRef.current = focus
+  const kickRef = React.useRef(() => {})
+  React.useEffect(() => {
+    kickRef.current()
+  }, [focus])
 
   React.useEffect(() => {
     const canvas = canvasRef.current
@@ -281,7 +298,7 @@ export default function CurvedLensCarousel({
     gl.enableVertexAttribArray(loc)
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
     const u: GLState["u"] = {}
-    for (const k of ["uRes", "uSize", "uX", "uBend", "uVel", "uIntro", "uTex", "uAspect", "uShift", "uReady", "uLift"]) u[k] = gl.getUniformLocation(prog, k)
+    for (const k of ["uRes", "uSize", "uX", "uBend", "uVel", "uIntro", "uTex", "uAspect", "uShift", "uReady", "uLift", "uDim", "uOutline", "uOutlineColor", "uScale"]) u[k] = gl.getUniformLocation(prog, k)
     gl.enable(gl.BLEND)
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
@@ -334,6 +351,56 @@ export default function CurvedLensCarousel({
     let dragging = false, dragX = 0, dragPos = 0, lastX = 0, lastT = 0, flick = 0, downX = 0, downY = 0, moved = 0
     let raf = 0, last = 0, visible = true, current = 0
 
+    // Focus veil per card (live site's [data-focus] paper overlay, .6, .5s
+    // ease) and the hovered card's world-colour outline + PLAY cursor.
+    const dims = new Float32Array(n)
+    let hovered = -1
+    const WORLD_COLOR: Record<string, [number, number, number]> = {
+      build: [0x2f / 255, 0x55 / 255, 0xff / 255],
+      "open-source": [0xef / 255, 0x3b / 255, 0x2d / 255],
+      learn: [0xff / 255, 0xc8 / 255, 0x1a / 255],
+    }
+    const dimTarget = (i: number) =>
+      focusRef.current && slides[i].world !== focusRef.current ? 0.6 : 0
+    // Hovered card under the pointer, from the same vertex math the shader
+    // uses. Later-drawn cards win, matching paint order.
+    const pickHover = (clientX: number, clientY: number): number => {
+      if (intro < 1) return -1
+      const r = canvas.getBoundingClientRect()
+      const lx = clientX - r.left
+      const ly = clientY - r.top
+      const step = cw + gap
+      const lift = W < 640 ? 0.3 : 0.15
+      let best = -1
+      for (let i = 0; i < n; i++) {
+        const d = offsetOf(i, pos, n)
+        const x = d * step
+        if (Math.abs(x) > W * 0.5 + step * 1.5) continue
+        const nx = Math.max(-1.4, Math.min(1.4, x / (W * 0.5)))
+        const cx = W / 2 + x
+        const cy = H / 2 - (lift * H) / 2
+        const hw = cw / 2
+        const hh = (ch / 2) * (1 + bend * nx * nx)
+        if (Math.abs(lx - cx) <= hw && Math.abs(ly - cy) <= hh) best = i
+      }
+      return best
+    }
+    const setHover = (idx: number) => {
+      if (idx === hovered) return
+      hovered = idx
+      if (idx >= 0) canvas.dataset.cursor = "Play"
+      else delete canvas.dataset.cursor
+      kick()
+    }
+    const onHover = (e: PointerEvent) => {
+      if (dragging || e.pointerType === "touch") {
+        setHover(-1)
+        return
+      }
+      setHover(pickHover(e.clientX, e.clientY))
+    }
+    const onHoverLeave = () => setHover(-1)
+
     const resize = (w: number, h: number) => {
       W = Math.max(1, w)
       H = Math.max(1, h)
@@ -375,6 +442,19 @@ export default function CurvedLensCarousel({
         gl.uniform1f(u.uAspect, tex[i].aspect)
         gl.uniform1f(u.uReady, tex[i].ready ? 1 : 0)
         gl.uniform1f(u.uShift, Math.max(-0.05, Math.min(0.05, -d * 0.035)))
+        // Hovered card: a slightly enlarged flat-colour quad first, so a
+        // ~3px world-colour outline shows around its tilted edge.
+        if (i === hovered) {
+          const c = WORLD_COLOR[slides[i].world ?? ""] ?? [0.067, 0.067, 0.067]
+          gl.uniform1f(u.uScale, 1.05)
+          gl.uniform1f(u.uOutline, 1)
+          gl.uniform3f(u.uOutlineColor, c[0], c[1], c[2])
+          gl.uniform1f(u.uDim, 0)
+          gl.drawArrays(gl.TRIANGLES, 0, mesh.length / 2)
+        }
+        gl.uniform1f(u.uScale, 1)
+        gl.uniform1f(u.uOutline, 0)
+        gl.uniform1f(u.uDim, dims[i])
         gl.drawArrays(gl.TRIANGLES, 0, mesh.length / 2)
       }
     }
@@ -403,11 +483,18 @@ export default function CurvedLensCarousel({
         setIndex(idx)
         onChangeRef.current?.(idx)
       }
+      // Focus veil eases toward its target (.5s, like the live CSS).
+      let dimMoving = false
+      for (let i = 0; i < n; i++) {
+        const t = dimTarget(i)
+        dims[i] += (t - dims[i]) * (1 - Math.exp(-dt * 8))
+        if (Math.abs(t - dims[i]) > 0.002) dimMoving = true
+      }
       draw()
       const videoActive =
         visible && !reduced.matches && tex.some((e) => !!e.video && !e.video.paused && e.video.readyState >= 2)
       const settled = !dragging && Math.abs(target - pos) < 0.0005 && Math.abs(vel) < 0.001 && (intro >= 1 || reduced.matches)
-      if (settled && !videoActive) {
+      if (settled && !videoActive && !dimMoving) {
         pos = target
         draw()
         last = 0
@@ -417,6 +504,7 @@ export default function CurvedLensCarousel({
     function kick() {
       if (!raf && visible && !disposed) raf = requestAnimationFrame(frame)
     }
+    kickRef.current = kick
 
     api.current.go = (dir: number) => {
       target = Math.round(target) + dir
@@ -425,6 +513,7 @@ export default function CurvedLensCarousel({
 
     const onDown = (e: PointerEvent) => {
       if (e.button !== 0) return
+      setHover(-1)
       dragging = true
       dragX = lastX = e.clientX
       downX = e.clientX
@@ -482,6 +571,8 @@ export default function CurvedLensCarousel({
 
     canvas.addEventListener("pointerdown", onDown)
     canvas.addEventListener("pointermove", onMove)
+    canvas.addEventListener("pointermove", onHover)
+    canvas.addEventListener("pointerleave", onHoverLeave)
     canvas.addEventListener("pointerup", onUp)
     canvas.addEventListener("pointercancel", onUp)
     root.addEventListener("keydown", onKey)
@@ -515,6 +606,8 @@ export default function CurvedLensCarousel({
       io.disconnect()
       canvas.removeEventListener("pointerdown", onDown)
       canvas.removeEventListener("pointermove", onMove)
+      canvas.removeEventListener("pointermove", onHover)
+      canvas.removeEventListener("pointerleave", onHoverLeave)
       canvas.removeEventListener("pointerup", onUp)
       canvas.removeEventListener("pointercancel", onUp)
       root.removeEventListener("keydown", onKey)
