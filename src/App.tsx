@@ -7,8 +7,10 @@ import { REELS } from "./data/site";
 
 /** Entrance: preload the reel posters + sky, drive the loader's odometer
  *  toward the real load fraction at ~60 points/sec (the live pace), lift
- *  the loader at 100%. Reduced-motion skips the loader entirely. The hero
- *  renders underneath from the start, like the live site. */
+ *  the loader at 100%. The loader shows the hero wall itself drifting on
+ *  the paper, and the brand flies onto the header wordmark as the paper
+ *  fades. Reduced-motion skips the loader entirely. The hero renders
+ *  underneath from the start, like the live site. */
 const ASSETS = [...REELS.map((r) => r.thumb), "/sky.jpg"];
 
 export default function App() {
@@ -21,12 +23,26 @@ export default function App() {
   const progressRef = useRef(0);
   const doneRef = useRef(false);
 
-  const finish = () => {
+  const finish = (immediate = false) => {
     if (doneRef.current) return;
     doneRef.current = true;
+    if (immediate) {
+      // Skip: jump straight to the hero, no morph, no fade.
+      setPhase("done");
+      return;
+    }
+    // Completion: the brand morph runs 1.3s, so the loader stays mounted
+    // 1.4s while the paper fades (.9s) and the name lands on the wordmark.
     setPhase("leaving");
-    window.setTimeout(() => setPhase("done"), 650);
+    window.setTimeout(() => setPhase("done"), 1400);
   };
+
+  // The header nav + Human/Agent switch fade in only once the loader is
+  // gone (the live site's staggered header entrance); the wordmark itself
+  // stays put — it is the loader brand's landing spot.
+  useEffect(() => {
+    document.body.dataset.phase = phase;
+  }, [phase]);
 
   useEffect(() => {
     if (phase !== "loading") return;
@@ -62,7 +78,7 @@ export default function App() {
     <>
       <CursorLabel />
       <Home onOpenChat={() => setChatOpen(true)} entered={phase !== "loading"} />
-      {phase !== "done" && <Loader progress={progress} leaving={phase === "leaving"} onSkip={finish} />}
+      {phase !== "done" && <Loader progress={progress} leaving={phase === "leaving"} onSkip={() => finish(true)} />}
       {chatOpen && <ChatModal onClose={() => setChatOpen(false)} />}
     </>
   );
