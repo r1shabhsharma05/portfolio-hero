@@ -311,6 +311,21 @@ export default function CurvedLensCarousel({
       for (const [p, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]])
         gl.texParameteri(gl.TEXTURE_2D, p, v)
       const entry: { t: WebGLTexture; aspect: number; ready: boolean; video?: HTMLVideoElement } = { t, aspect: 0.8, ready: false }
+      // Poster first: the card shows its image while the clip loads, so a
+      // slow video never leaves a black card — the draw loop overwrites the
+      // texture with video frames once the clip is ready.
+      const img = new Image()
+      if (!s.image.startsWith("data:")) img.crossOrigin = "anonymous"
+      img.decoding = "async"
+      img.onload = () => {
+        if (disposed) return
+        gl.bindTexture(gl.TEXTURE_2D, t)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
+        entry.aspect = img.naturalWidth / img.naturalHeight
+        entry.ready = true
+        kick()
+      }
+      img.src = s.image
       if (s.video) {
         const video = document.createElement("video")
         video.muted = true
@@ -326,20 +341,7 @@ export default function CurvedLensCarousel({
         }
         video.src = s.video
         entry.video = video
-        return entry
       }
-      const img = new Image()
-      if (!s.image.startsWith("data:")) img.crossOrigin = "anonymous"
-      img.decoding = "async"
-      img.onload = () => {
-        if (disposed) return
-        gl.bindTexture(gl.TEXTURE_2D, t)
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
-        entry.aspect = img.naturalWidth / img.naturalHeight
-        entry.ready = true
-        kick()
-      }
-      img.src = s.image
       return entry
     })
 
