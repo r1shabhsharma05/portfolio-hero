@@ -45,8 +45,8 @@ export const REELS: Reel[] = [
 
 export const STATS = [
   { value: "212", label: "LeetCode solved" },
-  { value: "1,153", label: "GitHub contributions in 2026" },
-  { value: "14", label: "Pull requests merged" },
+  { value: "1,253", label: "GitHub contributions in 2026" },
+  { value: "20", label: "Pull requests merged" },
 ];
 
 export interface Project {
@@ -79,7 +79,7 @@ export const WORLDS = [
   {
     id: "open-source",
     title: "Open Source: code in the open",
-    body: "14 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects — small verified fixes, reproduced first, reviewed by maintainers.",
+    body: "20 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects — small verified fixes, reproduced first, reviewed by maintainers.",
     link: "https://github.com/r1shabhsharma05",
     linkLabel: "See the contributions ↗",
   },
