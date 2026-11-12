@@ -15,7 +15,7 @@ markdown negotiation, RSS).
 
 | Path | What lives there |
 | --- | --- |
-| `src/` | The React app. `src/pages/Home.tsx` is the only page — **there is no client-side router**. |
+| `src/` | The React app. `src/pages/Home.tsx` is the homepage; `src/pages/Build.tsx` is the /projects page (second Vite entry) — **there is no client-side router**. |
 | `src/data/site.ts` | Single source for homepage content: reels, stats, projects, worlds. |
 | `src/components/ChatModal.tsx` | "Talk to my AI" chat UI (SSE to `/api/chat`). |
 | `src/styles/index.scss` | All styles. Design tokens measured from the live site. |
@@ -69,9 +69,9 @@ crawlers and no-JS clients only. Do not make it visible to normal visitors.
 content, markdown negotiation, `Vary` headers, trust-anchor pages, JSON-LD
 completeness and robots policy.
 
-**Facts only.** Every number on the site is verified: LeetCode 212 solved,
-1,153 GitHub contributions in 2026, 14 merged / 8 open OSS PRs, reel view
-counts from the Instagram connector (2026-11-12; total 1,114 across all reels). Never invent employment,
+**Facts only.** Every number on the site is verified: LeetCode 213 solved,
+1,387 GitHub contributions in 2026, 22 merged / 8 open OSS PRs, reel view
+counts (total 7,121; the 2 newest counts are Rishabh's own figures, IG connector down 2026-11-13). Never invent employment,
 internships, credentials or follower counts.
 
 ## Style
