@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { LEARN_POSTS, PROFILE, PROJECTS, REELS, STATS, WORLDS } from "../data/site";
 import ReelCard from "../components/ReelCard";
 import CurvedLensCarousel from "../components/CurvedLensCarousel";
@@ -31,7 +32,7 @@ function CountUp({ value, start }: { value: string; start: boolean }) {
  *  preview clip play live on the canvas; tap a card (not a drag) to
  *  open that reel on Instagram. The slides array is memoized — a fresh
  *  array identity remounts the whole WebGL stage. */
-function HeroWall() {
+function HeroWall({ focus }: { focus: string | null }) {
   const slides = useMemo(
     () =>
       REELS.map((r) => ({
@@ -41,6 +42,7 @@ function HeroWall() {
         image: r.thumb,
         alt: r.title,
         video: r.preview ?? undefined,
+        world: r.world,
       })),
     []
   );
@@ -56,6 +58,7 @@ function HeroWall() {
         ink="#111111"
         height="100%"
         showCopy={false}
+        focus={focus}
         onSlideClick={onSlideClick}
       />
     </div>
@@ -71,6 +74,126 @@ interface Choice {
   action?: "chat";
 }
 
+/** The live site's sentence-hover preview: a fixed card that follows the
+ *  pointer and hangs just above the sentence (its anchor y is clamped to
+ *  the sentence top + 12). The featured clip of the hovered world plays
+ *  live; "talk to my AI" shows the dark ask card instead. Portalled to
+ *  the body so it stays sharp above the wall, like the live site. */
+type PreviewEntry = {
+  world: string;
+  color: string;
+  image: string;
+  video: string | null;
+  views: string | null;
+  caption: string;
+};
+
+function SentencePreview({
+  preview,
+  isAi,
+  sentenceRef,
+}: {
+  preview: PreviewEntry | null;
+  isAi: boolean;
+  sentenceRef: React.RefObject<HTMLParagraphElement | null>;
+}) {
+  const anchorRef = useRef<HTMLDivElement | null>(null);
+  const targetRef = useRef({ x: -1000, y: -1000 });
+  const posRef = useRef({ x: -1000, y: -1000 });
+  const active = preview !== null || isAi;
+  const [displayed, setDisplayed] = useState<{ kind: "preview"; p: PreviewEntry } | { kind: "ai" } | null>(null);
+
+  // Keep the last card mounted ~200ms after hover ends so it can fade out.
+  useEffect(() => {
+    if (active) {
+      setDisplayed(isAi ? { kind: "ai" } : preview ? { kind: "preview", p: preview } : null);
+      return;
+    }
+    const id = window.setTimeout(() => setDisplayed(null), 200);
+    return () => window.clearTimeout(id);
+  }, [active, isAi, preview]);
+
+  useEffect(() => {
+    // Track the pointer always, not just while a preview is open — the
+    // jump-on-activation needs a fresh target even if the pointer has
+    // already stopped on the word.
+    const onMove = (e: PointerEvent) => {
+      targetRef.current = { x: e.clientX, y: e.clientY };
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, []);
+
+  useEffect(() => {
+    if (!active) return;
+    // Jump to the pointer on activation so the card never flies in from
+    // off-screen, then ease after it.
+    posRef.current = { ...targetRef.current };
+    let raf = 0;
+    const tick = () => {
+      const el = anchorRef.current;
+      if (!el) return;
+      const t = targetRef.current;
+      posRef.current.x += (t.x - posRef.current.x) * 0.18;
+      posRef.current.y += (t.y - posRef.current.y) * 0.18;
+      const top = sentenceRef.current?.getBoundingClientRect().top ?? Infinity;
+      const y = Math.min(posRef.current.y, top + 12);
+      el.style.transform = `translate3d(${posRef.current.x}px, ${y}px, 0)`;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [active, sentenceRef]);
+
+  const card =
+    displayed?.kind === "ai" ? (
+      <div className="sentence-preview" data-on={active ? "" : undefined} data-ai="">
+        <p className="sentence-preview-ask">What are you working on?</p>
+        <p className="sentence-preview-meta">
+          Rishabh&rsquo;s AI &middot; ask about a build, an open-source project or where to start learning
+        </p>
+      </div>
+    ) : displayed?.kind === "preview" ? (
+      <div
+        className="sentence-preview"
+        data-on={active ? "" : undefined}
+        style={{ "--world": displayed.p.color } as React.CSSProperties}
+      >
+        <div className="sentence-preview-media">
+          {displayed.p.video ? (
+            <video
+              key={displayed.p.video}
+              src={displayed.p.video}
+              poster={displayed.p.image}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            />
+          ) : (
+            <img src={displayed.p.image} alt="" />
+          )}
+          {displayed.p.views ? <span className="sentence-preview-views">&bull; {displayed.p.views}</span> : null}
+        </div>
+        <p className="sentence-preview-meta">
+          <b>
+            <i />
+            {displayed.p.world}
+          </b>{" "}
+          {displayed.p.caption}
+        </p>
+      </div>
+    ) : null;
+
+  return createPortal(
+    <div ref={anchorRef} className="sentence-preview-anchor" aria-hidden="true">
+      {card}
+    </div>,
+    document.body
+  );
+}
+
 const SENTENCE_CHOICES: Choice[] = [
   { label: "founders", sup: "01", world: "#2F55FF", on: "#FFFFFF", href: "/projects" },
   { label: "open source", sup: "02", world: "#EF3B2D", on: "#FFFFFF", href: "https://github.com/r1shabhsharma05" },
@@ -80,16 +203,25 @@ const SENTENCE_CHOICES: Choice[] = [
 
 export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; entered: boolean }) {
   const [hovered, setHovered] = useState<string | null>(null);
-  const [navHover, setNavHover] = useState(false);
-  // The live hero dims while a nav link or a sentence word is hovered.
-  const dimHero = hovered !== null || navHover;
+  const [navWorld, setNavWorld] = useState<string | null>(null);
+  const sentenceRef = useRef<HTMLParagraphElement | null>(null);
+  // Sentence hover focuses one world (live site's data-focus): the wall
+  // dims only the other worlds' cards; "talk to my AI" focuses nothing.
+  // Hovering a header world link focuses that world too.
+  const focusWorld =
+    hovered === "01" ? "build" : hovered === "02" ? "open-source" : hovered === "03" ? "learn" : navWorld;
+  const openChat = () => {
+    setHovered(null);
+    setNavWorld(null);
+    onOpenChat();
+  };
   const mergedPRs = STATS.find((s) => s.label.includes("Pull requests"))?.value ?? "";
-  // Preview card that rises from below the wall while a sentence word is
-  // hovered — the live site's behaviour. No card for "talk to my AI".
-  const PREVIEWS: Record<string, { world: string; image: string; caption: string } | null> = {
-    "01": { world: "BUILD", image: "/projects/secureguard.jpg", caption: "SecureGaurd · SafeLife · RailSync — 7 products, shipped." },
-    "02": { world: "OPEN SOURCE", image: "/reels/github-prompt.webp", caption: `${mergedPRs} PRs merged · Jenkins · WordPress/Gutenberg` },
-    "03": { world: "LEARN", image: "/reels/gemini.webp", caption: "Free roadmaps, prompts and build write-ups." },
+  // Featured card per sentence word — the live site shows a curated card
+  // per world, not a wall reel. Views only where verified.
+  const PREVIEWS: Record<string, PreviewEntry | null> = {
+    "01": { world: "BUILD", color: "#2F55FF", image: "/projects/secureguard.jpg", video: null, views: null, caption: "SecureGaurd · SafeLife · RailSync — 7 products, shipped." },
+    "02": { world: "OPEN SOURCE", color: "#EF3B2D", image: "/reels/github-prompt.webp", video: "/reels/github-prompt-preview.mp4", views: null, caption: `${mergedPRs} PRs merged · Jenkins · WordPress/Gutenberg` },
+    "03": { world: "LEARN", color: "#FFC81A", image: "/reels/gemini.webp", video: "/reels/gemini-preview.mp4", views: "127", caption: "Free roadmaps, prompts and build write-ups." },
     "04": null,
   };
   const preview = hovered ? PREVIEWS[hovered] ?? null : null;
@@ -131,7 +263,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
       onBlur: () => setHovered(null),
     };
     return c.action === "chat" ? (
-      <button type="button" key={c.sup} {...props} onClick={onOpenChat}>
+      <button type="button" key={c.sup} {...props} onClick={openChat}>
         {label}
         <sup>{c.sup}</sup>
       </button>
@@ -180,15 +312,15 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
           <nav className="world-nav" aria-label="Worlds">
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#2F55FF", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/projects" onMouseEnter={() => setNavHover(true)} onMouseLeave={() => setNavHover(false)}>Build</a>
+              <a className="world-link" style={{ "--world": "#2F55FF", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/projects" onMouseEnter={() => setNavWorld("build")} onMouseLeave={() => setNavWorld(null)}>Build</a>
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#EF3B2D", "--world-on": "#FFFFFF" } as React.CSSProperties} href="https://github.com/r1shabhsharma05" onMouseEnter={() => setNavHover(true)} onMouseLeave={() => setNavHover(false)}>Open Source</a>
+              <a className="world-link" style={{ "--world": "#EF3B2D", "--world-on": "#FFFFFF" } as React.CSSProperties} href="https://github.com/r1shabhsharma05" onMouseEnter={() => setNavWorld("open-source")} onMouseLeave={() => setNavWorld(null)}>Open Source</a>
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#FFC81A", "--world-on": "#111111" } as React.CSSProperties} href="/blog/" onMouseEnter={() => setNavHover(true)} onMouseLeave={() => setNavHover(false)}>Learn</a>
+              <a className="world-link" style={{ "--world": "#FFC81A", "--world-on": "#111111" } as React.CSSProperties} href="/blog/" onMouseEnter={() => setNavWorld("learn")} onMouseLeave={() => setNavWorld(null)}>Learn</a>
             </span>
           </nav>
         </div>
@@ -209,26 +341,16 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
 
       <main>
         {/* hero — one viewport: sky wall + sentence strip, like the live site */}
-        <section className={`stage${dimHero ? " dim" : ""}${preview ? " show-preview" : ""}`} data-stage aria-label="Intro">
+        <section className="stage" data-stage data-focus={focusWorld ?? undefined} aria-label="Intro">
           <div className="world-frame">
             <div className="sky-layer">
               <img src="/sky.jpg" alt="" aria-hidden="true" />
             </div>
-            <HeroWall />
-            <div className="world-preview" aria-hidden="true">
-              {preview ? (
-                <>
-                  <img src={preview.image} alt="" />
-                  <p>
-                    <b>■ {preview.world}</b> / {preview.caption}
-                  </p>
-                </>
-              ) : null}
-            </div>
+            <HeroWall focus={focusWorld} />
             <div className="cloud-layer" aria-hidden="true" />
           </div>
           <div className={`below${entered ? " is-entered" : ""}`} aria-label="What Rishabh does, in one sentence">
-          <p className="sentence" data-hovering={hovered ? "" : undefined}>
+          <p className="sentence" ref={sentenceRef} data-hovering={hovered ? "" : undefined}>
             {sentence}
           </p>
           <dl className="meta">
@@ -243,6 +365,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
           </dl>
           </div>
         </section>
+        <SentencePreview preview={preview} isAi={hovered === "04"} sentenceRef={sentenceRef} />
 
         {/* reels grid */}
         <section className="section" id="reels" aria-label="Reels">
