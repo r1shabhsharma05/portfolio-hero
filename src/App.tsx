@@ -16,6 +16,8 @@ const ASSETS = [...REELS.map((r) => r.thumb), "/sky.jpg"];
 export default function App() {
   const [chatOpen, setChatOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  // Reel posters loaded so far (of REELS.length) — the loader's 01/12 count.
+  const [loadedReels, setLoadedReels] = useState(0);
   const [phase, setPhase] = useState<"loading" | "leaving" | "done">(() =>
     typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "done" : "loading",
   );
@@ -48,14 +50,16 @@ export default function App() {
     if (phase !== "loading") return;
     const t0 = performance.now();
     let loaded = 0;
-    for (const src of ASSETS) {
+    ASSETS.forEach((src, i) => {
       const img = new Image();
       img.onload = img.onerror = () => {
         loaded += 1;
+        // The first REELS.length assets are the reel posters — the 01/12 count.
+        if (i < REELS.length) setLoadedReels((c) => c + 1);
         targetRef.current = (loaded / ASSETS.length) * 100;
       };
       img.src = src;
-    }
+    });
     // Safety: never stall on a hung asset.
     const safety = window.setTimeout(() => (targetRef.current = 100), 4000);
     let raf = 0;
@@ -78,7 +82,7 @@ export default function App() {
     <>
       <CursorLabel />
       <Home onOpenChat={() => setChatOpen(true)} entered={phase !== "loading"} />
-      {phase !== "done" && <Loader progress={progress} leaving={phase === "leaving"} onSkip={() => finish(true)} />}
+      {phase !== "done" && <Loader progress={progress} leaving={phase === "leaving"} loadedReels={loadedReels} reelTotal={REELS.length} onSkip={() => finish(true)} />}
       {chatOpen && <ChatModal onClose={() => setChatOpen(false)} />}
     </>
   );
