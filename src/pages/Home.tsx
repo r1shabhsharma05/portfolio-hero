@@ -406,7 +406,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
             Rishabh Sharma is a 19-year-old full-stack developer studying Computer Science at GLA
             University, Mathura. He ships real products — a safety app with live SOS, a campus
             marketplace, an escrow-backed farmer platform — and contributes to open source:{" "}
-            <strong>20 pull requests merged</strong> across Jenkins, WordPress/Gutenberg and
+            <strong>22 pull requests merged</strong> across Jenkins, WordPress/Gutenberg and
             more. He also makes tech Reels as <strong>@cod.ehx</strong> and runs a faceless
             history channel on YouTube. No internship yet — everything here is built, not claimed.
           </p>
