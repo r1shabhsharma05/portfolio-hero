@@ -1,5 +1,9 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = dirname(fileURLToPath(import.meta.url));
 
 // Local dev mock for /api/chat - simulates SSE streaming
 function apiMockPlugin(): Plugin {
@@ -59,5 +63,11 @@ export default defineConfig({
   build: {
     outDir: "dist",
     sourcemap: true,
+    rollupOptions: {
+      input: {
+        main: resolve(ROOT, "index.html"),
+        projects: resolve(ROOT, "projects/index.html"),
+      },
+    },
   },
 });
