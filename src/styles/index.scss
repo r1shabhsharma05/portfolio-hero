@@ -98,6 +98,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* reel wall inside the hero frame */
 .wall-wrap {
   position: absolute; z-index: 2; left: 0; right: 0; bottom: 0;
+  height: 504px;
   padding: 0 24px 24px; perspective: 1400px;
   user-select: none; -webkit-user-select: none; touch-action: pan-y;
 }
@@ -377,7 +378,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .stage { height: 560px; min-height: 0; }
   .world-frame { clip-path: inset(0 round 20px); margin: 10px 10px 0; }
   .hero-name { font-size: clamp(64px, 18vw, 110px); }
-  .wall-wrap { padding-bottom: 8px; }
+  .wall-wrap { height: 368px; padding-bottom: 8px; }
   .ring { height: 360px; transform: none; }
   .ring .reel-card { margin-left: -84px; }
   .reel-card { width: 168px; }
