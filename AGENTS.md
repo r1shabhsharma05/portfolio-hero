@@ -70,7 +70,7 @@ content, markdown negotiation, `Vary` headers, trust-anchor pages, JSON-LD
 completeness and robots policy.
 
 **Facts only.** Every number on the site is verified: LeetCode 213 solved,
-1,387 GitHub contributions in 2026, 22 merged / 8 open OSS PRs, reel view
+1,387 GitHub contributions in 2026, 23 merged / 8 open OSS PRs, reel view
 counts (total 7,121; the 2 newest counts are Rishabh's own figures, IG connector down 2026-11-13). Never invent employment,
 internships, credentials or follower counts.
 
