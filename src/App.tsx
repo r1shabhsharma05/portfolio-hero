@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import ChatModal from "./components/ChatModal";
+import CursorLabel from "./components/CursorLabel";
 import Loader from "./components/Loader";
 import Home from "./pages/Home";
 import { REELS } from "./data/site";
@@ -59,6 +60,7 @@ export default function App() {
 
   return (
     <>
+      <CursorLabel />
       <Home onOpenChat={() => setChatOpen(true)} entered={phase !== "loading"} />
       {phase !== "done" && <Loader progress={progress} leaving={phase === "leaving"} onSkip={finish} />}
       {chatOpen && <ChatModal onClose={() => setChatOpen(false)} />}
