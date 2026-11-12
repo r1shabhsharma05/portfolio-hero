@@ -1,64 +1,198 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LEARN_POSTS, PROFILE, PROJECTS, REELS, STATS, WORLDS } from "../data/site";
-import type { Reel } from "../data/site";
+import ReelCard from "../components/ReelCard";
+import ReelRing from "../components/ReelRing";
 
-/** Reel card: poster img + hover-play preview video (live-site mechanism — the
- *  video has no src until hover, then loads from data-preview-src, plays muted
- *  on loop; pause + reset on leave). Poster-only reels have no video element. */
-function ReelCard({ reel, tilt }: { reel: Reel; tilt?: { ry: string; ty: string; i: number } }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+/** Counts a stat up from 0 once `start` flips true — the live stats roll
+ *  up for ~2s after the loader lifts. */
+function CountUp({ value, start }: { value: string; start: boolean }) {
+  const target = Number(value.replace(/,/g, ""));
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    let raf = 0;
+    const t0 = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / 2000);
+      setN(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [start, target]);
+  return <>{n.toLocaleString("en-US")}</>;
+}
 
-  const play = () => {
-    const v = videoRef.current;
-    if (!v || !reel.preview) return;
-    if (!v.src) v.src = v.dataset.previewSrc ?? "";
-    v.play().catch(() => {});
-    v.closest(".reel-card")?.classList.add("is-playing");
+/** The hero wall — the live site's reel ring. It never stops: slow
+ *  auto-rotation (~1 slot per 5s), drag it to spin with momentum, scroll
+ *  the wheel over it to spin it further (the wheel never scrolls the page
+ *  while over the wall). A drag never follows its card link. */
+function HeroWall() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const lensRef = useRef<HTMLDivElement>(null);
+  const [rotation, setRotation] = useState(0);
+  const [pill, setPill] = useState<{ x: number; y: number } | null>(null);
+  const rotRef = useRef(0);
+  const velRef = useRef(0);
+  const dragRef = useRef<{ x: number; rot: number; moved: boolean } | null>(null);
+  const lastMoveRef = useRef({ x: 0, t: 0 });
+  const lastInteractRef = useRef(0);
+  const lastPointerRef = useRef({ x: -1, y: -1 });
+  const hoveredRef = useRef<Element | null>(null);
+  const suppressClickRef = useRef(false);
+  const reducedRef = useRef(false);
+
+  useEffect(() => {
+    reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
+
+  // Hover-play must follow the ring, not just the mouse: the ring keeps
+  // moving under a stationary pointer (live site does the same check per
+  // frame via elementFromPoint), so re-resolve the hovered card each frame.
+  const syncHover = () => {
+    const { x, y } = lastPointerRef.current;
+    if (x < 0 || dragRef.current) return;
+    const card = document.elementFromPoint(x, y)?.closest?.("[data-card]") as HTMLElement | null;
+    const prev = hoveredRef.current as HTMLElement | null;
+    if (card === prev) return;
+    if (prev) {
+      const v = prev.querySelector("video");
+      if (v) {
+        v.pause();
+        v.currentTime = 0;
+      }
+      prev.classList.remove("is-playing");
+    }
+    hoveredRef.current = card;
+    if (card) {
+      const v = card.querySelector("video");
+      if (v) {
+        if (!v.src) v.src = v.dataset.previewSrc ?? "";
+        v.play().catch(() => {});
+      }
+      card.classList.add("is-playing");
+    }
+    setPill((p) => {
+      const next = card ? { x, y } : null;
+      if (!p && !next) return p;
+      if (p && next && p.x === next.x && p.y === next.y) return p;
+      return next;
+    });
   };
-  const stop = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.pause();
-    v.currentTime = 0;
-    v.closest(".reel-card")?.classList.remove("is-playing");
+
+  // Animation loop: idle auto-rotation + momentum glide.
+  useEffect(() => {
+    let raf = 0;
+    let last = performance.now();
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (!dragRef.current && !reducedRef.current) {
+        const idle = now - lastInteractRef.current > 2000;
+        rotRef.current += (idle ? 2.4 : 0) * dt + velRef.current * dt;
+        velRef.current *= Math.pow(0.06, dt);
+        if (Math.abs(velRef.current) < 0.05) velRef.current = 0;
+        setRotation(rotRef.current);
+      }
+      syncHover();
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Wheel over the wall spins the ring instead of scrolling the page.
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const d = Math.max(-480, Math.min(480, Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX));
+      rotRef.current += d * 0.18;
+      if (!reducedRef.current) velRef.current = d * 0.18 * 2;
+      lastInteractRef.current = performance.now();
+      setRotation(rotRef.current);
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (e.button !== 0) return;
+    dragRef.current = { x: e.clientX, rot: rotRef.current, moved: false };
+    lastMoveRef.current = { x: e.clientX, t: performance.now() };
+    velRef.current = 0;
+    lastInteractRef.current = performance.now();
+    wrapRef.current?.setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    lastPointerRef.current = { x: e.clientX, y: e.clientY };
+    // Lens tilt: the wall leans toward the pointer, like the live wall.
+    const lens = lensRef.current;
+    if (lens) {
+      const r = lens.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      lens.style.transform = `rotateY(${px * 8}deg) rotateX(${py * -5}deg)`;
+    }
+    // "PLAY" pill follows the pointer over a card (the live custom cursor).
+    const card = (e.target as Element).closest?.("[data-card]");
+    setPill(card ? { x: e.clientX, y: e.clientY } : null);
+    const drag = dragRef.current;
+    if (!drag) return;
+    const now = performance.now();
+    const dx = e.clientX - drag.x;
+    if (Math.abs(dx) > 4) drag.moved = true;
+    const dt = Math.max(1, now - lastMoveRef.current.t) / 1000;
+    velRef.current = ((e.clientX - lastMoveRef.current.x) / dt) * 0.12;
+    lastMoveRef.current = { x: e.clientX, t: now };
+    rotRef.current = drag.rot + dx * 0.12;
+    lastInteractRef.current = now;
+    setRotation(rotRef.current);
+  };
+  const endDrag = () => {
+    const drag = dragRef.current;
+    if (!drag) return;
+    if (drag.moved) {
+      suppressClickRef.current = true;
+      window.setTimeout(() => (suppressClickRef.current = false), 120);
+    }
+    if (!reducedRef.current) velRef.current = Math.max(-300, Math.min(300, velRef.current));
+    else velRef.current = 0;
+    dragRef.current = null;
+    lastInteractRef.current = performance.now();
+  };
+  const onWallLeave = () => {
+    if (lensRef.current) lensRef.current.style.transform = "";
+    setPill(null);
   };
 
   return (
-    <a
-      className="reel-card"
-      href={reel.url}
-      target="_blank"
-      rel="noreferrer"
-      style={
-        tilt
-          ? ({ "--ry": tilt.ry, "--ty": tilt.ty, "--i": tilt.i } as React.CSSProperties)
-          : undefined
-      }
-      onMouseEnter={play}
-      onMouseLeave={stop}
-      onFocus={play}
-      onBlur={stop}
+    <div
+      className="wall-wrap"
+      ref={wrapRef}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onPointerLeave={onWallLeave}
+      onClickCapture={(e) => {
+        if (suppressClickRef.current) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }}
     >
-      <img className="reel-poster" src={reel.thumb} alt={reel.title} loading="lazy" draggable={false} />
-      {reel.preview && (
-        <video
-          ref={videoRef}
-          className="reel-preview"
-          data-preview-src={reel.preview}
-          muted
-          loop
-          playsInline
-          preload="none"
-          aria-hidden="true"
-          tabIndex={-1}
-        />
+      <div className="wall-lens" ref={lensRef}>
+        <ReelRing rotation={rotation} />
+      </div>
+      {pill && (
+        <span className="cursor-pill" style={{ left: pill.x, top: pill.y }}>
+          Play
+        </span>
       )}
-      <span className="reel-views">{reel.views ? `${reel.views} views` : "New"}</span>
-      <span className="reel-meta">
-        <span className="reel-tag">{reel.tag}</span>
-        <span className="reel-title">{reel.title}</span>
-      </span>
-    </a>
+    </div>
   );
 }
 
@@ -77,31 +211,7 @@ const SENTENCE_CHOICES: Choice[] = [
   { label: "talk to my AI", sup: "04", world: "var(--world-opensource)", action: "chat" },
 ];
 
-export default function Home({ onOpenChat }: { onOpenChat: () => void }) {
-  // Hero wall: the reels with live previews, views order first.
-  const wallReels = REELS.filter((r) => r.preview).slice(0, 5);
-  const tilts = [
-    { ry: "-14deg", ty: "18px", i: 0 },
-    { ry: "-7deg", ty: "6px", i: 1 },
-    { ry: "0deg", ty: "0px", i: 2 },
-    { ry: "7deg", ty: "6px", i: 3 },
-    { ry: "14deg", ty: "18px", i: 4 },
-  ];
-
-  // Lens tilt: the wall leans toward the pointer, like the live wall.
-  const lensRef = useRef<HTMLDivElement>(null);
-  const onWallMove = (e: React.PointerEvent) => {
-    const el = lensRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `rotateY(${px * 8}deg) rotateX(${py * -5}deg)`;
-  };
-  const onWallLeave = () => {
-    if (lensRef.current) lensRef.current.style.transform = "";
-  };
-
+export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; entered: boolean }) {
   return (
     <>
       <header className="site-header">
@@ -144,25 +254,13 @@ export default function Home({ onOpenChat }: { onOpenChat: () => void }) {
                 I build <em>cool things</em> with AI.
               </p>
             </div>
-            <div
-              className="wall-wrap"
-              onPointerMove={onWallMove}
-              onPointerLeave={onWallLeave}
-            >
-              <div className="wall-lens" ref={lensRef} aria-label="Latest reels">
-                <div className="wall-center">
-                  {wallReels.map((reel, i) => (
-                    <ReelCard key={reel.id} reel={reel} tilt={tilts[i]} />
-                  ))}
-                </div>
-              </div>
-            </div>
+            <HeroWall />
             <div className="cloud-layer" aria-hidden="true" />
           </div>
         </section>
 
         {/* sentence + stats */}
-        <section className="below" aria-label="What Rishabh does, in one sentence">
+        <section className={`below${entered ? " is-entered" : ""}`} aria-label="What Rishabh does, in one sentence">
           <p className="sentence">
             I build{" "}
             {SENTENCE_CHOICES.map((c, i) => (
@@ -192,7 +290,9 @@ export default function Home({ onOpenChat }: { onOpenChat: () => void }) {
             {STATS.map((s) => (
               <div key={s.label}>
                 <dt>{s.label}</dt>
-                <dd>{s.value}</dd>
+                <dd>
+                  <CountUp value={s.value} start={entered} />
+                </dd>
               </div>
             ))}
           </dl>
