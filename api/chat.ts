@@ -60,7 +60,7 @@ About Rishabh:
 - Full name: Rishabh Sharma, 19 years old
 - Education: B.Tech in Computer Science at GLA University, Mathura (2025–2028). Home town: Bulandshahr, Uttar Pradesh, India.
 - Full-stack developer: React, Next.js, React Native, TypeScript, JavaScript, Node.js, Express.js, FastAPI, Python, Tailwind CSS, Supabase, PostgreSQL, Prisma, Vite, Expo, GSAP, GitHub Actions, Vercel, Render.
-- Open source: 14 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects.
+- Open source: 20 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects.
 - LeetCode: 212 problems solved (88 Easy, 99 Medium, 25 Hard).
 - Products he built and shipped:
   - SecureGaurd — application security for every repository (https://secureguard-main.vercel.app)
