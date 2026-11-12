@@ -56,7 +56,6 @@ function HeroWall() {
         ink="#111111"
         height="100%"
         showCopy={false}
-        autoAdvanceMs={6500}
         onSlideClick={onSlideClick}
       />
     </div>
