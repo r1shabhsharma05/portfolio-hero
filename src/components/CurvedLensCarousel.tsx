@@ -1,7 +1,9 @@
 // Restored from Rishabh's pasted 3d-curved-carousel prompt, verbatim except:
 // - "use client" dropped (Vite, no RSC); demo.tsx NOT included (Unsplash slides).
 // - Tap opens the reel (onSlideClick), big title hideable (showCopy).
-// - Self-rotation (autoAdvanceMs): one original spring step per interval.
+// - Self-rotation: continuous drift, 10 deg/s on the target (his "thoda fast";
+//   live site runs 7), plus wheel-to-rotate, 0.12 deg per wheel unit clamped
+//   to +/-240 (live-site value). Nothing else about the animation changed.
 // - Live video (video prop): the card texture is fed from the clip each frame.
 
 import * as React from "react"
@@ -40,8 +42,6 @@ export type CurvedLensCarouselProps = {
   onChange?: (index: number) => void
   /** Tap (not drag) on the stage opens the current slide. Hero adaptation. */
   onSlideClick?: (index: number) => void
-  /** Self-rotation: one spring step per N ms; 0/undefined = off. Hero addition. */
-  autoAdvanceMs?: number
   /** Show the big title block; false hides it (hero keeps titles on the cards). */
   showCopy?: boolean
 }
@@ -237,7 +237,6 @@ export default function CurvedLensCarousel({
   className,
   onChange,
   onSlideClick,
-  autoAdvanceMs,
   showCopy = true,
 }: CurvedLensCarouselProps) {
   const n = slides.length
@@ -389,6 +388,9 @@ export default function CurvedLensCarousel({
         intro = Math.min(1.5, (now - introStart) / 1100)
         if (intro >= 1.5) intro = 1
       }
+      // Continuous drift: the target advances 10 deg/s (scaled by intro
+      // progress), the spring eases pos after it. No timer, no steps.
+      if (!dragging && !reduced.matches) target += (10 / (360 / n)) * Math.min(1, Math.max(0, intro)) * dt
       if (!dragging) {
         if (reduced.matches) {
           pos = target
@@ -416,26 +418,9 @@ export default function CurvedLensCarousel({
       if (!raf && visible && !disposed) raf = requestAnimationFrame(frame)
     }
 
-    // Self-rotation: one original spring step per autoAdvanceMs, never a
-    // continuous drift. A manual step / drag restarts the wait.
-    let autoTimer: ReturnType<typeof setTimeout> | 0 = 0
-    const clearAuto = () => {
-      if (autoTimer) clearTimeout(autoTimer)
-      autoTimer = 0
-    }
-    const scheduleAuto = () => {
-      clearAuto()
-      if (!autoAdvanceMs || reduced.matches || disposed) return
-      autoTimer = setTimeout(() => {
-        if (disposed || dragging || !visible) return
-        api.current.go(1)
-      }, autoAdvanceMs)
-    }
-
     api.current.go = (dir: number) => {
       target = Math.round(target) + dir
       kick()
-      scheduleAuto()
     }
 
     const onDown = (e: PointerEvent) => {
@@ -445,7 +430,6 @@ export default function CurvedLensCarousel({
       downX = e.clientX
       downY = e.clientY
       moved = 0
-      clearAuto()
       lastT = e.timeStamp
       dragPos = pos
       flick = 0
@@ -472,7 +456,6 @@ export default function CurvedLensCarousel({
       target = restFor(pos, flick)
       vel = flick
       kick()
-      scheduleAuto()
     }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") api.current.go(1)
@@ -482,11 +465,27 @@ export default function CurvedLensCarousel({
     }
     const onMotion = () => kick()
 
+    // Wheel rotates the ring, live-site exact: 0.12 deg per wheel unit,
+    // clamped to +/-240 per event, dominant axis, line/page normalised.
+    // Scroll-down moves the cards left, scroll-up moves them right; the
+    // page itself never scrolls under the hero.
+    const onWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey || intro < 1) return
+      const t = e.target instanceof Element ? e.target : null
+      if (t?.closest("input, textarea, select, [role='dialog']")) return
+      e.preventDefault()
+      const r = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1
+      const d = (Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * r
+      target += (0.12 * Math.max(-240, Math.min(240, d))) / (360 / n)
+      kick()
+    }
+
     canvas.addEventListener("pointerdown", onDown)
     canvas.addEventListener("pointermove", onMove)
     canvas.addEventListener("pointerup", onUp)
     canvas.addEventListener("pointercancel", onUp)
     root.addEventListener("keydown", onKey)
+    root.addEventListener("wheel", onWheel, { passive: false })
     reduced.addEventListener("change", onMotion)
 
     const ro = new ResizeObserver((entries) => {
@@ -501,20 +500,16 @@ export default function CurvedLensCarousel({
         for (const e of tex) {
           if (e.video) void e.video.play().catch(() => {})
         }
-        scheduleAuto()
         kick()
       } else {
-        clearAuto()
         for (const e of tex) e.video?.pause()
       }
     })
     io.observe(root)
-    scheduleAuto()
 
     return () => {
       disposed = true
       cancelAnimationFrame(raf)
-      clearAuto()
       for (const e of tex) e.video?.pause()
       ro.disconnect()
       io.disconnect()
@@ -523,12 +518,13 @@ export default function CurvedLensCarousel({
       canvas.removeEventListener("pointerup", onUp)
       canvas.removeEventListener("pointercancel", onUp)
       root.removeEventListener("keydown", onKey)
+      root.removeEventListener("wheel", onWheel)
       reduced.removeEventListener("change", onMotion)
       for (const t of tex) gl.deleteTexture(t.t)
       gl.deleteBuffer(buf)
       gl.deleteProgram(prog)
     }
-  }, [n, slides, bend, autoAdvanceMs])
+  }, [n, slides, bend])
 
   const slide = slides[index] ?? slides[0]
   if (!slide) return null
