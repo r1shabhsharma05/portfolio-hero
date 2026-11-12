@@ -4,8 +4,7 @@ import type { Reel } from "../data/site";
 /** Reel card: poster img + hover-play preview video (live-site mechanism — the
  *  video has no src until hover, then loads from data-preview-src, plays muted
  *  on loop; pause + reset on leave). Poster-only reels have no video element.
- *  The ring positions cards via the --ring-tf variable (see ReelRing); grid
- *  cards have no --ring-tf and lay flat. */
+ *  Grid cards lay flat; the hero wall renders its own WebGL cards. */
 export default function ReelCard({ reel, style }: { reel: Reel; style?: React.CSSProperties }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
