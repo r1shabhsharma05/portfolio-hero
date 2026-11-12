@@ -29,10 +29,14 @@ export interface Reel {
 }
 
 /** Top 8 @cod.ehx reels by lifetime views, verified via Instagram connector 2026-11-12
- *  (total reel views 1,121; no reel near 1k — real numbers only), plus the 2 unposted
- *  Drive videos (GitHub prompt + One Prompt draft, tag NEW, no views) and the posted
- *  "7 day Macbook" reel (7 views). Posters: IG CDN
- *  thumbs for poster-only reels; frames cut from the Drive videos for the live ones. */
+ *  (total reel views 1,121 then), plus the 2 unposted Drive videos (GitHub prompt +
+ *  One Prompt draft, tag NEW, no views), the posted "7 day Macbook" reel (7 views),
+ *  and 2 more Drive reels added 2026-11-13: "Muse motion reel" (1,000 views) and
+ *  "Kalyani — Lyric video" (5,000 views) — counts as stated by Rishabh (IG connector
+ *  down, unverified); total reel views now 7,121. Posters: IG CDN thumbs for
+ *  poster-only reels; frames cut from the Drive videos for the live ones. The 2 new
+ *  videos are letterboxed 16:9 inside a 9:16 frame — posters/previews use a
+ *  blurred-fill treatment so the cards read clean. */
 export const REELS: Reel[] = [
   { id: "DfEjg7Hjghl", title: "100+ LLM apps sitting FREE on GitHub right now.", views: "206", viewsRaw: 206, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfEjg7Hjghl/", thumb: "/reels/llm-apps-206.jpg", preview: null },
   { id: "DfVSuL7zIhi", title: "Gemini 4 argon ....", views: "127", viewsRaw: 127, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfVSuL7zIhi/", thumb: "/reels/gemini.webp", preview: "/reels/gemini-preview.mp4" },
@@ -46,12 +50,14 @@ export const REELS: Reel[] = [
   { id: "one-prompt", title: "One Prompt", views: null, viewsRaw: null, world: "open-source", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/one-prompt.webp", preview: "/reels/one-prompt-preview.mp4" },
   { id: "macbook-7day", title: "7 day Macbook", views: "7", viewsRaw: 7, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/macbook-7day.webp", preview: "/reels/macbook-7day-preview.mp4" },
   { id: "alfaaz-single-prompt", title: "Alfaaz — Single prompt", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/alfaaz-prompt.webp", preview: "/reels/alfaaz-prompt-preview.mp4" },
+  { id: "muse-motion", title: "Muse motion reel", views: "1,000", viewsRaw: 1000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/muse-motion.webp", preview: "/reels/muse-motion-preview.mp4" },
+  { id: "kalyani-lyric", title: "Kalyani — Lyric video", views: "5,000", viewsRaw: 5000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/kalyani-lyric.webp", preview: "/reels/kalyani-lyric-preview.mp4" },
 ];
 
 export const STATS = [
-  { value: "212", label: "LeetCode solved" },
-  { value: "1,253", label: "GitHub contributions in 2026" },
-  { value: "20", label: "Pull requests merged" },
+  { value: "213", label: "LeetCode solved" },
+  { value: "1,387", label: "GitHub contributions in 2026" },
+  { value: "22", label: "Pull requests merged" },
 ];
 
 export interface Project {
@@ -84,7 +90,7 @@ export const WORLDS = [
   {
     id: "open-source",
     title: "Open Source: code in the open",
-    body: "20 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects — small verified fixes, reproduced first, reviewed by maintainers.",
+    body: "22 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects — small verified fixes, reproduced first, reviewed by maintainers.",
     link: "https://github.com/r1shabhsharma05",
     linkLabel: "See the contributions ↗",
   },
