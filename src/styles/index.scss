@@ -98,32 +98,38 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* reel wall inside the hero frame */
 .wall-wrap {
   position: absolute; z-index: 2; left: 0; right: 0; bottom: 0;
-  padding: 0 24px 24px; perspective: 1200px;
+  padding: 0 24px 24px; perspective: 1400px;
+  user-select: none; -webkit-user-select: none; touch-action: pan-y;
 }
 .wall-lens {
   transform-style: preserve-3d; transition: transform 0.35s ease-out;
   will-change: transform;
 }
-.wall-center {
-  display: flex; justify-content: center; gap: clamp(10px, 2vw, 28px);
+/* The ring: cards ride a shallow arc (centre far/small/high, ends
+ * near/large/low, tilted outward) and cycle around it as it rotates. */
+.ring { position: relative; height: 480px; transform-style: preserve-3d; }
+.ring .reel-card {
+  position: absolute; left: 50%; top: 0; margin-left: -120px;
+  transform: var(--ring-tf, none); opacity: var(--ring-o, 1);
+  transition: none;
 }
-.wall-lens .reel-card {
-  animation: wall-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--i, 0) * 90ms);
+.ring-entering .reel-card {
+  animation: ring-fly-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
 }
-@keyframes wall-in {
-  from { opacity: 0; transform: translateY(28px); }
-  to { opacity: 1; }
+@keyframes ring-fly-in {
+  from { opacity: 0; transform: var(--ring-tf) translateZ(-1800px) scale(2.3); }
+  to { opacity: var(--ring-o, 1); transform: var(--ring-tf); }
 }
 .reel-card {
   width: 240px; aspect-ratio: 9 / 16; flex: none; position: relative;
   border-radius: 20px; overflow: hidden; text-align: left;
-  transform: rotateY(var(--ry, 0deg)) rotateX(4deg) translateY(var(--ty, 0px));
+  transform: var(--ring-tf, none);
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   box-shadow: 0 18px 36px -24px rgb(0 0 0 / 55%);
   text-decoration: none; color: #fff;
 }
-.reel-card:hover { transform: rotateY(0deg) rotateX(0deg) translateY(-8px); }
+.reel-card:hover { transform: var(--ring-tf, none) translateY(-8px); }
 .reel-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .reel-card .reel-poster { transition: opacity 0.3s; }
 .reel-card .reel-preview {
@@ -147,12 +153,82 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .reel-card .reel-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9; }
 .reel-card .reel-title { font-family: var(--font-serif); font-size: 19px; line-height: 1.15; margin: 4px 0 0; }
 
+/* ---------- entrance loader (live tokens) ---------- */
+.reel-loader {
+  position: fixed; inset: 0; z-index: 100; overflow: hidden;
+  background: var(--color-paper); color: var(--color-ink);
+  transition: opacity 0.6s ease;
+}
+.reel-loader.is-leaving { opacity: 0; pointer-events: none; }
+.loader-brand {
+  position: fixed; z-index: 102; top: 3.2vh; left: 4vw; margin: 0;
+  font-family: var(--font-serif); letter-spacing: -0.03em;
+  font-size: clamp(64px, 9vw, 150px); line-height: 0.95;
+  display: flex; pointer-events: none; transform-origin: 0 0;
+}
+.loader-mask { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.loader-brand .loader-mask > span {
+  display: inline-block;
+  animation: loader-letter-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes loader-letter-in {
+  from { transform: translateY(105%) rotate(8deg); }
+  to { transform: translateY(0) rotate(0); }
+}
+.loader-ring {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
+  perspective: 1400px; pointer-events: none;
+}
+.loader-ring .ring { position: absolute; left: 0; right: 0; bottom: 0; }
+.loader-status {
+  position: absolute; bottom: 4vh; right: 5vw;
+  display: flex; flex-direction: column; align-items: flex-end;
+}
+.loader-caption {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--color-ink-soft); white-space: pre;
+  margin: 0 0 4px; border-bottom: 1px solid var(--color-ink-soft); padding-bottom: 6px;
+}
+.loader-count {
+  font-family: var(--font-mono); letter-spacing: -0.09em;
+  font-variant-numeric: tabular-nums; font-weight: 400;
+  font-size: clamp(80px, 12vw, 180px); line-height: 1.1;
+  display: flex; align-items: flex-end;
+}
+.loader-count .loader-mask { height: 1.1em; }
+.loader-count .odometer {
+  display: flex; flex-direction: column;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.loader-count .odometer > span { display: block; height: 1.1em; line-height: 1.1; }
+.loader-percent { font-size: 0.22em; letter-spacing: 0; margin: 0 0 0.75em 22px; }
+.loader-skip {
+  position: absolute; bottom: 5vh; left: 4vw; width: 44px; height: 44px;
+  border-radius: 50%; font-size: 18px; cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 13%, transparent);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* "PLAY" pill that follows the pointer over a reel card (live custom cursor). */
+.cursor-pill {
+  position: fixed; z-index: 90; transform: translate(-50%, -50%);
+  background: #111; color: #fff; font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 7px 12px; border-radius: 999px; pointer-events: none; white-space: nowrap;
+}
+
 /* below-hero strip: sentence + stats */
 .below {
   z-index: 4; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
   align-items: end; column-gap: 24px;
   padding: clamp(18px, 3svh, 30px) 48px clamp(22px, 4svh, 38px); position: relative;
 }
+.below .sentence, .below .meta { opacity: 0; transform: translateY(24px); }
+.below.is-entered .sentence, .below.is-entered .meta {
+  opacity: 1; transform: none;
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.below.is-entered .meta { transition-delay: 0.15s; }
 .below > :first-child { grid-column: 1 / span 9; }
 .below > :last-child { grid-column: 10 / span 3; justify-self: end; }
 .sentence {
@@ -298,12 +374,18 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .wordmark-name .wordmark-last { display: none; }
   .world-nav { display: none; }
   .mode-switch { font-size: 19px; }
-  .stage { height: calc(100svh - 60px); min-height: 520px; }
+  .stage { height: 560px; min-height: 0; }
   .world-frame { clip-path: inset(0 round 20px); margin: 10px 10px 0; }
   .hero-name { font-size: clamp(64px, 18vw, 110px); }
-  .wall-wrap { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; }
-  .wall-center { justify-content: flex-start; }
-  .reel-card { width: 168px; scroll-snap-align: start; }
+  .wall-wrap { padding-bottom: 8px; }
+  .ring { height: 360px; transform: none; }
+  .ring .reel-card { margin-left: -84px; }
+  .reel-card { width: 168px; }
+  .loader-brand { top: 2vh; }
+  .loader-ring { height: 55%; }
+  .loader-status { top: 2vh; bottom: auto; flex-direction: column-reverse; }
+  .loader-count { font-size: 72px; }
+  .loader-skip { bottom: 8vh; }
   .below { grid-template-columns: 1fr; row-gap: 16px; padding: 18px 20px 22px; }
   .below > :first-child, .below > :last-child { grid-column: 1; justify-self: start; }
   .meta > div { align-items: flex-start; }
