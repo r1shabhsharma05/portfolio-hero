@@ -76,7 +76,7 @@ export const PROJECTS: Project[] = [
   { name: "Farmer Marketplace", tagline: "From farm to market. Without barriers.", description: "Empowering farmers, connecting markets. Escrow payments, listings, profiles.", image: "/projects/farmer.jpg", live: "https://farmer-market-place-six.vercel.app", repo: "https://github.com/r1shabhsharma05/Farmer-Market-Place" },
   { name: "LocalKart", tagline: "Good finds. Right on campus.", description: "Buy and sell pre-loved essentials within your college.", image: "/projects/localkart.jpg", live: "https://localkart-jet.vercel.app", repo: "https://github.com/r1shabhsharma05/LocalKart" },
   { name: "Healthcare Hub", tagline: "Connected healthcare for everyone.", description: "A unified digital health platform. Your health, all in one place.", image: "/projects/healthcare.jpg", repo: "https://github.com/r1shabhsharma05" },
-  { name: "MorphAI", tagline: "AI-powered content tooling.", description: "Modern AI APIs for creators.", image: "/projects/morphai.jpg", repo: "https://github.com/r1shabhsharma05" },
+  { name: "MorphAI", tagline: "AI-powered content tooling.", description: "Modern AI APIs for creators.", image: "/projects/morphai.jpg", repo: "https://github.com/r1shabhsharma05/MorphAi" },
 ];
 
 export const WORLDS = [
