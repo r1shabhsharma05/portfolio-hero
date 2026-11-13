@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ChatModal from "../components/ChatModal";
 import CursorLabel from "../components/CursorLabel";
+import LiquidGlassCarousel, {
+  type LiquidGlassCarouselItem,
+} from "../components/LiquidGlassCarousel";
 import ReelCard from "../components/ReelCard";
+import SkillSphere from "../components/SkillSphere";
 import {
   revealWorldTransition,
   shouldShowWorldTransition,
@@ -115,6 +119,22 @@ const BUILT = [
   { ...PROJECTS[0], role: "Solo", tags: ["React", "TypeScript", "Prisma", "Supabase"] },
   { ...PROJECTS[3], role: "Solo", tags: ["React", "Node.js", "Supabase", "Razorpay"] },
 ];
+
+/** Measured image aspect (w/h) per Built-myself screenshot. */
+const BUILT_ASPECT: Record<string, number> = {
+  "/projects/railsync.jpg": 1600 / 900,
+  "/projects/localkart.jpg": 1536 / 1024,
+  "/projects/healthcare.jpg": 1536 / 1024,
+  "/projects/morphai.jpg": 1536 / 1024,
+  "/projects/secureguard.jpg": 1600 / 900,
+  "/projects/farmer.jpg": 1600 / 900,
+};
+
+const BUILT_ITEMS: LiquidGlassCarouselItem[] = BUILT.map((b) => ({
+  src: b.image,
+  title: b.name,
+  aspect: BUILT_ASPECT[b.image] ?? 16 / 9,
+}));
 
 const WORKED_AT = [PROJECTS[0], PROJECTS[1], PROJECTS[3]].map((p) => ({
   name: p.name,
@@ -468,6 +488,7 @@ export default function Build() {
   // World transition (Avi's mechanism): arriving from the homepage, the
   // full-screen sky scene is already covering; it morphs into the hero.
   const [showTransition] = useState(() => shouldShowWorldTransition());
+  const [builtActive, setBuiltActive] = useState(0);
   useEffect(() => {
     if (!showTransition) return;
     const cleanup = revealWorldTransition();
@@ -642,6 +663,19 @@ export default function Build() {
           ))}
         </section>
 
+        <section className="section build-skills" aria-label="Skills">
+          <p className="section-label">Skills</p>
+          <h2 className="section-title">What I work with.</h2>
+          <p className="section-body">
+            The stack behind the seven products — drag the sphere to spin it,
+            click a card to bring it to the front.
+          </p>
+          <div className="skill-sphere">
+            <SkillSphere />
+          </div>
+          <p className="skill-hint">Drag · Scroll · Arrow keys</p>
+        </section>
+
         <section className="section build-shipped" aria-label="Shipped, end to end">
           <p className="section-label">Shipped — end to end</p>
           <h2 className="section-title">Shipped, end to end.</h2>
@@ -663,57 +697,46 @@ export default function Build() {
             Side projects that shipped — each one taught me something the big
             ones needed.
           </p>
-          <div className="built-grid">
-            {BUILT.map((b) => {
-              const open = () =>
-                window.open(b.live ?? b.repo, "_blank", "noopener,noreferrer");
-              return (
-                <article
-                  key={b.name}
-                  className="built-card build-card"
-                  data-cursor="Open"
-                  tabIndex={0}
-                  role="link"
-                  aria-label={`${b.name} — open`}
-                  onClick={(e) => {
-                    if ((e.target as HTMLElement).closest("a, button")) return;
-                    open();
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") open();
-                  }}
-                >
-                  <img src={b.image} alt={b.name} loading="lazy" />
-                  <div className="built-body">
-                    <p className="built-role">{b.role}</p>
-                    <h3>
-                      <span className="card-title">{b.name}</span>
-                    </h3>
-                    <p>{b.description}</p>
-                    {b.tags.length > 0 && (
-                      <ul className="ship-tags">
-                        {b.tags.map((t) => (
-                          <li key={t}>{t}</li>
-                        ))}
-                      </ul>
-                    )}
-                    <p className="card-links">
-                      {b.live && (
-                        <a href={b.live} target="_blank" rel="noreferrer">
-                          Live ↗
-                        </a>
-                      )}
-                      {b.repo && (
-                        <a href={b.repo} target="_blank" rel="noreferrer">
-                          GitHub ↗
-                        </a>
-                      )}
-                    </p>
-                  </div>
-                </article>
-              );
-            })}
+          <div className="built-carousel">
+            <LiquidGlassCarousel
+              items={BUILT_ITEMS}
+              panelHeight={340}
+              background="#f3f3f1"
+              onActiveChange={setBuiltActive}
+            />
           </div>
+          {(() => {
+            const b = BUILT[builtActive] ?? BUILT[0];
+            if (!b) return null;
+            return (
+              <div className="built-detail">
+                <p className="built-role">{b.role}</p>
+                <h3>
+                  <span className="card-title">{b.name}</span>
+                </h3>
+                <p>{b.description}</p>
+                {b.tags.length > 0 && (
+                  <ul className="ship-tags">
+                    {b.tags.map((t) => (
+                      <li key={t}>{t}</li>
+                    ))}
+                  </ul>
+                )}
+                <p className="card-links">
+                  {b.live && (
+                    <a href={b.live} target="_blank" rel="noreferrer">
+                      Live ↗
+                    </a>
+                  )}
+                  {b.repo && (
+                    <a href={b.repo} target="_blank" rel="noreferrer">
+                      GitHub ↗
+                    </a>
+                  )}
+                </p>
+              </div>
+            );
+          })()}
         </section>
 
         <section className="section build-experiments" aria-label="Experiments">

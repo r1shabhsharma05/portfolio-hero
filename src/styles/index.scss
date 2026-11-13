@@ -839,6 +839,25 @@ body[data-phase="leaving"] .site-header .mode-switch {
   color: var(--color-ink-soft);
 }
 
+/* Skills sphere — draggable 3D card sphere of skill icons. */
+.build-skills .skill-sphere {
+  height: 560px;
+  margin-top: 32px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  background: #fff;
+}
+
+.build-skills .skill-hint {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
 /* Worked At strip — product wordmarks, cell fills white on hover. */
 .build-worked {
   padding: clamp(32px, 6vh, 64px) 48px 0;
@@ -1111,37 +1130,19 @@ body[data-phase="leaving"] .site-header .mode-switch {
   background: var(--world-build);
 }
 
-/* Built myself: static grid. */
-.built-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+/* Built myself: liquid-glass carousel. */
+.built-carousel {
+  height: 680px;
   margin-top: 40px;
-}
-
-.built-card {
-  display: flex;
-  flex-direction: column;
-  background: var(--color-surface);
-  border: 1px solid var(--color-line);
-  border-radius: 20px;
+  border-radius: 24px;
   overflow: hidden;
-  cursor: pointer;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper);
 }
 
-.built-card > img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-}
-
-.built-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
-  padding: 20px;
+.built-detail {
+  max-width: 640px;
+  margin-top: 32px;
 }
 
 .built-role {
@@ -1152,30 +1153,31 @@ body[data-phase="leaving"] .site-header .mode-switch {
   color: var(--color-ink-soft);
 }
 
-.built-card h3 {
+.built-detail h3 {
   font-family: var(--font-serif);
   font-size: 24px;
   line-height: 1.1;
+  margin-top: 10px;
 }
 
-.built-body p {
+.built-detail p {
   font-size: 15px;
   line-height: 1.55;
   color: var(--color-ink-soft);
 }
 
-.built-body .ship-tags {
+.built-detail .ship-tags {
   margin: 0;
 }
 
-.built-body a {
+.built-detail a {
   font-size: 14px;
   color: var(--color-ink);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.built-body a:hover {
+.built-detail a:hover {
   color: var(--world-build);
 }
 
@@ -1307,10 +1309,6 @@ body[data-phase="leaving"] .site-header .mode-switch {
 
 /* Build page: tablet + mobile. */
 @media (max-width: 1200px) {
-  .built-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .experiments-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1339,14 +1337,20 @@ body[data-phase="leaving"] .site-header .mode-switch {
     padding: 48px 20px;
   }
 
+  .build-skills .skill-sphere {
+    height: 420px;
+    border-radius: 20px;
+  }
+
   .ship-card {
     grid-template-columns: 1fr;
     padding: 24px;
     top: calc(76px + var(--i, 0) * 16px);
   }
 
-  .built-grid {
-    grid-template-columns: 1fr;
+  .built-carousel {
+    height: 480px;
+    border-radius: 20px;
   }
 
   .experiments-panel {
