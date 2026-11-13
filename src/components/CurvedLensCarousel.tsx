@@ -5,10 +5,6 @@
 //   live site runs 7), plus wheel-to-rotate, 0.12 deg per wheel unit clamped
 //   to +/-240 (live-site value). Nothing else about the animation changed.
 // - Live video (video prop): the card texture is fed from the clip each frame.
-// - Formation arc (uArc): the loader's rainbow. The wall's centres sit on one
-//   line, so no CSS pose can bend them into an arc — the shader bends them
-//   instead (edges down, centre high). 0 in the hero; eased in while the
-//   loader runs, eased out during the morph. Read live from body[data-phase].
 
 import * as React from "react"
 
@@ -96,7 +92,7 @@ export function pad2(n: number): string {
 
 const VERT =
   "attribute vec2 aPos;" +
-  "uniform vec2 uRes;uniform vec2 uSize;uniform float uX;uniform float uBend;uniform float uVel;uniform float uIntro;uniform float uLift;uniform float uArc;uniform float uScale;" +
+  "uniform vec2 uRes;uniform vec2 uSize;uniform float uX;uniform float uBend;uniform float uVel;uniform float uIntro;uniform float uLift;uniform float uScale;" +
   "varying vec2 vUv;varying float vX;" +
   "void main(){" +
   "vec2 ap=(aPos-.5)*uScale+.5;" +
@@ -105,7 +101,6 @@ const VERT =
   "vec2 n=p/(uRes*.5);" +
   "float x=clamp(n.x,-1.4,1.4);" +
   "n.y*=1.+uBend*x*x;" +
-  "n.y-=uArc*x*x;" +
   "n.y+=uVel*.05*sin(ap.x*3.14159)*(ap.y-.5);" +
   "n.x*=1.-.06*uBend*x*x;n.y+=uLift;" +
   "vUv=aPos;vX=x;" +
@@ -303,7 +298,7 @@ export default function CurvedLensCarousel({
     gl.enableVertexAttribArray(loc)
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
     const u: GLState["u"] = {}
-    for (const k of ["uRes", "uSize", "uX", "uBend", "uVel", "uIntro", "uTex", "uAspect", "uShift", "uReady", "uLift", "uArc", "uDim", "uOutline", "uOutlineColor", "uScale"]) u[k] = gl.getUniformLocation(prog, k)
+    for (const k of ["uRes", "uSize", "uX", "uBend", "uVel", "uIntro", "uTex", "uAspect", "uShift", "uReady", "uLift", "uDim", "uOutline", "uOutlineColor", "uScale"]) u[k] = gl.getUniformLocation(prog, k)
     gl.enable(gl.BLEND)
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
@@ -353,12 +348,6 @@ export default function CurvedLensCarousel({
     // Stage size, measured on resize only; the frame loop reads these numbers.
     let W = 1, H = 1, dpr = 1, cw = 1, ch = 1, gap = 1
     let pos = 0, vel = 0, target = 0
-    // Formation arc (loader rainbow): 0 in the hero, ARC_FORMATION while
-    // the loader runs. Starts arced — the loader is already up when this
-    // mounts — and eases out during the morph. The frame loop reads
-    // body[data-phase] live, so no prop drilling.
-    const ARC_FORMATION = 0.24
-    let arc = document.body.dataset.phase === "done" ? 0 : ARC_FORMATION
     let intro = reduced.matches ? 1 : 0
     let introStart = -1
     let dragging = false, dragX = 0, dragPos = 0, lastX = 0, lastT = 0, flick = 0, downX = 0, downY = 0, moved = 0
@@ -434,7 +423,6 @@ export default function CurvedLensCarousel({
       gl.uniform1f(u.uBend, bend)
       gl.uniform1f(u.uVel, reduced.matches ? 0 : Math.max(-1, Math.min(1, vel * 0.12)))
       gl.uniform1f(u.uLift, W < 640 ? 0.3 : 0.15)
-      gl.uniform1f(u.uArc, arc)
       const step = cw + gap
       for (let i = 0; i < n; i++) {
         const d = offsetOf(i, pos, n)
@@ -497,12 +485,6 @@ export default function CurvedLensCarousel({
         setIndex(idx)
         onChangeRef.current?.(idx)
       }
-      // Formation arc eases toward its target (rainbow while the loader
-      // runs, flat in the hero). Read live: the loader phase lives on
-      // document.body, not in a prop.
-      const arcTarget = document.body.dataset.phase === "loading" ? ARC_FORMATION : 0
-      arc += (arcTarget - arc) * (1 - Math.exp(-dt * 6))
-      const arcMoving = Math.abs(arcTarget - arc) > 0.001
       // Focus veil eases toward its target (.5s, like the live CSS).
       let dimMoving = false
       for (let i = 0; i < n; i++) {
@@ -513,7 +495,7 @@ export default function CurvedLensCarousel({
       draw()
       const videoActive =
         visible && !reduced.matches && tex.some((e) => !!e.video && !e.video.paused && e.video.readyState >= 2)
-      const settled = !dragging && Math.abs(target - pos) < 0.0005 && Math.abs(vel) < 0.001 && (intro >= 1 || reduced.matches) && !arcMoving
+      const settled = !dragging && Math.abs(target - pos) < 0.0005 && Math.abs(vel) < 0.001 && (intro >= 1 || reduced.matches)
       if (settled && !videoActive && !dimMoving) {
         pos = target
         draw()
@@ -617,11 +599,6 @@ export default function CurvedLensCarousel({
       }
     })
     io.observe(root)
-    // The loader phase lives on document.body; re-kick the frame loop when
-    // it changes so the formation arc eases out during the morph even if
-    // the loop had settled.
-    const po = new MutationObserver(() => kick())
-    po.observe(document.body, { attributes: true, attributeFilter: ["data-phase"] })
 
     return () => {
       disposed = true
@@ -629,7 +606,6 @@ export default function CurvedLensCarousel({
       for (const e of tex) e.video?.pause()
       ro.disconnect()
       io.disconnect()
-      po.disconnect()
       canvas.removeEventListener("pointerdown", onDown)
       canvas.removeEventListener("pointermove", onMove)
       canvas.removeEventListener("pointermove", onHover)
