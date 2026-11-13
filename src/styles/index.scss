@@ -53,10 +53,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .site-left[data-home]:has(.site-mark:hover, .site-mark:focus-visible) .world-nav {
   opacity: 0; pointer-events: none; transform: translateY(-6px);
 }
-.site-mark:hover .wordmark-name:not(.wordmark-line),
-.site-mark:focus-visible .wordmark-name:not(.wordmark-line) { opacity: 0; transform: translateY(-105%); }
-.site-mark:hover .wordmark-line,
-.site-mark:focus-visible .wordmark-line { opacity: 1; transform: none; }
+.site-left[data-home] .site-mark:hover .wordmark-name:not(.wordmark-line),
+.site-left[data-home] .site-mark:focus-visible .wordmark-name:not(.wordmark-line) { opacity: 0; transform: translateY(-105%); }
+.site-left[data-home] .site-mark:hover .wordmark-line,
+.site-left[data-home] .site-mark:focus-visible .wordmark-line { opacity: 1; transform: none; }
 .world-nav {
   font-family: var(--font-serif); letter-spacing: -0.02em;
   font-size: 26px; line-height: 1; display: flex; align-items: baseline;
@@ -528,80 +528,142 @@ body[data-phase="leaving"] .site-header .mode-switch {
   transform: translateY(-110%);
 }
 
-/* Brief "Opening Build" overlay, only when arriving from the homepage. */
-.build-intro {
+/* Screen-reader-only text (e.g. the "Opening Build" live-region status). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* World page transition (Avi's mechanism): the full-screen sky scene +
+   "Build." covers on the homepage, then morphs into the hero sky panel
+   on /projects and fades out. */
+.world-transition {
+  z-index: 1000;
+  pointer-events: auto;
+  cursor: wait;
   position: fixed;
   inset: 0;
-  z-index: 200;
+  overflow: hidden;
+}
+.world-transition-scene {
+  background: var(--color-paper-deep) var(--scene) 50% 88% / cover;
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path;
+  align-items: flex-end;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-paper);
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.world-transition-light {
   pointer-events: none;
-  transition: opacity 0.6s ease;
+  filter: blur(12px);
+  background: linear-gradient(90deg, #0000, #ffe9c4d9 42%, #fff6e6 50%, #ffe3b5d9 58%, #0000);
+  width: 26%;
+  position: absolute;
+  top: -10%;
+  bottom: -10%;
+  left: -14%;
+  transform: translate(-50%) skew(-8deg);
 }
-
-.build-intro span {
+.world-transition-name {
   font-family: var(--font-serif);
-  font-size: 32px;
+  letter-spacing: -0.04em;
   color: var(--color-ink);
+  margin: 0 0 clamp(28px, 6vh, 64px) clamp(24px, 4vw, 56px);
+  padding-bottom: 0.06em;
+  font-size: clamp(72px, 12vw, 180px);
+  line-height: 0.9;
+  display: block;
+  overflow: hidden;
 }
-
-.build-intro.is-fading {
-  opacity: 0;
+.world-transition-name > span {
+  display: block;
+  transform: translateY(105%);
 }
+.world-transition-active {
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+/* Covered state, rendered by /projects on arrival from the homepage:
+   the scene is fully in, the name is up, the light has swept past. */
+.world-transition.is-covered .world-transition-scene { clip-path: inset(0 0% 0 0); }
+.world-transition.is-covered .world-transition-name > span { transform: none; }
+.world-transition.is-covered .world-transition-light { opacity: 0; }
 
 /* Hero: sky panel + brief form. */
+/* Hero: one painted-sky panel; the brief card sits on it (Avi's layout). */
 .build-hero {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 24px;
-  margin: 0 16px;
-}
-
-.build-hero-sky {
+  box-sizing: border-box;
   position: relative;
-  min-height: 560px;
-  border-radius: 28px;
+  isolation: isolate;
   overflow: hidden;
-  background: var(--color-paper-deep);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  align-items: end;
+  gap: 40px;
+  min-height: min(600px, 100svh - 140px);
+  margin: 0 16px;
+  padding: 40px clamp(24px, 4vw, 56px);
+  border-radius: 28px;
+  background: var(--color-paper-deep) url("/build-sky.webp") 50% 88% / cover;
 }
 
-.build-hero-sky > img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.8;
-  object-position: 60% 35%;
+@media (max-width: 700px) {
+  .build-hero {
+    background-image: url("/build-sky-sm.webp");
+  }
 }
 
-.build-hero-sky::after {
+/* Scroll zoom (Avi's --hero-p): the sky grows to 1.3x and sinks 22% as the
+   hero scrolls out, clipped by the panel; a paper veil fades in over it. */
+.build-hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
-  background: linear-gradient(180deg, rgb(0 0 0 / 0) 40%, rgb(0 0 0 / 0.55));
+  z-index: -2;
+  background: inherit;
+  transform-origin: 50% 100%;
+  transform: translate3d(0, calc(var(--hero-p, 0) * 22%), 0)
+    scale(calc(1 + var(--hero-p, 0) * 0.3));
+  will-change: transform;
+}
+.build-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-paper);
+  opacity: calc(var(--hero-p, 0) * 0.45);
+  pointer-events: none;
 }
 
 .build-hero-copy {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 32px;
-  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  color: var(--color-ink);
 }
 
 .build-eyebrow {
-  margin-bottom: 14px;
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgb(255 255 255 / 0.85);
+  color: var(--color-ink);
 }
 
 .build-hero-copy h1 {
@@ -611,157 +673,144 @@ body[data-phase="leaving"] .site-header .mode-switch {
   letter-spacing: -0.02em;
 }
 
+.build-underline {
+  text-decoration: underline;
+  text-decoration-color: var(--world-build);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+
 .build-hero-copy p:not(.build-eyebrow) {
   max-width: 52ch;
-  margin-top: 16px;
   font-size: 16px;
   line-height: 1.55;
-  color: rgb(255 255 255 / 0.88);
+  color: var(--color-ink-soft);
 }
 
-/* Brief form. */
+/* Brief form card (Avi's sentence form). */
 .brief-form {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 32px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-line);
-  border-radius: 28px;
+  gap: 18px;
+  padding: 26px 28px 22px;
+  background: color-mix(in srgb, var(--color-surface) 95%, transparent);
+  border-radius: 22px;
+  box-shadow: 0 40px 80px -40px rgb(0 0 0 / 40%);
 }
 
-.brief-title {
-  font-family: var(--font-serif);
-  font-size: 28px;
-  line-height: 1.1;
-}
-
-.brief-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.brief-field > span,
-.brief-timeline > legend {
+.brief-kicker {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-ink-soft);
 }
 
-.brief-field input,
-.brief-field textarea {
-  font: inherit;
-  font-size: 15px;
-  padding: 12px 14px;
-  border: 1px solid var(--color-line);
-  border-radius: 12px;
-  background: var(--color-paper);
+.brief-line {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.35;
   color: var(--color-ink);
 }
 
-.brief-field input:focus,
-.brief-field textarea:focus {
-  outline: 2px solid var(--world-build);
-  outline-offset: 2px;
-}
-
-.brief-field textarea {
-  resize: vertical;
-}
-
-.brief-timeline {
+.brief-blank {
+  width: calc(var(--chars) * 0.42em);
+  max-width: 100%;
+  padding: 0 0.15em;
   border: 0;
+  border-bottom: 2px solid var(--color-ink);
+  background: transparent;
+  outline: none;
+  font: inherit;
+  color: var(--color-ink);
+}
+.brief-blank::placeholder {
+  color: var(--color-ink-muted);
+}
+
+.brief-when button {
+  isolation: isolate;
+  position: relative;
   padding: 0;
-  margin: 0;
-}
-
-.brief-timeline > legend {
-  margin-bottom: 10px;
-}
-
-.brief-radio {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-right: 8px;
-  padding: 8px 14px;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  font-size: 14px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--color-ink-muted);
   cursor: pointer;
 }
-
-.brief-radio:has(input:checked) {
-  border-color: var(--world-build);
-  background: color-mix(in srgb, var(--world-build) 8%, #fff);
+.brief-when button::before {
+  content: "";
+  position: absolute;
+  inset: 0.12em -0.12em 0.04em;
+  z-index: -1;
+  background: var(--world-build);
+  transform-origin: 0;
+  transform: scaleX(0);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.brief-when button:hover,
+.brief-when button[aria-checked="true"] {
+  color: var(--color-surface);
+}
+.brief-when button:hover::before,
+.brief-when button[aria-checked="true"]::before {
+  transform: none;
 }
 
-.brief-radio input {
-  accent-color: var(--world-build);
-  margin: 0;
+.brief-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.brief-ai {
+.brief-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.brief-ai > span {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-ink-soft);
-}
-
-.brief-ai-btn {
-  width: 88px;
-  height: 44px;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  background: var(--color-surface);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
+.brief-ghost {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--color-line);
   color: var(--color-ink);
-  cursor: pointer;
-  transition: background 0.25s, color 0.25s, border-color 0.25s;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s;
 }
-
-.brief-ai-btn:hover {
-  border-color: var(--color-ink);
-}
-
-.brief-ai-btn[data-on] {
-  background: var(--color-ink);
-  border-color: var(--color-ink);
-  color: #fff;
+.brief-ghost:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 0 0 1px var(--color-ink);
 }
 
 .brief-send {
-  padding: 14px 28px;
+  margin-left: auto;
+  padding: 12px 18px;
   border: 0;
   border-radius: 999px;
-  background: var(--color-ink);
-  color: #fff;
-  font-family: var(--font-sans);
-  font-size: 15px;
-  font-weight: 600;
+  background: var(--color-night);
+  color: var(--color-surface);
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s;
+}
+.brief-send:hover {
+  transform: translateY(-2px);
 }
 
-.brief-send:not(:disabled):hover {
-  background: var(--world-build);
-}
-
-.brief-send:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+/* Hero: tablet + mobile (Avi: single column under 1000px). */
+@media (max-width: 1000px) {
+  .build-hero {
+    grid-template-columns: 1fr;
+    border-radius: 20px;
+    padding: 28px 20px;
+  }
 }
 
 /* Stats row. */
@@ -1279,14 +1328,6 @@ body[data-phase="leaving"] .site-header .mode-switch {
   .build-hero {
     grid-template-columns: 1fr;
     margin: 0 12px;
-  }
-
-  .build-hero-sky {
-    min-height: 440px;
-  }
-
-  .build-hero-copy {
-    padding: 24px;
   }
 
   .brief-form {
