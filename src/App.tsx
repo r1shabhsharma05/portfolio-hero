@@ -6,11 +6,11 @@ import Home from "./pages/Home";
 import { REELS } from "./data/site";
 
 /** Entrance: preload the reel posters + sky, drive the loader's odometer
- *  toward the real load fraction at ~108 points/sec (the live pace, ~1s
- *  to 100%), lift the loader at 100%. The loader shows the hero wall
- *  itself drifting on the paper, and the brand flies onto the header
- *  wordmark as the paper fades. Reduced-motion skips the loader entirely.
- *  The hero renders underneath from the start, like the live site. */
+ *  toward the real load fraction at ~60 points/sec (the live pace), lift
+ *  the loader at 100%. The loader shows the hero wall itself drifting on
+ *  the paper, and the brand flies onto the header wordmark as the paper
+ *  fades. Reduced-motion skips the loader entirely. The hero renders
+ *  underneath from the start, like the live site. */
 const ASSETS = [...REELS.map((r) => r.thumb), "/sky.jpg"];
 
 export default function App() {
@@ -33,10 +33,10 @@ export default function App() {
       setPhase("done");
       return;
     }
-    // Completion: the brand morph runs 1.0s, so the loader stays mounted
-    // 1.1s while the paper fades (.9s) and the name lands on the wordmark.
+    // Completion: the brand morph runs 1.3s, so the loader stays mounted
+    // 1.4s while the paper fades (.9s) and the name lands on the wordmark.
     setPhase("leaving");
-    window.setTimeout(() => setPhase("done"), 1100);
+    window.setTimeout(() => setPhase("done"), 1400);
   };
 
   // The header nav + Human/Agent switch fade in only once the loader is
@@ -64,10 +64,10 @@ export default function App() {
     const safety = window.setTimeout(() => (targetRef.current = 100), 4000);
     let raf = 0;
     const tick = () => {
-      const next = Math.min(targetRef.current, progressRef.current + 1.8);
+      const next = Math.min(targetRef.current, progressRef.current + 1.1);
       progressRef.current = next;
       setProgress(next);
-      if (next >= 100 && performance.now() - t0 >= 900) finish();
+      if (next >= 100 && performance.now() - t0 >= 1400) finish();
       else if (!doneRef.current) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
