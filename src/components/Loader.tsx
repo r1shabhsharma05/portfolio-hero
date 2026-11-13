@@ -40,9 +40,10 @@ export default function Loader({ progress, leaving, loadedReels, reelTotal, onSk
   }, [onSkip]);
 
   // When the load completes, fly the brand onto the header wordmark —
-  // the live site's name morph (1.3s, [.65,0,.35,1]). The trailing "."
-  // fades out mid-flight; the header's "Rishabh" is underneath at the
-  // landing spot, so the swap is invisible when the loader unmounts.
+  // the live site's name morph is 1.3s, [.65,0,.35,1]; ours runs 1.0s,
+  // faster per the faster-loader order. The trailing "." fades out
+  // mid-flight; the header's "Rishabh" is underneath at the landing spot,
+  // so the swap is invisible when the loader unmounts.
   useEffect(() => {
     if (!leaving) return;
     const brand = brandRef.current;
@@ -57,7 +58,7 @@ export default function Loader({ progress, leaving, loadedReels, reelTotal, onSk
         { transform: "translate(0px, 0px) scale(1)" },
         { transform: `translate(${t.left - r.left}px, ${t.top - r.top}px) scale(${scale})` },
       ],
-      { duration: 1300, easing: "cubic-bezier(.65,0,.35,1)", fill: "forwards" },
+      { duration: 1000, easing: "cubic-bezier(.65,0,.35,1)", fill: "forwards" },
     );
     const period = brand.querySelector(".loader-mask:last-child > span");
     const fade = period?.animate([{ opacity: 1 }, { opacity: 0 }], {
