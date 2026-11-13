@@ -3,6 +3,10 @@ import { createPortal } from "react-dom";
 import { LEARN_POSTS, PROFILE, PROJECTS, REELS, STATS, WORLDS } from "../data/site";
 import ReelCard from "../components/ReelCard";
 import CurvedLensCarousel from "../components/CurvedLensCarousel";
+import {
+  openWorldTransition,
+  preloadWorldScene,
+} from "../components/WorldTransition";
 
 /** Counts a stat up from 0 once `start` flips true — the live stats roll
  *  up for ~2s after the loader lifts. */
@@ -210,7 +214,7 @@ function SentencePreview({
 }
 
 const SENTENCE_CHOICES: Choice[] = [
-  { label: "founders", sup: "01", world: "#2F55FF", on: "#FFFFFF", href: "/projects" },
+  { label: "founders", sup: "01", world: "#2F55FF", on: "#FFFFFF", href: "/projects/" },
   { label: "open source", sup: "02", world: "#EF3B2D", on: "#FFFFFF", href: "https://github.com/r1shabhsharma05" },
   { label: "students", sup: "03", world: "#FFC81A", on: "#111111", href: "/blog/" },
   { label: "talk to my AI", sup: "04", world: "var(--color-ink)", on: "var(--color-paper)", action: "chat" },
@@ -328,7 +332,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
           <nav className="world-nav" aria-label="Worlds">
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#2F55FF", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/projects" onMouseEnter={() => setNavWorld("build")} onMouseLeave={() => setNavWorld(null)}>Build</a>
+              <a className="world-link" style={{ "--world": "#2F55FF", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/projects/" onMouseEnter={() => { setNavWorld("build"); preloadWorldScene(); }} onMouseLeave={() => setNavWorld(null)} onClick={(e) => { e.preventDefault(); openWorldTransition("/projects/"); }}>Build</a>
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>

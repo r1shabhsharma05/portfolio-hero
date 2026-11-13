@@ -84,7 +84,7 @@ export const WORLDS = [
     id: "build",
     title: "Build: products for everyone",
     body: "Idea to launch for real products: the seven products he built himself, from an AI railway planner to an emergency SOS app.",
-    link: "/projects",
+    link: "/projects/",
     linkLabel: "See the products ↗",
   },
   {
