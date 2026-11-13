@@ -38,6 +38,7 @@ type ShipItem = {
   period: string;
   description: string;
   image: string;
+  images?: string[];
   live?: string;
   repo?: string;
   stats: { value: string; label: string }[];
@@ -48,6 +49,11 @@ const SHIPPED: ShipItem[] = [
   {
     ...PROJECTS[0],
     period: "2026 · Solo",
+    images: [
+      "/projects/secureguard.jpg",
+      "/projects/secureguard-landing.jpg",
+      "/projects/secureguard-dashboard.jpg",
+    ],
     stats: [
       { value: "25", label: "security fixes shipped" },
       { value: "19", label: "Supabase tables" },
@@ -67,10 +73,31 @@ const SHIPPED: ShipItem[] = [
     ...PROJECTS[3],
     period: "2026 · Solo",
     stats: [
-      { value: "423", label: "backend tests passing" },
-      { value: "10", label: "stages live" },
+      { value: "457", label: "backend tests passing" },
+      { value: "12", label: "stages live" },
     ],
     tags: ["React", "Node.js", "Supabase", "Razorpay"],
+  },
+  {
+    ...PROJECTS[2],
+    period: "2026",
+    stats: [{ value: "4", label: "PRs merged upstream" }],
+    tags: ["Python", "CP-SAT"],
+  },
+  {
+    ...PROJECTS[5],
+    period: "2026",
+    stats: [],
+    tags: [],
+  },
+  {
+    ...PROJECTS[4],
+    period: "2026 · Solo",
+    stats: [
+      { value: "6", label: "live listings" },
+      { value: "3", label: "upstream PRs merged" },
+    ],
+    tags: ["React", "Node.js", "MongoDB"],
   },
 ];
 
@@ -79,7 +106,14 @@ const BUILT = [
   { ...PROJECTS[4], role: "Solo", tags: ["React", "Node.js", "MongoDB"] },
   { ...PROJECTS[5], role: "Solo", tags: [] as string[] },
   { ...PROJECTS[6], role: "Solo", tags: [] as string[] },
+  { ...PROJECTS[0], role: "Solo", tags: ["React", "TypeScript", "Prisma", "Supabase"] },
+  { ...PROJECTS[3], role: "Solo", tags: ["React", "Node.js", "Supabase", "Razorpay"] },
 ];
+
+const WORKED_AT = [PROJECTS[0], PROJECTS[1], PROJECTS[3]].map((p) => ({
+  name: p.name,
+  live: p.live ?? "",
+}));
 
 const reducedMotion = () =>
   typeof window !== "undefined" &&
@@ -145,8 +179,7 @@ function Petals() {
     () =>
       Array.from({ length: 8 }, (_, i) => ({
         left: (i * 13 + 4) % 100,
-        delay: (i * 1.7) % 8,
-        dur: 9 + (i % 4) * 2,
+        top: ((i * 29 + 12) % 70) + 8,
         size: 8 + (i % 3) * 4,
       })),
     []
@@ -158,8 +191,7 @@ function Petals() {
           key={i}
           style={{
             left: `${p.left}%`,
-            animationDelay: `${p.delay}s`,
-            animationDuration: `${p.dur}s`,
+            top: `${p.top}%`,
             width: p.size,
             height: p.size * 0.7,
           }}
@@ -347,7 +379,6 @@ function ShipCard({ item, index }: { item: ShipItem; index: number }) {
     <article
       className="ship-card build-card"
       style={{ "--i": index } as React.CSSProperties}
-      data-cursor="Open"
       tabIndex={0}
       role="link"
       aria-label={`${item.name} — open live site`}
@@ -365,28 +396,44 @@ function ShipCard({ item, index }: { item: ShipItem; index: number }) {
           <span className="card-title">{item.name}</span>
         </h3>
         <p className="ship-desc">{item.description}</p>
-        <div className="ship-stats">
-          {item.stats.map((s) => (
-            <BuildStat key={s.label} value={s.value} label={s.label} />
-          ))}
-        </div>
-        <ul className="ship-tags">
-          {item.tags.map((t) => (
-            <li key={t}>{t}</li>
-          ))}
-        </ul>
-        {item.repo && (
-          <a
-            className="ship-link"
-            href={item.repo}
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub ↗
-          </a>
+        {item.stats.length > 0 && (
+          <div className="ship-stats">
+            {item.stats.map((s) => (
+              <BuildStat key={s.label} value={s.value} label={s.label} />
+            ))}
+          </div>
         )}
+        {item.tags.length > 0 && (
+          <ul className="ship-tags">
+            {item.tags.map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
+        )}
+        <p className="card-links">
+          {item.live && (
+            <a
+              className="ship-link"
+              href={item.live}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Live ↗
+            </a>
+          )}
+          {item.repo && (
+            <a
+              className="ship-link"
+              href={item.repo}
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub ↗
+            </a>
+          )}
+        </p>
       </div>
-      <SlideShow images={[item.image]} url={item.live ?? item.repo ?? ""} alt={item.name} />
+      <SlideShow images={item.images ?? [item.image]} url={item.live ?? item.repo ?? ""} alt={item.name} />
     </article>
   );
 }
@@ -533,6 +580,23 @@ export default function Build() {
           <BriefForm />
         </section>
 
+        <section className="build-worked" aria-label="Worked at">
+          <p className="section-label">Worked at</p>
+          <div className="worked-row">
+            {WORKED_AT.map((w) => (
+              <a
+                key={w.name}
+                className="worked-cell"
+                href={w.live}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="worked-name">{w.name}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
         <section className="build-stats" aria-label="Numbers">
           {BUILD_STATS.map((s) => (
             <BuildStat key={s.label} value={s.value} label={s.label} />
@@ -543,7 +607,7 @@ export default function Build() {
           <p className="section-label">Shipped — end to end</p>
           <h2 className="section-title">Shipped, end to end.</h2>
           <p className="section-body">
-            Three products I took from idea to production — designed, built and
+            Six products I took from idea to production — designed, built and
             shipped solo.
           </p>
           <div className="ship-list">
@@ -594,11 +658,18 @@ export default function Build() {
                         ))}
                       </ul>
                     )}
-                    {b.repo && (
-                      <a href={b.repo} target="_blank" rel="noreferrer">
-                        GitHub ↗
-                      </a>
-                    )}
+                    <p className="card-links">
+                      {b.live && (
+                        <a href={b.live} target="_blank" rel="noreferrer">
+                          Live ↗
+                        </a>
+                      )}
+                      {b.repo && (
+                        <a href={b.repo} target="_blank" rel="noreferrer">
+                          GitHub ↗
+                        </a>
+                      )}
+                    </p>
                   </div>
                 </article>
               );
@@ -608,7 +679,7 @@ export default function Build() {
 
         <section className="section build-experiments" aria-label="Experiments">
           <p className="section-label">Experiments</p>
-          <h2 className="section-title">Experiments.</h2>
+          <h2 className="section-title">Experiments, for fun</h2>
           <p className="section-body">
             Why the products ship with taste. Every product here has a Reel —
             the build, the prompt or the code, explained in 60 seconds.
