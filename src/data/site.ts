@@ -21,7 +21,7 @@ export interface Reel {
   viewsRaw: number | null;
   tag: "LEARN" | "NEW";
   /** World the reel belongs to — drives the sentence-hover focus dim. */
-  world: "build" | "open-source" | "learn";
+  world: "build" | "brand" | "learn";
   url: string;
   thumb: string;
   /** Hover-play preview clip; null = poster-only card (no Drive video available). */
@@ -36,7 +36,10 @@ export interface Reel {
  *  down, unverified); total reel views now 7,121. Posters: IG CDN thumbs for
  *  poster-only reels; frames cut from the Drive videos for the live ones. The 2 new
  *  videos are letterboxed 16:9 inside a 9:16 frame — posters/previews use a
- *  blurred-fill treatment so the cards read clean. */
+ *  blurred-fill treatment so the cards read clean. 2 more Drive reels added
+ *  2026-11-16 (tag NEW, no views): "Portfolio reel" (his video-editor showreel;
+ *  letterboxed, blurred-fill poster/preview) and "Claude dropped five launches"
+ *  (Claude Sheets / Whiteboards / Meetings / Plans explainer). Total 16 reels. */
 export const REELS: Reel[] = [
   { id: "DfEjg7Hjghl", title: "100+ LLM apps sitting FREE on GitHub right now.", views: "206", viewsRaw: 206, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfEjg7Hjghl/", thumb: "/reels/llm-apps-206.jpg", preview: null },
   { id: "DfVSuL7zIhi", title: "Gemini 4 argon ....", views: "127", viewsRaw: 127, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfVSuL7zIhi/", thumb: "/reels/gemini.webp", preview: "/reels/gemini-preview.mp4" },
@@ -46,17 +49,19 @@ export const REELS: Reel[] = [
   { id: "DfGwobiFElT", title: "Someone just turned Claude into a day-trading desk. And it's FREE.", views: "116", viewsRaw: 116, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfGwobiFElT/", thumb: "/reels/trading-116.jpg", preview: null },
   { id: "DfnAhmGhVxY", title: "Claude made this one prompt", views: "108", viewsRaw: 108, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfnAhmGhVxY/", thumb: "/reels/claude-prompt-108.jpg", preview: null },
   { id: "DfFAweQH_TG", title: "One prompt. Every LLM. Side by side.", views: "83", viewsRaw: 83, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfFAweQH_TG/", thumb: "/reels/llm-comparison.webp", preview: "/reels/llm-comparison-preview.mp4" },
-  { id: "github-prompt", title: "Upgrade your GitHub using this single prompt", views: null, viewsRaw: null, world: "open-source", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/github-prompt.webp", preview: "/reels/github-prompt-preview.mp4" },
-  { id: "one-prompt", title: "One Prompt", views: null, viewsRaw: null, world: "open-source", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/one-prompt.webp", preview: "/reels/one-prompt-preview.mp4" },
+  { id: "github-prompt", title: "Upgrade your GitHub using this single prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/github-prompt.webp", preview: "/reels/github-prompt-preview.mp4" },
+  { id: "one-prompt", title: "One Prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/one-prompt.webp", preview: "/reels/one-prompt-preview.mp4" },
   { id: "macbook-7day", title: "7 day Macbook", views: "7", viewsRaw: 7, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/macbook-7day.webp", preview: "/reels/macbook-7day-preview.mp4" },
   { id: "alfaaz-single-prompt", title: "Alfaaz — Single prompt", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/alfaaz-prompt.webp", preview: "/reels/alfaaz-prompt-preview.mp4" },
   { id: "muse-motion", title: "Muse motion reel", views: "1,000", viewsRaw: 1000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/muse-motion.webp", preview: "/reels/muse-motion-preview.mp4" },
   { id: "kalyani-lyric", title: "Kalyani — Lyric video", views: "5,000", viewsRaw: 5000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/kalyani-lyric.webp", preview: "/reels/kalyani-lyric-preview.mp4" },
+  { id: "portfolio-reel", title: "Portfolio reel", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/portfolio-reel.webp", preview: "/reels/portfolio-reel-preview.mp4" },
+  { id: "claude-five-launches", title: "Claude dropped five launches", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/claude-five-launches.webp", preview: "/reels/claude-five-launches-preview.mp4" },
 ];
 
 export const STATS = [
-  { value: "213", label: "LeetCode solved" },
-  { value: "1,387", label: "GitHub contributions in 2026" },
+  { value: "218", label: "LeetCode solved" },
+  { value: "1,739", label: "GitHub contributions in 2026" },
   { value: "23", label: "Pull requests merged" },
 ];
 
@@ -77,22 +82,23 @@ export const PROJECTS: Project[] = [
   { name: "LocalKart", tagline: "Good finds. Right on campus.", description: "Buy and sell pre-loved essentials within your college.", image: "/projects/localkart.jpg", live: "https://localkart-jet.vercel.app", repo: "https://github.com/r1shabhsharma05/LocalKart" },
   { name: "Healthcare Hub", tagline: "Connected healthcare for everyone.", description: "A unified digital health platform. Your health, all in one place.", image: "/projects/healthcare.jpg", repo: "https://github.com/r1shabhsharma05" },
   { name: "MorphAI", tagline: "AI-powered content tooling.", description: "Modern AI APIs for creators.", image: "/projects/morphai.jpg", repo: "https://github.com/r1shabhsharma05/MorphAi" },
+  { name: "Rkhshak", tagline: "Master security skills.", description: "Master security skills — complete production-readiness security audit + minimal-code fixes. Nothing partial.", image: "/projects/rkhshak.jpg", repo: "https://github.com/r1shabhsharma05/Rkhshak" },
 ];
 
 export const WORLDS = [
   {
     id: "build",
     title: "Build: products for everyone",
-    body: "Idea to launch for real products: the seven products he built himself, from an AI railway planner to an emergency SOS app.",
+    body: "Idea to launch for real products: the eight products he built himself, from an AI railway planner to an emergency SOS app.",
     link: "/projects/",
     linkLabel: "See the products ↗",
   },
   {
-    id: "open-source",
-    title: "Open Source: code in the open",
-    body: "23 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects — small verified fixes, reproduced first, reviewed by maintainers.",
-    link: "https://github.com/r1shabhsharma05",
-    linkLabel: "See the contributions ↗",
+    id: "brand",
+    title: "Brand: campaigns on camera",
+    body: "Real tools, built on camera — the @cod.ehx Reels brands see first. A media kit for campaigns: reach, formats, and how a collaboration works.",
+    link: "/brands/",
+    linkLabel: "See the media kit ↗",
   },
   {
     id: "learn",
@@ -102,6 +108,13 @@ export const WORLDS = [
     linkLabel: "Read the write-ups ↗",
   },
 ];
+
+/** Header nav worlds — Build / Brand / Learn (Avi's three worlds). */
+export const NAV_WORLDS = [
+  { id: "build", label: "Build", color: "#2F55FF", text: "#ffffff", href: "/projects/" },
+  { id: "brand", label: "Brand", color: "#EF3B2D", text: "#ffffff", href: "/brands/" },
+  { id: "learn", label: "Learn", color: "#FFC81A", text: "#111111", href: "/blog/" },
+] as const;
 
 export const LEARN_POSTS = [
   { slug: "how-i-got-14-open-source-prs-merged", title: "How I got 14 open-source PRs merged", tag: "LEARN" },
