@@ -6,6 +6,7 @@ import CurvedLensCarousel from "../components/CurvedLensCarousel";
 import {
   openWorldTransition,
   preloadWorldScene,
+  WORLD_SCENES,
 } from "../components/WorldTransition";
 
 /** Counts a stat up from 0 once `start` flips true — the live stats roll
@@ -29,12 +30,13 @@ function CountUp({ value, start }: { value: string; start: boolean }) {
 }
 
 /** The single shared scene: one lens, mounted once, positioned over the
- *  hero frame. During loading it sits above the paper in formation (small
- *  and tilted, like the reference's formation wall); at 100% it expands
- *  into the hero arc as the paper fades — the same canvas, same drift, no
- *  remount, no duplicate cards. The layer tracks the frame's box
- *  (offsetTop/Left/Width/Height are relative to .stage, the positioned
- *  ancestor), so it follows resizes and scrolls with the page. */
+ *  hero frame. During loading the cards sit in formation (small and
+ *  tilted, like the reference's formation wall); at 100% the paper
+ *  fades and the same wall becomes the hero arc — the same canvas,
+ *  same drift, no remount, no duplicate cards. The layer tracks the
+ *  frame's box (offsetTop/Left/Width/Height are relative to .stage,
+ *  the positioned ancestor), so it follows resizes and scrolls with
+ *  the page. */
 function HeroScene({ focus, frameRef }: { focus: string | null; frameRef: React.RefObject<HTMLDivElement | null> }) {
   const [rect, setRect] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
   useEffect(() => {
@@ -215,7 +217,7 @@ function SentencePreview({
 
 const SENTENCE_CHOICES: Choice[] = [
   { label: "founders", sup: "01", world: "#2F55FF", on: "#FFFFFF", href: "/projects/" },
-  { label: "open source", sup: "02", world: "#EF3B2D", on: "#FFFFFF", href: "https://github.com/r1shabhsharma05" },
+  { label: "campaigns for brands", sup: "02", world: "#EF3B2D", on: "#FFFFFF", href: "/brands/" },
   { label: "students", sup: "03", world: "#FFC81A", on: "#111111", href: "/blog/" },
   { label: "talk to my AI", sup: "04", world: "var(--color-ink)", on: "var(--color-paper)", action: "chat" },
 ];
@@ -229,18 +231,17 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
   // dims only the other worlds' cards; "talk to my AI" focuses nothing.
   // Hovering a header world link focuses that world too.
   const focusWorld =
-    hovered === "01" ? "build" : hovered === "02" ? "open-source" : hovered === "03" ? "learn" : navWorld;
+    hovered === "01" ? "build" : hovered === "02" ? "brand" : hovered === "03" ? "learn" : navWorld;
   const openChat = () => {
     setHovered(null);
     setNavWorld(null);
     onOpenChat();
   };
-  const mergedPRs = STATS.find((s) => s.label.includes("Pull requests"))?.value ?? "";
   // Featured card per sentence word — the live site shows a curated card
   // per world, not a wall reel. Views only where verified.
   const PREVIEWS: Record<string, PreviewEntry | null> = {
-    "01": { world: "BUILD", color: "#2F55FF", image: "/projects/secureguard.jpg", video: null, views: null, caption: "SecureGaurd · SafeLife · RailSync — 7 products, shipped." },
-    "02": { world: "OPEN SOURCE", color: "#EF3B2D", image: "/reels/github-prompt.webp", video: "/reels/github-prompt-preview.mp4", views: null, caption: `${mergedPRs} PRs merged · Jenkins · WordPress/Gutenberg` },
+    "01": { world: "BUILD", color: "#2F55FF", image: "/projects/secureguard.jpg", video: null, views: null, caption: "SecureGaurd · SafeLife · RailSync — 8 products, shipped." },
+    "02": { world: "BRAND", color: "#EF3B2D", image: "/reels/portfolio-reel.webp", video: "/reels/portfolio-reel-preview.mp4", views: null, caption: "The @cod.ehx showreel — motion type, lyric videos, AI builds on camera." },
     "03": { world: "LEARN", color: "#FFC81A", image: "/reels/gemini.webp", video: "/reels/gemini-preview.mp4", views: "127", caption: "Free roadmaps, prompts and build write-ups." },
     "04": null,
   };
@@ -307,7 +308,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
   sentence.push(", ");
   sentence.push(renderChoice(SENTENCE_CHOICES[1]));
   sentence.push(" ");
-  plain("for everyone and free roadmaps for");
+  plain("and free roadmaps for");
   sentence.push(" ");
   sentence.push(renderChoice(SENTENCE_CHOICES[2]));
   sentence.push(". ");
@@ -336,7 +337,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#EF3B2D", "--world-on": "#FFFFFF" } as React.CSSProperties} href="https://github.com/r1shabhsharma05" onMouseEnter={() => setNavWorld("open-source")} onMouseLeave={() => setNavWorld(null)}>Open Source</a>
+              <a className="world-link" style={{ "--world": "#EF3B2D", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/brands/" onMouseEnter={() => { setNavWorld("brand"); preloadWorldScene(WORLD_SCENES.brand.scene); }} onMouseLeave={() => setNavWorld(null)} onClick={(e) => { e.preventDefault(); openWorldTransition("/brands/", "brand"); }}>Brand</a>
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
@@ -419,14 +420,14 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
         {/* worlds */}
         <section className="section" id="worlds" aria-label="Three worlds">
           <p className="section-label">Three worlds</p>
-          <h2 className="section-title">Build. Open Source. Learn.</h2>
+          <h2 className="section-title">Build. Brand. Learn.</h2>
           <div className="worlds-grid">
             {WORLDS.map((w) => (
               <a
                 key={w.id}
                 className="world-card"
                 href={w.link}
-                style={{ "--world": w.id === "build" ? "var(--world-build)" : w.id === "open-source" ? "var(--world-opensource)" : "var(--world-learn)" } as React.CSSProperties}
+                style={{ "--world": w.id === "build" ? "var(--world-build)" : w.id === "brand" ? "var(--world-brand)" : "var(--world-learn)" } as React.CSSProperties}
               >
                 <h3>{w.title}</h3>
                 <p>{w.body}</p>
@@ -439,7 +440,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
         {/* projects */}
         <section className="section" id="projects" aria-label="Projects">
           <p className="section-label">Build — projects</p>
-          <h2 className="section-title">Seven products, shipped.</h2>
+          <h2 className="section-title">Eight products, shipped.</h2>
           <div className="projects-grid">
             {PROJECTS.map((p) => (
               <article key={p.name} className="project-card">

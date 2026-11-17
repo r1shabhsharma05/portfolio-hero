@@ -12,35 +12,11 @@ import {
   WORLD_NAME,
   WORLD_SCENE,
 } from "../components/WorldTransition";
-import { PROFILE, PROJECTS, REELS, STATS } from "../data/site";
-
-const WORLDS = [
-  {
-    id: "build",
-    label: "Build",
-    color: "#2F55FF",
-    text: "#ffffff",
-    href: "/projects/",
-  },
-  {
-    id: "open-source",
-    label: "Open Source",
-    color: "#EF3B2D",
-    text: "#ffffff",
-    href: "https://github.com/r1shabhsharma05",
-  },
-  {
-    id: "learn",
-    label: "Learn",
-    color: "#FFC81A",
-    text: "#111111",
-    href: "/blog/",
-  },
-] as const;
+import { NAV_WORLDS, PROFILE, PROJECTS, REELS, STATS } from "../data/site";
 
 const BUILD_STATS = [
   ...STATS,
-  { value: "7", label: "Products shipped" },
+  { value: "8", label: "Products shipped" },
 ];
 
 type ShipItem = {
@@ -564,7 +540,7 @@ export default function Build() {
             </span>
           </a>
           <nav className="world-nav" aria-label="Worlds">
-            {WORLDS.map((w) => (
+            {NAV_WORLDS.map((w) => (
               <span className="world-option" key={w.id}>
                 <span className="mode-slash" aria-hidden="true">
                   /
@@ -632,9 +608,9 @@ export default function Build() {
             </h1>
             <p>
               Full-stack developer and AI builder studying Computer Science
-              at GLA University, Mathura. Seven products shipped — safety,
-              security, farming, campus, health, railways and AI tooling.
-              Everything here is built, not claimed.
+              at GLA University, Mathura. Eight products shipped — safety,
+              security, farming, campus, health, railways, AI tooling and
+              security skills. Everything here is built, not claimed.
             </p>
           </div>
           <BriefForm />
@@ -667,7 +643,7 @@ export default function Build() {
           <p className="section-label">Skills</p>
           <h2 className="section-title">What I work with.</h2>
           <p className="section-body">
-            The stack behind the seven products — drag the sphere to spin it,
+            The stack behind the eight products — drag the sphere to spin it,
             click a card to bring it to the front.
           </p>
           <div className="skill-sphere">
