@@ -7,44 +7,141 @@
 <meta name="description" content="A copy-pasteable Replit Agent prompt for a skeuomorphic site where the whole page is one piece of 90s beige hardware — chunky bezel, green phosphor CRT with sca" />
 <link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-fake-old-hardware-crt-device-replit/" />
 <link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
-@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
-body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
-nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
-nav a { color:var(--muted); text-decoration:none; }
-nav a[aria-current="page"] { color:var(--fg); }
-.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
-.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
-h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
-.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
-.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
-h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
-h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
-a { color:inherit; }
-img, video { max-width:100%; height:auto; border-radius:12px; }
-pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
-code { font-size:.9em; }
-pre code { font-size:1em; }
-table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
-th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
-.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
-@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
-ul, ol { padding-left:1.25rem; }
-footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+:root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+* { box-sizing:border-box; }
+body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
+/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
+a { color:inherit; text-decoration:none; }
+#progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
+.site-head { max-width:1240px; margin:0 auto; padding:20px clamp(16px,4vw,48px); display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+.logo { font-family:var(--serif); font-size:22px; }
+.worlds { display:flex; gap:10px; align-items:baseline; font-family:var(--serif); font-size:18px; }
+.worlds .sep { color:var(--ink-soft); }
+.worlds a[aria-current="page"] { border-bottom:3px solid var(--learn); padding-bottom:2px; }
+.view-toggle { display:flex; gap:14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+.view-toggle .on { border-bottom:2px solid var(--learn); padding-bottom:2px; }
+.view-toggle a { color:var(--ink-soft); }
+.wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:clamp(32px,5vw,80px); max-width:1240px; margin:0 auto; padding:36px clamp(16px,4vw,48px) 0; }
+.meta { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin:0 0 14px; }
+.meta a { color:var(--ink); }
+.meta a:hover { text-underline-offset:3px; text-decoration:underline; }
+.title { font-family:var(--serif); letter-spacing:-.03em; margin:14px 0 0; font-size:clamp(40px,5vw,72px); font-weight:400; line-height:1; text-wrap:balance; }
+.lede { max-width:720px; color:var(--ink-soft); margin:20px 0 0; font-size:19px; line-height:1.6; }
+.output { max-width:760px; margin:32px 0 0; }
+.output figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink); display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; font-size:11px; }
+.outputUrl { color:var(--ink-soft); text-transform:none; letter-spacing:.02em; }
+.outputWindow { aspect-ratio:1440/900; background:var(--paper-deep) var(--grain); box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.outputCardUrl { font-family:var(--mono); font-size:13px; letter-spacing:.02em; color:var(--ink-soft); }
+.outputOpen { background:var(--ink); color:var(--paper); border-radius:8px; padding:9px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); position:absolute; bottom:12px; right:12px; }
+.outputWindow:hover .outputOpen { transform:translateY(-2px); }
+.post { max-width:760px; margin-top:36px; color:var(--ink); font-family:var(--sans); line-height:1.7; }
+.post a { color:var(--tech); }
+.post h1 { font-size:1.6rem; margin-bottom:.5rem; line-height:1.25; }
+.post h2 { font-family:var(--serif); letter-spacing:-.02em; font-size:clamp(28px,2.6vw,38px); font-weight:400; line-height:1.1; margin-top:2.5rem; padding-bottom:8px; scroll-margin-top:24px; background:linear-gradient(var(--learn),var(--learn)) 0 100%/0 4px no-repeat; transition:background-size .7s cubic-bezier(.22,1,.36,1); }
+.post h2[data-current] { background-size:64px 4px; }
+.post h3 { font-family:var(--serif); letter-spacing:-.01em; font-size:24px; font-weight:400; margin-top:1.75rem; margin-bottom:.25rem; }
+.post p { margin:1rem 0; }
+.post ul, .post ol { margin:1rem 0; padding-left:1.4rem; }
+.post li { margin:.5rem 0; }
+.post code { background:#11111114; background:color-mix(in srgb, var(--ink) 8%, transparent); border-radius:4px; padding:1px 5px; font-family:var(--mono); font-size:.9em; }
+.post pre { color:#e0e0e0; background:#1a1a1a; border-radius:8px; padding:20px; font-size:.88rem; line-height:1.6; overflow-x:auto; }
+.post pre code { color:inherit; background:transparent; padding:0; }
+.post .prompt, .post .code { color:#e6e6e6; white-space:pre-wrap; background:#1a1a1a; border-radius:10px; margin:1.5rem 0; padding:20px 22px; font-family:var(--mono); font-size:.78rem; line-height:1.6; overflow-x:auto; }
+.post .promptbox { margin:1.5rem 0; position:relative; }
+.post .promptbox .prompt { margin:0; padding-top:52px; }
+.post .copybtn { z-index:2; position:absolute; top:10px; right:10px; letter-spacing:.08em; text-transform:uppercase; color:#e6e6e6; cursor:pointer; background:#2b2b2b; border:1px solid #3d3d3d; border-radius:6px; min-height:34px; padding:9px 14px; font:600 .72rem/1 var(--mono); }
+.post .copybtn:hover { background:#3a3a3a; }
+.post .copybtn.done { color:#7ee39a; border-color:#2f6b41; }
+.post .highlight, .post blockquote { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post blockquote { color:#333; padding:4px 20px; font-style:italic; }
+.post .tldr { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post .card { background:#f8f8f8; border-left:4px solid #000; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card { background:#f8f8f8; border-left:4px solid #06c; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card h3 { margin:0 0 8px; font-size:1.3rem; }
+.post .stat { color:#06c; font-weight:700; }
+.post .stars { letter-spacing:.06em; color:#444; vertical-align:middle; background:#f2f2f2; border:1px solid #e2e2e2; border-radius:6px; margin-left:6px; padding:5px 9px; font:600 .72rem/1 var(--mono); }
+.post .tag { color:#1a56db; background:#e8f0fe; border-radius:12px; margin:2px; padding:2px 10px; font-size:.8rem; display:inline-block; }
+.post .tier-note { color:#666; margin-top:-.25rem; font-style:italic; }
+.post .signal, .post .check { color:#0a7d33; font-weight:600; }
+.post .signal { margin:.5rem 0 0; }
+.post .check { margin:.75rem 0 0; }
+.post .qnum { color:#06c; font-variant-numeric:tabular-nums; }
+.post .q { border-left:3px solid #e8e8e8; margin:1.6rem 0; padding-left:14px; }
+.post .q p { margin:.4rem 0; }
+.post .q .ask { font-size:1.02rem; font-weight:600; }
+.post .q .prep { color:#444; font-size:.95rem; }
+.post .q .prep strong { color:#1a1a1a; }
+.post .week { margin:1.1rem 0; }
+.post .src { font-size:.9rem; }
+.post .repo-link { word-break:break-all; font-family:var(--mono); font-size:.85rem; }
+.post .tech-stack { flex-wrap:wrap; gap:8px; margin:1rem 0; display:flex; }
+.post .tech-stack span { background:#f0f0f0; border-radius:20px; padding:4px 12px; font-size:.85rem; font-weight:500; }
+.post .sw { vertical-align:-1px; border-radius:2px; width:10px; height:10px; margin-right:8px; display:inline-block; }
+.post .tablewrap { margin:1.5rem 0; overflow-x:auto; }
+.post table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.9rem; }
+.post th { text-align:left; background:#f0f0f0; color:#444; font-weight:600; padding:10px 14px; }
+.post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
+.post img, .post video { max-width:100%; height:auto; border-radius:12px; }
+.aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
+.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
+.reel figcaption { color:var(--ink); }
+.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
+.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
+.reelFoot span { color:var(--ink); }
+.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
+.reelFoot a:hover { transform:translateY(-1px); }
+.toc { flex-direction:column; gap:6px; display:flex; }
+.toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
+.toc ol { list-style:none; margin:0; padding:0; }
+.toc a { border-top:1px solid var(--line); grid-template-columns:30px 1fr; align-items:baseline; padding:10px 0; display:grid; }
+.toc i { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-style:normal; }
+.toc b { font-family:var(--serif); background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; justify-self:start; margin:0 -.12em; padding:0 .12em; font-size:20px; font-weight:400; line-height:1.2; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.toc a:hover b, .toc a[aria-current] b { background-size:100% 100%; }
+.keep { max-width:1240px; margin:72px auto 0; padding:28px clamp(16px,4vw,48px) 0; }
+.keep h2 { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-weight:400; margin:0; }
+.keep ul { margin-top:10px; list-style:none; padding:0; }
+.keep li a { border-top:1px solid var(--line); font-family:var(--serif); padding:14px 0; font-size:26px; line-height:1.2; display:block; }
+.keep li a span { background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; margin:0 -.12em; padding:0 .12em; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.keep li a:hover span { background-size:100% 100%; }
+footer { max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,48px); border-top:1px solid var(--line); display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px; }
+footer .f-col { display:flex; flex-direction:column; gap:6px; }
+footer strong { font-family:var(--serif); font-size:20px; font-weight:400; }
+footer .f-label { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-bottom:4px; }
+footer span, footer a { font-size:14px; }
+footer a:hover { text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:860px) {
+  .site-head { padding-left:12px; padding-right:12px; gap:16px; }
+  .wrap { grid-template-columns:1fr; }
+  .aside { order:-1; max-height:none; position:static; }
+  .reel { flex-flow:wrap; align-items:center; }
+  .reel video { width:120px; }
+  .toc { display:none; }
+  .toc b, .keep li a span { transition:none; }
+  .outputOpen { transition:none; }
+  footer { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
+<div id="progress"></div>
+<header class="site-head">
+<a class="logo" href="/">Rishabh.</a>
+<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
+</header>
 <div class="wrap">
-<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
 <main>
-<a class="back" href="/learn/">&larr; All 91 posts</a>
-<p class="kicker">Learn &middot; Prompt</p>
-<h1>The Prompt I Used to Build a Fake Old Computer on Replit (Beige Plastic, a CRT Screen, and Buttons That Do Something)</h1>
+<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 29 AUGUST 2026 &middot; 16 min</p>
+<h1 class="title">The Prompt I Used to Build a Fake Old Computer on Replit (Beige Plastic, a CRT Screen, and Buttons That Do Something)</h1>
 <p class="lede">A copy-pasteable Replit Agent prompt for a skeuomorphic site where the whole page is one piece of 90s beige hardware — chunky bezel, green phosphor CRT with scanlines and bloom, a fake POST boot sequence, and knobs, switches and buttons that physically move.</p>
-<p class="meta">29 August 2026</p>
-<h2>Overview</h2>
+
+<div class="post">
+<h2 id="overview">Overview</h2>
 <p>
         The whole page is one piece of fake hardware. Yellowed beige ABS plastic,
         a chunky moulded bezel, visible screw wells, a parting line running down
@@ -75,7 +172,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
           Audio API, and a handful of seamless texture images. No 3D, no canvas,
           no audio files.
 </p>
-</div><h2>I did not tell it what the thing does</h2>
+</div><h2 id="i-did-not-tell-it-what-the-thing-does">I did not tell it what the thing does</h2>
 <p>
         This is the part worth copying more than the CSS. I opened Replit Agent
         with the aesthetic and nothing else:
@@ -111,7 +208,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
         Everything below is what I fed in <em>after</em> that, in pieces, once
         the concept was settled. Aesthetic direction from me, function from the
         conversation.
-</p><h2>Why beige, and not the white neumorphic thing</h2>
+</p><h2 id="why-beige-and-not-the-white-neumorphic-thing">Why beige, and not the white neumorphic thing</h2>
 <p>
         The obvious alternative was soft white neumorphism — extruded pale
         plastic, dual shadows, the whole 2020 dribbble aesthetic. I have built
@@ -125,7 +222,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
         are one repeating gradient, bloom is a duplicated blurred text layer, and
         a boot sequence is a <code>setTimeout</code> chain. The three things that
         sell it hardest are all nearly free.
-</p><h2>The prompt</h2>
+</p><h2 id="the-prompt">The prompt</h2>
 <p>
         Paste the whole thing at once, after the concept conversation — not
         instead of it.
@@ -141,7 +238,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li>Must pass <code>tsc</code> with no errors and run with a clean console.</li>
 </ul>
 <hr>
-<h2>Step 1 — Textures, not a picture of a device</h2>
+<h2 id="step-1-textures-not-a-picture-of-a-device">Step 1 — Textures, not a picture of a device</h2>
 <p><strong>Do not render the device as one image.</strong> The case geometry is built in CSS/SVG so it can move and respond. Images are used only as seamless surface textures blended over that geometry.</p>
 <p>Expect these in <code>attached_assets/</code>, imported as Vite modules:</p>
 <ol>
@@ -151,7 +248,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li><code>glass.png</code> — dust and fingerprints for the screen glass</li>
 </ol>
 <p>Apply as <code>background-image</code> over the CSS gradients with <code>background-blend-mode: multiply</code>, plastic at full strength, grain at ~0.35, wear at ~0.12, glass dust at ~0.06. If an asset is missing, fall back to the CSS gradient alone — never substitute a drawn SVG of a whole device.</p>
-<h2>Step 2 — The case</h2>
+<h2 id="step-2-the-case">Step 2 — The case</h2>
 <ul>
 <li>Base plastic <code>#d8d0bc</code>; second panel (the bezel surround) <code>#c9c0a8</code>; recesses <code>#b8ae95</code>.</li>
 <li><strong>All shadows warm.</strong> <code>rgba(74, 62, 40, .35)</code> and similar. Never a grey or blue-grey shadow — cool shadows are what make CSS plastic look like CSS.</li>
@@ -161,7 +258,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li><strong>Silkscreen labels</strong> beside every control, in tiny condensed uppercase (~9px, <code>letter-spacing: .12em</code>), colour <code>#6b6250</code>, <code>opacity: .75</code>, and each rotated a hair off-axis (±0.4deg) so the print looks slightly off-register.</li>
 <li>The case fills the viewport: <code>body { overflow: hidden }</code>, no browser chrome, no scrollbar.</li>
 </ul>
-<h2>Step 3 — The screen</h2>
+<h2 id="step-3-the-screen">Step 3 — The screen</h2>
 <p>A rounded rectangle inset into the bezel, <code>#0a1a0a</code> base, phosphor <code>#33ff66</code>. Layers, bottom to top:</p>
 <ol>
 <li><strong>Text layer</strong> — the actual screen content, font <code>VT323</code> (Google Fonts) at ~22px. Never a modern sans on this screen.</li>
@@ -175,7 +272,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li><strong>Flicker</strong> — 3–5% opacity oscillation on the text layer at ~0.15s, via CSS keyframes.</li>
 <li><strong>Roll</strong> — every 20–40s (randomised), a horizontal band translates down the screen over ~350ms. Rare enough to be a glitch, not a loop.</li>
 </ul>
-<h2>Step 4 — The controls</h2>
+<h2 id="step-4-the-controls">Step 4 — The controls</h2>
 <p>The controls are where sites like this fail. Each one must move.</p>
 <ul>
 <li><strong>Buttons</strong> — on <code>:active</code>, <code>transform: translateY(2px)</code> <strong>and</strong> collapse the drop shadow. A button that only changes colour reads as fake immediately. Give them a moulded cap: light top edge, dark bottom edge, warm shadow beneath.</li>
@@ -184,7 +281,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li><strong>Toggles</strong> — hard state change, <strong>no transition, no easing</strong>. Physical switches do not ease. The only animation permitted is the shadow swap.</li>
 <li>Every control has a <code>:focus-visible</code> ring and works from the keyboard.</li>
 </ul>
-<h2>Step 5 — Sound</h2>
+<h2 id="step-5-sound">Step 5 — Sound</h2>
 <p>Synthesized with the Web Audio API, created inside the first user gesture (not at module load):</p>
 <ul>
 <li><strong>Click</strong> on button press — a short filtered noise burst, ~12ms, quiet.</li>
@@ -192,7 +289,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li><strong>Detent tick</strong> on knob steps — shorter and higher than the click.</li>
 <li><strong>Muted by default</strong>, with a physical mute toggle on the case. Master gain ~0.15.</li>
 </ul>
-<h2>Step 6 — Boot sequence</h2>
+<h2 id="step-6-boot-sequence">Step 6 — Boot sequence</h2>
 <p>On load, the screen runs a fake POST before anything else is reachable:</p>
 <ol>
 <li>A block cursor blinks alone for ~400ms</li>
@@ -202,16 +299,16 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li><code>READY.</code> — then the home screen</li>
 </ol>
 <p>Total ~2.5s. Add a <code>SKIP</code> affordance (any key or any button) — after the third visit nobody wants it, and a boot sequence you cannot skip is a bad website.</p>
-<h2>Step 7 — Screen state</h2>
+<h2 id="step-7-screen-state">Step 7 — Screen state</h2>
 <p>The screen is a plain state machine — one <code>mode</code> value plus per-mode state, no router. Every hardware control dispatches into it; the screen never has its own buttons. Keyboard mirrors the hardware, and each mapped key is printed on the screen in the same style as the silkscreen (<code>OR HIT [P]</code>).</p>
-<h2>Step 8 — Responsive</h2>
+<h2 id="step-8-responsive">Step 8 — Responsive</h2>
 <p>The device has a fixed aspect ratio. Handle it deliberately, now, not at the end:</p>
 <ul>
 <li>Wrap the device in a fixed-aspect container and <code>transform: scale()</code> it to fit the viewport, transform-origin centre, recalculated on resize.</li>
 <li>Below ~600px wide, switch to a simplified portrait layout: the same case, controls stacked below the screen, no scaling gymnastics.</li>
 <li>Never let the case overflow into a scrollbar at any viewport size.</li>
 </ul>
-<h2>Step 9 — Pass/fail checks</h2>
+<h2 id="step-9-pass-fail-checks">Step 9 — Pass/fail checks</h2>
 <p>Before you tell me it is done, verify each:</p>
 <ul>
 <li><input disabled="" type="checkbox"> No scrollbar at 1440x900, 1280x720, or 390x844</li>
@@ -224,7 +321,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li><input disabled="" type="checkbox"> Every control is reachable and operable by keyboard alone</li>
 <li><input disabled="" type="checkbox"> <code>tsc</code> clean, console clean</div></div></li>
 </ul>
-<h2>Why each clause is in there</h2><h3>"Do not render the device as one image"</h3>
+<h2 id="why-each-clause-is-in-there">Why each clause is in there</h2><h3>"Do not render the device as one image"</h3>
 <p>
         This is the single most important line in the prompt and it is the first
         thing an agent will do if you let it. If the case is one generated PNG,
@@ -290,7 +387,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
         animated behind it, on every machine. A radial vignette plus a big
         border-radius plus an inset shadow buys you 80% of the read for none of
         the cost. Say no to it explicitly or you will get it.
-</p><h2>Knobs to turn first</h2>
+</p><h2 id="knobs-to-turn-first">Knobs to turn first</h2>
 <ul>
 <li>
 <strong>Scanline opacity (0.35).</strong> The number that decides
@@ -335,7 +432,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
           the realism for almost no build cost, and autoplaying it loses you the
           visitor. Both things are true.
 </li>
-</ul><h2>If it comes out wrong</h2>
+</ul><h2 id="if-it-comes-out-wrong">If it comes out wrong</h2>
 <ul>
 <li>
 <strong>A grey rounded rectangle.</strong> The first pass always looks
@@ -400,7 +497,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
           timer chain is inside a component that remounts. Hoist it, and gate it
           on a boot-complete flag.
 </li>
-</ul><h2>The part the prompt cannot do for you</h2>
+</ul><h2 id="the-part-the-prompt-cannot-do-for-you">The part the prompt cannot do for you</h2>
 <p>
         Do not stop at the first result. The first pass will look like a grey
         rectangle with rounded corners — that is not a failed prompt, that is
@@ -410,7 +507,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 </p>
 <p>
         The iteration is not overhead on the build. It is the build.
-</p><h2>Recap</h2>
+</p><h2 id="recap">Recap</h2>
 <ul>
 <li>
           Bring the aesthetic, let the agent argue you into the function. The
@@ -471,8 +568,79 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
           >a frosted glass refraction cube in WebGL</a>.
 </p>
 
-</main>
-<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
 </div>
+</main>
+<aside class="aside">
+<figure class="reel"><figcaption>You came from this Reel</figcaption><video src="/reels/DcpulL0y4SH-preview.mp4" poster="/reels/DcpulL0y4SH.webp" muted loop playsinline preload="none" aria-label="Reel"></video><div class="reelFoot" style="justify-content:flex-end"><a href="https://www.instagram.com/reel/DcpulL0y4SH/" target="_blank" rel="noopener noreferrer">Watch on Instagram ↗</a></div></figure>
+<nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#i-did-not-tell-it-what-the-thing-does"><i>02</i><b>I did not tell it what the thing does</b></a></li><li><a href="#why-beige-and-not-the-white-neumorphic-thing"><i>03</i><b>Why beige, and not the white neumorphic thing</b></a></li><li><a href="#the-prompt"><i>04</i><b>The prompt</b></a></li><li><a href="#step-1-textures-not-a-picture-of-a-device"><i>05</i><b>Step 1 — Textures, not a picture of a device</b></a></li><li><a href="#step-2-the-case"><i>06</i><b>Step 2 — The case</b></a></li><li><a href="#step-3-the-screen"><i>07</i><b>Step 3 — The screen</b></a></li><li><a href="#step-4-the-controls"><i>08</i><b>Step 4 — The controls</b></a></li><li><a href="#step-5-sound"><i>09</i><b>Step 5 — Sound</b></a></li><li><a href="#step-6-boot-sequence"><i>10</i><b>Step 6 — Boot sequence</b></a></li><li><a href="#step-7-screen-state"><i>11</i><b>Step 7 — Screen state</b></a></li><li><a href="#step-8-responsive"><i>12</i><b>Step 8 — Responsive</b></a></li><li><a href="#step-9-pass-fail-checks"><i>13</i><b>Step 9 — Pass/fail checks</b></a></li><li><a href="#why-each-clause-is-in-there"><i>14</i><b>Why each clause is in there</b></a></li><li><a href="#knobs-to-turn-first"><i>15</i><b>Knobs to turn first</b></a></li><li><a href="#if-it-comes-out-wrong"><i>16</i><b>If it comes out wrong</b></a></li><li><a href="#the-part-the-prompt-cannot-do-for-you"><i>17</i><b>The part the prompt cannot do for you</b></a></li><li><a href="#recap"><i>18</i><b>Recap</b></a></li></ol></nav>
+</aside>
+</div>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li><li><a href="/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/"><span>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</span></a></li><li><a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/"><span>The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero</span></a></li></ul></aside>
+<footer>
+<div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a><a href="/blog/feed.xml">RSS</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+</footer>
+<script>
+(function () {
+  var bar = document.getElementById("progress");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var f = max > 0 ? h.scrollTop / max : 0;
+    bar.style.width = Math.max(24, f * window.innerWidth) + "px";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  // Scroll-spy: TOC highlight + the H2's yellow underline.
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var heads = links.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && heads.length) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.removeAttribute("data-current");
+          current = e.target;
+          current.setAttribute("data-current", "");
+          links.forEach(function (a) {
+            if (a.getAttribute("href") === "#" + current.id) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+          });
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+  // COPY buttons in prompt boxes.
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = btn.closest(".promptbox");
+      var prompt = box && box.querySelector(".prompt");
+      if (!prompt) return;
+      var done = function () {
+        btn.textContent = "Copied ✓";
+        btn.classList.add("done");
+        setTimeout(function () { btn.textContent = btn.dataset.label || "Copy prompt"; btn.classList.remove("done"); }, 2000);
+      };
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(prompt.textContent.trim()).then(done, done);
+      } else done();
+    });
+  });
+  // Reel videos play when in view, pause when scrolled away.
+  var reels = document.querySelectorAll(".reel video");
+  if ("IntersectionObserver" in window && reels.length) {
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) e.target.play().catch(function () {});
+        else e.target.pause();
+      });
+    }, { threshold: 0.3 });
+    reels.forEach(function (v) { rio.observe(v); });
+  }
+})();
+</script>
 </body>
 </html>

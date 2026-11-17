@@ -18,7 +18,7 @@ Last updated: November 2026
 - [Developer portal](https://portfolio-hero-psi-lemon.vercel.app/developers) — every machine-readable endpoint
 - [Projects](https://portfolio-hero-psi-lemon.vercel.app/projects) — production work and side projects
 - [Brand](https://portfolio-hero-psi-lemon.vercel.app/brands/) — media kit for campaigns: reach, formats, and how a collaboration works
-- [Learn](https://portfolio-hero-psi-lemon.vercel.app/learn/) — 91 free roadmaps, prompts and builds
+- [Learn](https://portfolio-hero-psi-lemon.vercel.app/learn/) — 39 free roadmaps and prompts
 - [Blog](https://portfolio-hero-psi-lemon.vercel.app/blog/) — build write-ups
 - [Blog RSS feed](https://portfolio-hero-psi-lemon.vercel.app/blog/feed.xml) — machine-readable post feed
 - [Sitemap](https://portfolio-hero-psi-lemon.vercel.app/sitemap.xml) — every canonical URL
