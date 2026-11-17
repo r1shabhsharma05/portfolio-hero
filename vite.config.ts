@@ -68,6 +68,7 @@ export default defineConfig({
         main: resolve(ROOT, "index.html"),
         projects: resolve(ROOT, "projects/index.html"),
         brands: resolve(ROOT, "brands/index.html"),
+        learn: resolve(ROOT, "learn/index.html"),
       },
     },
   },
