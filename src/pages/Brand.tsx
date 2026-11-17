@@ -287,6 +287,45 @@ const MONTHS = ["this month", "next month", "we're flexible"] as const;
 const PRODUCT_EXAMPLE = "an AI coding tool";
 const AUDIENCE_EXAMPLE = "developers in India";
 
+/** One reach card — Avi's behavior: the poster clip plays muted on hover
+ *  and pauses (frozen) on leave; the whole card links the IG Reel in a
+ *  new tab. Poster-only reels (no preview clip) show the still. */
+function ReachCard({ reel }: { reel: Reel }) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  return (
+    <a
+      className="brand-reach-card"
+      href={reel.url}
+      target="_blank"
+      rel="noreferrer"
+      data-cursor="▶ PLAY"
+      aria-label={`${reel.title} — ${reel.views} views`}
+      onMouseEnter={() => void videoRef.current?.play().catch(() => {})}
+      onMouseLeave={() => videoRef.current?.pause()}
+    >
+      <span className="brand-reach-poster">
+        {reel.preview ? (
+          <video
+            ref={videoRef}
+            src={reel.preview}
+            poster={reel.thumb}
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
+        ) : (
+          <img src={reel.thumb} alt="" loading="lazy" />
+        )}
+      </span>
+      <span className="brand-reach-line">
+        <span className="brand-reach-line-title">▶ {reel.title}</span>
+        <span className="brand-reach-line-views">{reel.views}</span>
+      </span>
+    </a>
+  );
+}
+
 export default function Brand() {
   const [chatOpen, setChatOpen] = useState(false);
   const [headerHidden, setHeaderHidden] = useState(false);
@@ -591,36 +630,22 @@ export default function Brand() {
           </div>
         </section>
 
-        {/* reach */}
+        {/* reach — heading above the banner, three straight poster cards
+          * on the seascape. Likes/shares pills are NOT rendered: no verified
+          * likes/shares figures exist for these Reels (views only). */}
         <section className="section" aria-label="For a sense of reach" data-reveal>
-          <div className="brand-reach">
-            <div className="brand-reach-head">
-              <h2 className="section-title">For a sense of reach</h2>
-              <p className="brand-reach-note">My three most watched Reels. @cod.ehx</p>
-            </div>
-            <div className="brand-fan brand-fan-static">
-              {BRAND_WORK.slice(0, 3).map(({ reel, made }, i) => (
-                <a
-                  key={reel.id}
-                  className="brand-reach-card"
-                  href={reel.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`${reel.title} — ${reel.views} views`}
-                  style={{
-                    transform: `translateX(${(i - 1) * 62}px) rotate(${(i - 1) * 9}deg) translateY(${Math.abs(i - 1) * 10 + (i === 1 ? -10 : 0)}px)`,
-                    zIndex: 10 - Math.abs(i - 1),
-                  }}
-                >
-                  <img src={reel.thumb} alt="" loading="lazy" />
-                  <span className="brand-reach-card-text">
-                    <span className="brand-reach-card-title">▶ {reel.title}</span>
-                    <span className="brand-reach-card-views">{reel.views}</span>
-                    <span className="brand-reach-card-sub">{made}</span>
-                  </span>
-                </a>
-              ))}
-            </div>
+          <div className="brand-reach-head">
+            <h2 className="section-title">For a sense of reach</h2>
+            <p className="brand-reach-note">
+              My three most watched Reels of the last 6 months.
+              <br />
+              @cod.ehx
+            </p>
+          </div>
+          <div className="brand-reach-banner">
+            {BRAND_WORK.slice(0, 3).map(({ reel }) => (
+              <ReachCard key={reel.id} reel={reel} />
+            ))}
           </div>
         </section>
 
