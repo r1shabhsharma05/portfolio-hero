@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Plate OS: Case Study | Rishabh Sharma</title>
+<meta name="description" content="Case study: Sushen Dang built Plate OS, a multi-tenant operations platform for meal-prep businesses, on Emergent with no code — $10K vs. a $200K agency quote, n" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/plate-os-case-study/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Case study</p>
+<h1>Plate OS: Case Study</h1>
+<p class="lede">Case study: Sushen Dang built Plate OS, a multi-tenant operations platform for meal-prep businesses, on Emergent with no code — $10K vs. a $200K agency quote, now a SaaS with paying customers.</p>
+<p class="meta">13 July 2026</p>
+<h2>Overview</h2>
+<p>Plate OS is an operations platform built for meal prep and delivery businesses, created by Sushen Dang, a data scientist who runs two Toronto meal-prep brands, Two Punjabi for You and BiteBox Meals. Dang built the entire system on Emergent, an AI app-building platform, without writing a line of code. What began as a Shopify theme experiment grew over six months into a full multi-tenant SaaS now running his own business and being sold to other meal-prep operators. His operation processes 600 to 700 orders a day and generates $100,000 to $120,000 in monthly revenue, and the platform itself has its first paying external customer at $1,800 a month, with an enterprise deal near $2,500 a month in negotiation and 20 to 25 prospects in the pipeline.</p><h2>Background</h2>
+<p>Dang spent eight years as a technical product manager before launching his meal-prep business in 2022. That background meant he could read code, debug it, and write precise feature specs, but not write software himself:</p>
+<blockquote>"If you ask me to write a line of code to save my life, I will be shot immediately."</blockquote>
+<p>He wanted the kind of automated, frictionless experience customers get from platforms like Uber or Zomato, but nothing built for meal-prep operators existed off the shelf.</p><h2>The problem</h2>
+<p>Dang was running the business across a patchwork of disconnected tools: OptimoRoute for delivery, Dinespot for CRM, Shopify for the storefront, plus spreadsheets, PDFs, and label-printing software layered on top. None of these shared data, so keeping the business running meant constant manual reconciliation between systems.</p>
+<p>That manual layer showed up as errors. Orders entered by hand and processed through Google Forms carried a 3% to 4% error rate. It also ate the team's time: 90% of phone hours went to inbound calls for meal skips, ingredient swaps, and address changes, leaving almost no capacity for outbound sales. A professional dev quote to fix this properly ran at least $200,000, roughly 20% of the business's annual revenue. Dang called that math a non-starter.</p><h2>The build</h2>
+<p>Dang described the workflows and features he needed in natural language, the same way he'd written specs for engineering teams throughout his career, and Emergent turned those descriptions into working software. He evaluated other AI dev tools, including Codex and GitHub Copilot, but found Emergent's experience more intuitive, and valued being able to export his code at any time. He briefly tried migrating to AWS himself, ran into the operational complexity of managing deployments, and went back to letting Emergent handle it.</p>
+<p>The build ran six months and cost roughly $10,000 in Emergent credits.</p><h2>The product</h2>
+<p>The finished platform connects to Shopify, auto-generates daily kitchen sheets and thermal-printer labels, handles delivery routing with real-time driver tracking and proof of delivery, and manages subscriptions, renewals, and billing in one system. A customer self-serve portal lets subscribers skip meals, swap ingredients, or change delivery addresses on their own, and an AI agent handles the same requests over SMS. It also runs multiple brands from a single dashboard, and is multi-tenant: other meal-prep companies can sign up and run their own instance of it.</p><h2>Results</h2>
+<table>
+<thead>
+<tr><th>Metric</th><th>Result</th></tr>
+</thead>
+<tbody>
+<tr><td>Build cost vs. agency quote</td><td>$10,000 vs. ~$200,000 (20x reduction)</td></tr>
+<tr><td>Monthly savings from cancelled tools</td><td>$2,500/month (OptimoRoute, Dinespot, Shopify apps, SMS)</td></tr>
+<tr><td>Time to ROI</td><td>4 months</td></tr>
+<tr><td>Order error rate</td><td>3-4% → 0%, sustained 3+ weeks</td></tr>
+<tr><td>Inbound support call share</td><td>90% → ~40% of phone time</td></tr>
+<tr><td>Own-business scale</td><td>600-700 orders/day, $100K-$120K/month revenue</td></tr>
+<tr><td>SaaS traction</td><td>1 paying customer ($1,800/mo), 1 deal in negotiation (~$2,500/mo), 20-25 prospects</td></tr>
+</tbody>
+</table><h2>5 reasons it worked</h2>
+<ol>
+<li><strong>Dang was his own first customer.</strong> Plate OS was stress-tested on a real 600-700-order-a-day business before it was ever pitched to anyone else.</li>
+<li><strong>Domain expertise substituted for code.</strong> His years writing engineering specs meant he already had the one skill AI app-building actually demands: describing precisely what a system should do.</li>
+<li><strong>The ROI math is trivial to sell.</strong> $10,000 spent, $2,500/month saved, 4 months to break even — a prospect can do that arithmetic in their head.</li>
+<li><strong>Multi-tenancy was built in, not bolted on.</strong> He architected for other brands from the start, so turning it into a SaaS was a packaging decision, not a rebuild.</li>
+<li><strong>It solved one vertical, deeply.</strong> Kitchen sheets, driver routing, subscription skips — hyper-specific workflows a generic SaaS or CRM would never bother building.</li>
+</ol>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

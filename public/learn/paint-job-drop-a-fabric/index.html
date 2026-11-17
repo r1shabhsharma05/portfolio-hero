@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Paint Job: A Sofa You Re-Upholster by Dropping a Swatch on It | Rishabh Sharma</title>
+<meta name="description" content="How I built a furniture store where you drag a fabric swatch onto the sofa and the new fabric soaks in from where it lands. Seven Codex photos of one room, a ma" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/paint-job-drop-a-fabric/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Paint Job: A Sofa You Re-Upholster by Dropping a Swatch on It</h1>
+<p class="lede">How I built a furniture store where you drag a fabric swatch onto the sofa and the new fabric soaks in from where it lands. Seven Codex photos of one room, a mask worked out from where they differ, and one WebGL shader. Prompts and code inside.</p>
+<p class="meta">13 November 2026</p>
+<p>Choosing a sofa fabric online means clicking a tiny square and watching the whole photo blink into a different photo. In a showroom you hold the swatch against the arm. So I made the swatch the thing you pick up: drag it onto the sofa and the fabric soaks in from where it lands, like dye into cloth. <a href="https://www.avivashishta.com/lab/paint" target="_blank" rel="noreferrer">Try it at avivashishta.com/lab/paint</a>.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex makes one photo of a room with a cream sofa in it, then six edits of that photo with only the sofa re-upholstered. A script works out the sofa's mask from where the edits differ, and cuts each fabric's swatch from its own photo. One WebGL shader soaks the new fabric's photo in from the drop, with a sheen that the mask keeps on the sofa.</p></div><h2>Step 1: the room, then the fabrics (Codex)</h2>
+<p>The room is shot straight on at sofa height, so the sofa is big and nothing overlaps it:</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A bright minimalist living room, photographed straight on at sofa height. A mid-century modern three-seat sofa with slim tapered oak legs stands centred against a plain warm white wall, upholstered in cream boucle. A pale oak floor, a soft wool rug under the sofa, a small round side table on the right with a ceramic vase, a large window just out of frame on the left casting soft morning daylight. Uncluttered, calm, interior design magazine photography, photoreal. No text, no logos, no people. Landscape 3:2, 1536x1024.</p>
+</div>
+</div><p>Each fabric is that photo, attached, with one instruction. &quot;Its real texture and how it catches the light&quot; is what gets you corduroy ridges and the sheen on velvet instead of the same sofa tinted:</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>The attached image is a living room with a sofa. Re-upholster ONLY the sofa in mustard yellow wide-wale corduroy: the cushions, back, arms and seat all in the new fabric, with its real texture and how it catches the light. Keep EVERYTHING else exactly identical: the sofa's shape, size and position, the oak legs, the wall, the floor, the rug, the side table and vase, the light, the framing and the camera. Photoreal. No text. Landscape 3:2, 1536x1024.</p>
+</div>
+</div><p>Codex kept the room still to the pixel on all six. It mostly left the throw cushions alone, but in the linen edit it covered them to match, which is what an upholsterer would offer anyway.</p>
+<h2>Step 2: the sofa is where the photos differ</h2>
+<p>I never drew a mask. The prep script compares each fabric&#39;s photo with the first, at a quarter size with a little blur, and counts a pixel as sofa if most of the fabrics changed it. Then it closes the holes (grow, then shrink) and softens the edge:</p>
+<pre><code class="language-js">diff[i] += d &gt; 60 ? 1 : 0;                          // this fabric changed this pixel
+m[i] = diff[i] &gt;= files.length * 0.6 ? 255 : 0;     // most of them did: it&#39;s sofa
+m = morph(morph(m, true), false);                    // close the holes
+</code></pre>
+<p>Because the cushions stay the same in most of the photos, they mostly fall out of the mask by themselves. The middle of the mask is also where each fabric&#39;s swatch is cut from, so the swatches are real crops of the real fabric. And the page uses it to tell whether a swatch was dropped on the sofa or on the wall.</p>
+<pre><code class="language-bash">bun scripts/prepare-paint.mjs ./raw
+</code></pre>
+<h2>Step 3: the soak</h2>
+<p>The shader has the fabric that is on, the fabric that is going on, and the mask. A circle grows from the drop, roughed up by noise and stretched along the sofa so it reads as dye spreading through cloth rather than a wipe, with a soft sheen riding the front:</p>
+<pre><code class="language-glsl">float e = dist * mix(1., .8, abs(d.x) / max(dist, 1e-4)) + (fbm(uv * vec2(9., 7.) + uSeed) - .5) * .12 - uR;
+float band = exp(-e * e / .0016) * uLive * m;   // the sheen, only where the mask says sofa
+vec3 col = mix(a, b, 1. - smoothstep(-.006, .006, e));
+col += band * .16 * vec3(1., .97, .9);
+</code></pre>
+<p>My first version used the mask to keep everything outside the sofa from the first photo. It cut the throw cushions in half: Codex nudged them a few pixels in some edits, so the bottom of a cushion came from one photo and the top from another. The whole photo changing behind the front is better, because the room really is the same in every photo, so the only thing you see change is the sofa (and a cushion settling, which looks right).</p>
+<p>It is the same shader idea as <a href="/learn/try-on-one-model-every-bag/">Try On</a>, with the mask doing what the cut-out&#39;s alpha did there.</p>
+<h2>Step 4: drag and drop</h2>
+<p>The swatches are buttons in a tray. Press one and drag, and a copy follows the pointer; over the sofa it straightens up and gets a blue ring. To know whether it is over the sofa, the page keeps the mask&#39;s pixels from when it loaded and reads one under the pointer. Let go there and the soak starts at that exact point on the photo. A plain click soaks from the middle of the cushions instead.</p>
+<h2>The small things</h2>
+<ul>
+<li><strong>Three kinds of light.</strong> Morning, golden hour and evening grade the whole room in the shader, easing from one to the next, so you can see the fabric in your evenings, not just the photographer&#39;s morning.</li>
+<li><strong>The price follows the fabric.</strong> Velvet costs more than boucle, as it does.</li>
+<li><strong>Keyboard:</strong> tab to a swatch and press Enter.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a full-screen product recolour page (React, WebGL, no libraries). Assets: a room photo and several edits of it where only the sofa changes, plus a mask image of the sofa (worked out offline from where the edits differ from the original). Draw the room on a canvas covering the screen (cover-fit in the shader). The fragment shader takes the current fabric's photo, the next one's, the mask, a drop point and a radius. Show the next photo within a circle round the drop point, roughened with fbm noise and stretched horizontally, the current one outside it, with a soft light band along the edge only where the mask is set. Grow the radius over 1.7 s.</p>
+<p>Show swatches (crops of each fabric) in a tray. Dragging one shows a ghost under the pointer; read the mask's pixel under the pointer to know if it is over the sofa. Dropping on the sofa starts the soak there; a click starts it from the sofa's middle. Add a time-of-day switch that grades the colours in the shader, and the fabric's name and price with Add to bag.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

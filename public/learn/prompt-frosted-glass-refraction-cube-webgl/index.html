@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt I Used to Build a Frosted-Glass Refraction Cube in Raw WebGL (One HTML File) | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable prompt for a frosted-glass cube floating in front of giant type, where the letters genuinely refract and smear through the glass — raymarched t" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-frosted-glass-refraction-cube-webgl/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt I Used to Build a Frosted-Glass Refraction Cube in Raw WebGL (One HTML File)</h1>
+<p class="lede">A copy-pasteable prompt for a frosted-glass cube floating in front of giant type, where the letters genuinely refract and smear through the glass — raymarched two-bounce refraction, chromatic aberration and film grain in a single index.html with no build step, no npm and no Three.js.</p>
+<p class="meta">27 July 2026</p>
+<h2>Overview</h2>
+<p>
+        You have seen this effect on agency sites and in
+<a href="https://spline.design" target="_blank" rel="noreferrer" rel="nofollow">Spline</a> demos: giant
+        type across a black page, a slab of frosted glass floating in front of
+        it, and the letters visibly bending, smearing and splitting into colour
+        fringes as they pass through the glass.
+</p>
+<p>
+        It is usually a 3D tool export, or Three.js with a transmission
+        material. Neither is necessary. Below is a single prompt that produces
+        it as <strong>one <code>index.html</code> file</strong> — no build step,
+        no npm, no Three.js, raw WebGL — where the refraction is genuinely
+        raymarched rather than faked with a blur.
+</p><div class="highlight">
+<p>
+<strong>What it produces:</strong> full-viewport black page, "AVI
+          VASHISHTA" in ultra-bold condensed caps with a stack of ghosted
+          outline copies bleeding behind it, film grain over everything, and a
+          rounded frosted cube floating dead centre that refracts the type
+          through two surfaces. Drag to rotate, release and it carries momentum.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> nothing. One HTML file, one 2D canvas for the
+          background, one fullscreen fragment shader for the cube. Paste it into
+          Replit, Claude, or any single-file host and it runs.
+</p>
+</div><h2>The prompt</h2>
+<p>
+        Paste the whole thing at once. It is long on purpose — the specificity
+        is what makes it a one-shot rather than a twenty-round negotiation.
+        Swap the text string for your own name.
+</p><div class="prompt">Build a single-file HTML page (index.html, no build step, no npm packages, no Three.js — raw WebGL only) that renders a frosted-glass 3D cube floating in front of giant type, where the type visibly refracts and smears through the glass.<p>LAYOUT &amp; TYPE</p>
+<ul>
+<li>Full-viewport black background (#060606). No scrolling, no UI chrome.</li>
+<li>Background layer is drawn on an offscreen 2D canvas, then uploaded as a WebGL texture:<ul>
+<li>The words &quot;AVI VASHISHTA&quot; in one line, centered, uppercase, ultra-bold condensed sans (900 weight, Helvetica Neue / Arial / system sans fallback), fill #d2d2d2, scaled so the word spans ~92% of the viewport width.</li>
+<li>Behind it, a &quot;ghost stack&quot;: 3 outline-only copies of the same word (transparent fill, 1–2px stroke, rgba(255,255,255,0.055)), each scaled 4–8% larger than the solid word and offset on BOTH axes (e.g. up-left, down-right, far-up) so they bleed past the letterforms.</li>
+<li>Add fine monochrome film grain to the whole background canvas by walking the ImageData and adding ±27 to each RGB channel.</li>
+<li>Redraw and re-upload this canvas on resize.</li>
+</ul>
+</li>
+</ul>
+<p>THE CUBE (all in one fullscreen fragment shader, drawn on a single fullscreen triangle)</p>
+<ul>
+<li>Raymarch a rounded-box SDF: half-extent 0.62, corner radius 0.03, centered exactly at world origin (0,0,0) so it sits dead center of the viewport. Camera at (0,0,3.0) looking down -Z, focal 1.9.</li>
+<li>Rotate the cube by transforming the sample point with an inverse rotation mat3 (Rx(-pitch) * Ry(-yaw)) passed in as a uniform. Start at yaw 0.62, pitch 0.46 so a corner faces the viewer.</li>
+<li>TWO-BOUNCE REFRACTION (this is the important part — do not fake it with a blur):<ol>
+<li>March from the camera to the front surface, compute the normal via central differences.</li>
+<li>refract() the view ray into the glass with IOR 1.48.</li>
+<li>March INSIDE the solid (step on the negated SDF) until you reach the back surface, compute that normal.</li>
+<li>refract() out again (fall back to reflect() on total internal reflection).</li>
+<li>Intersect that exit ray with a plane at z = -3.2, then project the hit point back through the same camera to get a UV into the background texture. That projected UV is what makes the type genuinely bend.</li>
+</ol>
+</li>
+<li>FROSTED look:<ul>
+<li>Perturb both surface normals with 3D value noise (frequency ~26, amplitude ~0.10) so the refraction wobbles like ground glass.</li>
+<li>Sample the background at the refracted UV with a 16-tap golden-angle spiral blur, radius 0.010 + 0.055 * fresnel, jittered per pixel by a hash so it dithers instead of banding. Correct the offsets for aspect ratio so the blur stays circular.</li>
+</ul>
+</li>
+<li>Fresnel = pow(1 - dot(-rayDir, normal), 3.5). Use it to: widen the blur, brighten the rim (+0.14), and drive chromatic aberration — offset the R and B taps in opposite directions along the refraction displacement vector by 0.004 + 0.020 * fresnel, so corners get iridescent color fringes.</li>
+<li>Tint the transmitted color vec3(0.90, 0.93, 0.97), add a purple-ish iridescent bloom on grazing angles, and one specular highlight: pow(max(dot(reflect(rayDir, normal), normalize(vec3(-0.55,0.85,0.55))), 0.), 34.) * 0.55.</li>
+<li>Finally, over the entire frame (cube and background alike): hash-based film grain at ±0.027 and a subtle radial vignette.</li>
+</ul>
+<p>MOTION &amp; INTERACTION</p>
+<ul>
+<li>Idle: slow continuous yaw drift (~0.0038 rad/frame) plus a gentle sinusoidal pitch bob.</li>
+<li>Pointer drag rotates the cube (pointerdown/move/up with pointer capture); on release, momentum carries and decays at 0.94 per frame. Clamp pitch to ±1.25. Cursor grab / grabbing.</li>
+<li>Small monospace &quot;DRAG TO ROTATE&quot; label bottom-left, letter-spaced, rgba(255,255,255,0.32).</li>
+</ul>
+<p>QUALITY</p>
+<ul>
+<li>Size the canvas to clientWidth/Height * min(devicePixelRatio, 2); update viewport and re-render the text texture on resize.</li>
+<li>Expose a JS config object at the top of the script for: text string, ghost copy count, ghost offset/scale/opacity, cube size, IOR, frost blur amount, chromatic aberration amount, grain strength, and rotation speed — so all of it is tunable in one place.</li>
+<li>Log shader compile/link errors to the console. If WebGL is unavailable, show a plain fallback message.</div></li>
+</ul>
+<h2>Why the prompt is written this way</h2>
+<p>
+        Most of the length is doing one job: closing off the cheap shortcuts a
+        model will otherwise take. Five clauses are carrying the result.
+</p><h3>"Do not fake it with a blur"</h3>
+<p>
+        Ask for "frosted glass" and you will get a blurred copy of the
+        background clipped to a cube silhouette. It looks fine in a still and
+        completely wrong in motion, because a blur does not
+<em>displace</em> anything — rotate the cube and the letters underneath
+        stay exactly where they were.
+</p>
+<p>
+        Real glass moves them. That needs the light path traced through both
+        surfaces: refract on the way in, march to the back wall, refract on the
+        way out. Naming the five steps explicitly is what stops the model
+        collapsing it into a one-surface approximation.
+</p><h3>The projection step is the whole trick</h3>
+<p>
+        Step 5 is the part people miss. After the second refraction you have a
+        ray leaving the glass in some new direction — but a 2D background
+        texture has no depth, so there is nothing for that ray to hit.
+</p>
+<p>
+        The fix is to give it something: put a plane behind everything at
+<code>z = -3.2</code>, intersect the exit ray with it, then
+<strong>project that hit point back through the same camera</strong> to
+        get a texture coordinate. Because the exit ray is bent, the coordinate
+        you land on is not the one under the pixel — and that displacement,
+        pixel by pixel, is the type visibly bending. Any wrong-looking
+        refraction almost always traces back to this projection rather than to
+        the <code>refract()</code> calls.
+</p><h3>Frost is normal noise, not blur radius</h3>
+<p>
+        Ground glass scatters because its surface is microscopically rough. The
+        prompt reproduces that by perturbing both surface normals with 3D value
+        noise before refracting, so neighbouring pixels bend slightly
+        differently. The 16-tap blur is a secondary softening on top. Turning
+        the blur up without the normal noise gives you smooth frosted plastic;
+        the noise is what makes it read as glass.
+</p>
+<p>
+        The golden-angle spiral with a per-pixel hash jitter matters for the
+        same reason a dither pattern matters — 16 taps in a fixed ring produce
+        visible rings, and 16 jittered taps produce grain your eye reads as
+        texture.
+</p><h3>Fresnel drives three things at once</h3>
+<p>
+        Rather than tuning rim brightness, blur width and colour fringing
+        independently, all three are driven off the same Fresnel term. Grazing
+        angles automatically get a brighter edge, a wider blur, and stronger
+        chromatic aberration — which is physically what happens and, more
+        usefully, means there is only one number to tune when it looks off.
+</p>
+<p>
+        The chromatic aberration is deliberately offset
+<em>along the refraction displacement vector</em> rather than in a fixed
+        screen direction. That is why the fringes follow the bend of the letters
+        instead of sitting as a flat red/blue ghost.
+</p><h3>Grain twice, on purpose</h3>
+<p>
+        There is film grain baked into the background canvas
+        (<code>±27</code> per channel in the ImageData) and a second pass over
+        the whole frame in the shader (<code>±0.027</code>). This is not
+        redundant. The first gets <em>refracted along with the type</em>, so the
+        grain inside the glass smears with everything else. The second sits flat
+        on the final image and ties the cube and the page together. Drop either
+        and the cube starts to look pasted on.
+</p><h2>Knobs to turn first</h2>
+<p>
+        The prompt asks for a config object at the top of the script, which is
+        the difference between iterating in seconds and re-prompting for every
+        tweak. The four worth reaching for:
+</p>
+<ul>
+<li>
+<strong>IOR (1.48).</strong> Water is ~1.33, glass ~1.5, diamond ~2.4.
+          Push past 1.7 and the bending gets so aggressive the type stops being
+          readable through the cube.
+</li>
+<li>
+<strong>Cube half-extent (0.62).</strong> Controls how much of the
+          word it covers. Larger reads as a slab, smaller as a gem.
+</li>
+<li>
+<strong>Frost blur amount.</strong> Low values look like clear glass
+          and make the refraction obvious; high values obscure the type. The
+          interesting range is narrow.
+</li>
+<li>
+<strong>Ghost stack opacity (0.055).</strong> Easy to overdo. The
+          outline copies should be nearly subliminal — you want to feel depth
+          behind the word, not read four words.
+</li>
+</ul><h2>If it comes out wrong</h2>
+<ul>
+<li>
+<strong>The cube is a flat grey blob.</strong> The two-bounce march
+          collapsed to one surface. Check that the inside march steps on the
+<em>negated</em> SDF — inside the solid the distance field is
+          negative, and stepping on the raw value walks backwards forever.
+</li>
+<li>
+<strong>The type does not move when the cube rotates.</strong> The
+          projection in step 5 is being skipped and the shader is sampling the
+          background at the plain screen UV. That is exactly the blur-fake the
+          prompt is written to prevent.
+</li>
+<li>
+<strong>Concentric rings inside the glass.</strong> The blur taps are
+          not jittered. Add the per-pixel hash to the spiral's starting angle.
+</li>
+<li>
+<strong>The blur is oval near the screen edges.</strong> The tap
+          offsets are not aspect-corrected — divide the x offset by the aspect
+          ratio.
+</li>
+<li>
+<strong>Everything is black.</strong> Check the console. A shader that
+          fails to compile silently produces nothing, which is why the prompt
+          asks for compile and link errors to be logged.
+</li>
+<li>
+<strong>It is slow on a laptop.</strong> The cost is the 16 taps
+          multiplied by the device pixel ratio. The <code>min(dpr, 2)</code>
+          clamp is in the prompt for this reason; drop the tap count to 8 before
+          you touch anything else.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          The effect does not need a 3D tool or Three.js. A rounded-box SDF, two
+<code>refract()</code> calls and a background texture get you there in
+          one file.
+</li>
+<li>
+          Say "do not fake it with a blur" out loud in the prompt, then
+          enumerate the march steps. Otherwise you will get the blur.
+</li>
+<li>
+          Refract to a plane, then project back through the camera. That step is
+          what makes the letters bend.
+</li>
+<li>
+          Roughen the normals with noise for frost; the blur alone reads as
+          plastic.
+</li>
+<li>
+          Drive rim, blur width and colour fringing from one Fresnel term so
+          there is one number to tune.
+</li>
+<li>
+          Ask for a config object up front. Every minute spent on that is ten
+          minutes not spent re-prompting.
+</li>
+</ul><p>
+        If you want more prompts in this shape, there is
+<a href="/learn/build-drivable-3d-car-game-react-three-fiber/"
+          >a drivable 3D car game</a>, <a href="/learn/build-3d-flappy-bird-plane-threejs/">a 3D Flappy Bird</a>, and <a href="/learn/wind-chime-effect/">a wind chime app in one HTML
+        file</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

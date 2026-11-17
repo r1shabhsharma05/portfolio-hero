@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Front Row: A Fashion Store Where the Scroll Walks the Show | Rishabh Sharma</title>
+<meta name="description" content="How I built a fashion store where you sit at the end of the catwalk: scroll and the looks walk toward you, the one that stops at the front is for sale and the c" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/front-row-a-store-on-the-runway/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Front Row: A Fashion Store Where the Scroll Walks the Show</h1>
+<p class="lede">How I built a fashion store where you sit at the end of the catwalk: scroll and the looks walk toward you, the one that stops at the front is for sale and the cameras go off. One Codex catwalk, one Codex model, seven Codex outfit edits and a little perspective maths.</p>
+<p class="meta">13 November 2026</p>
+<p>A fashion week show is the best product page fashion has: every look walks toward you, stops, and you get a good long look. Then it is on a white background in a grid for the rest of its life. I wanted the store to be the show. <a href="https://www.avivashishta.com/lab/runway" target="_blank" rel="noreferrer">Take your seat at avivashishta.com/lab/runway</a>.</p>
+<p>You sit at the end of the catwalk. Scroll, and the models walk out of the lit door at the far end, one after another, getting bigger as they come. The one at the front stops, the cameras in the crowd go off, and her look is for sale on the left, piece by piece. Scroll on and she turns off past you while the next one arrives.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex makes one photo of an empty catwalk and one photo of the model walking toward the camera. Every other look is that photo with only the outfit changed. A script cuts each one out with macOS Vision. The page puts each look somewhere between the door and the front, sizes her by perspective and stands her feet on the floor below the vanishing point. The scroll is walking speed, and CSS scroll snap makes every stop a look at the front.</p></div><h2>Step 1: the room (Codex)</h2>
+<p>The catwalk has to be empty and photographed straight down its length, so it has one vanishing point that every model can walk out of.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>An empty fashion show runway photographed from the very end of the catwalk, looking straight down its length, eye level, one-point perspective with the vanishing point in the centre of the frame. A long glossy white runway floor with soft reflections, a tall plain warm white wall at the far end with a soft lit entrance opening, rows of seated audience in soft shadow on both sides of the runway (people in dark clothes, faces not detailed), a few phones raised. No model on the runway, nobody standing on it. Soft overhead spotlights, editorial fashion week photography, calm and premium. No text, no logos, no screens with text. Landscape 3:2, 1536x1024.</p>
+</div>
+</div><h2>Step 2: one model, eight looks</h2>
+<p>The first look is a new photo: her, mid-stride, walking at the camera, on white. Every other look is an edit of it that changes only the clothes. That is what makes eight models feel like one show: the same woman, the same walk, the same light.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>The attached image is a full-length fashion photo of a model walking toward the camera. Change ONLY her outfit: she now wears a sharp cobalt blue tailored suit, a single-breasted blazer with nothing underneath and wide matching trousers, with black pointed heels. Keep EVERYTHING else identical: the same woman, face, hair and expression, the same pose and stride, the same arms, the same framing, scale and position in the frame, the same light and the same pure white background. Whole body visible head to shoes. Photoreal. No text, no logos. Portrait 2:3, 1024x1536.</p>
+</div>
+</div><p>The prep script cuts each look out with macOS Vision and trims it to her, so the top of the image is the top of her head and the bottom is her shoes. That is all the page needs to stand her on the floor.</p>
+<pre><code class="language-bash">bun scripts/prepare-runway.mjs ./raw
+</code></pre>
+<h2>Step 3: perspective with two numbers</h2>
+<p>The photo covers the screen, so first the page works out where its vanishing point (the foot of the door) lands on this screen. Then each look has a place on the catwalk, <code>z</code>, from 0 at the door to 1 at the front. How big she is comes from how far away she is, and the distance shrinks evenly as she walks, so she grows slowly at first and quickly at the end, as people do when they walk at you:</p>
+<pre><code class="language-ts">const z = 1 + u / WALK;   // 0 at the door, 1 at the front
+const s = 1 / (7 - 6 * z); // her size: 1/7 at the door, 1 at the front
+const h = front * s;
+const y = hy + FEET * h - h; // feet below the horizon, by her own height
+</code></pre>
+<p>The last line is the one that makes it look right. The camera is at about eye level, so the horizon cuts through her eyes at any distance, and her feet are always about nine tenths of her height below it. Get that wrong and the models float or sink.</p>
+<p>A small bob tied to the distance walked makes her step, and a flipped copy under her, faded with a mask, is her reflection in the glossy floor.</p>
+<h2>Step 4: the scroll is walking speed</h2>
+<p>Every look is one screen of scroll, and the page has CSS scroll snap on, so wherever you stop, a look is standing at the front:</p>
+<pre><code class="language-css">html:has(.page) { scroll-snap-type: y mandatory; }
+.snap { height: 100svh; scroll-snap-align: start; }
+</code></pre>
+<p>Look <code>i</code> is at the front when you have scrolled <code>i</code> screens. Before that it is walking in from the door; it leaves the door almost two screens early, so there is always someone on the catwalk behind her. After it, she turns off to one side, gets bigger, blurs and fades as she passes the camera. The page follows the scroll with a little lag, so a flick turns into a few quick steps instead of a jump.</p>
+<h2>The small things</h2>
+<ul>
+<li><strong>The cameras go off</strong> when a look stops: flashes pop in the crowd on both sides and the room washes white for a moment. Turn the sound on for a shutter burst.</li>
+<li><strong>The first look walks in on load</strong>, from the door to the front, before you have touched anything.</li>
+<li><strong>Shop the piece or the look.</strong> The panel lists every piece with its price and a plus, and &quot;Shop the look&quot; adds the lot.</li>
+<li><strong>The line-up</strong> on the right shows all eight looks; click one and the show walks to it.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a scroll-driven runway store (React, no libraries). Assets: stage.webp, a photo straight down an empty catwalk with its vanishing point at known fractions of the image, and one cut-out WebP per look, trimmed so the top is the head and the bottom is the shoes. Cover the screen with the photo in a fixed layer and work out where its vanishing point lands. Make the page one 100svh section per look with scroll-snap-type y mandatory.</p>
+<p>Each frame, take t = scroll / screen height, smoothed. For look i, u = t - i. While -1.9 &lt; u &lt;= 0 she walks in: z = 1 + u / 1.9, scale s = 1 / (7 - 6z), height = s times her height at the front, x centred on the vanishing point, feet 0.92 of her height below the horizon. For 0 &lt; u &lt; 0.55 she turns off to one side, growing, blurring and fading. Add a small bob tied to u and a flipped, masked copy below her for the floor reflection. When a look stops at the front, flash cameras in the crowd. Show the look's pieces and prices in a panel with Add buttons, and a line-up of all looks that scrolls to each.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

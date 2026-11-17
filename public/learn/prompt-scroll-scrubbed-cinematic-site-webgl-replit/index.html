@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt I Used to Build a pear.no-Style Scroll-Scrubbed Cinematic Site on Replit (WebP Frames, No Code) | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable Replit Agent prompt for a single-page cinematic WebGL site in the style of pear.no — one sticky stage 60 viewports tall, one normalized progres" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-scroll-scrubbed-cinematic-site-webgl-replit/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt I Used to Build a pear.no-Style Scroll-Scrubbed Cinematic Site on Replit (WebP Frames, No Code)</h1>
+<p class="lede">A copy-pasteable Replit Agent prompt for a single-page cinematic WebGL site in the style of pear.no — one sticky stage 60 viewports tall, one normalized progress number, scroll-scrubbed WebP frame sequences instead of seeking a video, a halving-stride loader that never shows a blank frame, six shader transitions, and an asset pipeline that generates motion first and decomposes it with ffmpeg.</p>
+<p class="meta">17 September 2026</p>
+<h2>Overview</h2>
+<p>
+        One page. One <code>&lt;section&gt;</code> sixty viewports tall with a
+        single sticky child that never leaves the screen. As you scroll, an
+        oil-painting world plays forwards and backwards under your finger —
+        figures in linen and crimson, marble plinths, scaffolding around a
+        colossal golden object — and dissolves between scenes through halftone
+        dots, radial rings and noise-warped wipes. Hairline rules draw in.
+        Headlines fade up in a serif with optical sizes. Film grain sits on top
+        of everything, and highlights pull toward cream.
+</p>
+<p>
+        It looks like video. It is not. It is around six hundred WebP stills,
+        indexed by scroll position, uploaded two at a time into a WebGL shader
+        that cross-dissolves them. The whole thing is vanilla TypeScript and
+        hand-written WebGL1 with no animation library at all, and the JavaScript
+        comes in under 350 KB.
+</p>
+<p>
+        The reference is the class of high-end WebGL agency sites that
+<a href="https://pear.no/" target="_blank" rel="noreferrer">pear.no</a> is the cleanest example of. This
+        post is the build brief for that class of site, turned into a single
+        prompt for <a href="https://replit.com/" target="_blank" rel="noreferrer">Replit Agent</a> — the
+        architecture, the frame loader, the shader, the asset pipeline, the
+        scroll timeline, and the fallbacks — with the reasons each clause exists
+        afterwards.
+</p><div class="highlight">
+<p>
+<strong>What it produces:</strong> a sticky stage driven by one
+          normalized progress value, five to seven scroll-scrubbed WebP frame
+          sequences plus one 360-frame centrepiece reel, a progressive frame
+          loader with a halving-stride load order and a priority window around
+          the current frame, a two-texture WebGL1 renderer with six named
+          transitions and an always-on grain-and-grade pass, a 2D hairline
+          overlay, real HTML text layers, two ambient
+<code>&lt;video&gt;</code> loops, an ffmpeg script that decomposes
+          generated clips into budgeted sequences, and a reduced-motion and
+          WebGL-lost fallback for each.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> vanilla TypeScript on Vite, raw WebGL1, native
+          scroll, one <code>requestAnimationFrame</code> loop. No GSAP, no
+          ScrollTrigger, no Three.js, no Lenis, no Framer Motion.
+</p>
+</div><h2>Generate the motion first</h2>
+<p>
+        On the
+<a href="/learn/prompt-premium-property-site-scroll-choreography-replit/"
+          >property site</a>
+        the assets were photography you had to source before the agent wired
+        anything. Here the assets are the engine's fuel, and there is a specific
+        order of operations that works and a tempting one that does not.
+</p>
+<ul>
+<li>
+<strong>Do not ask an image model for 121 consistent frames.</strong>
+          They will not match. Faces drift, the horizon moves, the palette
+          shifts a few degrees per frame, and the scrub reads as a flip-book of
+          near-misses. Generate <em>one</em> still per scene, then hand that
+          still to an image-to-video model for motion, then decompose the clip.
+          Consistency comes from the video model for free.
+</li>
+<li>
+<strong>One shared style suffix on every still prompt.</strong> The
+          art direction, "oil painting realism, soft directional sunlight, fine
+          canvas grain, muted warm palette", appended verbatim to all six
+          prompts. Six scenes that were prompted separately without it look
+          like six different sites.
+</li>
+<li>
+<strong>Slow, single-axis camera moves only.</strong> "Slow push in",
+          "slow crane up", "wind in fabric, camera locked". Dramatic motion
+          scrubs badly, because a big change between adjacent frames strobes,
+          and it compresses worse, because WebP has more to encode. Boring
+          clips make better sequences.
+</li>
+<li>
+<strong>Budget in numbers before you encode.</strong> 60–120 KB per
+          desktop frame, 25–35 KB per mobile frame, under 12 MB per desktop
+          sequence. Print the directory size after every run. Without a number
+          the agent will ship quality 90 and a 40 MB folder, and you will not
+          notice until the sequence stalls on a real connection.
+</li>
+</ul><h2>The prompt</h2>
+<p>
+        Paste the whole thing at once. Fill in the <code>BRAND BRIEF</code>
+        block first.
+</p><div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt" id="cinematic-prompt">Build a single-page cinematic marketing site in the style of high-end WebGL agency sites (reference: pear.no). Do NOT use GSAP, ScrollTrigger, Three.js, Lenis, Framer Motion, or any animation library. Everything is vanilla TypeScript + hand-written WebGL1 + native scroll, bundled with Vite. Total JS budget: under 350 KB minified.<h2>BRAND BRIEF — fill this in</h2>
+<ul>
+<li>Brand name: [[BRAND]]</li>
+<li>One-line positioning: [[e.g. &quot;Not an agency on the clock, a partner in the upside.&quot;]]</li>
+<li>Art direction: [[e.g. &quot;Neoclassical oil-painting realism: figures in white linen and crimson drapery, marble plinths, wooden scaffolding, a colossal golden object, deep cobalt sky, warm cream highlights&quot;]]</li>
+<li>Background color: <code>#0B0A09</code> (near-black). Accent cream <code>rgb(226,208,177)</code>.</li>
+<li>Typography: a serif display face with optical sizes for headlines (Flecha, Editorial New, or Instrument Serif as a free substitute), a neutral grotesk for body, a mono for eyebrow labels/metadata.</li>
+<li>Sections, in scroll order: [[Hero → The Model → The Work → The Terms → Questions/FAQ → Apply/Footer]]</li>
+<li>Copy per section: [[paste your copy]]</li>
+</ul>
+<h2>1. Core architecture</h2>
+<p>One <code>&amp;lt;main&amp;gt;</code> containing one <code>&amp;lt;section class=&quot;stage&quot;&amp;gt;</code> that is roughly <strong>60–70 viewport heights tall</strong> (~50,000px on desktop). Inside it, one <code>&amp;lt;div class=&quot;pin&quot;&amp;gt;</code> that is <code>position: sticky; top: 0; height: 100vh; overflow: hidden</code>. Everything the user ever sees lives inside <code>.pin</code>. There are no other page sections and no scroll-snapping.</p>
+<p>Derive one global normalized progress value every frame:</p>
+<pre><code class="language-ts">const p = scrollY / (document.documentElement.scrollHeight - innerHeight); // 0..1
+</code></pre>
+<p>Run a single <code>requestAnimationFrame</code> loop. Read <code>scrollY</code> once per frame (never in a scroll listener), lerp <code>p</code> toward its target with a smoothing factor around <code>0.12</code> for inertia, and drive <em>everything</em> — frame index, shader uniforms, text overlays — from that one number. No per-element scroll listeners, no IntersectionObserver for animation.</p>
+<p>Inside <code>.pin</code>, stack in this order:</p>
+<ol>
+<li><code>&amp;lt;canvas class=&quot;gl&quot;&amp;gt;</code> — full-bleed WebGL, sized to <code>innerWidth * devicePixelRatio</code> (cap DPR at 2).</li>
+<li><code>&amp;lt;canvas class=&quot;lines&quot;&amp;gt;</code> — 2D canvas drawing hairline rules and crosshair ticks at <code>rgba(255,255,255,0.14)</code>, 1 device pixel wide, animated in/out with progress.</li>
+<li>Small 2D overlay canvases for grain/dither passes if needed.</li>
+<li>An inline <code>&amp;lt;svg&amp;gt;</code> with <code>&amp;lt;filter&amp;gt;</code> defs using <code>feTurbulence</code> + <code>feDisplacementMap</code> + <code>feComponentTransfer</code> for a subtle organic warp/grain, applied to specific text blocks.</li>
+<li>Absolutely positioned HTML text layers (<code>.sign</code>, <code>.faq</code>, <code>.ft</code>) that fade and translate on progress ranges. Text stays real HTML for SEO and accessibility — never rendered into the canvas.</li>
+</ol>
+<h2>2. The visual system: scroll-scrubbed WebP frame sequences, NOT scroll-scrubbed video</h2>
+<p>This is the single most important implementation decision. Seeking a <code>&amp;lt;video&amp;gt;</code> element by scroll position is janky on every browser. Instead:</p>
+<p><strong>Frame sequences (the main mechanism).</strong> Each cinematic beat is a folder of numbered WebP stills that you index by scroll position:</p>
+<pre><code>/public/films/&amp;lt;name&amp;gt;/f_001.webp ... f_121.webp        ← desktop tier (1920x1080 or 1280x720)
+/public/films/&amp;lt;name&amp;gt;/768/f_001.webp ... f_121.webp    ← mobile tier (768x432)
+</code></pre>
+<p>Target <strong>60–120 KB per desktop frame, 25–35 KB per mobile frame</strong> (WebP quality ~78, no alpha). Pick the tier once at boot with <code>matchMedia(&#39;(max-width: 820px)&#39;).matches</code>.</p>
+<p>Build 5–7 sequences of <strong>89–130 frames each</strong>, plus one long &quot;reel&quot; sequence of ~360 frames for the centerpiece scroll passage. Write a <code>manifest.json</code> per sequence:</p>
+<pre><code class="language-json">{ &quot;tiers&quot;: { &quot;768&quot;: { &quot;count&quot;: 121 }, &quot;1440&quot;: { &quot;count&quot;: 121 } } }
+</code></pre>
+<p><strong>Real <code>&amp;lt;video&amp;gt;</code> only for ambient loops that are not scroll-driven.</strong> Use <code>&amp;lt;video autoplay muted loop playsinline preload=&quot;metadata&quot; poster=&quot;...-poster.jpg&quot;&amp;gt;</code> for exactly two things: the hero reveal loop behind the first viewport, and the footer loop behind the final CTA. Set <code>.muted = true</code> in JS <em>and</em> the <code>muted</code> attribute, call <code>.play()</code> on <code>canplay</code> and on the first <code>pointerdown</code>/<code>touchstart</code> (iOS needs the gesture fallback), and only start the footer loop once the user has scrolled past 50%. Each <code>.mp4</code> gets a matching <code>-poster.jpg</code>. Keep each under ~12 MB, H.264 High, faststart, 24fps.</p>
+<h2>3. The frame loader (implement exactly this — it&#39;s what makes it feel instant)</h2>
+<pre><code class="language-ts">function makeSequence(base: string, count: number, readyAt = 2, from = 0, to = 1)
+</code></pre>
+<ul>
+<li><strong>Progressive load order.</strong> Don&#39;t load 1→N. Build the order with a halving stride so a coarse pass across the whole sequence lands first, then refines:<pre><code class="language-ts">const order: number[] = [], seen = new Set&amp;lt;number&amp;gt;();
+for (let s = 32; s &amp;gt;= 1; s &amp;gt;&amp;gt;= 1)
+  for (let i = 0; i &amp;lt; count; i += s)
+    if (!seen.has(i)) { seen.add(i); order.push(i); }
+</code></pre>
+</li>
+<li><strong>Priority window.</strong> Keep a <code>want</code> index (the frame scroll currently needs). On each loader tick, first scan outward <code>±24</code> frames from <code>want</code> for anything unloaded and fetch that; only if that window is full do you fall back to the next item in <code>order</code>.</li>
+<li><strong>Neighbor pre-decode.</strong> When <code>want</code> changes, call <code>img.decode()</code> on <code>want±1, ±2, ±3</code> so the GPU upload never stalls mid-scrub.</li>
+<li><strong>Never blank.</strong> A <code>nearest(i)</code> accessor walks outward from <code>i</code> and returns the closest frame that is actually decoded (<code>naturalWidth &amp;gt; 0</code>). Draw that. The picture degrades to a slightly stale frame instead of flashing black.</li>
+<li><strong>Retry.</strong> On error, up to 3 retries, then push the index back onto the order queue.</li>
+<li><strong>Range-gated loading.</strong> Register each sequence against its normalized scroll range with a lead margin (~0.06), so a sequence only consumes bandwidth when it&#39;s approaching. Run a global scheduler that allows at most 4–6 in-flight image requests across all sequences.</li>
+<li><code>readyAt</code> = how many frames must land before the sequence is allowed to render at all.</li>
+</ul>
+<p>Load images with <code>new Image()</code>, <code>decoding = &#39;async&#39;</code>, and cache-bust with a build-constant query (<code>?r=1</code>). Do not use <code>createImageBitmap</code> — plain <code>Image</code> + <code>decode()</code> has better memory behavior across 600+ frames.</p>
+<h2>4. The WebGL renderer</h2>
+<p>One WebGL1 context, one fullscreen triangle/quad, one fragment shader. Two <code>sampler2D</code> uniforms <code>uA</code> and <code>uB</code> plus <code>uMix</code> so any two frames — from the same sequence or across a sequence boundary — can be cross-dissolved. Upload frames with <code>texImage2D</code> into two reused textures (never allocate per frame); <code>NEAREST</code>/<code>LINEAR</code> filtering, <code>CLAMP_TO_EDGE</code>, no mipmaps, <code>UNPACK_FLIP_Y_WEBGL</code> true.</p>
+<p>Implement these named transitions, selected per section and switchable at runtime via a <code>?t=</code> query param for tuning:</p>
+<ul>
+<li><code>breathe</code> — slow scale/luminance pulse with a low-frequency noise drift</li>
+<li><code>slice</code> — horizontal band displacement wipe</li>
+<li><code>halftone</code> — dot-matrix dissolve; dot radius driven by luminance and <code>uMix</code></li>
+<li><code>displace</code> — noise-warped UV push between A and B</li>
+<li><code>static</code> — thresholded hash noise dissolve</li>
+<li><code>ring</code> — radial reveal with a soft antialiased edge</li>
+</ul>
+<p>Default to <code>ring</code> for section changes and <code>halftone</code> for the centerpiece.</p>
+<p>Always-on post pass, all parameterized as uniforms so they can be tuned: film grain (~0.17), ordered dither (~0.01), value noise (~0.06), a very slight chromatic-ish edge, and a cream color grade pulling highlights toward <code>rgb(226,208,177)</code>. Guard derivatives with <code>#extension GL_OES_standard_derivatives : enable</code> and fall back to a constant AA width when unavailable. Add a <code>#define PHONE 1</code> branch that drops grain and halftone cost on mobile.</p>
+<p>Also support a <code>uZoom</code>/<code>uPan</code> pair so a sequence can slowly push in across its scroll range — a Ken Burns move layered on top of the frame scrub.</p>
+<h2>5. Asset generation on Replit — do this in this order</h2>
+<p>Do NOT try to generate 121 individually consistent frames with an image model; they will not match. Generate motion, then decompose it.</p>
+<p><strong>Step A — keyframe stills (image generation).</strong> For each of the 6 sequences, generate one 16:9 hero still at the highest resolution available, using one shared style suffix appended to every prompt so the look is identical across all of them: <code>[[art direction]], oil painting realism, soft directional sunlight, fine canvas grain, muted warm palette, cinematic composition, no text, no watermark</code>. Save these as <code>/assets/keys/&amp;lt;name&amp;gt;.png</code>. Review them and regenerate any that drift before moving on.</p>
+<p><strong>Step B — motion (video generation).</strong> Feed each still to image-to-video with a slow, single-axis camera instruction — <code>slow push in</code>, <code>slow orbit left</code>, <code>slow crane up</code>, <code>subtle wind in fabric and leaves, camera locked</code>. Ask for 5 seconds, 24fps, 16:9, no cuts. Slow and simple beats dramatic: the scrub reads better and frames compress smaller. Save as <code>/assets/raw/&amp;lt;name&amp;gt;.mp4</code>.</p>
+<p><strong>Step C — decompose to frame sequences (ffmpeg).</strong> Write <code>scripts/frames.sh</code>:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -e
+NAME=$1; COUNT=${2:-121}
+SRC=&quot;assets/raw/$NAME.mp4&quot;
+OUT=&quot;public/films/$NAME&quot;
+mkdir -p &quot;$OUT/768&quot;
+FPS=$(python3 -c &quot;import sys;print($COUNT/5.0)&quot;)   # COUNT frames out of a 5s clip
+ffmpeg -y -i &quot;$SRC&quot; -vf &quot;fps=$FPS,scale=1920:-2&quot; -frames:v $COUNT \
+  -c:v libwebp -quality 78 -compression_level 6 -preset picture &quot;$OUT/f_%03d.webp&quot;
+ffmpeg -y -i &quot;$SRC&quot; -vf &quot;fps=$FPS,scale=768:-2&quot; -frames:v $COUNT \
+  -c:v libwebp -quality 72 -compression_level 6 -preset picture &quot;$OUT/768/f_%03d.webp&quot;
+python3 - &amp;lt;&amp;lt;EOF
+import json,os
+json.dump({&quot;tiers&quot;:{&quot;768&quot;:{&quot;count&quot;:$COUNT},&quot;1440&quot;:{&quot;count&quot;:$COUNT}}}, open(&quot;$OUT/manifest.json&quot;,&quot;w&quot;))
+EOF
+du -sh &quot;$OUT&quot; &quot;$OUT/768&quot;
+</code></pre>
+<p>Run it per sequence and <strong>print the total directory size</strong>. Hard budget: <strong>under 12 MB per desktop sequence, under 4 MB per mobile sequence.</strong> If a sequence blows the budget, lower quality to 70 before lowering the frame count — below ~90 frames the scrub starts to strobe.</p>
+<p><strong>Step D — ambient loops.</strong> Take two of the generated clips, make them seamless (<code>ffmpeg</code> palindrome loop: concat the clip with its reversed self), encode H.264 with <code>-movflags +faststart -crf 23 -pix_fmt yuv420p</code>, and export a poster JPEG from frame 1. These are the only real <code>&amp;lt;video&amp;gt;</code> elements on the page.</p>
+<h2>6. Scroll timeline</h2>
+<p>Lay the page out as normalized ranges. Use these as the starting map and expose them in one <code>TIMELINE</code> const so they&#39;re easy to retune:</p>
+<table>
+<thead>
+<tr>
+<th>range</th>
+<th>beat</th>
+<th>mechanism</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.00–0.04</td>
+<td>Hero: blurred ambient loop resolving to sharp; logo mark + nav fade in</td>
+<td><code>&amp;lt;video&amp;gt;</code> loop + CSS blur driven by progress</td>
+</tr>
+<tr>
+<td>0.04–0.16</td>
+<td>Section 1 headline over dark; hairline rules draw in</td>
+<td><code>lines</code> canvas + text layers only</td>
+</tr>
+<tr>
+<td>0.16–0.42</td>
+<td>Centerpiece reel — the long 360-frame scrub with a slow push-in</td>
+<td>frame sequence, <code>breathe</code></td>
+</tr>
+<tr>
+<td>0.42–0.58</td>
+<td>Transition sequence; <code>halftone</code> dissolve into the next world</td>
+<td>two sequences, <code>halftone</code></td>
+</tr>
+<tr>
+<td>0.58–0.72</td>
+<td>Section 3, split copy layout over a locked-camera sequence</td>
+<td>frame sequence, <code>displace</code></td>
+</tr>
+<tr>
+<td>0.72–0.86</td>
+<td>FAQ accordion over a dimmed, slowly drifting frame</td>
+<td>frame sequence at low opacity</td>
+</tr>
+<tr>
+<td>0.86–1.00</td>
+<td>Apply/footer: ambient loop returns, address + email + CTA</td>
+<td><code>&amp;lt;video&amp;gt;</code> loop</td>
+</tr>
+</tbody></table>
+<p>Text layers get <code>opacity</code> and <code>translateY</code> from a smoothstep over their own sub-range, with <code>will-change: transform, opacity</code> and nothing else animated in CSS.</p>
+<h2>7. Performance, accessibility, fallbacks</h2>
+<ul>
+<li>First paint must not wait on WebGL. Ship a <code>&amp;lt;img class=&quot;boot&quot;&amp;gt;</code> poster that covers the viewport and fades out once the first sequence reports ready.</li>
+<li>Preload only: the two fonts actually used above the fold, the boot poster, and the first sequence&#39;s manifest. Everything else is lazy.</li>
+<li>Respect <code>prefers-reduced-motion: reduce</code> — skip the scrub entirely, collapse the stage to normal document height, and show one still per section.</li>
+<li>If WebGL context creation fails or is lost, fall back to drawing the same frames into a 2D canvas with <code>drawImage</code> and plain opacity crossfades. Handle <code>webglcontextlost</code>/<code>webglcontextrestored</code>.</li>
+<li>Cap memory: keep at most ~180 decoded frames alive; release <code>img.src</code> on sequences whose scroll range is more than 0.25 away.</li>
+<li>Real semantic HTML underneath: one <code>&amp;lt;h1&amp;gt;</code>, <code>&amp;lt;h2&amp;gt;</code> per section, <code>&amp;lt;nav&amp;gt;</code>, meta description, OG image. The site must be readable with JS disabled.</li>
+<li>Test at 1440×900, 1920×1080, and 390×844. On mobile, reduce the stage to ~40vh-multiples and use the 768 tier throughout.</li>
+</ul>
+<h2>8. Deliverables</h2>
+<pre><code>index.html
+src/main.ts          — boot, RAF loop, global progress
+src/stage.ts         — sticky stage + timeline map
+src/sequence.ts      — frame loader (order, priority window, decode, nearest)
+src/gl.ts            — WebGL context, textures, uniform plumbing
+src/shaders/frag.glsl — transitions + grain/grade
+src/lines.ts         — hairline overlay canvas
+src/content.ts       — all copy in one place
+scripts/frames.sh    — video → WebP sequence + manifest
+public/films/...     — generated sequences, loops, posters
+</code></pre>
+<p>Start by generating the assets (Steps A–D) and printing the size report. Then build the engine against them. Show me the first working scroll-scrub with one sequence before adding the rest.</p>
+<p>All imagery, copy, brand marks and typefaces must be original, generated, or licensed. The reference is for the class of interaction only — do not reproduce pear.no&#39;s imagery, copy or brand.</div></p>
+</div><h2>Why the prompt is written this way</h2>
+<p>
+        The first version of this brief was a paragraph: a cinematic single-page
+        site, WebGL, video that plays as you scroll, grain, a serif. What came
+        back was a <code>&lt;video&gt;</code> element with
+<code>currentTime</code> set from a scroll listener, a Three.js
+<code>PlaneGeometry</code> with the video as a texture, and a GSAP
+        timeline to fade the headlines. It worked in the sense that scrolling
+        did something. It also stuttered on every seek, hitched for a full
+        second whenever the browser hit a keyframe boundary, shipped 1.4 MB of
+        JavaScript before a pixel was drawn, and showed black between sections
+        while the next clip loaded.
+</p>
+<p>
+        None of that is the agent's fault. It is what "scroll-driven video"
+        means on the internet. Every clause below is in the prompt because its
+        absence produced one of those failures, repeatably.
+</p><h3>Ban video scrubbing by name, and say what to do instead</h3>
+<p>
+<em           >Seeking a <code>&lt;video&gt;</code> element by scroll position is
+          janky on every browser. Instead: frame sequences.</em>
+</p>
+<p>
+        This is the clause I would keep if I could keep only one. Video
+        decoders are built to play forwards at a fixed rate. Ask one to jump to
+        an arbitrary timestamp and it has to find the previous keyframe, decode
+        every frame between there and where you want, and then present — and
+        do it again on the next scroll tick, possibly backwards. Chrome does
+        this with a visible hitch. Safari does it with a hitch and a few frames
+        of the wrong image. Nothing you can do in JavaScript changes the fact
+        that the format is not random-access.
+</p>
+<p>
+        A folder of stills <em>is</em> random-access. Frame 87 costs the same
+        to show as frame 3. So the prompt does not describe the effect and hope
+        the agent finds a way; it names the structure — numbered WebP files, a
+        manifest, a mobile tier — and bans the alternative in the same
+        sentence. Banning by name matters here for the same reason it did with
+<code>pin: true</code> on the property site: "prefer image sequences"
+        gets you sequences for the first section and a video with
+<code>currentTime</code> for the two the agent writes after it.
+</p>
+<p>
+        Then the prompt gives video back, narrowly: two ambient loops that play
+        forwards on their own, with the exact attribute list that makes iOS
+        autoplay actually work. That is what video decoders are for, and
+        allowing it there stops the agent from trying to fake a loop out of
+        stills.
+</p><h3>One progress number, one loop</h3>
+<p>
+<em           >Read <code>scrollY</code> once per frame, lerp <code>p</code>, drive
+          everything from that one number. No per-element scroll listeners.</em>
+</p>
+<p>
+        Left to itself an agent will register a scroll listener per section,
+        an IntersectionObserver per text block, and a resize handler that
+        recomputes all of them, and then wonder why the frame index and the
+        headline opacity are half a frame out of sync. Reading scroll position
+        in a listener also means reading it whenever the browser feels like
+        firing the event, which on a trackpad is many times per frame and on a
+        wheel is in bursts.
+</p>
+<p>
+        One <code>requestAnimationFrame</code> loop that reads
+<code>scrollY</code> once, derives a single <code>0..1</code>, and
+        pushes it into everything is not just cleaner. It is the only way the
+        frame you see, the grain on it, the ring wipe halfway through it, and
+        the headline over it are all computed from the same scroll position. The
+        lerp gives you inertia without a smooth-scroll library, and it also
+        means the sequence never asks for a frame more than a few indices from
+        the last one, which is what lets the loader's priority window work.
+</p><h3>Specify the load order, not just "lazy load"</h3>
+<p>
+<em           >Build the order with a halving stride so a coarse pass across the
+          whole sequence lands first, then refines.</em>
+</p>
+<p>
+        "Lazy load the frames" gets you frames loaded 1 to N in order. The user
+        scrolls to 60% of the sequence in the first second and looks at black,
+        or at frame 12 frozen, while frames 13 through 72 arrive one at a time.
+        Loading every 32nd frame first, then every 16th, then every 8th means
+        that after the first dozen requests the entire sequence is watchable at
+        low temporal resolution, and every subsequent request makes it
+        smoother. It is progressive JPEG for time.
+</p>
+<p>
+        The priority window is the other half. The halving stride is the right
+        order when the user is not scrolling. When they are, the frame they
+        need <em>now</em> matters more than the schedule, so the loader checks
+        ±24 around the wanted frame first and only falls back to the stride
+        when that window is full. Neither idea alone is enough; the prompt
+        spells out both and the eleven-line snippet, because "progressive
+        loading" is another adjective.
+</p><h3>Never blank</h3>
+<p>
+<em           >A <code>nearest(i)</code> accessor returns the closest frame that is
+          actually decoded. Draw that.</em>
+</p>
+<p>
+        The single biggest visible difference between an amateur frame scrub
+        and a professional one is what happens when the frame you want has not
+        arrived. The default is nothing — the texture is empty and you see the
+        clear colour, which is a black flash. Drawing the nearest decoded
+        neighbour instead means the worst case is a frame that is slightly
+        wrong for a few hundred milliseconds. Nobody notices a frame that is
+        slightly wrong. Everybody notices black.
+</p>
+<p>
+        This is three lines of code and it will not be written unless asked
+        for. The same is true of pre-decoding neighbours with
+<code>img.decode()</code>. Without it the first upload of a fresh frame
+        decodes synchronously on the main thread during a scroll tick, which is
+        exactly where you cannot afford 20 ms.
+</p><h3>Two textures, one shader, any two frames</h3>
+<p>
+<em           >Two <code>sampler2D</code> uniforms plus <code>uMix</code> so any two
+          frames — from the same sequence or across a boundary — can be
+          cross-dissolved.</em>
+</p>
+<p>
+        The obvious renderer has one texture and draws the current frame. Then
+        every section boundary needs special handling, and the six transitions
+        get implemented as six separate code paths with six separate bugs.
+        Naming the two-texture design up front makes a section change and a
+        frame step the same operation: A is where we were, B is where we are
+        going, <code>uMix</code> is how far. A cross-dissolve inside one
+        sequence and a halftone wipe between two sequences differ only in which
+        function the shader runs on <code>uMix</code>.
+</p>
+<p>
+        "Reused textures, never allocate per frame" is in there because
+        allocating a texture per frame is what an agent writes first and it
+        leaks GPU memory until the tab dies at around frame 400. The
+<code>?t=</code> query param is in there because you will want to see
+        every transition on every boundary before you decide which goes where,
+        and rebuilding for each is how tuning does not happen.
+</p><h3>Generate motion, then decompose it</h3>
+<p>
+<em           >Do NOT try to generate 121 individually consistent frames with an
+          image model; they will not match.</em>
+</p>
+<p>
+        An agent with an image model at hand will try to prompt its way to a
+        frame sequence, because it is the tool it has. The result looks like a
+        sequence for exactly as long as it is not moving. The prompt puts the
+        asset pipeline before the engine in the deliverables for a reason: the
+        engine is easy to build against real sequences and easy to build wrong
+        against imagined ones, and the ffmpeg script is where the quality,
+        frame count and size budget get enforced by a number rather than by
+        eye.
+</p>
+<p>
+        The "lower quality before lowering frame count" rule is the kind of
+        thing that only survives if it is written down. Cutting from 121 frames
+        to 60 halves the folder size and looks like the obvious lever. It also
+        doubles the visual jump between adjacent frames, and below about 90
+        frames per five-second clip the scrub starts to strobe on fast
+        scrolls. Quality 70 versus 78 is invisible under 17% film grain.
+</p><h3>Text stays HTML</h3>
+<p>
+<em>Never rendered into the canvas.</em>
+</p>
+<p>
+        Once there is a fullscreen WebGL canvas, drawing the headlines into it
+        is tempting — the grain and grade would apply to type for free. It also
+        makes the site invisible to search engines, screen readers, find-in-page
+        and text selection, and it turns a font change into a shader change. The
+        SVG filter on specific text blocks gets you the organic warp without
+        giving any of that up, and absolutely positioned layers with
+<code>will-change: transform, opacity</code> composite on the same GPU
+        as the canvas anyway.
+</p><h3>Write the fallbacks as first-class features</h3>
+<p>
+        Reduced motion, WebGL context loss, JS disabled, a 180-frame memory cap,
+        a boot poster so the first paint does not wait on a shader compile: none
+        of these appear in a site until they are asked for, and every one of
+        them is the difference between a page that works for everyone and a demo
+        that works on the machine it was built on. Reduced motion on a
+        60-viewport sticky stage without a fallback is a blank page you cannot
+        scroll out of. Write them into the brief and they get built with the
+        same care as the halftone.
+</p><h2>What goes wrong, and what it means</h2>
+<ul>
+<li>
+<strong>Black flashes at section boundaries.</strong> The renderer is
+          drawing the wanted frame rather than <code>nearest()</code>, or the
+          incoming sequence's <code>readyAt</code> is 0. Check that a sequence
+          cannot render until at least two frames have decoded.
+</li>
+<li>
+<strong>Stutter on every scroll direction change.</strong> A
+<code>&lt;video&gt;</code> with <code>currentTime</code> survived
+          somewhere. Search the build for it — it is usually the "hero reveal"
+          the agent decided to scrub.
+</li>
+<li>
+<strong>The tab's memory climbs until it crashes around a minute
+          in.</strong> Textures are being allocated per frame instead of
+          uploaded into two reused ones, or the 180-frame cap and the
+<code>img.src</code> release were never implemented.
+</li>
+<li>
+<strong>The scrub is smooth at the start of a sequence and stale in
+          the middle.</strong> Frames are loading 1→N. The halving stride was
+          replaced with a plain loop, probably during a refactor.
+</li>
+<li>
+<strong>A hitch every few frames while scrolling slowly.</strong> The
+          neighbour pre-decode is missing and the first upload of each frame is
+          decoding on the main thread. Or the global in-flight limit is missing
+          and forty requests are competing.
+</li>
+<li>
+<strong>The frame index and the headline are half a beat apart.</strong>
+          Something is reading <code>scrollY</code> in a scroll listener
+          instead of from the shared <code>p</code>. There must be exactly one
+          reader.
+</li>
+<li>
+<strong>Ambient loops do not autoplay on iPhone.</strong> The
+<code>muted</code> attribute is set in JS only, or
+<code>playsinline</code> is missing, or there is no
+<code>pointerdown</code> fallback. All three are required.
+</li>
+<li>
+<strong>The scrub strobes on fast scrolls.</strong> A sequence was cut
+          below ~90 frames to hit the size budget. Put the frames back and drop
+          WebP quality instead.
+</li>
+<li>
+<strong>Six sequences look like six different sites.</strong> The
+          shared style suffix was left off one or more of the still prompts.
+          Regenerate the outliers; do not try to grade them into matching in
+          the shader.
+</li>
+<li>
+<strong>A hard edge on the ring transition on some machines.</strong>
+<code>GL_OES_standard_derivatives</code> is unavailable and the
+          fallback constant AA width was never written.
+</li>
+<li>
+<strong>Blank page with reduced motion on.</strong> The 60-viewport
+          stage is still tall and the scrub is disabled, so there is nothing to
+          scroll into. The stage must collapse to document height with one
+          still per section.
+</li>
+<li>
+<strong>The JS bundle is over budget.</strong> An animation or GL
+          library was pulled in "just for the easing" or "just for the matrix
+          math". There is no matrix math in a fullscreen quad.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          Ban video scrubbing by name and specify the replacement in the same
+          sentence. "Scroll-driven video" is what every tutorial means by
+<code>currentTime</code>, and <code>currentTime</code> is what stutters.
+</li>
+<li>
+          One progress number, one loop, one reader of <code>scrollY</code>.
+          Everything computed from the same value is in sync by construction.
+</li>
+<li>
+          Specify the load order. Halving stride for the schedule, a priority
+          window around the wanted frame for the user, and a nearest-decoded
+          fallback so nothing is ever black.
+</li>
+<li>
+          Design the renderer around two textures and a mix, so that a frame
+          step and a section change are the same operation.
+</li>
+<li>
+          Generate motion, then decompose it. One still per scene, one video
+          model for consistency, one ffmpeg script that enforces the budget
+          with a number.
+</li>
+<li>
+          Lower quality before frame count. Grain hides compression; nothing
+          hides strobing.
+</li>
+<li>
+          Keep text as HTML. The canvas is for pictures.
+</li>
+<li>
+          Write the fallbacks into the brief — reduced motion, context loss, no
+          JS, memory cap, boot poster — or they will not exist.
+</li>
+<li>
+          Ask for the size report and the first single-sequence scrub before
+          anything else. Both are checkpoints you can fail on observation.
+</li>
+</ul><p>
+        This is the second brief in a pair. The first was a scroll-choreographed
+        site built entirely out of transforms and clip-paths, with no canvas at
+        all —
+<a href="/learn/prompt-premium-property-site-scroll-choreography-replit/"
+          >the premium property site prompt</a>
+        — and the
+<a href="/learn/era-residence-scroll-choreography-design-language/"
+          >teardown it came from</a>. If you want more prompts in this shape, there is
+<a href="/learn/prompt-frosted-glass-refraction-cube-webgl/"
+          >a frosted-glass refraction cube in WebGL</a>,
+<a href="/learn/prompt-kinetic-wind-wall-threejs-vertex-shader/"
+          >a kinetic wind wall in a vertex shader</a>, and
+<a href="/learn/prompt-luma-floor-lamp-lit-hero-replit/"
+          >a floor lamp hero with a brass switch that lights the whole page</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

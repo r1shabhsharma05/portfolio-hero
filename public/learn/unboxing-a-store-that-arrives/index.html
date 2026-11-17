@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Unboxing: A Headphone Store Whose Hero Is the Delivery | Rishabh Sharma</title>
+<meta name="description" content="How I built a product page you open like a parcel: drag across the tape to slice it, the flaps open from the cut, and you pull the headphones up out of the tiss" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/unboxing-a-store-that-arrives/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Unboxing: A Headphone Store Whose Hero Is the Delivery</h1>
+<p class="lede">How I built a product page you open like a parcel: drag across the tape to slice it, the flaps open from the cut, and you pull the headphones up out of the tissue. A Codex box, the same box opened, and the headphones in three colours.</p>
+<p class="meta">13 November 2026</p>
+<p>The best moment of buying headphones is not the checkout, it is the box arriving. People film it. So this store starts with the box: it is sitting on the page, sealed, and you open it. <a href="https://www.avivashishta.com/lab/unbox" target="_blank" rel="noreferrer">Open it at avivashishta.com/lab/unbox</a>.</p>
+<p>Drag across the tape and a cut follows your pointer. Cut most of it and the box jolts, the flaps open from the cut outwards, and there is tissue paper inside. Pull up and the headphones rise out of it. Then the spec sheet folds open beside them.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex makes a photo of a sealed box, then an edit of that photo with the box opened and full of tissue, so the two line up exactly. The headphones are a separate Codex product shot with two colour edits. The page stacks the two box photos and reveals the open one from the seam out; the headphones sit in a layer clipped at the box's front rim, so they can come up out of it.</p></div><h2>Step 1: the box, sealed and open (Codex)</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A plain kraft cardboard shipping box, closed and sealed with a strip of clear packing tape along the centre seam of the top, seen from a high three-quarter angle so the top and front are visible, centered on a pale warm grey seamless background (#EDEDEA), soft studio light, a soft shadow. No text, no logos, no labels, no stickers. Photoreal. Square 1:1, 1024x1024.</p>
+</div>
+</div><p>The open box is that photo, attached and edited, so it is the same box in the same place:</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>The attached image is a closed cardboard box. Show the SAME box opened: the tape cut, the four top flaps folded fully open and outward, and inside, crumpled white tissue paper filling the box up to the rim with a nest in the middle. Keep EVERYTHING else identical: the box's size, position and angle, the camera, the light and the pale grey background. No product inside. No text, no logos. Photoreal. Square 1:1, 1024x1024.</p>
+</div>
+</div><p>&quot;No product inside&quot; matters: the headphones are their own layer, so they can move.</p>
+<pre><code class="language-bash">bun scripts/prepare-unbox.mjs ./raw
+</code></pre>
+<h2>Step 2: slicing the tape</h2>
+<p>The tape&#39;s two ends were measured once on the photo. On the page, pressing near that line and dragging along it projects the pointer onto the line and remembers the furthest it has reached in each direction. The cut drawn is that stretch, so you can start anywhere and cut either way, and wobbling off the tape doesn&#39;t count.</p>
+<pre><code class="language-ts">const t = ((px - x0) * dx + (py - y0) * dy) / len2;               // how far along the tape
+const off = Math.abs((px - x0) * dy - (py - y0) * dx) / Math.sqrt(len2); // how far off it
+</code></pre>
+<p>At 80% the box jolts and opens.</p>
+<h2>Step 3: the flaps</h2>
+<p>The open photo sits exactly on the sealed one, clipped to nothing in the middle. Opening animates the clip out from the seam to the edges, so the flaps seem to part along your cut:</p>
+<pre><code class="language-css">.open { clip-path: inset(0 50% 0 50%); transition: clip-path .75s cubic-bezier(.7,0,.2,1); }
+[data-step=&quot;open&quot;] .open { clip-path: inset(0); }
+</code></pre>
+<h2>Step 4: out of the tissue</h2>
+<p>The headphones live in a layer clipped at the front rim of the open box, so whatever is below the rim is hidden, as if inside. Dragging up moves them up by how far you have dragged (with a little twist that straightens as they come out) and a shadow on the tissue fades in under them. Let go past halfway and they spring the rest of the way; once out, the clip comes off and they float. The spec sheet&#39;s cards fold down one after another.</p>
+<h2>The small things</h2>
+<ul>
+<li><strong>&quot;Open it for me&quot;</strong> does each step with one click, for anyone in a hurry or on a keyboard.</li>
+<li><strong>Three colours</strong> swap the product shot once it is out.</li>
+<li><strong>&quot;Pack it again&quot;</strong> puts everything back, for the second time you want to open it.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build an unboxing product page (React, CSS, no libraries). Assets: a cut-out photo of a sealed box, the same box opened full of tissue (lined up exactly), a cut-out product photo, the tape's two end points and the open box's front rim height as fractions. Stack the two box photos in a square stage. Over them draw the tape as a dashed SVG line; pressing near it and dragging along it extends a cut line between the lowest and highest points reached along the tape. At 80% cut, jolt the stage and animate the open photo's clip-path from inset(0 50% 0 50%) to inset(0) while the sealed photo fades.</p>
+<p>Put the product in a layer clipped below the rim (clip-path inset with the bottom at the rim). Dragging up lifts it by the drag distance; past halfway on release it springs out, the clip is removed and it floats. Then show spec cards that fold down in turn, colour options, price, Add to bag and Pack it again. Add a button that does each step for you.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

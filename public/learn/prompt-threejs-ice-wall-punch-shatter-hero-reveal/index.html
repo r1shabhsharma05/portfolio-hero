@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt I Used to Build a Punch-Through Ice Wall in Three.js (Voronoi Shatter + Refracted Hero Reveal) | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable prompt for a landing page sealed behind frosted mint ice — punch it five times and the wall fractures into ~90 real Voronoi shards that tumble " />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-threejs-ice-wall-punch-shatter-hero-reveal/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt I Used to Build a Punch-Through Ice Wall in Three.js (Voronoi Shatter + Refracted Hero Reveal)</h1>
+<p class="lede">A copy-pasteable prompt for a landing page sealed behind frosted mint ice — punch it five times and the wall fractures into ~90 real Voronoi shards that tumble past the camera, refracting the hero text as they fly. Two-pass render target refraction, hand-rolled fracture, no physics engine.</p>
+<p class="meta">10 August 2026</p>
+<h2>Overview</h2>
+<p>
+        You land on the page and there is a sheet of frosted mint-green ice
+        between you and it. Behind the frost, blurred and bent, you can
+<em>almost</em> read a name. So you click. A hole punches through with
+        straight cracks snapping outward, the camera kicks, and glass cracks in
+        your speakers. Four more hits and the whole wall lets go — roughly ninety
+        real polygonal shards tumbling toward the lens, growing as they come,
+        flying past your head and out of frame. Behind them, the hero finally
+        resolves sharp.
+</p>
+<p>
+        The idea is the fourth wall. The glass isn't decoration sitting on top of
+        the page, it's <em>in front of</em> the page, and the visitor breaks it
+        themselves. Everything in the prompt below serves that one sentence.
+</p>
+<p>
+        The whole thing is <a href="https://threejs.org" target="_blank" rel="noreferrer" rel="nofollow">three.js</a>
+        — real meshes, shaders and render targets. No physics engine, no CSG
+        library, no textures loaded from disk.
+</p><div class="highlight">
+<p>
+<strong>What it produces:</strong> a full-viewport frosted pane that
+          genuinely refracts the scene behind it, five escalating punches that
+          paint holes and cracks into a damage texture, a hand-rolled Voronoi
+          fracture into ~90 shards launched at the camera, WebAudio glass sounds
+          synthesised from noise buffers, and a DOM hero that cross-fades in once
+          the wall is gone.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> three.js, <code>troika-three-text</code>,
+<code>EffectComposer</code> with bloom and a custom grain/barrel pass.
+          Five files. Every tunable in one <code>CONFIG</code> object.
+</p>
+</div><h2>The one idea that makes it work</h2>
+<p>
+        The instinct is to float a transparent WebGL canvas over your normal HTML
+        and let the glass sit on top. That cannot work, because WebGL cannot
+        refract DOM. You end up reaching for <code>backdrop-filter</code>, and
+<code>backdrop-filter</code> gives you a blur — not refraction, not
+        chromatic aberration, and definitely not per-shard distortion.
+</p>
+<p>
+        So the page renders <strong>twice</strong>. The hero text and background
+        live in their own scene, rendered into a render target. Then the ice is
+        rendered to the screen, and its fragment shader samples that render target,
+        offsetting the lookup by the frost's surface normal. Now the glass is
+        bending an actual image of the actual page. Aberration and blur-behind-glass
+        come free once that path exists.
+</p>
+<p>
+        The corollary is the part worth protecting: <strong>keep sampling the live
+        render target after the wall breaks.</strong> The shards are still running
+        the ice shader, so as they tumble away they refract the newly-revealed hero
+        in real time. It's tempting to freeze a snapshot for performance. Don't —
+        that one detail is the best frame in the whole sequence.
+</p><h2>The prompt</h2>
+<p>
+        Paste everything below into Replit Agent, Lovable, v0, Bolt or Cursor as a
+        single message. It is written to be executed rather than interpreted — the
+        shader code, the fracture algorithm and the specific numbers are what stop
+        an agent handing you a grey box with a <code>console.log</code> in it. If
+        your tool has a planning step, let it plan, then tell it to build the whole
+        thing in one pass.
+</p>
+<p>
+<strong>One thing to change before you paste:</strong> the
+<em>Hero content</em> block near the end has my name and copy in it. Swap
+        it for yours.
+</p><div class="prompt">Build a WebGL landing page with **three.js**. Real 3D — meshes, shaders, render targets,
+post-processing. Do **not** implement this with a 2D canvas, CSS filters, or an SVG fallback.<h2>Stack</h2>
+<ul>
+<li><code>three</code> (latest), ES modules, <code>import * as THREE from &#39;three&#39;</code></li>
+<li>From <code>three/addons/</code>: <code>EffectComposer</code>, <code>RenderPass</code>, <code>UnrealBloomPass</code>, <code>ShaderPass</code>, <code>OutputPass</code></li>
+<li><code>troika-three-text</code> for the hero type (so the glass can actually refract it)</li>
+<li>Vite if the environment supports it; otherwise a single <code>index.html</code> with a
+<code>&amp;lt;script type=&quot;importmap&quot;&amp;gt;</code> pointing at <code>https://unpkg.com/three@latest/build/three.module.js</code>
+and <code>https://unpkg.com/three@latest/examples/jsm/</code></li>
+<li><strong>No physics library.</strong> No <code>cannon-es</code>, no <code>rapier</code>, no <code>ammo</code>. The motion is 40 lines of
+hand-rolled Euler integration and a physics engine will only fight the art direction.</li>
+<li><strong>No CSG library.</strong> The fracture is 2D Voronoi + triangulation, described below.</li>
+<li>No images, no textures loaded from disk. Everything procedural.</li>
+</ul>
+<p>Files: <code>index.html</code>, <code>main.js</code>, <code>ice.glsl.js</code> (exported vertex/fragment strings),
+<code>fracture.js</code>, <code>style.css</code>. Every tunable number lives in one <code>CONFIG</code> object at the top of
+<code>main.js</code>.</p>
+<h2>The concept</h2>
+<p>The visitor lands facing a full-screen sheet of frosted mint-green ice. Behind it, blurred and
+refracted, they can <em>almost</em> read a name. They click to punch the ice. Each punch opens a hole
+with straight angular cracks radiating out. After five punches the entire wall shatters into
+real Voronoi shards that tumble <strong>toward the camera and past it</strong>, out of frame — and the hero
+resolves into focus behind them.</p>
+<p>The whole point is the fourth wall. The glass is between the viewer and the page, and they
+break it with their own hand. Every choice below serves that.</p>
+<h2>Architecture — two-pass render (this is the important part)</h2>
+<p>Naive approach: transparent WebGL canvas over DOM content. <strong>Don&#39;t.</strong> WebGL can&#39;t refract DOM,
+so you&#39;d end up faking it with <code>backdrop-filter</code> and the whole thing falls flat.</p>
+<p>Instead:</p>
+<pre><code>sceneWorld  →  renderTarget (half resolution is fine)
+   ├─ background plane, procedural aurora shader
+   ├─ hero text (troika-three-text)
+   └─ ambient + one soft point light
+
+sceneIce  →  screen (via EffectComposer)
+   ├─ fullscreen quad sampling renderTarget  (the world, undistorted)
+   └─ the ice: one PlaneGeometry, then N shard meshes after the break
+      → their fragment shader samples renderTarget
+</code></pre>
+<p>So: render <code>sceneWorld</code> into <code>rtWorld</code> each frame. Then render <code>sceneIce</code>, whose ice material
+reads <code>rtWorld</code> as <code>uScene</code> and offsets its lookup by the ice surface normal. That gives you
+genuine refraction, chromatic aberration, and blur-behind-glass for free.</p>
+<p><strong>Keep sampling the live render target after the shatter.</strong> As the shards tumble away they&#39;ll
+refract the revealed hero text in real time. That is the money shot of the whole page — do not
+freeze a snapshot to &quot;optimise&quot; it.</p>
+<p>Camera: <code>PerspectiveCamera(50, aspect, 0.1, 100)</code> at <code>z = 5</code>. Size the ice plane to exactly
+fill the frustum at <code>z = 0</code> (compute it: <code>h = 2 * tan(fov/2) * 5</code>, <code>w = h * aspect</code>) and
+recompute on resize. Perspective, not orthographic — the shards need real depth to fly past
+the lens.</p>
+<h2>The ice material</h2>
+<p><code>ShaderMaterial</code>, <code>transparent: true</code>, <code>depthWrite: false</code>.</p>
+<p>Uniforms: <code>uScene</code> (the world RT), <code>uDamage</code> (damage texture, below), <code>uTime</code>,
+<code>uResolution</code>, <code>uMouse</code>, <code>uOpacity</code>, <code>uTintA</code> <code>#dff3ec</code>, <code>uTintB</code> <code>#7fd6ac</code>,
+<code>uTintC</code> <code>#5fc0a2</code>, <code>uRefract</code> 0.045, <code>uAberration</code> 0.006, <code>uFrostScale</code> 3.2.</p>
+<p>The <strong>damage texture</strong> is the one place a 2D canvas is legitimate: keep an offscreen
+<code>canvas</code> at viewport resolution wrapped in a <code>THREE.CanvasTexture</code>, and paint damage into it
+on each punch. Channel layout:</p>
+<ul>
+<li><strong>R</strong> = hole mask (white where the ice is gone → shader alpha goes to 0)</li>
+<li><strong>G</strong> = crack intensity (drives a specular ridge and a normal kink)</li>
+<li><strong>B</strong> = bruise / micro-fracture haze around impacts (whitens the frost, no hole yet)</li>
+</ul>
+<p>Set <code>texture.needsUpdate = true</code> only on the frames a punch happens.</p>
+<p>Fragment shader — implement essentially this:</p>
+<pre><code>varying vec2 vUv;
+uniform sampler2D uScene, uDamage;
+uniform float uTime, uRefract, uAberration, uFrostScale, uOpacity;
+uniform vec3 uTintA, uTintB, uTintC;
+
+// hash / value noise / fbm — standard 3-octave fbm, write it inline
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float noise(vec2 p){ /* smoothstep-interpolated value noise */ }
+float fbm(vec2 p){ float a=.5, s=0.; for(int i=0;i&amp;lt;4;i++){ s+=a*noise(p); p*=2.03; a*=.5; } return s; }
+
+void main() {
+  vec3 dmg = texture2D(uDamage, vUv).rgb;
+
+  // ---- frost surface normal ----
+  // two fbm samples at slightly offset uvs give a cheap gradient
+  float e = 1.5 / 1000.0;
+  float f  = fbm(vUv * uFrostScale * 40.0);
+  float fx = fbm((vUv + vec2(e,0.)) * uFrostScale * 40.0);
+  float fy = fbm((vUv + vec2(0.,e)) * uFrostScale * 40.0);
+  vec2 grad = vec2(fx - f, fy - f) * 40.0;
+
+  // cracks kink the normal hard — that&#39;s what makes them catch light like glass
+  grad += (dmg.g * 2.2) * normalize(grad + 0.001);
+
+  // ---- refraction with chromatic aberration ----
+  vec2 off = grad * uRefract;
+  float r = texture2D(uScene, vUv + off * (1.0 + uAberration)).r;
+  float g = texture2D(uScene, vUv + off).g;
+  float b = texture2D(uScene, vUv + off * (1.0 - uAberration)).b;
+  vec3 behind = vec3(r, g, b);
+
+  // blur-behind-glass: mix in 4 wide taps, weighted by how frosted this pixel is
+  vec3 diffuse = vec3(0.0);
+  for (int i = 0; i &amp;lt; 4; i++) {
+    float a = float(i) * 1.5707 + uTime * 0.02;
+    diffuse += texture2D(uScene, vUv + off + vec2(cos(a), sin(a)) * 0.012).rgb;
+  }
+  behind = mix(behind, diffuse * 0.25, 0.75);
+
+  // ---- the ice itself ----
+  float marble = fbm(vUv * uFrostScale * 1.6 + uTime * 0.01);
+  vec3 ice = mix(uTintC, uTintB, marble);
+  ice = mix(ice, uTintA, pow(f, 1.6));
+  ice = mix(ice, vec3(1.0), dmg.b * 0.5);            // bruised = whiter
+
+  vec3 col = mix(behind, ice, 0.78);                  // 0.78 = how opaque the frost reads
+
+  // long thin skate scratches
+  float scr = smoothstep(0.975, 1.0, fbm(vUv * vec2(2.0, 90.0) + 5.0));
+  col += scr * 0.16;
+
+  // crack specular: bright core, mint bloom shoulder
+  col += dmg.g * vec3(0.85, 1.0, 0.94) * 1.6;
+
+  // rim light around holes so broken edges catch the light
+  float rim = smoothstep(0.35, 0.5, dmg.r) - smoothstep(0.5, 0.72, dmg.r);
+  col += rim * vec3(0.8, 1.0, 0.92) * 1.4;
+
+  // pane vignette
+  col += pow(length(vUv - 0.5) * 1.4, 3.0) * 0.22;
+
+  float alpha = (1.0 - smoothstep(0.42, 0.58, dmg.r)) * uOpacity;
+  gl_FragColor = vec4(col, alpha);
+}
+</code></pre>
+<p>Vertex shader: pass <code>vUv</code>, and additionally displace <code>position.z</code> by
+<code>-dmg.b * 0.06</code> so bruised regions dish inward slightly. Sample the damage texture in the
+vertex shader for that (needs enough plane subdivision — use <code>PlaneGeometry(w, h, 120, 120)</code>).</p>
+<h2>Punching</h2>
+<p>Raycast from the pointer onto the ice plane. On <code>pointerup</code>:</p>
+<ol>
+<li><strong>Paint the damage texture</strong> at the hit UV:<ul>
+<li>Hole: an irregular 16-vertex blob, radius <code>CONFIG.holeRadius * (0.75 + hits*0.16)</code>,
+vertex radius jitter only <code>0.80–1.14</code> of nominal. Fill into the <strong>R</strong> channel with a
+3px blur. Deep notches make it look like a starfish, not broken glass.</li>
+<li>Bruise: a soft radial gradient ~2.2× the hole radius into <strong>B</strong>.</li>
+<li>Cracks into <strong>G</strong> — read the next section, it&#39;s the detail everyone gets wrong.</li>
+</ul>
+</li>
+<li><strong>Displace the mesh</strong>: push the plane vertices near the impact backward by
+<code>-0.12 * falloff</code> for one frame, then spring them back over ~180ms. The wall should
+visibly <em>take</em> the hit.</li>
+<li><strong>Spawn debris</strong>: ~18 small shard meshes (random 3–6 gon <code>ShapeGeometry</code>, ~0.02–0.09 world
+units) flying outward from the impact, plus ~30 additive point sprites as sparks.</li>
+<li><strong>Shake the camera</strong>: offset <code>camera.position</code> by random ±<code>0.02 * strength</code> and roll
+<code>camera.rotation.z</code> by ±<code>0.004</code>, decaying over 400ms. Shake the <em>camera</em>, never a CSS
+transform on the canvas.</li>
+<li><strong>Flash + sound</strong>: bump a <code>uFlash</code> uniform in the final pass to 0.4 and decay it. Synthesise
+the sound with WebAudio, no files: a 0.4s white-noise buffer with <code>(1-t)^5</code> decay through a
+highpass sweeping 900→3500 Hz as damage accumulates, layered with a sine thud
+150 Hz → 42 Hz. Rising pitch each hit. Mute toggle in the corner.</li>
+<li>Escalate the centred hint text: <code>PUNCH THE ICE</code> → <code>AGAIN</code> → <code>HARDER</code> → <code>ALMOST THROUGH</code>.
+Tick an <code>INTEGRITY 100%</code> readout down toward zero.</li>
+</ol>
+<h2>Cracks — get this right or the illusion dies</h2>
+<p>Glass cracks are <strong>straight and angular</strong>. Organic wandering lines read as lightning, roots, or
+veins, and instantly kill it.</p>
+<ul>
+<li>~13 radial arms from the impact point.</li>
+<li>Each arm is built from long rigid segments of <strong>26–54 px</strong>, with only <strong>±0.14 rad</strong> of
+direction drift per segment. Long and stiff.</li>
+<li>With ~22% probability per segment, a splinter forks off at a <strong>sharp 0.45–1.0 rad</strong> angle and
+dies within half the parent arm&#39;s remaining length. Thinner stroke.</li>
+<li>Then <strong>3 concentric rings</strong> joining the arms — this is the actual signature of impacted glass.
+20–28 segments each, radius jitter ±7%. <strong>They must stay inside the radial reach</strong>
+(<code>ring_radius ≈ arm_length * (0.26 + i * 0.21)</code>). Rings drawn larger than the arms look like
+giant floating hexagons and destroy the effect.</li>
+<li>Stroke into the <strong>G</strong> channel with a small blur so the shader gets a soft ridge, not aliased
+hairlines.</li>
+</ul>
+<h2>The collapse — Voronoi fracture</h2>
+<p>Trigger after <code>CONFIG.hitsToBreak</code> (5) punches.</p>
+<p>In <code>fracture.js</code>, implement Voronoi by <strong>half-plane clipping</strong>, not a library:</p>
+<pre><code>// for each seed i: start with the full plane rect as a polygon,
+// then clip it by the perpendicular bisector against every other seed j
+function clipHalfPlane(poly, normal, midpoint) { /* Sutherland–Hodgman */ }
+</code></pre>
+<p>~90 seeds, biased toward the final impact point (sample <code>r = pow(random(), 0.6)</code> around it) so
+the break originates where they hit. 90 seeds × 89 clips is instant — do it once, on the click.</p>
+<p>Turn each cell polygon into a mesh:</p>
+<ul>
+<li>Fan-triangulate the convex cell from its centroid.</li>
+<li><strong>UVs must be the original plane UVs</strong> (<code>uv = (localXY / planeSize) + 0.5</code>), so every shard
+carries the exact patch of wall it came from and keeps refracting correctly. Getting this
+wrong is the #1 way this looks cheap.</li>
+<li>Recentre each shard&#39;s geometry on its centroid and put the centroid in the mesh&#39;s <code>position</code>,
+so it rotates about itself.</li>
+<li>Same ice <code>ShaderMaterial</code>, cloned, with a per-shard <code>uOpacity</code>.</li>
+<li>Optional and worth it: <code>ExtrudeGeometry</code> with <code>depth: 0.012</code> and a tiny bevel so shard edges
+catch the light as they tumble.</li>
+</ul>
+<p>Then hide the intact plane and animate every shard:</p>
+<pre><code>direction   = normalize(shardCentroid - impactPoint)
+boost       = clamp(0.9 / distance, 0.5, 3.2)     // near the fist = launched hardest
+velocity.xy = direction * rand(0.6, 2.2) * boost
+velocity.z  = rand(0.9, 3.4) * boost              // POSITIVE — toward the camera
+angularVel  = random on all three axes, ±3 rad/s
+gravity     = -3.2 units/s² on y
+</code></pre>
+<p>Shards get <strong>bigger as they approach the lens</strong> — that&#39;s the perspective camera doing the work,
+and it&#39;s what makes it feel like the wall broke <em>at you</em> rather than away from you. Let them
+fly past <code>camera.z</code> and out of frame; cull each shard once <code>z &amp;gt; 6</code> or its opacity hits 0. Fade
+<code>uOpacity</code> over ~1.1s.</p>
+<p>Simultaneously: hard camera shake, bloom intensity spikes to 2.2 and eases back to 0.6, and a
+low WebAudio rumble (1.6s brown-noise buffer through a 320 Hz lowpass).</p>
+<h2>Hero reveal</h2>
+<p>While the wall is intact, the hero already exists in <code>sceneWorld</code> as <code>troika-three-text</code> — that
+is <em>why</em> the glass has something to refract, and why the visitor can half-read a name and wants
+to break through. Keep it slightly out of focus by rendering <code>rtWorld</code> at 0.5× and letting the
+shader&#39;s blur taps do the rest.</p>
+<p>On collapse:</p>
+<ol>
+<li>Ease <code>rtWorld</code> scale to 1.0 and the shader&#39;s diffuse mix to 0 — the world sharpens.</li>
+<li>Animate the text material opacity and a per-glyph <code>translateY</code> in, staggered ~35 ms apart.</li>
+<li>Ease the background plane&#39;s scale 1.06 → 1.0, a slow settling exhale.</li>
+<li><strong>Then cross-fade the troika text out and a real DOM hero in</strong>, absolutely positioned over
+the canvas. WebGL text is not selectable, not readable by a screen reader, and not
+crawlable. The DOM version is the one that ships — the WebGL one exists only to be
+refracted. Do this; don&#39;t skip it because it&#39;s two implementations of the same words.</li>
+<li>Show a <code>REFREEZE</code> button that resets damage texture, shard list, hit count and material
+uniforms so it can be replayed.</li>
+</ol>
+<h3>Hero content</h3>
+<pre><code>eyebrow   PORTFOLIO // 2026
+h1        Rishabh Sharma          light weight, clamp(38px, 10.5vw, 150px), per-letter stagger
+rule      thin mint gradient line, scales in from centre
+role      SOFTWARE DEVELOPMENT ENGINEER      uppercase, letter-spacing .5em, mint
+tagline   one muted line
+buttons   &quot;View work&quot; / &quot;Get in touch&quot; as pill outlines
+</code></pre>
+<p>Type: <code>Space Grotesk</code> for display, <code>JetBrains Mono</code> for the HUD. Palette: void <code>#04110d</code>,
+deep <code>#0a2a22</code>, mint accent <code>#7cf0b4</code>, ice <code>#dff3ec</code>.</p>
+<h2>Post-processing</h2>
+<p><code>EffectComposer</code>: <code>RenderPass</code> → <code>UnrealBloomPass(strength 0.6, radius 0.8, threshold 0.72)</code>
+→ custom <code>ShaderPass</code> (barrel distortion 0.015, RGB shift 0.0012, film grain 0.035, vignette,
+plus the <code>uFlash</code> white additive) → <code>OutputPass</code>.</p>
+<p>Grain and a hair of barrel distortion are what make it read as <em>looking through something</em>
+rather than at a flat render. Don&#39;t drop them.</p>
+<h2>Details that matter</h2>
+<ul>
+<li><strong>No native cursor over the canvas.</strong> Draw a reticle: a thin ring mesh (or an additive
+sprite) tracking the pointer at <code>z = 0.1</code>, radius easing down ~35% on <code>pointerdown</code> so it
+reads as a fist closing. Add four small tick marks that slowly rotate.</li>
+<li><code>renderer.setPixelRatio(Math.min(devicePixelRatio, 2))</code>. Half-res render target.</li>
+<li>Resize: rebuild the damage canvas, re-stamp stored impacts (keep <code>{uv, strength}</code> for each),
+recompute plane size from the frustum, resize the RT and the composer.</li>
+<li>Touch: <code>touchend</code> punches. On mobile drop to 45 shards, bloom off, no barrel pass.</li>
+<li><code>prefers-reduced-motion</code>: no camera shake, no pulsing hint, one click breaks it.</li>
+<li>Target 60fps on an M1 MacBook Air and ≥30 on a 3-year-old Android.</li>
+<li>The hint, integrity meter and mute toggle live in a DOM <code>#hud</code> overlay, not in WebGL.</li>
+</ul>
+<h2>Do not</h2>
+<ul>
+<li>Do not use <code>MeshPhysicalMaterial</code> with <code>transmission</code> for the wall. It&#39;s the obvious
+reach and it can&#39;t do the crack normals, the hole mask, or the frost marbling. (It <em>is</em> fine
+for the small debris shards if you want them cheap.)</li>
+<li>Do not add a physics engine, a CSG library, or GSAP-driven DOM animation of the shards.</li>
+<li>Do not let the shards fly <em>away</em> from the camera. The direction is the entire idea.</li>
+<li>Do not make the cracks curve.</li>
+<li>Do not ship WebGL-only text.</li>
+</ul>
+<h2>Acceptance checklist</h2>
+<p>Before you tell me it&#39;s done, verify each of these yourself:</p>
+<ol>
+<li>On load: a frosted mint wall fills the viewport, and a name is faintly legible behind it.</li>
+<li>Moving the pointer shows a custom reticle; the OS cursor is hidden.</li>
+<li>First click: a hole appears with <strong>straight</strong> radial cracks and visible concentric rings
+inside the crack reach. Camera shakes. A crack sound plays.</li>
+<li>Through the hole, the hero text is visibly <strong>sharper</strong> than through the ice — proving the
+refraction path is wired to the render target and not faked.</li>
+<li>Clicks 2–4 escalate: bigger holes, longer cracks, higher-pitched crack sound, integrity
+dropping.</li>
+<li>Click 5: the full wall becomes ~90 distinct polygonal shards. They tumble, <strong>grow as they
+approach</strong>, and leave the frame. Each shard visibly refracts what&#39;s behind it while flying.</li>
+<li>Hero animates in sharp, letters staggered, and the final text is selectable with the mouse.</li>
+<li><code>REFREEZE</code> fully restores the intact wall and it&#39;s replayable.</li>
+<li>Resizing the window doesn&#39;t stretch, blur, or misalign the ice, and existing damage survives.</li>
+<li>No console errors. No WebGL warnings about render target feedback loops.</div></li>
+</ol>
+<h2>Why each part is in there</h2><h3>The damage texture, and why a 2D canvas is allowed here</h3>
+<p>
+        Everything else in this build is explicitly not-a-2D-canvas, but damage is
+        the exception. An offscreen canvas wrapped in a
+<code>CanvasTexture</code> is the right tool: you get
+<code>arc</code>, <code>lineTo</code> and blur for free, and you only pay
+        for it on the handful of frames where a punch actually lands.
+</p>
+<p>
+        Packing three separate maps into one texture's channels is what keeps it
+        cheap — <strong>R</strong> is the hole mask that drives alpha to zero,
+<strong>G</strong> is crack intensity that kinks the surface normal and
+        lights a specular ridge, <strong>B</strong> is the bruise haze that whitens
+        the frost and dishes the geometry inward without cutting a hole yet. One
+        texture fetch in the shader, three different jobs.
+</p><h3>Cracks must be straight, and this is the whole illusion</h3>
+<p>
+        This is the clause I would fight hardest for. An agent left to its own
+        devices draws cracks as wandering organic curves, and the instant they
+        curve they stop reading as glass — they read as lightning, or roots, or
+        veins. Real impacted glass is <strong>long, rigid and angular</strong>.
+</p>
+<p>
+        Hence the very specific numbers: segments of 26–54px with only ±0.14 rad of
+        drift each, splinters forking at a sharp 0.45–1.0 rad. And then the detail
+        that sells it more than anything — <strong>three concentric rings</strong>
+        joining the radial arms. That ladder pattern is the actual signature of a
+        point impact. Miss it and you have a starburst; include it and people
+        recognise it without knowing why.
+</p>
+<p>
+        The prompt also constrains the rings to stay <em>inside</em> the radial
+        reach, because the obvious implementation draws them at whatever radius and
+        you end up with giant floating hexagons sitting outside the cracks.
+</p><h3>Voronoi by half-plane clipping, in about 20 lines</h3>
+<p>
+        You do not need a CSG library to break a flat plane. For each seed, start
+        with the full rectangle as a polygon and clip it by the perpendicular
+        bisector against every other seed — Sutherland–Hodgman, once per pair. 90
+        seeds against 89 others is 8,000 clips of tiny polygons, which is
+        instantaneous, so it runs on the click with no pre-bake.
+</p>
+<p>
+        Biasing the seeds toward the final impact point with
+<code>pow(random(), 0.6)</code> is a one-line touch that matters a lot: the
+        break visibly originates where the last punch landed, with fine shards near
+        the fist and bigger slabs out at the edges.
+</p><h3>The shard UVs are the #1 way this looks cheap</h3>
+<p>
+        Each shard must carry the <em>original plane UVs</em>, not fresh 0–1 UVs of
+        its own outline. Get it wrong and every shard maps the whole wall onto
+        itself, so the frost pattern and the refraction visibly pop the moment the
+        wall breaks. Get it right and each piece keeps refracting exactly the patch
+        of world it was covering a frame earlier, and the transition is invisible.
+</p><h3>Toward the camera, never away</h3>
+<p>
+<code>velocity.z</code> is positive. The shards fly at the lens and past
+        it, and because the camera is perspective they grow on approach. That's
+        what makes it feel like the wall broke <em>at you</em>. Send them away
+        instead and you get a tidy, entirely forgettable dissolve — same code, all
+        the impact gone. It's in the "Do not" list for a reason.
+</p><h3>Two implementations of the same words, on purpose</h3>
+<p>
+        The hero exists twice: as <code>troika-three-text</code> inside the render
+        target, which is the thing the glass has to refract, and as real DOM that
+        cross-fades in after the collapse. That looks redundant and agents will try
+        to save you the trouble by shipping only the WebGL one.
+</p>
+<p>
+        Don't let it. WebGL text can't be selected, isn't read by a screen reader
+        and isn't crawlable — which for a portfolio landing page is the entire
+        point of having a name on it. The WebGL copy exists to be broken; the DOM
+        copy is what ships.
+</p><h3>Grain and barrel distortion are not garnish</h3>
+<p>
+        A hair of barrel distortion (0.015) plus film grain (0.035) is the
+        difference between "looking through something" and "looking at a flat
+        render". They're the cheapest credibility in the whole pipeline and the
+        first things an agent drops when trimming.
+</p><h2>Things to watch for</h2>
+<ul>
+<li>
+<strong>Render target feedback loops.</strong> The ice samples
+<code>rtWorld</code>, so the ice must never be in
+<code>sceneWorld</code>. If WebGL warns about reading and writing the
+          same target in one pass, something drifted between the two scenes.
+</li>
+<li>
+<strong>The vertex displacement needs subdivision.</strong>
+<code>PlaneGeometry(w, h)</code> defaults to a single quad, so sampling
+          damage in the vertex shader does nothing at all. The
+<code>120 × 120</code> in the prompt is load-bearing.
+</li>
+<li>
+<strong>Resize has to re-stamp the damage.</strong> The damage canvas is
+          viewport-sized, so a resize wipes it unless you keep every
+<code>{uv, strength}</code> and repaint. Cheapest correct approach is to
+          store the impacts, not the pixels.
+</li>
+<li>
+<strong>Shake the camera, not the canvas.</strong> A CSS transform on the
+          canvas shakes the post-processing and the DOM HUD along with it, which
+          instantly reads as a webpage wobbling rather than an impact.
+</li>
+<li>
+<strong>Hole blobs want low jitter.</strong> 0.80–1.14 of nominal radius.
+          Any more and the deep notches make it a starfish instead of broken glass.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          Render the world into a target and let the ice shader sample it. That is
+          the difference between refraction and a blur filter.
+</li>
+<li>
+          Keep sampling it live after the break, so the shards refract the hero as
+          they fly.
+</li>
+<li>
+          Straight cracks with concentric rings. Curved cracks are lightning.
+</li>
+<li>
+          Voronoi is half-plane clipping and about 20 lines. Skip the library.
+</li>
+<li>
+          Shard UVs come from the original plane, or the illusion pops on the first
+          frame of the collapse.
+</li>
+<li>
+          Positive Z. The wall breaks at the viewer, not away from them.
+</li>
+<li>
+          Ship the DOM hero even though the WebGL one already says the same thing.
+</li>
+</ul><p>
+        If you want more prompts in this shape, there is
+<a href="/learn/prompt-kinetic-wind-wall-threejs-vertex-shader/"
+          >a kinetic wind wall of 2,000 blades moved entirely in the vertex
+          shader</a>,
+<a href="/learn/prompt-frosted-glass-refraction-cube-webgl/"
+          >a frosted-glass refraction cube in raw WebGL</a>,
+<a href="/learn/prompt-fluid-ink-reveal-wordmark-higgsfield/"
+          >a fluid ink-reveal homepage with a Higgsfield-generated wordmark
+          video</a>, and
+<a href="/learn/prompt-hover-reveal-spaceship-scanner-higgsfield/"
+          >a hover-reveal spaceship hull scanner</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

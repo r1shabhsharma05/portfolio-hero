@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How a Gaming Chip Built a $5 Trillion Empire: The True Story of Nvidia and CUDA | Rishabh Sharma</title>
+<meta name="description" content="Nvidia put a feature nobody used into every chip it sold, and Wall Street ignored it for years. Then two gaming cards in a Toronto bedroom changed everything." />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/how-nvidia-built-a-5-trillion-dollar-empire/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Case study</p>
+<h1>How a Gaming Chip Built a $5 Trillion Empire: The True Story of Nvidia and CUDA</h1>
+<p class="lede">Nvidia put a feature nobody used into every chip it sold, and Wall Street ignored it for years. Then two gaming cards in a Toronto bedroom changed everything.</p>
+<p class="meta">6 November 2026</p>
+<p>In October 2025, Nvidia became the first company in history worth five trillion dollars. Most people think it got there by being in the right place when AI arrived. The real story is stranger: Nvidia spent years building something almost nobody wanted, paid for it in every chip it sold, and kept going while Wall Street shrugged.</p>
+<div class="highlight"><p><strong>The short version:</strong> in 2006 Nvidia launched CUDA, a way to program its graphics chips for things other than games, and built it into every chip it sold. It made every product more expensive and barely anyone used it. For six years, from 2009 to 2015, the company's value hardly moved. Then in 2012 a student in Toronto trained a neural network called AlexNet on two Nvidia gaming cards, written in CUDA, and it beat everyone. When the AI boom arrived, Nvidia already owned the road.</p></div><h2>Three engineers at a Denny&#39;s</h2>
+<p>Nvidia started in 1993 at a Denny&#39;s booth in San Jose. Jensen Huang, Chris Malachowsky and Curtis Priem met there to plan a company that would make graphics chips for video games. They started it with $40,000.</p>
+<p>It worked. Gamers loved Nvidia&#39;s cards, and for years that was the whole business: make pixels move faster.</p>
+<h2>What else could a graphics chip do?</h2>
+<p>A graphics chip is built differently from the main processor in your computer. Instead of a few powerful cores doing one thing after another, it has thousands of small ones doing simple calculations all at the same time. That is perfect for drawing millions of pixels. Huang saw that it would also be perfect for any problem that can be split into lots of small pieces: physics simulations, medical imaging, finance, science.</p>
+<p>The catch was that graphics chips were hard to program for anything except graphics. So in 2006, alongside the GeForce 8800, Nvidia launched <strong>CUDA</strong>: a way for any programmer to write ordinary code that runs on the chip.</p>
+<h2>The expensive part</h2>
+<p>Here is the bold move. Nvidia didn&#39;t make CUDA a premium product for a few researchers. It put CUDA into every chip it sold, including the ones people bought only to play games.</p>
+<p>Huang later said CUDA &quot;made all of our products more expensive.&quot; Between 2006 and 2017, Nvidia spent nearly $12 billion on research and development, while most of its customers had no idea what CUDA was and almost nobody was using it.</p>
+<p>Wall Street didn&#39;t get it. From 2009 to 2015, Nvidia&#39;s market value sat between roughly $8.5 and $10 billion. It took about ten years before investors believed the bet made sense.</p>
+<h2>Two gaming cards in a bedroom</h2>
+<p>In 2012, Alex Krizhevsky, a student at the University of Toronto working with Ilya Sutskever and Geoffrey Hinton, built a neural network to enter ImageNet, the biggest image recognition contest in the world.</p>
+<p>He trained it in his bedroom at his parents&#39; house, on two Nvidia GTX 580 gaming cards. The code was written in CUDA.</p>
+<p>It was called <strong>AlexNet</strong>, and it won by a huge margin: a top-5 error rate of 15.3%, more than 10.8 points ahead of the runner-up. Training a neural network that size on ordinary processors would have been far too slow. On graphics chips, it was possible in a bedroom.</p>
+<p>That result is widely seen as the start of the modern deep learning era. Suddenly AI researchers wanted the same thing Krizhevsky had used: Nvidia chips, and the CUDA tools that made them programmable.</p>
+<h2>The road before the cars</h2>
+<p>Ten years later, the AI boom arrived, and everyone needed Nvidia&#39;s chips at once. In July 2025 Nvidia became the first company worth $4 trillion. On 29 October 2025 it became the first worth $5 trillion. (Since then Nvidia and Apple have traded the &quot;most valuable company&quot; title back and forth, but nobody else got to five trillion first.)</p>
+<p>Nvidia didn&#39;t just sell chips for games. It built the road before anyone had a car. And when the cars finally came, there was only one road.</p>
+<h2>What I take from it</h2>
+<ul>
+<li><strong>The bet looked bad for years.</strong> A flat stock price for six years is a long time to keep spending billions on something your customers don&#39;t use.</li>
+<li><strong>Distribution was the strategy.</strong> Putting CUDA in every gaming card meant that when a student wanted to try something new, the hardware was already in his bedroom.</li>
+<li><strong>The payoff came from someone they had never met.</strong> Nvidia didn&#39;t build AlexNet. It made it possible for someone else to.</li>
+</ul>
+<h2>Sources</h2>
+<ol>
+<li>Yahoo Finance / Quartz, <a href="https://ca.finance.yahoo.com/news/going-all-in-with-nvidia-how-jensen-huangs-high-stakes-bets-paid-off-113053891.html" target="_blank" rel="noreferrer">Going all-in with Nvidia: How Jensen Huang&#39;s high-stakes bets paid off</a>. CUDA in 2006, R&amp;D spend, flat market value 2009 to 2015, Huang&#39;s &quot;more expensive&quot; quote, the $40,000 start.</li>
+<li>Wikipedia, <a href="https://en.wikipedia.org/wiki/AlexNet" target="_blank" rel="noreferrer">AlexNet</a>. The bedroom, the two GTX 580s, CUDA, the 15.3% result.</li>
+<li>Entrepreneur, <a href="https://www.entrepreneur.com/business-news/nvidia-becomes-the-first-to-pass-5-trillion-in-market-value/498929" target="_blank" rel="noreferrer">Nvidia becomes the first company to reach a $5 trillion market value</a> (29 October 2025).</li>
+<li>NBC / CNBC, <a href="https://www.nbcmiami.com/news/business/money-report/jensen-huang-started-his-2-trillion-company-nvidia-at-a-dennys-breakfast-booth/3302554" target="_blank" rel="noreferrer">Jensen Huang started Nvidia at a Denny&#39;s breakfast booth</a>.</li>
+<li>eWeek, <a href="https://www.eweek.com/networking/nvidia-launches-new-architecture-for-its-graphics-chips/" target="_blank" rel="noreferrer">Nvidia launches new architecture for its graphics chips</a> (November 2006).</li>
+<li>Forbes, <a href="https://www.forbes.com/sites/fionariley/2026/11/03/nvidia-regains-title-of-worlds-most-valuable-company-as-apple-shares-slide/" target="_blank" rel="noreferrer">Nvidia regains title of world&#39;s most valuable company as Apple shares slide</a> (3 November 2026).</li>
+</ol>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

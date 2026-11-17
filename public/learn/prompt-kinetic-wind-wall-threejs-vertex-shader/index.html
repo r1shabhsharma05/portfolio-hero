@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt I Used to Build a Kinetic Wind Wall in Three.js (2,000 Metal Blades, All Moved in the Vertex Shader) | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable prompt for a wall of ~2,000 metal louvres that ripples with a procedural wind field and parts around the cursor — all motion in an onBeforeComp" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-kinetic-wind-wall-threejs-vertex-shader/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt I Used to Build a Kinetic Wind Wall in Three.js (2,000 Metal Blades, All Moved in the Vertex Shader)</h1>
+<p class="lede">A copy-pasteable prompt for a wall of ~2,000 metal louvres that ripples with a procedural wind field and parts around the cursor — all motion in an onBeforeCompile patch on MeshPhysicalMaterial, reflections from a procedural PMREM studio, zero texture or HDR files. Plus the three silent bugs that cost me an evening.</p>
+<p class="meta">5 August 2026</p>
+<h2>Overview</h2>
+<p>
+        A dark room with a wall in it. The wall is two thousand small metal
+        louvres on a gentle cylindrical curve, and it is never still — a
+        procedural wind field runs across it in travelling waves, and when you
+        move the cursor the elements twist away from it and back, so a wake
+        opens and closes behind your hand. Six reflective objects float in
+        front, each with a different metal treatment. Every parameter is on a
+        panel you can close.
+</p>
+<p>
+        The whole thing is Vite, vanilla JS, and one npm dependency. No
+        textures, no HDR environment map, no addon imports, no React, no
+<code>lil-gui</code>. Three files.
+</p>
+<p>
+        The prompt is long, and almost all of that length is buying one thing:
+        that the motion happens on the GPU while the material stays a real
+<code>MeshPhysicalMaterial</code>. Ask for a moving wall without saying
+        that and you get an animation loop that rewrites two thousand instance
+        matrices from JavaScript every frame, which is a slideshow. Ask for a
+        custom shader instead and you get a wall that moves beautifully and
+        reflects nothing, because you have just thrown away three's entire
+        physical shading model to get one rotation.
+</p><div class="highlight">
+<p>
+<strong>What it produces:</strong> a full-screen scene with a curved
+          wall of ~1,500 blades or ~2,200 discs (toggleable), rippling with
+          directional wind and parting around the cursor; six floating metal
+          shapes on slow orbits; a glassy tuning panel with every knob exposed;
+          film grain and a vignette over the top.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> Vite + vanilla JS, <code>three@0.160.1</code>
+          installed from npm. <code>index.html</code>,
+<code>src/main.js</code>, <code>src/style.css</code>. Zero asset
+          files — the environment, the roughness map and the noise are all
+          generated at runtime.
+</p>
+</div><h2>The prompt</h2>
+<p>Paste the whole thing at once.</p><div class="prompt">Build an interactive kinetic wind wall WebGL scene with three.js. Use a Vite + vanilla JS template and install three as a dependency (npm i three@0.160.1) — do not load it from a CDN. Everything lives in index.html, src/main.js, and src/style.css. No React, no UI libraries, no HDR/texture files, no addon imports beyond what I list. When you're done, run the dev server and confirm the canvas renders with zero console errors.<p>WHAT IT IS
+A full-screen dark scene containing: (1) a dense, gently curved wall of small metallic elements that ripples with a procedural wind field and parts around the cursor like a wake; (2) six reflective shapes floating in front of the wall, each with a different metal treatment; (3) a live tuning panel for every parameter, which can be closed.</p>
+<ol>
+<li><p>RENDERER AND CAMERA
+WebGLRenderer({ antialias: true, alpha: true, powerPreference: &#39;high-performance&#39; }), setPixelRatio(Math.min(devicePixelRatio, 2)). toneMapping = ACESFilmicToneMapping, toneMappingExposure = 1.02, outputColorSpace = SRGBColorSpace. PerspectiveCamera(36, aspect, 0.1, 200) at (0,0,16); the wall plane sits at z = -3. Use alpha: true so a CSS radial-gradient behind the canvas shows through as the background.</p>
+</li>
+<li><p>REFLECTIONS — PROCEDURAL STUDIO ENVIRONMENT, NO FILES
+Write buildStudioEnv() that constructs a throwaway Scene and runs it through PMREMGenerator.fromScene(envScene, 0.035), then assign the result to scene.environment. The env scene contains: an inverted BoxGeometry shell (side: BackSide, scale 30) with a tiny ShaderMaterial fading dark at the bottom to lighter blue-grey at the top; and emissive &quot;softboxes&quot; — PlaneGeometry meshes with MeshBasicMaterial whose color is multiplied past 1.0 (m.color.multiplyScalar(intensity)) so PMREM captures real HDR range. Place a warm key at upper left (~9), a cool fill at right (~4), an overhead (~5), a dim floor bounce (~1), plus 5-6 narrow tall bright strips (12-20) at front and back. The narrow strips are what read as crisp streak highlights on chrome — don&#39;t skip them. Dispose the PMREM generator and temp geometries afterwards. Also add a DirectionalLight key, a cool DirectionalLight rim, and a PointLight that rides the cursor (intensity ~110, distance 18, decay 2).</p>
+</li>
+<li><p>THE WALL — ONE InstancedMesh PER MODE, ALL MOTION IN THE VERTEX SHADER
+Two modes, toggled, one visible at a time: &quot;blades&quot; = thin BoxGeometry louvres (~54% of cell width, 88% of cell height, thin in z), ~1500 instances; &quot;discs&quot; = coin-shaped CylinderGeometry(r, r, r*0.16, 18) with geometry.rotateX(Math.PI/2) so flat faces point at the camera, alternate rows offset by half a cell, ~2200 instances. Grid spans 27 x 15.5 world units. Provide low/medium/high density presets that rebuild the meshes.</p>
+</li>
+</ol>
+<p>Per instance: bake position + a small random UNIFORM scale into instanceMatrix via Matrix4.compose (uniform only — non-uniform shears the element once the shader rotates it). Add an InstancedBufferAttribute named aRand (one float per instance). Also call setColorAt with a subtle per-instance brightness/temperature jitter (v = 0.82 + rand*0.26, plus a ±0.035 warm/cool offset on R and B) — this is what stops 2000 identical elements looking like a decal. Set mesh.frustumCulled = false since vertices move in the shader.</p>
+<p>SHADER INJECTION: use MeshPhysicalMaterial (metalness 1, roughness ~0.11, envMapIntensity ~1.85, light clearcoat, side: DoubleSide) patched in onBeforeCompile:</p>
+<ul>
+<li>Prepend a GLSL block declaring attribute float aRand, the uniforms, kRotX/kRotY/kRotZ mat3 helpers, a hash + value-noise function using QUINTIC smoothing (f<em>f</em>f*(f*(f*6-15)+10) — cubic smoothing leaves visible grid creases), a 3-octave fbm, two globals <code>mat3 kRot; vec3 kOff;</code>, and a void kinetic() that fills them.</li>
+<li>Replace #include &lt;beginnormal_vertex&gt; with: kinetic(); vec3 objectNormal = kRot * vec3(normal);  (plus the USE_TANGENT branch). That chunk runs BEFORE begin_vertex, so compute kRot/kOff there and reuse them.</li>
+<li>Replace #include &lt;begin_vertex&gt; with: vec3 transformed = kRot * position + kOff;</li>
+<li>Set material.customProgramCacheKey = () =&gt; &#39;kineticWall&#39;, and keep a per-material uniforms object on material.userData so JS can drive it.
+Read each instance&#39;s world position as instanceMatrix[3].xyz. Because rotation happens in object space BEFORE instanceMatrix is applied, it composes correctly with three&#39;s own instancing.</li>
+</ul>
+<p>Inside kinetic(): rotate the sampling frame by a uWindDir uniform (degrees) so wind has a direction. Wind value w = two travelling sines + fbm turbulence blended by uWindTurb, times a slow global swell from uGust, scaled by uWindStrength and varied per element with aRand. Cursor field: infl = pow(1 - smoothstep(0, uCursorRadius, distance(ip.xy, uCursor.xy)), 1.55) * uCursorAmt, times a burst factor from uCursorSpeed so fast movement hits harder; add rotation that flips sign either side of the cursor (a parting wake), a counter-tilt on the other axis, and a push along +z via uCursorPush. Cylindrical wrap: nx = ip.x / uHalfW, offset z by -uCurve * nx * nx and add a small toe-in rotation of -uCurve * 0.16 * nx. Discs get a small idle spin term, blades don&#39;t — differentiate the two modes purely with per-material uRotGain / uTiltGain / uPushGain / uSpin uniforms so both share one compiled program.</p>
+<p>BACKDROP PANEL: add a curved PlaneGeometry (48x12 segments, vertices displaced by the same parabola) 1.6 units behind the wall, MeshStandardMaterial in near-black with metalness 0.5, roughness 0.68. Without it the gaps between elements fall to pure black and the wall looks like a flat graphic instead of a facade.</p>
+<ol start="4">
+<li>THE SHAPES
+Six meshes floating between camera and wall, each on its own slow sin/cos orbit with independent per-axis spin, plus gentle repulsion away from the cursor:</li>
+<li>Chrome sphere — metalness 1, roughness 0.03.</li>
+<li>Brushed torus — roughness ~0.4 driven by a CANVAS-GENERATED streaked roughness map (~5000 faint horizontal lines on a 512² canvas, RepeatWrapping, repeat 6x2), light clearcoat.</li>
+<li>Iridescent torus knot — iridescence: 1, iridescenceIOR: 1.9, iridescenceThicknessRange: [120, 520], clearcoat 1.</li>
+<li>Gold icosahedron — flatShading: true.</li>
+<li>Clearcoat rounded cube — build the geometry as a superellipsoid: take SphereGeometry(1, 96, 58), normalize each vertex, scale by pow(pow(|x|,n)+pow(|y|,n)+pow(|z|,n), -1/n) with n ≈ 5.2, then computeVertexNormals(). Dark base colour, clearcoat: 1, clearcoatRoughness: 0.03, a touch of sheen.</li>
+<li>Copper capsule — CapsuleGeometry, metalness 1, roughness 0.09.
+Keep them modest (radius ~0.3-0.7) and inside roughly ±4 x, ±2.6 y so nothing clips the frame edges.</li>
+</ol>
+<p>OPTIONAL REAL-TIME REFLECTIONS (off by default, exposed as a toggle): a WebGLCubeRenderTarget(192, { type: HalfFloatType }) + CubeCamera at (0,0,2.4), updated every 3rd frame with shapeGroup.visible = false during the capture, assigned to each shape&#39;s material.envMap. When on, set scene.background to the env texture at low backgroundIntensity (~0.3) with high backgroundBlurriness so the capture has something to reflect. Comment that the studio env alone actually gives crisper metal and this mode is for mirroring the wall itself.</p>
+<ol start="5">
+<li><p>CONTROL PANEL
+Hand-rolled, no lil-gui or dat.gui. A glassy blurred panel pinned top right, dark, monospace, ~300px, scrollable, with small helper functions slider / toggle / color / select / segmented / group. Groups: Wall (mode segmented control, density); Wind (strength, speed, scale, turbulence, direction°, gust, wall curve); Cursor (radius, twist, push, easing, light, idle-drift toggle); Material (tint colour, metal, rough, reflect, exposure); Scene (shapes toggle, spread, spin, real-time reflections, background mode, two bg colours, parallax, auto-orbit); Presets (4 named looks — chrome studio / sequin gold / cyan storm / graphite calm — plus reset). Footer shows live fps and element count.
+Panel dismissal, all three paths: an × button in the panel header that hides it and reveals a small ☰ button in its place; H toggles, Space switches wall mode, R resets; and a <code>const SHOW_UI = true</code> flag at the top of the file which, when false, hides panel + ☰ + caption entirely. Hide with style.display = &#39;none&#39; rather than .remove(), so any code that writes into those elements stays valid.</p>
+</li>
+<li><p>INTERACTION AND LOOP
+Track the pointer in NDC, project it onto the wall plane, and lerp a smoothed world-space cursor toward it; feed that into the shader uniform and the point light. Derive a cursor-speed value from frame-to-frame movement and smooth it — this drives the burst term. Idle drift: if the pointer hasn&#39;t moved for ~2.5s, drive it along a slow Lissajous path so the wall keeps breathing. Camera parallax toward the pointer with an optional slow auto-orbit; camera.position.lerp(target, 0.045). Honour prefers-reduced-motion by damping wind speed and gust. Adaptive quality: sample fps every 0.5s, step setPixelRatio down below ~42fps and back up above ~58. Debounced resize handler. Expose window.KWW = { THREE, scene, camera, renderer, walls, shapes, P, applyAll, rebuildWalls } for console tinkering. CSS overlay extras: an animated SVG-turbulence film grain at low opacity with mix-blend-mode: overlay, and a radial vignette.</p>
+</li>
+</ol>
+<p>THREE BUGS TO AVOID — I HIT ALL OF THESE</p>
+<ol>
+<li>Don&#39;t call both clock.getDelta() and clock.getElapsedTime() in the same frame. getElapsedTime() internally consumes the delta, so doing both silently halves your dt toward zero — shape spin dies, fps never updates, adaptive quality never fires. Take t = clock.getElapsedTime() and compute dt = t - prevT yourself.</li>
+<li>Don&#39;t reuse one Vector3 as both direction and result when unprojecting the pointer onto the wall plane. out.copy(camera.position).addScaledVector(out, t) overwrites the direction before it&#39;s used and the cursor lands hundreds of units off-screen. Use a separate scratch vector for the ray direction.</li>
+<li>Allocate no Vector3/Color/Matrix4 inside the frame loop — hoist scratch objects to module scope.</li>
+</ol>
+<p>ACCEPTANCE CHECK
+Both wall modes render with visible wind ripple; moving the cursor produces an obvious parting wake that follows it; every slider and toggle changes something without throwing; density switching rebuilds cleanly; the × / ☰ / H cycle works; SHOW_UI = false gives a bare full-screen piece; console is clean and gl.getError() returns 0.</div></p>
+<h2>Why the prompt is written this way</h2>
+<p>
+        There are eight clauses here that are doing structural work. Remove any
+        one of them and you still get a scene — just a worse one, usually in a
+        way that looks like an art problem and is actually an engineering one.
+</p><h3>All motion in the vertex shader, and it stays a physical material</h3>
+<p>
+        This is the sentence the entire prompt is built around, and it rules out
+        both of the obvious approaches.
+</p>
+<p>
+        The first is animating from JavaScript: loop over the instances every
+        frame, compose a fresh <code>Matrix4</code> for each, write it into the
+        instance buffer, flag it for upload. Two thousand matrix composes and a
+        full re-upload of a 128 KB buffer, sixty times a second, on the main
+        thread. It runs. It runs at about the speed of a carousel.
+</p>
+<p>
+        The second is reaching for a <code>RawShaderMaterial</code>, which makes
+        the motion free and the reflections impossible. Every element in this
+        wall is chrome, and chrome is defined entirely by what it reflects — so
+        the moment you write your own fragment shader you owe yourself an
+        implementation of the GGX specular lobe, the PMREM lookup, the clearcoat
+        layer, and tone mapping. That is a week, and three already ships it.
+</p>
+<p>
+<code>onBeforeCompile</code> is the seam between the two. You keep the
+        stock <code>MeshPhysicalMaterial</code> — its lighting, its
+<code>envMapIntensity</code>, its clearcoat — and you replace two
+        include chunks with your own. Which two, and in what order, is the rest
+        of the trick.
+</p><h3>Patch the normal chunk too, or the light never moves</h3>
+<p>
+<em>Replace <code>#include &lt;beginnormal_vertex&gt;</code> with:
+<code>kinetic(); vec3 objectNormal = kRot * vec3(normal);</code></em>
+</p>
+<p>
+        This is the clause people skip, because rotating the position is
+        obviously necessary and rotating the normal is not obviously anything.
+        Leave it out and the geometry moves perfectly — the wall ripples, the
+        blades twist, the wake opens — and every specular highlight stays nailed
+        exactly where it was. The wall reads as a video texture playing on a
+        flat surface. That single frozen-highlight tell is the difference
+        between a facade and a screensaver, and it is one line.
+</p>
+<p>
+        The ordering note matters as much as the patch.
+<code>beginnormal_vertex</code> runs <em>before</em>
+<code>begin_vertex</code> in three's chunk sequence, so it is the right
+        place to call <code>kinetic()</code> and fill the two globals. By the
+        time <code>begin_vertex</code> runs, <code>kRot</code> and
+<code>kOff</code> already exist and the position patch is a single
+        multiply-add. Do it the other way round — compute in
+<code>begin_vertex</code> — and the normal chunk has already run with a
+<code>kRot</code> that is either garbage or identity, which is exactly
+        the frozen-highlight bug with extra steps.
+</p><h3>Quintic smoothing, because cubic leaves grid creases</h3>
+<p>
+<em>a hash + value-noise function using QUINTIC smoothing
+        (<code>f*f*f*(f*(f*6-15)+10)</code>)</em>
+</p>
+<p>
+        Most value-noise implementations you will find use
+<code>smoothstep</code>, i.e. <code>3f² − 2f³</code>. Its first
+        derivative is continuous, so the noise looks smooth in isolation, but
+        its <em>second</em> derivative jumps at every cell boundary. In a
+        lighting context that shows up as faint creases along the noise lattice.
+</p>
+<p>
+        Normally you would never notice. Here you have two thousand elements
+        sitting on a regular grid, and if the noise lattice lands anywhere near
+        the element lattice the creases stop being faint and start being
+<em>rows</em> — a visible seam marching across the wall in straight
+        lines. It looks like a bug in how you laid out the grid. It is a bug in
+        the interpolant. Ken Perlin's quintic curve is C², the second derivative
+        is continuous, and the rows vanish.
+</p>
+<p>
+        This is the single hardest thing in the whole build to debug from the
+        symptom, which is why it is in the prompt as a parenthetical rather than
+        left to chance.
+</p><h3>Uniform scale only</h3>
+<p>
+<em>bake position + a small random UNIFORM scale into instanceMatrix —
+        non-uniform shears the element once the shader rotates it</em>
+</p>
+<p>
+        A little size variation across the wall is good, and the instinct is to
+        vary width and height independently for more variety. On a static grid
+        that is fine. Here it is not, and the reason is the order of operations
+        you just committed to.
+</p>
+<p>
+        The rotation happens in object space, before <code>instanceMatrix</code>
+        is applied — that is what makes it compose with three's instancing at
+        all. So the final transform is <code>S · R</code>: scale
+<em>after</em> rotation. When <code>S</code> is uniform that is a
+        rotation and a resize, which is what you want. When
+<code>S</code> is non-uniform it is a shear, and it gets worse the
+        further each element rotates. Your louvres turn into parallelograms at
+        exactly the moments the wind is strongest.
+</p>
+<p>
+        Same root cause as the frozen highlight, seen from the other side: once
+        motion moves into object space, everything baked into the instance
+        matrix has to survive being multiplied by a rotation.
+</p><h3>The narrow bright strips are the reflection</h3>
+<p>
+        The environment is built at runtime from a box shell and a handful of
+        emissive planes, and the crucial detail is the
+<code>m.color.multiplyScalar(intensity)</code> — pushing colour values
+        past 1.0 before PMREM samples them. A <code>MeshBasicMaterial</code>
+        clamped at white gives PMREM an LDR scene, and an LDR environment on a
+        metal surface produces a flat grey sheen. It looks like painted plastic.
+        The multiply is what gives the generator real range to work with.
+</p>
+<p>
+        Then: broad softboxes versus narrow strips. The four big sources — warm
+        key, cool fill, overhead, floor bounce — establish the value structure,
+        the sense of a room. They will not, on their own, make anything look
+        like chrome. Chrome is recognisable because it reflects
+<em>edges</em>: long, hard-edged streaks that slide across the surface
+        as it turns. That is what the 5-6 tall strips at intensity 12-20 are
+        for, and it is why the prompt says don't skip them. They cost almost
+        nothing and they are the entire material read.
+</p><h3>The backdrop panel is not decoration</h3>
+<p>
+        A curved near-black plane 1.6 units behind the wall, displaced by the
+        same parabola. It is barely visible in the final render, and without it
+        the piece falls apart.
+</p>
+<p>
+        Two thousand elements on a grid means two thousand gaps between them.
+        With nothing behind, every gap is pure background — a hard-edged hole
+        straight through to the CSS gradient. The eye reads a field of holes as
+        a pattern, not as depth, and the wall flattens into a graphic. Put a
+        dark surface behind it and those gaps become shadowed recesses that
+        catch a little bounce light, and suddenly the wall has a
+<em>behind</em>. It is the cheapest depth cue in the file.
+</p><h3>One compiled program for both modes</h3>
+<p>
+<em>differentiate the two modes purely with per-material uRotGain /
+        uTiltGain / uPushGain / uSpin uniforms</em>, plus
+<em><code>material.customProgramCacheKey = () =&gt;
+        'kineticWall'</code></em>.
+</p>
+<p>
+        Blades and discs want different motion — discs get an idle spin, blades
+        would look broken with one — and the natural way to express that is a
+<code>#define</code> or two branches of injected GLSL. Do that and you
+        have two programs, and every mode switch and every density rebuild
+        risks a shader compile. A compile is a multi-hundred-millisecond stall
+        on the main thread, which on a Space keypress reads as the app hanging.
+        Express the difference as four floats instead and the switch is
+        instant.
+</p>
+<p>
+        The cache key is the other half. Three derives its program cache key
+        from the material's own parameters, and it has no idea you rewrote the
+        source in <code>onBeforeCompile</code> — so two materials that differ
+        only in your injected code can collide, and you get one wall rendering
+        with the other's shader. Overriding
+<code>customProgramCacheKey</code> is how you tell it these are yours.
+</p><h3>Ship the panel, then ship the off switch</h3>
+<p>
+        Thirty-odd sliders is not over-engineering for a piece like this — a
+        wind wall lives or dies on about six numbers, and you cannot find them
+        by editing a file and waiting on a hot reload. You find them by dragging
+        a slider and watching the wall.
+</p>
+<p>
+        But the panel is scaffolding, and the finished thing is the wall. Hence
+        three separate dismissal paths, deliberately: the
+<code>×</code>/<code>☰</code> pair for a visitor who wants to just look
+        at it, <code>H</code> for you while you work, and
+<code>SHOW_UI = false</code> for when you embed it somewhere and it
+        needs to be a full-bleed piece with no chrome. That last one is a
+        one-character edit rather than a deletion job, which is the difference
+        between shipping it as art and rewriting it.
+</p>
+<p>
+        And <em>hide, don't remove</em>. Every frame the loop writes the current
+        fps into the panel footer. Call <code>.remove()</code> and that node is
+        gone from the document, so the next write throws on a null reference —
+        one frame after you dismiss the UI, in a code path nobody tests.
+<code>style.display = 'none'</code> keeps every element addressable and
+        every writer valid.
+</p><h2>The three bugs, and why they are all silent</h2>
+<p>
+        The prompt ends with three named bugs because I hit all three, and none
+        of them threw an error. That is the common thread: every one produces a
+        scene that renders cleanly at sixty frames a second while being subtly
+        or completely wrong. Telling the model about a trap you have already
+        fallen into is the highest-leverage line you can add to a prompt.
+</p><h3>1. Two clock reads in one frame</h3>
+<p>
+<code>Clock.getElapsedTime()</code> calls <code>getDelta()</code>
+        internally and adds the result to its accumulator. So if you call
+<code>getDelta()</code> and then <code>getElapsedTime()</code> in the
+        same frame, the first call consumes the interval and the second one
+        measures the microseconds since — a <code>dt</code> of roughly zero.
+</p>
+<p>
+        Nothing errors. The wall keeps rippling, because the wind is driven by
+        elapsed time. Everything driven by <code>dt</code> quietly stops: the
+        shapes' orbits freeze mid-flight, the fps counter reads a number from
+        the first frame forever, and the adaptive-quality sampler never
+        accumulates half a second so it never fires. You spend twenty minutes
+        looking for a bug in your spin code. Read the elapsed time once and
+        subtract the previous value yourself.
+</p><h3>2. The aliased scratch vector</h3>
+<p>
+        Unprojecting the pointer onto the wall plane means building a ray
+        direction, scaling it to the plane distance, and adding it to the camera
+        position. Write that as a single chain on one vector —
+<code>out.copy(camera.position).addScaledVector(out, t)</code> — and the
+<code>copy</code> has already overwritten <code>out</code> before
+<code>addScaledVector</code> reads it as a direction. You are adding a
+        scaled copy of the camera position to the camera position.
+</p>
+<p>
+        The uniform still updates, so nothing looks broken from the outside.
+        The cursor influence point just lands a few hundred units off in the
+        dark, and the wake never appears anywhere on screen. Every instinct
+        says the shader is wrong, and you go and rewrite the
+<code>smoothstep</code> falloff that was fine all along. Use a separate
+        scratch vector for the direction.
+</p><h3>3. Allocating inside the loop</h3>
+<p>
+        Standard advice, and it bites harder here than usual. A few
+<code>new Vector3()</code> per frame is fine at 60fps in a light scene.
+        In this one the GC already has two thousand instances and a PMREM
+        texture to walk, so a collection pause is long enough to see — and it
+        lands exactly when you are moving the cursor fast, because that is when
+        the allocations spike. The stutter correlates perfectly with
+        interaction, which makes it look like the cursor maths is expensive.
+        Hoist every scratch object to module scope.
+</p><h2>Knobs to turn first</h2>
+<ul>
+<li>
+<strong><code>roughness</code> (0.11) and
+<code>envMapIntensity</code> (1.85).</strong> The pair that decides
+          metal versus plastic, and they fight each other. Roughness past ~0.2
+          blurs out the strip highlights and no amount of env intensity brings
+          them back; below ~0.05 the wall becomes a mirror and every element
+          reflects the same thing, which reads as flat.
+</li>
+<li>
+<strong><code>uCursorRadius</code> against
+<code>uCursorAmt</code>.</strong> The whole feel of the interaction.
+          Wide and gentle is a breath moving over the wall; tight and strong is
+          a hand pushing through it. Turning both up gives you neither — the
+          wake swallows the wind field entirely.
+</li>
+<li>
+<strong>Wall curve.</strong> More sensitive than it looks. A little
+          gives the wall presence and catches different reflections at the
+          edges; too much and the outer columns turn edge-on to the camera and
+          the wall visibly ends.
+</li>
+<li>
+<strong>The ±0.035 colour jitter.</strong> Tiny and load-bearing.
+          Take it to zero and two thousand identical elements collapse into a
+          texture. Push it to 0.1 and the wall looks dirty rather than
+          hand-assembled.
+</li>
+<li>
+<strong><code>toneMappingExposure</code> (1.02).</strong> ACES rolls
+          off the highlights, so this mostly moves the mid-tones. Nudge it in
+          hundredths, not tenths.
+</li>
+<li>
+<strong>Density.</strong> Not just a performance dial. Fewer, larger
+          elements read as a sculpture; more, smaller ones read as fabric. Pick
+          the one you meant, then tune the wind against it — the same wind
+          strength looks calm on a coarse wall and frantic on a fine one.
+</li>
+</ul><h2>If it comes out wrong</h2>
+<ul>
+<li>
+<strong>The wall ripples but the highlights are frozen.</strong>
+          Positions are being rotated and normals are not. The
+<code>beginnormal_vertex</code> patch is missing or is running after
+<code>begin_vertex</code>.
+</li>
+<li>
+<strong>Faint straight seams march across the wall.</strong> Cubic
+          smoothing in the value noise. Swap in the quintic curve.
+</li>
+<li>
+<strong>Elements skew into parallelograms when the wind
+          peaks.</strong> A non-uniform scale is baked into
+<code>instanceMatrix</code> and the object-space rotation is shearing
+          it.
+</li>
+<li>
+<strong>The metal looks like grey plastic.</strong> Either the env
+          colours were never multiplied past 1.0, or there are only broad
+          softboxes and no narrow strips. Chrome needs edges to reflect.
+</li>
+<li>
+<strong>It reads as a flat printed pattern.</strong> No backdrop
+          panel — the gaps are punching through to the background.
+</li>
+<li>
+<strong>No wake anywhere, but the shader looks right.</strong> The
+          aliased scratch vector in the unproject. Log the smoothed cursor
+          position; if it is in the hundreds, that is the one.
+</li>
+<li>
+<strong>Shapes stop spinning after the first frame and fps never
+          changes.</strong> Both clock methods are being called in the same
+          frame.
+</li>
+<li>
+<strong>Elements pop out of existence near the screen edges.</strong>
+<code>frustumCulled</code> is still true. The bounding volume is
+          computed from the base geometry and the instance matrices, and knows
+          nothing about vertices your shader moved.
+</li>
+<li>
+<strong>Memory climbs every time you switch density.</strong> The
+          rebuild is creating new meshes without calling
+<code>dispose()</code> on the old geometry, material and instance
+          buffers. Same applies to the PMREM generator after the env is baked.
+</li>
+<li>
+<strong>Half-second freeze on the first mode switch.</strong> A second
+          shader program is compiling. The mode difference leaked into a
+<code>#define</code> instead of staying in uniforms.
+</li>
+<li>
+<strong>Console error one frame after you close the panel.</strong>
+          The panel was removed rather than hidden, and the loop is still
+          writing fps into it.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          Say <em>all motion in the vertex shader</em> and <em>keep
+          MeshPhysicalMaterial</em> in the same breath, or you get either a
+          slideshow or a beautifully animated wall that reflects nothing.
+</li>
+<li>
+          Patch the normal chunk, not just the position chunk. Frozen
+          highlights on moving geometry is the tell that gives it away.
+</li>
+<li>
+          Name the chunk order. <code>beginnormal_vertex</code> runs first, so
+          that is where the work goes.
+</li>
+<li>
+          Quintic smoothing in the noise. Cubic leaves creases that align with
+          the element grid and look like a layout bug.
+</li>
+<li>
+          Uniform scale only. Object-space rotation plus non-uniform instance
+          scale is a shear.
+</li>
+<li>
+          Push environment colours past 1.0 and include narrow bright strips.
+          Broad soft light makes chrome look like plastic.
+</li>
+<li>
+          Put something behind the wall. Gaps that fall to pure black flatten
+          the whole thing.
+</li>
+<li>
+          Keep the two modes on one compiled program, and override
+<code>customProgramCacheKey</code> when you rewrite a shader.
+</li>
+<li>
+          Hide UI with <code>display: none</code>, never
+<code>.remove()</code>, when a render loop writes into it.
+</li>
+<li>
+          Write the bugs you already hit into the prompt. All three of mine
+          rendered a clean, error-free, wrong scene.
+</li>
+</ul><p>
+        If you want more prompts in this shape, there is
+<a href="/learn/prompt-frosted-glass-refraction-cube-webgl/"
+          >a frosted-glass refraction cube in raw WebGL</a>,
+<a href="/learn/prompt-fluid-ink-reveal-wordmark-higgsfield/"
+          >a fluid ink-reveal homepage</a>, and
+<a href="/learn/build-drivable-3d-car-game-react-three-fiber/"
+          >a drivable 3D car game in React Three Fiber</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

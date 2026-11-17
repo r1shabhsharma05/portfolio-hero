@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>At My Desk: I Turned My Real Desk Into an Interactive 3D Website With Replit | Rishabh Sharma</title>
+<meta name="description" content="At My Desk is my actual desk setup rebuilt as a 3D website: lamps you can switch on and off, a monitor and laptop you can type on, a globe, a plant to water and" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/at-my-desk-interactive-3d-desk-website-replit/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>At My Desk: I Turned My Real Desk Into an Interactive 3D Website With Replit</h1>
+<p class="lede">At My Desk is my actual desk setup rebuilt as a 3D website: lamps you can switch on and off, a monitor and laptop you can type on, a globe, a plant to water and a phone that becomes a focus timer. How the scene, the camera, the lights and the live screens work, built with Replit Agent, React Three Fiber and Drei.</p>
+<p class="meta">1 October 2026</p>
+<h2>Overview</h2>
+<p>
+        This is my desk at night. A Dell monitor with a light bar on top, my
+        laptop on a stand to the right, a paper lantern glowing behind it, a
+        clamp lamp on the left throwing orange light up the wall, a small
+        globe and a potted plant on the shelf, a phone on a charging stand
+        under the monitor, and a keyboard and trackpad on a desk mat. I took
+        a photo of it and asked
+<a href="https://replit.com/" target="_blank" rel="noreferrer">Replit Agent</a> to turn it into a
+        website you can sit at.
+</p>
+<p>
+        The result is <strong>At My Desk</strong>: a small 3D scene of that
+        setup where the lamps switch on and off, the monitor and laptop are
+        real screens you can read and type on, the globe spins, the plant
+        can be watered, and putting the phone on its charger starts a focus
+        timer.
+</p>
+<p>
+        This post covers what you can do on it, how it's put together, and
+        where each piece lives in the code, in case you want to make one of
+        your own desk.
+</p><div class="highlight">
+<p>
+<strong>What it is:</strong> an interactive 3D desk built from real
+          3D objects, not layered pictures. The desk, lamps, globe, plant,
+          phone, monitor and laptop all sit in one scene under one camera, so
+          the perspective stays consistent wherever you look from.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> React and TypeScript single-page app.
+          Three.js through React Three Fiber and Drei for the 3D scene,
+          Framer Motion for the welcome and the panels. It publishes as a
+          static site: no server, no database, no account.
+</p>
+</div><h2>What you can do on it</h2>
+<ul>
+<li>
+<strong>Watch a short welcome, or skip it.</strong> The site opens
+          on an animated intro and then hands you the desk.
+</li>
+<li>
+<strong>Look around.</strong> Drag to orbit, scroll to zoom, or
+          jump to one of three views: <strong>Whole desk</strong>,
+<strong>Monitor</strong> or <strong>Laptop</strong>.
+</li>
+<li>
+<strong>Click anything on the desk.</strong> The camera glides
+          over to it. For the globe, the plant, the keyboard and the phone,
+          a panel for that object opens once the camera arrives.
+</li>
+<li>
+<strong>Switch the lights.</strong> A lightbulb capsule in the
+          bottom-left corner turns each lamp on or off. Clicking a lamp in
+          the scene itself moves the camera to it instead, so the two never
+          fight over what a click means.
+</li>
+<li>
+<strong>Write on the screens.</strong> The monitor and laptop show
+          live web content mapped onto the 3D screens. It's real text you
+          can select and type into, not text painted into a texture.
+</li>
+<li>
+<strong>Use the props.</strong> Spin the globe, water the plant,
+          and put the phone on its charger to use it as a focus timer.
+</li>
+<li>
+<strong>Open the command menu</strong> with a keyboard shortcut.
+          You can replay the welcome from there.
+</li>
+</ul><h2>From a photo to a scene</h2>
+<p>
+        The photo was the brief. I didn't want a flat illustration with
+        hotspots on it, because the moment you move the camera, a picture
+        gives itself away. Every item had to be an actual 3D object, so you
+        can orbit the desk and the lamp still stands behind the globe, the
+        laptop still sits at an angle to the monitor, and the light from
+        each lamp still lands where it should.
+</p>
+<p>
+        That's also what makes clicking feel right. When the camera flies to
+        the plant, it's travelling through the same space you were just
+        looking at, not cutting to a different image.
+</p><h2>How it's built</h2><h3>The camera</h3>
+<p>
+        Camera moves use a damped spring rather than a fixed-length tween.
+        It eases in, and if you click a second object while the camera is
+        still moving, it keeps its momentum and curves toward the new target
+        instead of stopping and starting again.
+</p>
+<p>
+        While an automatic move is running, the orbit controls are paused so
+        they don't pull against the spring. But you're never locked out:
+        dragging or scrolling mid-flight cancels the move and gives you the
+        camera back.
+</p><h3>The lights</h3>
+<p>
+        Turning a lamp off doesn't remove its light from the scene. It fades
+        the intensity down. Removing and re-adding lights in Three.js forces
+        materials to recompile for the new lighting setup, which shows up as
+        a hitch. Keeping every light in place and only changing how bright it
+        is avoids that, and gives you a soft fade for free.
+</p><h3>Shadows</h3>
+<p>
+        Nothing on the desk moves while the camera does, so the shadows
+        don't need to change either. During camera-only movement the scene
+        reuses the shadows it already rendered instead of recalculating them
+        every frame. That's most of the time anyone spends on the site.
+</p><h3>The screens</h3>
+<p>
+        The monitor and laptop screens are React content placed onto the 3D
+        screens, so they behave like web pages: you can read them, select
+        text and type notes. Drawing the text into a canvas texture would
+        have been simpler, but then you couldn't write on them, and the text
+        would go blurry as soon as you zoomed in.
+</p><h3>Smaller screens and reduced motion</h3>
+<p>
+        The scene adapts to phone-sized screens and full-screen mode, and it
+        follows the device's reduced-motion setting.
+</p><h3>Nothing leaves your browser</h3>
+<p>
+        Your notes, light settings, the phone timer, and whether you've seen
+        the welcome and found each object are all saved in your own browser.
+        Nothing is uploaded or tied to an account, which is why the whole
+        thing can ship as a static site.
+</p><h2>Where the code lives</h2>
+<div class="tablewrap">
+<table>
+<thead>
+<tr><th>File</th><th>What it does</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>The desk page in <code>src/pages/</code></td>
+<td>Page state, interactions and overall layout</td>
+</tr>
+<tr>
+<td><code>src/components/desk3d/DeskScene.tsx</code></td>
+<td>Camera, rendering, lighting and shadows</td>
+</tr>
+<tr>
+<td><code>src/components/desk3d/models.tsx</code></td>
+<td>The 3D desk objects and what happens when you click them</td>
+</tr>
+<tr>
+<td><code>src/components/LightsCapsule.tsx</code>, <code>src/pages/desk.css</code></td>
+<td>The light controls and the visual styling</td>
+</tr>
+<tr>
+<td><code>DeskWelcome.tsx</code>, <code>DeskMonitor.tsx</code>, <code>InlineNotes.tsx</code>, <code>Panels.tsx</code></td>
+<td>The welcome, the screens, notes and the object panels</td>
+</tr>
+<tr>
+<td><code>src/lib/store.ts</code></td>
+<td>Browser-local saving and shared state</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+        The app sits at <code>artifacts/immersive-desk/</code> inside the
+        Replit workspace. The workspace also has separate API and canvas
+        projects, but the desk doesn't use either of them.
+</p><h2>A prompt to build your own</h2>
+<p>
+        This came together over several rounds with the agent, not one
+        prompt. I wrote this one afterwards from what the finished site
+        does. Attach a photo of your own desk and change the object list to
+        match it.
+</p><div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt" id="desk-prompt">Turn the attached photo of my desk into an interactive 3D website I can sit at.<p>Scene</p>
+<ul>
+<li>React + TypeScript single-page app. Render the desk with Three.js via React Three Fiber and Drei.</li>
+<li>Build every item as a real 3D object in one scene under one camera, not layered images or a photo with hotspots. Match the photo: [list your objects — e.g. monitor with light bar, laptop on a stand, paper lantern, clamp lamp, globe, potted plant, phone on a charging stand, keyboard, trackpad, desk mat].</li>
+<li>Warm night-time lighting like the photo, with each lamp as its own light source that casts light where it would in real life.</li>
+</ul>
+<p>Camera</p>
+<ul>
+<li>Drag to orbit, scroll to zoom. Three preset views: Whole desk, Monitor, Laptop.</li>
+<li>Clicking an object moves the camera to it with a damped spring (eases in, keeps momentum if the target changes mid-move).</li>
+<li>Pause the orbit controls during an automatic move, but let any drag or scroll interrupt it and hand control back.</li>
+</ul>
+<p>Interactions</p>
+<ul>
+<li>Lights: a lightbulb capsule in the bottom-left toggles each lamp. Fade light intensity instead of adding/removing lights, so materials never recompile. Clicking a lamp in the scene focuses the camera on it; it does not toggle it.</li>
+<li>Monitor and laptop: show live, selectable, editable web content on the 3D screens (not text drawn into a texture). Let me write notes on them.</li>
+<li>Globe: spins, opens a panel. Plant: can be watered, opens a panel. Keyboard: opens a panel. Phone: placing it on the charger starts a focus timer. Panels open only once the camera has arrived.</li>
+<li>A command menu on a keyboard shortcut, with an option to replay the welcome.</li>
+</ul>
+<p>Welcome</p>
+<ul>
+<li>A short, skippable animated welcome with Framer Motion, then hand over the desk.</li>
+</ul>
+<p>Performance</p>
+<ul>
+<li>Nothing on the desk moves during camera-only movement, so reuse the existing shadow map instead of re-rendering shadows every frame.</li>
+</ul>
+<p>Responsiveness and accessibility</p>
+<ul>
+<li>Works on small screens and in full-screen mode. Respect prefers-reduced-motion.</li>
+</ul>
+<p>Storage</p>
+<ul>
+<li>Save notes, light settings, phone/timer state and welcome/discovery progress in localStorage only. No server, no database, no accounts. It must publish as a static site.</div></div></li>
+</ul>
+<p>
+        The object list is the part to spend time on. The more closely the
+        3D layout follows your photo, the more it feels like your desk rather
+        than a generic one.
+</p><h2>Recap</h2>
+<ul>
+<li>
+          At My Desk is my real desk setup, rebuilt from a photo as a 3D
+          website with Replit Agent.
+</li>
+<li>
+          Every item is a real 3D object under one camera, so the perspective
+          holds up from any angle.
+</li>
+<li>
+          The camera moves on a damped spring you can interrupt by dragging
+          or scrolling.
+</li>
+<li>
+          Lamps fade instead of being removed, and shadows are reused while
+          only the camera moves, so nothing stutters.
+</li>
+<li>
+          The monitor and laptop show live web content you can type on, and
+          everything you change stays in your browser.
+</li>
+</ul><p>
+        More 3D Replit builds:
+<a href="/learn/cosmo-3d-robot-companion-threejs-replit/"
+          >Cosmo, a 3D robot companion you can boop and throw</a>,
+<a href="/learn/prompt-luma-floor-lamp-lit-hero-replit/"
+          >the Luma floor lamp hero, where a brass switch lights the page</a>, and
+<a href="/learn/the-descent-infinite-zoom-book-webgl-replit/"
+          >The Descent, an infinite zoom through seven worlds in a book</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

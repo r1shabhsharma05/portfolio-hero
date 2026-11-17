@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I Knitted My GitHub Into a Christmas Sweater (and You Can Make Yours) | Rishabh Sharma</title>
+<meta name="description" content="Type a GitHub username and your last year of contributions gets knitted into a Christmas jumper, shown in six real-looking product photos. How the canvas knitti" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/github-contribution-sweater/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>I Knitted My GitHub Into a Christmas Sweater (and You Can Make Yours)</h1>
+<p class="lede">Type a GitHub username and your last year of contributions gets knitted into a Christmas jumper, shown in six real-looking product photos. How the canvas knitting works, and how a Codex photo shoot became a shop that knits anyone's graph into the wool.</p>
+<p class="meta">15 November 2026</p>
+<p>Every developer has the green grid and nobody wears it. So I knitted mine into a Christmas sweater: one stitch per day for the last year, greener on the days I shipped more, my username across the chest and my total under the trees. Then I made it work for anyone, and then I made it a shop. <a href="https://www.avivashishta.com/lab/sweater" target="_blank" rel="noreferrer">Make your own at avivashishta.com/lab/sweater</a>: type a username and your year gets knitted into the chest of a real-looking jumper, in six product photos. The canvas version it started from, which knits the whole sweater live, is the <a href="https://www.avivashishta.com/lab/sweater/pattern" target="_blank" rel="noreferrer">knitting pattern</a>.</p>
+<div class="highlight"><p><strong>The short version:</strong> the sweater is four pieces drawn on a canvas, like a real one is knitted: two sleeves at an angle, the body and a ribbed crew collar. Every stitch is a "V" of two yarn legs, drawn once per colour into a tiny sprite and stamped thousands of times with a little jitter. Soft light, creases, loose fibres on the edges and a shadow make it look like wool on a table. The chest is a 61 by 78 stitch chart, and the contribution graph fits on it exactly: 53 weeks by 7 days. Your data comes from GitHub's public calendar, cached for a day.</p></div><p><img src="/lab/sweater/flatlay.webp" alt="My sweater as a real knitted jumper on linen: snowflakes, AVIVASHISHTA29, a green band of contribution stitches, trees and 8395"></p>
+<p>That one is a Codex photo of my sweater. More on it at the end.</p>
+<h2>Step 1: the chart</h2>
+<p>A knitting chart is a grid where every square is one stitch, which is exactly what a contribution graph already is. The front of the body is 61 stitches wide and 78 rows tall, and from the neck down it holds:</p>
+<ul>
+<li>a dotted row and a band of snowflakes,</li>
+<li>the username in a 5 by 7 stitch font (long names drop to a 3 by 5 font, very long ones go onto two lines),</li>
+<li>the contribution graph: 53 columns of weeks, 7 rows of days, GitHub&#39;s four greens, and a darker shade of the yarn for days with nothing,</li>
+<li>a band of trees and the year&#39;s total,</li>
+<li>a ribbed hem.</li>
+</ul>
+<p>The motif bands repeat a small pattern and centre whole repeats, so no snowflake is ever cut in half at the side seams. The four yarns are the site&#39;s three colours (red, blue, yellow) plus ink, and each one picks its own colour for the motifs.</p>
+<p><img src="/lab/sweater/chart.webp" alt="The flat chart for my sweater: every square is one stitch"></p>
+<h2>Step 2: a stitch</h2>
+<p>Stockinette, the smooth side of most sweaters, is rows of little V shapes. Each V is two tilted ellipses with a gradient (lit at the top, in shadow at the bottom), a few diagonal grooves for the plies of the yarn twisting round each other, and three loose fibres standing off the edge.</p>
+<pre><code class="language-ts">for (const side of [-1, 1]) {
+  x.translate(cx + side * u * 0.215, cy);
+  x.rotate(side * 0.5);                 // the two legs lean apart into a V
+  x.ellipse(0, 0, u * 0.26, rowH * 0.64, 0, 0, Math.PI * 2);
+  // + gradient fill, ply grooves clipped to the leg, a dark rim, loose fibres
+}
+</code></pre>
+<p>Drawing that 6,000 times would be slow, so each combination of colour, rib or not, and one of four random variations is drawn once into a small canvas and reused. Every stamp also gets a tiny offset from a hash of its position, so the fabric has the uneven tension of real knitting but looks the same every time you load it.</p>
+<p>The ribbing at the cuffs, hem and collar is a narrower, more upright V, and every other column is a shade darker, which is what knit-one-purl-one looks like from the front.</p>
+<h2>Step 3: the shape</h2>
+<p>My first version was a rectangle with stair-stepped sleeves, and it looked like a pixel sprite. A real sweater is pieces sewn together, so this one is too:</p>
+<ul>
+<li><strong>The body</strong> has shoulders that slope down from the neck, sides that come in a little at the waist, and a hem rib that pulls in slightly narrower than the body above it.</li>
+<li><strong>The sleeves</strong> are knitted in their own frame, turned 40 degrees, from the cuff up. Their top edge is cut to match the armhole seam, which runs straight down the side of the body, so they hang off the shoulders like a real flat lay. The cuffs are ribbed and gathered in.</li>
+<li><strong>The collar</strong> is three rounds of rib on an ellipse, and every stitch is turned to face out from the neck, the way a crew neck is picked up and knitted. Through it you see the inside of the back, in the shadow of the back of the collar.</li>
+</ul>
+<p>Each piece is clipped to a smooth outline, so the edges are curves, not steps. Then each one is finished separately: a low-frequency noise and a light from the top left blended in with <code>soft-light</code> for the drape, a few long soft <code>multiply</code> streaks for creases at the elbows and under the arms, short fibres poking out along the outline for fuzz, and a two-layer shadow drawn underneath with <code>destination-over</code>.</p>
+<h2>Step 4: knitting it live</h2>
+<p>Each piece is rendered once into its own canvas. The animation only changes how much of each one shows: the sleeves are revealed from the cuff up along their own axis, the body from the hem up, and the collar sweeps round from the front. A thin line rides along the row being knitted.</p>
+<pre><code class="language-ts">const p = [ease(t / 0.42), ease(t / 0.42), ease((t - 0.3) / 0.58), ease((t - 0.84) / 0.16)];
+pieces.forEach((piece, i) =&gt; {
+  ctx.save(); ctx.clip(piece.reveal(p[i])); ctx.drawImage(piece.canvas, 0, 0); ctx.restore();
+});
+</code></pre>
+<p>Changing the yarn swaps the finished pieces in place; a new username knits from scratch. Hover any green stitch and it tells you the day and how many contributions it was.</p>
+<h2>Step 5: anyone&#39;s GitHub</h2>
+<p><code>/api/lab/github/{user}</code> returns a year of contributions. With a <code>GITHUB_TOKEN</code> it asks GitHub&#39;s GraphQL API (the same query that keeps <a href="https://www.avivashishta.com/lab/commits" target="_blank" rel="noreferrer">my graph on /lab/commits</a> fresh). Without one it reads the public calendar at <code>github.com/users/{user}/contributions</code>, which needs no token: every day is a <code>&lt;td data-date data-level&gt;</code> and its count sits in a matching <code>&lt;tool-tip&gt;</code>. Either way the answer is cached for a day, so if a thousand people knit the same friend, GitHub is asked once.</p>
+<p>A shared link like <code>/lab/sweater/pattern?u=torvalds</code> knits that person&#39;s sweater as soon as it opens, and Save image gives you the PNG.</p>
+<h2>Step 6: knitted for real (Codex)</h2>
+<p>To see what it would look like as a real jumper, I gave Codex the flat chart from Step 1 and asked for a product photo of it knitted in wool, then a macro of the green band.</p>
+<p><img src="/lab/sweater/macro.webp" alt="A macro of the green contribution stitches, my username above in soft focus"></p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A photorealistic product photograph of a real hand-knitted wool Christmas jumper lying flat on a warm off-white linen surface, shot from directly above with soft window daylight from the left. Portrait 4:5 framing, the whole jumper in frame with some margin, sleeves angled slightly down and outward with natural soft creases, one cuff gently folded.</p>
+<p>The attached image is the knitting chart. Every small square is one stitch. Knit the front of the jumper to follow that chart exactly: the same red body, the same cream colourwork, and the same layout from top to bottom: a dotted cream row under the ribbed crew neck, a band of cream snowflakes, the username in cream blocky stitched letters across the chest, then a wide band of small green squares in four shades of green (pale mint to deep forest), exactly like a GitHub contribution graph, then a band of cream Christmas trees, the total in cream stitched digits, a dotted cream row, and a ribbed hem. The sleeves have a cream and red checker band and a deep green stripe above ribbed cuffs.</p>
+<p>It must look like a real physical garment: visible V-shaped stockinette stitches, slightly fuzzy chunky wool with stray fibres and a soft halo, tiny irregularities in tension, colourwork floats making the motifs slightly puckered, real fabric thickness and soft shadows. Not a render, not a vector, no text overlays, no logos, no watermark. Colours true to the chart.</p>
+</div>
+</div><pre><code class="language-bash">codex exec --skip-git-repo-check -C ./out -i chart.png -- - &lt; flatlay.txt
+</code></pre>
+<p>Put <code>--</code> before the <code>-</code> that reads the prompt from stdin, or Codex takes it for another image, and run one job at a time. Attaching the chart is what makes it work: Codex follows the layout closely (same bands, same name, same total), and the green band comes out close to my real year, if not stitch for stitch.</p>
+<h2>Step 7: a shop with real photos</h2>
+<p>The Codex photo looked so much better than my canvas that I wanted it for everyone. But Codex can&#39;t follow a graph stitch for stitch, and nobody wants to wait two minutes for a picture. So I flipped it: Codex makes the photos once, and the browser knits the graph into them.</p>
+<ol>
+<li><strong>One jumper with a blank.</strong> I gave Codex my photo and asked for the same jumper with one plain light grey panel knitted across the chest, nothing inside it. Then, with that photo attached so the design stays the same, five more shots: worn in a studio, worn on a sofa by the tree, on a hanger, folded next to a cocoa, and a close-up.</li>
+<li><strong>Find the panel.</strong> <code>scripts/prepare-sweater-shop.py</code> picks out the grey (neutral, light, and nothing like the cream or the linen), keeps the biggest piece and traces its outline. Its four edges, straight on the flat lay and curved round a body, become a Coons patch: a grid that bends with the fabric. Every pixel of the panel gets the stitch it belongs to, a 57 by 18 grid that fits the username and the 53 weeks.</li>
+<li><strong>Knit by brightness.</strong> In the browser every panel pixel takes its stitch&#39;s colour, multiplied by how bright the grey wool was right there. The stitches, the fuzz, the folds and the window light are all in that brightness, so the graph comes out knitted, not printed on.</li>
+<li><strong>Colourways.</strong> The script also marks the red wool of the jumper. Picking Forest, Midnight or Charcoal turns every red hue of the garment to the new colour, keeping its light, so even the red fuzz inside the cream snowflakes turns.</li>
+</ol>
+<p>The stitch map is a PNG next to each photo. One gotcha: browsers can shift decoded PNG values by a level, which turned 255 into 254 and broke the lookup, so the codes are spread out (column times 4, row times 12) and rounded back.</p>
+<p>Then it&#39;s a product page: thumbnails, a loupe that magnifies the stitches and tells you the day under it, four colours, sizes by commit count (8,000 in a year makes you an XXL), and a details, care and shipping section. Care: never force push. Shipping: never, it&#39;s a lab. Save the photo instead.</p>
+<h2>Make your own</h2>
+<p>Go to <a href="https://www.avivashishta.com/lab/sweater" target="_blank" rel="noreferrer">/lab/sweater</a>, type your username, pick a colour and save the photos. Or build your own version:</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a page that knits a GitHub contribution graph into a holiday sweater on a 2D canvas. Fetch the user's last year of contributions (GitHub GraphQL contributionCalendar, or parse github.com/users/{user}/contributions). Build a 61 x 78 stitch chart for the front: a snowflake band, the username in a 5x7 pixel font, the 53 x 7 contribution grid in four greens with a darker shade of the yarn for empty days, a tree band, the total, and a ribbed hem.</p>
+<p>Draw each stitch as a V of two tilted gradient ellipses with diagonal ply grooves and a few loose fibres, cached per colour as small sprites and stamped with a hash-based jitter. Make the garment from pieces: a body with sloped shoulders, a slight waist and a gathered hem rib; two sleeves knitted in their own rotated frame (40 degrees) from ribbed cuffs, with their top edge cut to the vertical armhole seam; and a crew collar of three rounds of rib on an ellipse with each stitch rotated to face outward and the dark inside of the back showing through. Clip each piece to a smooth outline, add soft-light noise and a light gradient, multiply creases, edge fuzz and a shadow underneath. Animate by revealing the sleeves from the cuff, then the body from the hem, then the collar, with a thin line on the row being knitted. Hovering a green stitch shows its date and count.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

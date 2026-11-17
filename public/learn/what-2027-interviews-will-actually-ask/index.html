@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>What 2027 Interviews Will Actually Ask You | Rishabh Sharma</title>
+<meta name="description" content="Fifteen questions software engineering interviews are moving toward in 2027 — working alongside an AI assistant, reading unfamiliar code, defending your own arc" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/what-2027-interviews-will-actually-ask/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Career</p>
+<h1>What 2027 Interviews Will Actually Ask You</h1>
+<p class="lede">Fifteen questions software engineering interviews are moving toward in 2027 — working alongside an AI assistant, reading unfamiliar code, defending your own architecture decisions, and explaining AI systems — with what to prepare for each, and a four-week plan. Sourced from Google's AI-assisted pilot, Meta's AI-enabled format, HackerRank's interview modes and CoderPad's 2026 hiring survey.</p>
+<p class="meta">23 September 2026</p>
+<p>
+        You commented <strong>INTERVIEW</strong>, so here is the full list —
+        fifteen questions, what to prepare for each, and a four-week plan at
+        the end.
+</p><div class="highlight">
+<p style="margin-bottom: 0">
+<strong>The one-line version:</strong> DSA is not going away. It is
+          just not the whole interview any more. The rounds being added around
+          it test whether you can work with an AI assistant without losing
+          track of what it wrote.
+</p>
+</div><h2>Why interviews are changing</h2>
+<ul>
+<li>
+<strong>Google</strong> is piloting an AI-assisted format for select
+          US teams. There is a new
+<em>code comprehension</em> round where you read, debug and optimize
+          an existing codebase with Gemini as your assistant. What gets scored
+          is AI fluency: how you direct the assistant, how you check its
+          output, and whether you understand every line it produced.
+          Candidates still sit one classic algorithm interview with no AI
+          alongside it.
+<span class="src"
+            >(<a               href="https://www.tryexponent.com/blog/google-ai-coding-interview"
+              rel="nofollow"
+              >source</a>)</span>
+</li>
+<li>
+<strong>Meta</strong>'s AI-enabled coding format, introduced as a
+          pilot, has appeared in 2026 candidate loops. HackerRank now runs
+          AI-assisted interviews in an IDE with inline completion, file-aware
+          chat, Plan Mode and Agent Mode — built specifically so interviewers
+          can watch how you reason with the assistant rather than grade the
+          finished code.
+<span class="src"
+            >(<a               href="https://formation.dev/blog/ai-assisted-coding-interviews"
+              rel="nofollow"
+              >source</a>)</span>
+</li>
+<li>
+<strong>CoderPad's State of Tech Hiring 2026</strong> found 46% of
+          hiring leaders allow AI in technical interviews either broadly or
+          with constraints, and another 20% decide case by case. 34% still ban
+          it outright. The same report found that, where AI is allowed,
+          catching and fixing the AI's mistakes is one of the strongest signals
+          teams look for.
+<span class="src"
+            >(<a               href="https://formation.dev/blog/ai-assisted-coding-interviews"
+              rel="nofollow"
+              >source</a>)</span>
+</li>
+</ul>
+<p>
+        A third of the market still bans AI in the room, so this is a
+        transition and not a finished shift. Prepare for both. The good news is
+        that the preparation overlaps almost entirely.
+</p><h2>1. Working with AI</h2><div class="q">
+<p class="ask"><span class="qnum">1.</span> "The AI wrote this function. What's wrong with it?"</p>
+<p class="prep">
+<strong>Prep:</strong> take AI-generated code and review it line by
+          line. Look for edge cases, Big-O claims that are wrong, and missing
+          error handling.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">2.</span> "Solve this with the assistant, and talk me through your prompts."</p>
+<p class="prep">
+<strong>Prep:</strong> practise saying what you are asking for and
+          why, out loud, before you type it. The narration is the thing being
+          scored.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">3.</span> "How do you know this output is correct?"</p>
+<p class="prep">
+<strong>Prep:</strong> write a quick test before you trust AI code.
+          Every time. In the interview, reaching for a test unprompted answers
+          this question before it is asked.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">4.</span> "What would you never let an AI do without checking?"</p>
+<p class="prep">
+<strong>Prep:</strong> have a real answer — auth, payments,
+          migrations, anything that deletes data. A candidate with no limits
+          reads as a candidate who has not shipped.
+</p>
+</div><h2>2. Reading real code</h2><div class="q">
+<p class="ask"><span class="qnum">5.</span> "Here's a codebase you've never seen. Find the bug."</p>
+<p class="prep">
+<strong>Prep:</strong> clone a mid-sized open-source repo and trace
+          one feature end to end, from the UI down to the database.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">6.</span> "This endpoint is slow. How would you find out why?"</p>
+<p class="prep">
+<strong>Prep:</strong> learn to read logs, profile code, and spot an
+          N+1 query on sight.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">7.</span> "Refactor this without breaking anything."</p>
+<p class="prep">
+<strong>Prep:</strong> practise small, safe changes with tests around
+          them. The instinct to put the test in place first is what is being
+          watched.
+</p>
+</div><h2>3. Your projects — the big one</h2><div class="q">
+<p class="ask"><span class="qnum">8.</span> "Why did you choose this architecture?"</p>
+<p class="prep">
+<strong>Prep:</strong> for each project, write down three decisions
+          you made and what you traded away to get them.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">9.</span> "How did you handle authentication?"</p>
+<p class="prep">
+<strong>Prep:</strong> know sessions versus JWT, and the OAuth
+          basics, well enough to explain why you picked one.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">10.</span> "What happens when 10,000 users hit your app at once?"</p>
+<p class="prep">
+<strong>Prep:</strong> caching, queues, rate limits, database
+          indexes. Know which one you would reach for first and why.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">11.</span> "What would you change if you rebuilt it?"</p>
+<p class="prep">
+<strong>Prep:</strong> have an honest answer. Interviewers love
+          self-awareness, and "nothing" is the worst thing you can say here.
+</p>
+</div><h2>4. AI systems</h2><div class="q">
+<p class="ask"><span class="qnum">12.</span> "How does your AI agent remember context?"</p>
+<p class="prep">
+<strong>Prep:</strong> know the difference between the context
+          window, RAG, and long-term memory — and which problem each one
+          actually solves.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">13.</span> "How would you evaluate whether your AI feature works?"</p>
+<p class="prep">
+<strong>Prep:</strong> learn what evals are and build a tiny one for
+          your own project. Almost nobody does this, which is exactly why it
+          lands.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">14.</span> "How would you cut the cost and latency of your LLM calls?"</p>
+<p class="prep">
+<strong>Prep:</strong> caching, a smaller model for the simple steps,
+          streaming, batching.
+</p>
+</div><div class="q">
+<p class="ask"><span class="qnum">15.</span> "What's MCP and when would you use it?"</p>
+<p class="prep">
+<strong>Prep:</strong> build one small MCP server that connects an
+          agent to a real tool. Having built one beats any definition you can
+          recite.
+</p>
+</div><h2>How I'd prepare — four weeks</h2>
+<p class="week">
+<strong>Week 1.</strong> Ship one project with an AI feature in it, and
+        deploy it. Deployed, not local.
+</p>
+<p class="week">
+<strong>Week 2.</strong> Write the "three decisions and their
+        tradeoffs" doc for that project. Practise explaining it in two minutes.
+</p>
+<p class="week">
+<strong>Week 3.</strong> Read and debug an open-source codebase. Do two
+        AI-assisted practice problems out loud, narrating every prompt.
+</p>
+<p class="week">
+<strong>Week 4.</strong> Add evals and a load test to your project.
+</p>
+<p>
+        Do those four things and you have real answers to more than half of
+        this list — not rehearsed ones, which is the difference the new format
+        is built to detect.
+</p><p>
+        If you want something to build for week 1, there is
+<a href="/learn/25-projects-to-build-to-get-hired-2026/"
+          >25 projects to build to get hired in 2026</a>,
+<a href="/learn/github-repos-that-make-claude-code-better/"
+          >eight repos that make Claude Code better</a>
+        for the tooling side, and
+<a href="/learn/gesture-controlled-portfolio-mediapipe-threejs/"
+          >the gesture-controlled portfolio</a>
+        as a worked example of a project with decisions worth defending.
+</p><p>
+        Follow
+<a href="https://www.instagram.com/avi_vashishta29/" target="_blank" rel="noreferrer"
+          >@avi_vashishta29</a>
+        for more like this.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

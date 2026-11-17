@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agent Sheet: A Portfolio as a Spreadsheet My Agents Fill In | Rishabh Sharma</title>
+<meta name="description" content="My Reel numbers as a spreadsheet that ten named agent cursors fill in at once: titles typed, stats pulled, a formula dragged down, a heat map and a chart. Real " />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/agent-sheet-a-portfolio-spreadsheet-agents-fill-in/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Agent Sheet: A Portfolio as a Spreadsheet My Agents Fill In</h1>
+<p class="lede">My Reel numbers as a spreadsheet that ten named agent cursors fill in at once: titles typed, stats pulled, a formula dragged down, a heat map and a chart. Real data, real HTML, code and prompt inside.</p>
+<p class="meta">7 November 2026</p>
+<p>Portfolios usually show numbers as big counters. I wanted mine to show where the numbers come from, and the most honest place for numbers is a spreadsheet. So this page is a sheet of my twelve most watched Reels that ten agents fill in together, like a shared sheet with ten people in it. <a href="https://www.avivashishta.com/lab/agent-sheet" target="_blank" rel="noreferrer">It is live at avivashishta.com/lab/agent-sheet</a>.</p>
+<div class="highlight"><p><strong>The short version:</strong> the table is a real HTML table with every value already in it, straight from <code>data/stats.json</code>. With JavaScript, the values start hidden and ten cursors write them in, each with its own coloured selection and name tag. Copy types the titles, four agents pull a column of numbers each at the same time, Claude writes <code>=F2/C2</code> and drags the fill handle down, Pixel paints a heat map, Codex selects the views and draws a chart, and Sum writes the totals. Then it's yours: click any cell to see its formula.</p></div><h2>Where it came from</h2>
+<p>This was one of six designs Claude drew when I asked for ways to use the agents-at-work idea on screens that aren&#39;t a web page: a trading terminal, a spreadsheet and a kanban board among them. The sheet won because multiplayer spreadsheets already look like this. Everyone has seen a coloured box with a name on it sitting on a cell, so ten cursors in a sheet read as a team straight away, where ten cursors on a web page read as a swarm. The other winner from that canvas became <a href="/learn/agent-crews-48-cursors-build-a-page/">agent crews</a>.</p>
+<h2>The data</h2>
+<p>Nothing in the sheet is made up. The rows are the twelve Reels with the most views in <code>reelStats</code>, the per-Reel numbers I copy from Meta Business Suite into <code>data/stats.json</code>, with titles and worlds from <code>data/reels.json</code>:</p>
+<pre><code class="language-ts">const ROWS = Object.entries(stats.reelStats.stats)
+  .sort((a, b) =&gt; b[1].views - a[1].views).slice(0, 12)
+  .map(([id, s]) =&gt; ({ id, title: reels.find((r) =&gt; r.id === id)?.title ?? id, ...s }));
+</code></pre>
+<p>The totals, saves per view and the chart&#39;s title are worked out from the same rows, so when I refresh the stats the sheet, the formulas and the headline on the chart (&quot;The top three Reels did 96% of the views&quot;) all update together.</p>
+<h2>A real table first</h2>
+<p>Every cell is a <code>&lt;td data-cell=&quot;C2&quot;&gt;</code> with the final value in it, and cells made by a formula carry it too: <code>data-f=&quot;=F2/C2&quot;</code>. That means the page is complete without JavaScript, crawlers and screen readers get a proper table, and the animation has its script built in: each agent just reveals what&#39;s already there.</p>
+<pre><code class="language-css">@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .sheet td[data-cell]:not([data-on]) .v { opacity: 0; }
+  .sheet td[data-h]:not([data-hot]) { background: var(--color-surface); }
+}
+</code></pre>
+<h2>Cursors and selections</h2>
+<p>Each agent has two things in an overlay above the page: a cursor, and a selection box in its colour with its name in a tab on top. Selecting a cell moves the box over it with a short transition, which is exactly how a shared sheet looks when someone clicks around. Dragging a range turns the transition off, lets the box follow the cursor, then snaps it to the range:</p>
+<pre><code class="language-ts">await moveTo(a, r2.x + r2.w - 8, r2.y + r2.h - 8, dur, (x, y) =&gt; {
+  a.sel.style.width = `${Math.max(r1.w, x - r1.x + 8)}px`;
+  a.sel.style.height = `${Math.max(r1.h, y - r1.y + 8)}px`;
+});
+</code></pre>
+<p>The faces in the toolbar lift up while their agent is working, and an agent&#39;s cursor only shows its name tag when it has no selection, so a name is never shown twice.</p>
+<h2>The script</h2>
+<p>The whole thing is a few async functions, one per job, and <code>Promise.all</code> is what makes it feel like ten people at once:</p>
+<pre><code class="language-ts">await headers(id);
+await Promise.all([titles(id), worlds(id),
+  numbers(id, &quot;Data&quot;, &quot;C&quot;, &quot;views&quot;, 200), numbers(id, &quot;Fetch&quot;, &quot;D&quot;, &quot;likes&quot;, 450),
+  numbers(id, &quot;Count&quot;, &quot;E&quot;, &quot;shares&quot;, 700), numbers(id, &quot;Stats&quot;, &quot;F&quot;, &quot;saves&quot;, 950)]);
+await Promise.all([formula(id), heat(id), draw(id)]);
+await totals(id);
+</code></pre>
+<p>The number agents start a quarter of a second apart, so the four columns fill as a staircase instead of in lockstep. Each number counts up into its cell from zero.</p>
+<h2>The formula and the fill handle</h2>
+<p>Claude clicks G2 and types <code>=F2/C2</code> into the cell and the formula bar at the same time, a character at a time. After a beat the formula turns into its value, <code>1.24%</code>. Then the move everyone knows: the cursor goes to the small square on the selection&#39;s corner and drags it down to G13. A dashed range follows it, and when it lets go the values drop into every row, one after another. Sum does the same thing sideways for the totals row.</p>
+<h2>Heat map and chart</h2>
+<p>Pixel selects the saves column and moves down it, and each cell warms up as the cursor passes. The colour is my yellow mixed into white by the cell&#39;s share of the biggest number, set on the server as a custom property:</p>
+<pre><code class="language-css">.sheet td[data-h] { background: color-mix(in srgb, var(--color-learn) calc(var(--h) * 85%), var(--color-surface)); }
+</code></pre>
+<p>At the same time Codex selects the views column, flies to the side, drags a dashed marquee where the chart goes, and the bars grow one by one in each Reel&#39;s world colour. Copy then reads the chart and types its title.</p>
+<h2>Then it&#39;s yours</h2>
+<p>When the agents are done, the sheet works: click a cell and the formula bar shows what&#39;s in it, the formula for anything calculated. On phones the world, likes and shares columns are dropped so the rest fits, and the agents fill those in without a cursor. Rebuild clears it from the bottom right and runs it again.</p>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a spreadsheet page in React with CSS modules that a team of ten named agent cursors fills in live. Render a real HTML table server side with every value in it: a header row, one row per item from my JSON data, and a totals row. Give each cell data-cell="C2" and cells made by a formula data-f="=F2/C2". Under @media (scripting: enabled) and (prefers-reduced-motion: no-preference), hide each cell's value until it has data-on. Add a formula bar (cell reference, fx, contents) and a toolbar with one coloured face per agent that lifts while that agent works.</p>
+<p>In an absolute overlay, give each agent a cursor (an SVG arrow) and a selection box in its colour with its name in a tab on top. Selecting a cell moves the box with a short transition; dragging a range makes the box follow the cursor and then snap to the range. Move all cursors with one requestAnimationFrame loop with eased, slightly bowed tweens. Script it with async functions run in parallel with Promise.all: one agent types the headers, one types every title into column A (mirrored in the formula bar), one tags a category column, four agents each count numbers up into one column, staggered by 250ms.</p>
+<p>Then in parallel: one agent types =F2/C2 into G2, shows the value, and drags the fill handle (a small square on the selection's corner) down the column while a dashed range follows, revealing each row's value in turn; one selects a column and paints a heat map with color-mix by each value's share of the max; one selects a column, drags a marquee beside the sheet and grows a bar chart, whose title another agent types. Finish with a SUM in the totals row dragged across. Afterwards, clicking a cell shows its formula or value in the formula bar. Add an activity log, Skip and Rebuild.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

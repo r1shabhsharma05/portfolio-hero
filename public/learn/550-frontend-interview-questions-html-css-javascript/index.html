@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>550 Frontend Interview Questions (HTML, CSS and JavaScript) for 2027 | Rishabh Sharma</title>
+<meta name="description" content="550 free frontend interview questions: 183 HTML and 212 CSS questions with answers, plus 155 JavaScript \&quot;what's the output?\&quot; questions from lydiahallie/javasc" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/550-frontend-interview-questions-html-css-javascript/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Roadmap</p>
+<h1>550 Frontend Interview Questions (HTML, CSS and JavaScript) for 2027</h1>
+<p class="lede">550 free frontend interview questions: 183 HTML and 212 CSS questions with answers, plus 155 JavaScript \&quot;what's the output?\&quot; questions from lydiahallie/javascript-questions (65K stars). With the 4 topics to start with and 3 things to build.</p>
+<p class="meta">5 October 2026</p>
+<p>
+        You commented <strong>frontend</strong>, so here are all 550, free,
+        with a link for each: 183 HTML questions and
+        212 CSS questions with written answers, plus
+        155 JavaScript "what's the output?" questions with
+        explanations. They come from three GitHub repos, and every link jumps
+        straight to its answer. I removed one CSS question its repo repeats.
+</p><div class="highlight">
+<p style="margin-bottom: 0">
+<strong>The short version:</strong> most frontend rounds start with
+          HTML and CSS, not React. Get the box model, Flexbox and Grid, and
+          semantic HTML solid, then do the JavaScript output questions. Build
+          the 3 small things below and you can talk through all of it.
+</p>
+</div><h2 id="repos">The three repos</h2>
+<h3>learning-zone/html-basics <span class="stars">~600 ★</span></h3>
+<p class="repo-link"><a href="https://github.com/learning-zone/html-basics" target="_blank" rel="noreferrer">github.com/learning-zone/html-basics</a></p>
+<p>183 HTML interview questions with answers and code, from tags and forms to accessibility, SEO and web components.</p>
+<h3>learning-zone/css-basics <span class="stars">~780 ★</span></h3>
+<p class="repo-link"><a href="https://github.com/learning-zone/css-basics" target="_blank" rel="noreferrer">github.com/learning-zone/css-basics</a></p>
+<p>212 CSS interview questions with answers, from the box model and specificity to Grid, animations and stacking contexts.</p>
+<h3>lydiahallie/javascript-questions <span class="stars">~65K ★</span></h3>
+<p class="repo-link"><a href="https://github.com/lydiahallie/javascript-questions" target="_blank" rel="noreferrer">github.com/lydiahallie/javascript-questions</a></p>
+<p>155 "what's the output?" JavaScript questions, each with the answer and an explanation of why. MIT licensed.</p><h2 id="start">The 4 I'd start with</h2>
+<ol>
+<li><strong>Box model and specificity.</strong> <a href="https://github.com/learning-zone/css-basics#-2-box-model" target="_blank" rel="noreferrer">Box model</a> and <a href="https://github.com/learning-zone/css-basics#-3-selectors--specificity" target="_blank" rel="noreferrer">selectors and specificity</a>. Every CSS round starts here.</li>
+<li><strong>Flexbox and Grid.</strong> <a href="https://github.com/learning-zone/css-basics#-5-flexbox" target="_blank" rel="noreferrer">Flexbox</a>, <a href="https://github.com/learning-zone/css-basics#-6-css-grid" target="_blank" rel="noreferrer">CSS Grid</a> and <a href="https://github.com/learning-zone/css-basics#-10-media-queries--responsive-design" target="_blank" rel="noreferrer">responsive design</a>. Expect to build a layout live.</li>
+<li><strong>Semantic HTML and accessibility.</strong> <a href="https://github.com/learning-zone/html-basics#-2-html-tags" target="_blank" rel="noreferrer">HTML tags</a>, <a href="https://github.com/learning-zone/html-basics#-4-html-forms" target="_blank" rel="noreferrer">forms</a> and <a href="https://github.com/learning-zone/html-basics#-15-html-accessibility" target="_blank" rel="noreferrer">accessibility</a>. The section most candidates skip and interviewers notice.</li>
+<li><strong>The JavaScript output questions.</strong> All 155 in <a href="#js-output">Part 3</a>. Read the code, guess the output, then read why.</li>
+</ol><h2 id="build">What to build to prove you get it</h2>
+<ol>
+<li>A <strong>responsive landing page</strong> using Grid for the layout and Flexbox inside each section, with no CSS framework.</li>
+<li>An <strong>accessible sign-up form</strong> with labels, error messages and full keyboard support.</li>
+<li>A <strong>CSS-only animation</strong>, like a loading spinner or a card flip, using transitions and transforms.</li>
+</ol>
+<p>You don't need all 550. You need to centre a div five different ways and explain why each one works.</p><h2 id="topics">Jump to a topic</h2>
+<p><strong>HTML:</strong> <a href="#html-introduction">Introduction</a> (26) · <a href="#html-html-tags">HTML Tags</a> (17) · <a href="#html-html-events">HTML Events</a> (10) · <a href="#html-html-forms">HTML Forms</a> (13) · <a href="#html-html-tables">HTML Tables</a> (8) · <a href="#html-html-lists">HTML Lists</a> (6) · <a href="#html-html-iframe">HTML Iframe</a> (4) · <a href="#html-html-url">Html Url</a> (7) · <a href="#html-html-svg">Html Svg</a> (4) · <a href="#html-html-canvas">HTML Canvas</a> (1) · <a href="#html-html-storage">HTML Storage</a> (6) · <a href="#html-html-apis">HTML APIs</a> (6) · <a href="#html-html-drag-and-drop">HTML Drag and Drop</a> (3) · <a href="#html-html-web-worker">HTML Web Worker</a> (5) · <a href="#html-html-accessibility">HTML Accessibility</a> (6) · <a href="#html-miscellaneous">Miscellaneous</a> (12) · <a href="#html-html-media">HTML Media</a> (4) · <a href="#html-html5-advanced-apis">HTML5 Advanced APIs</a> (6) · <a href="#html-service-workers-web-workers">Service Workers &amp; Web Workers</a> (3) · <a href="#html-indexeddb-advanced-web-storage">IndexedDB &amp; Advanced Web Storage</a> (2) · <a href="#html-atomic-design-pixel-perfect-design">Atomic Design &amp; Pixel Perfect Design</a> (2) · <a href="#html-seo-basics-advanced">SEO Basics &amp; Advanced</a> (4) · <a href="#html-html-performance-optimization">HTML Performance Optimization</a> (6) · <a href="#html-html-tags-elements-intermediate">HTML Tags &amp; Elements (Intermediate)</a> (14) · <a href="#html-web-components">Web Components</a> (4) · <a href="#html-html-security">HTML Security</a> (4)</p>
+<p><strong>CSS:</strong> <a href="#css-introduction">Introduction</a> (5) · <a href="#css-box-model">Box Model</a> (12) · <a href="#css-selectors-specificity">Selectors &amp; Specificity</a> (8) · <a href="#css-positioning">Positioning</a> (5) · <a href="#css-flexbox">Flexbox</a> (4) · <a href="#css-css-grid">CSS Grid</a> (6) · <a href="#css-pseudo-classes-pseudo-elements">Pseudo-Classes &amp; Pseudo-Elements</a> (12) · <a href="#css-transitions-animations">Transitions &amp; Animations</a> (9) · <a href="#css-transforms">Transforms</a> (8) · <a href="#css-media-queries-responsive-design">Media Queries &amp; Responsive Design</a> (19) · <a href="#css-css-variables">CSS Variables</a> (10) · <a href="#css-typography-text">Typography &amp; Text</a> (15) · <a href="#css-colors-gradients">Colors &amp; Gradients</a> (15) · <a href="#css-z-index-stacking-context">Z-index &amp; Stacking Context</a> (7) · <a href="#css-overflow-clipping">Overflow &amp; Clipping</a> (10) · <a href="#css-display-visibility">Display &amp; Visibility</a> (7) · <a href="#css-miscellaneous">Miscellaneous</a> (51) · <a href="#css-technical-lead-role">Technical Lead Role</a> (9)</p>
+<p><strong>JavaScript output:</strong> <a href="#js-output-questions-1-to-31">Questions 1 to 31</a> (31) · <a href="#js-output-questions-32-to-62">Questions 32 to 62</a> (31) · <a href="#js-output-questions-63-to-93">Questions 63 to 93</a> (31) · <a href="#js-output-questions-94-to-124">Questions 94 to 124</a> (31) · <a href="#js-output-questions-125-to-155">Questions 125 to 155</a> (31)</p><h2 id="html">Part 1: HTML interview questions (183)</h2>
+<p class="repo-link">Source: <a href="https://github.com/learning-zone/html-basics" target="_blank" rel="noreferrer">github.com/learning-zone/html-basics</a></p>
+<h3 id="html-introduction">Introduction (26)</h3>
+<ol start="1">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-html-and-xhtml" target="_blank" rel="noreferrer">What is the difference between HTML and XHTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-building-blocks-of-html5" target="_blank" rel="noreferrer">What are the building blocks of HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-semantic-tags-available-in-html5" target="_blank" rel="noreferrer">What are the semantic tags available in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-why-you-would-like-to-use-semantic-tag" target="_blank" rel="noreferrer">Why you would like to use semantic tag?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-does-a-doctype-html-do" target="_blank" rel="noreferrer">What does a &lt;DOCTYPE html&gt; do?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-happens-when-doctype-is-not-given" target="_blank" rel="noreferrer">What happens when DOCTYPE is not given?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-character-encoding" target="_blank" rel="noreferrer">What is Character Encoding?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-purpose-of-meta-tags" target="_blank" rel="noreferrer">What is the purpose of meta tags?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-does-async-and-defer-refer-in-script-tag" target="_blank" rel="noreferrer">What does async and defer refer in script tag?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-does-cors-stand-for-and-what-issue-does-it-address" target="_blank" rel="noreferrer">What does CORS stand for and what issue does it address?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-can-you-describe-the-difference-between-progressive-enhancement-and-graceful-degradation" target="_blank" rel="noreferrer">Can you describe the difference between progressive enhancement and graceful degradation?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-dom-how-does-the-dom-work" target="_blank" rel="noreferrer">What is the DOM? How does the DOM work?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-does-the-browser-rendering-engine-work" target="_blank" rel="noreferrer">How does the browser rendering engine work?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-standards-mode-and-quirks-mode" target="_blank" rel="noreferrer">What is the difference between standards mode and quirks mode?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-critical-rendering-path" target="_blank" rel="noreferrer">What is Critical Rendering Path?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-benefits-of-server-side-rendering-ssr-over-client-side-rendering-csr" target="_blank" rel="noreferrer">What are the Benefits of Server Side Rendering (SSR) Over Client Side Rendering (CSR)?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-does-the-lang-attribute-in-html-do" target="_blank" rel="noreferrer">What does the lang attribute in html do?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-explain-the-difference-between-layout-painting-and-compositing" target="_blank" rel="noreferrer">Explain the difference between layout, painting and compositing?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-explain-about-html-layout-engines-used-by-browsers" target="_blank" rel="noreferrer">Explain about HTML Layout Engines used by browsers?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-does-the-following-trigger-http-request-at-the-time-of-page-load" target="_blank" rel="noreferrer">Does the following trigger http request at the time of page load?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-progressive-rendering" target="_blank" rel="noreferrer">What is progressive rendering?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-serve-a-page-with-content-in-multiple-languages" target="_blank" rel="noreferrer">How do you serve a page with content in multiple languages?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-discuss-the-differences-between-an-html-specification-and-a-browsers-implementation-thereof" target="_blank" rel="noreferrer">Discuss the differences between an HTML specification and a browser&#x27;s implementation thereof.</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-establish-and-enforce-html-coding-standards-across-a-team" target="_blank" rel="noreferrer">How do you establish and enforce HTML coding standards across a team?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-implement-html-level-micro-frontend-architecture" target="_blank" rel="noreferrer">How do you implement HTML-level micro-frontend architecture?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-implement-browser-feature-detection-and-handle-browser-compatibility" target="_blank" rel="noreferrer">How do you implement browser feature detection and handle browser compatibility?</a></li>
+</ol>
+<h3 id="html-html-tags">HTML Tags (17)</h3>
+<ol start="27">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-difference-between-span-tag-and-div-tag" target="_blank" rel="noreferrer">What is difference between span tag and div tag?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-optional-closing-tag" target="_blank" rel="noreferrer">What are optional closing tag?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-a-self-closing-tag" target="_blank" rel="noreferrer">What is a self closing tag?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-explain-the-difference-between-block-elements-and-inline-elements" target="_blank" rel="noreferrer">Explain the difference between block elements and inline elements?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-semantic-and-non-semantic-elements" target="_blank" rel="noreferrer">What are semantic and non-semantic elements?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-purpose-of-main-element" target="_blank" rel="noreferrer">What is the purpose of main element?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-semantic-meanings-for-section-article-aside-nav-header-footer-and-how-should-each-be-used-in-structuring-html-markup" target="_blank" rel="noreferrer">What are the semantic meanings for &lt;section&gt;, &lt;article&gt;, &lt;aside&gt;, &lt;nav&gt;, &lt;header&gt;, &lt;footer&gt; and how should each be used in structuring html markup?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-when-should-you-use-section-div-or-article" target="_blank" rel="noreferrer">When should you use section, div or article?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-can-a-web-page-contain-multiple-header-elements-what-about-footer-elements" target="_blank" rel="noreferrer">Can a web page contain multiple &lt;header&gt; elements? What about &lt;footer&gt; elements?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-physical-tags-and-logical-tags-in-html" target="_blank" rel="noreferrer">What are the physical tags and logical tags in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-can-you-highlight-text-in-html" target="_blank" rel="noreferrer">How can you highlight text in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-an-attribute-and-a-property-in-html" target="_blank" rel="noreferrer">What is the difference between an &quot;attribute&quot; and a &quot;property&quot; in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-an-optional-tag" target="_blank" rel="noreferrer">What is an optional tag?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-an-html-preprocessor-have-you-used-different-html-templating-languages-before" target="_blank" rel="noreferrer">What is an HTML preprocessor? Have you used different HTML templating languages before?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-change-the-direction-of-html-text" target="_blank" rel="noreferrer">How do you change the direction of html text?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-when-is-it-appropriate-to-use-the-small-element" target="_blank" rel="noreferrer">When is it appropriate to use the small element?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-section-and-div" target="_blank" rel="noreferrer">What is the difference between &lt;section&gt; and &lt;div&gt;?</a></li>
+</ol>
+<h3 id="html-html-events">HTML Events (10)</h3>
+<ol start="44">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-html-events" target="_blank" rel="noreferrer">What are HTML events?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-categories-of-html-events" target="_blank" rel="noreferrer">What are the categories of HTML events?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-event-bubbling-and-event-capturing-in-html" target="_blank" rel="noreferrer">What is event bubbling and event capturing in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-event-delegation-in-html" target="_blank" rel="noreferrer">What is event delegation in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-eventpreventdefault-and-eventstoppropagation" target="_blank" rel="noreferrer">What is the difference between event.preventDefault() and event.stopPropagation()?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-mouseenter-and-mouseover-events" target="_blank" rel="noreferrer">What is the difference between mouseenter and mouseover events?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-domcontentloaded-and-load-events" target="_blank" rel="noreferrer">What is the difference between DOMContentLoaded and load events?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-event-object-and-what-are-its-commonly-used-properties" target="_blank" rel="noreferrer">What is the event object and what are its commonly used properties?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-focus-and-focusin-and-blur-and-focusout-events" target="_blank" rel="noreferrer">What is the difference between focus and focusin, and blur and focusout events?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-input-and-change-events-on-form-elements" target="_blank" rel="noreferrer">What is the difference between input and change events on form elements?</a></li>
+</ol>
+<h3 id="html-html-forms">HTML Forms (13)</h3>
+<ol start="54">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-an-html-form-and-what-is-it-used-for" target="_blank" rel="noreferrer">What is an HTML form and what is it used for?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-all-the-input-types-available-in-html" target="_blank" rel="noreferrer">What are all the input types available in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-html-form-validation-and-what-are-the-built-in-validation-attributes" target="_blank" rel="noreferrer">What is HTML form validation and what are the built-in validation attributes?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-name-and-id-attributes-on-form-elements" target="_blank" rel="noreferrer">What is the difference between name and id attributes on form elements?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-does-the-label-element-improve-html-forms" target="_blank" rel="noreferrer">How does the &lt;label&gt; element improve HTML forms?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-fieldset-and-legend-element-in-html-forms" target="_blank" rel="noreferrer">What is the &lt;fieldset&gt; and &lt;legend&gt; element in HTML forms?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-different-button-types-in-html-forms" target="_blank" rel="noreferrer">What are the different button types in HTML forms?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-autocomplete-attribute-in-html-forms" target="_blank" rel="noreferrer">What is the autocomplete attribute in HTML forms?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-new-form-elements-in-html5" target="_blank" rel="noreferrer">What are the new form elements in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-many-new-form-elements-are-introduced-in-html5" target="_blank" rel="noreferrer">How many new form elements are introduced in html5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-create-a-html-form-with-below-constraints" target="_blank" rel="noreferrer">Create a HTML form with below constraints?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-does-enctypemultipartform-data-mean" target="_blank" rel="noreferrer">What does enctype=&#x27;multipart/form-data&#x27; mean?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-difference-between-select-and-datalist" target="_blank" rel="noreferrer">What is difference between Select and Datalist?</a></li>
+</ol>
+<h3 id="html-html-tables">HTML Tables (8)</h3>
+<ol start="67">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-basic-html-table-elements-and-their-purpose" target="_blank" rel="noreferrer">What are the basic HTML table elements and their purpose?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-th-and-td-in-html-tables" target="_blank" rel="noreferrer">What is the difference between &lt;th&gt; and &lt;td&gt; in HTML tables?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-colspan-and-rowspan-attributes-work-in-html-tables" target="_blank" rel="noreferrer">How do colspan and rowspan attributes work in HTML tables?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-caption-element-in-html-tables-and-why-is-it-important" target="_blank" rel="noreferrer">What is the &lt;caption&gt; element in HTML tables and why is it important?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-use-colgroup-and-col-to-style-table-columns" target="_blank" rel="noreferrer">How do you use &lt;colgroup&gt; and &lt;col&gt; to style table columns?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-create-an-accessible-html-table" target="_blank" rel="noreferrer">How do you create an accessible HTML table?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-make-an-html-table-responsive" target="_blank" rel="noreferrer">How do you make an HTML table responsive?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-style-an-html-table-with-css" target="_blank" rel="noreferrer">How do you style an HTML table with CSS?</a></li>
+</ol>
+<h3 id="html-html-lists">HTML Lists (6)</h3>
+<ol start="75">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-types-of-lists-available-in-html" target="_blank" rel="noreferrer">What are the types of lists available in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-attributes-of-the-ol-element" target="_blank" rel="noreferrer">What are the attributes of the &lt;ol&gt; element?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-customize-list-markers-with-css" target="_blank" rel="noreferrer">How do you customize list markers with CSS?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-create-a-nested-list-in-html" target="_blank" rel="noreferrer">How do you create a nested list in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-a-description-list-in-html-and-when-should-you-use-it" target="_blank" rel="noreferrer">What is a description list in HTML and when should you use it?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-create-a-navigation-menu-using-an-html-list" target="_blank" rel="noreferrer">How do you create a navigation menu using an HTML list?</a></li>
+</ol>
+<h3 id="html-html-iframe">HTML Iframe (4)</h3>
+<ol start="81">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-an-iframe-and-how-it-works" target="_blank" rel="noreferrer">What is an iframe and how it works?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-does-cross-origin-communication-work-with-iframes-using-postmessage" target="_blank" rel="noreferrer">How does cross-origin communication work with iframes using postMessage?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-performance-considerations-when-using-iframes" target="_blank" rel="noreferrer">What are the performance considerations when using iframes?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-allow-attribute-on-iframes-and-how-does-it-relate-to-permissions-policy" target="_blank" rel="noreferrer">What is the allow attribute on iframes and how does it relate to Permissions Policy?</a></li>
+</ol>
+<h3 id="html-html-url">Html Url (7)</h3>
+<ol start="85">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-a-url-and-what-are-its-components" target="_blank" rel="noreferrer">What is a URL and what are its components?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-absolute-and-relative-urls" target="_blank" rel="noreferrer">What is the difference between absolute and relative URLs?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-base-tag-in-html-and-how-does-it-affect-urls" target="_blank" rel="noreferrer">What is the &lt;base&gt; tag in HTML and how does it affect URLs?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-href-and-src-attributes" target="_blank" rel="noreferrer">What is the difference between href and src attributes?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-target-attribute-values-for-anchor-tags" target="_blank" rel="noreferrer">What are the target attribute values for anchor tags?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-url-encoding-and-when-is-it-required" target="_blank" rel="noreferrer">What is URL encoding and when is it required?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-explain-the-use-of-relnofollow-relnoreferrer-relnoopener-attribute" target="_blank" rel="noreferrer">Explain the use of rel=&quot;nofollow&quot;, rel=&quot;noreferrer&quot;, rel=&quot;noopener&quot; attribute?</a></li>
+</ol>
+<h3 id="html-html-svg">Html Svg (4)</h3>
+<ol start="92">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-difference-between-svg-and-canvas" target="_blank" rel="noreferrer">What is difference between SVG and Canvas?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-different-ways-to-embed-svg-in-html-and-when-should-you-use-each" target="_blank" rel="noreferrer">What are the different ways to embed SVG in HTML and when should you use each?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-make-svg-accessible" target="_blank" rel="noreferrer">How do you make SVG accessible?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-animate-svg-and-what-are-the-different-animation-techniques" target="_blank" rel="noreferrer">How do you animate SVG and what are the different animation techniques?</a></li>
+</ol>
+<h3 id="html-html-canvas">HTML Canvas (1)</h3>
+<ol start="96">
+<li><a href="https://github.com/learning-zone/html-basics#q-explain-about-html-canvas" target="_blank" rel="noreferrer">Explain about HTML Canvas?</a></li>
+</ol>
+<h3 id="html-html-storage">HTML Storage (6)</h3>
+<ol start="97">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-local-storage-in-html5" target="_blank" rel="noreferrer">What is local storage in html5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-session-storage-in-html5" target="_blank" rel="noreferrer">What is session storage in html5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-cookies-in-html5" target="_blank" rel="noreferrer">What is cookies in html5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-describe-the-difference-between-a-cookie-sessionstorage-and-localstorage" target="_blank" rel="noreferrer">Describe the difference between a cookie, sessionStorage and localStorage?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-does-localstorage-throw-error-after-reaches-maximum-limits" target="_blank" rel="noreferrer">Does localStorage throw error after reaches maximum limits?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-purpose-of-cache-busting-and-how-can-you-achieve-it" target="_blank" rel="noreferrer">What is the purpose of cache busting and how can you achieve it?</a></li>
+</ol>
+<h3 id="html-html-apis">HTML APIs (6)</h3>
+<ol start="103">
+<li><a href="https://github.com/learning-zone/html-basics#q-list-the-api-available-in-html5" target="_blank" rel="noreferrer">List the API available in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-geolocation-api-works-in-html5" target="_blank" rel="noreferrer">How geolocation api works in html5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-use-of-websocket-api" target="_blank" rel="noreferrer">What is the use of WebSocket API?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-mutationobserver-api-and-when-should-you-use-it" target="_blank" rel="noreferrer">What is the MutationObserver API and when should you use it?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-resizeobserver-api-and-how-is-it-different-from-the-resize-window-event" target="_blank" rel="noreferrer">What is the ResizeObserver API and how is it different from the resize window event?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-requestanimationframe-and-why-should-you-use-it-for-animations" target="_blank" rel="noreferrer">What is requestAnimationFrame and why should you use it for animations?</a></li>
+</ol>
+<h3 id="html-html-drag-and-drop">HTML Drag and Drop (3)</h3>
+<ol start="109">
+<li><a href="https://github.com/learning-zone/html-basics#q-explain-drag-and-drop-in-html5" target="_blank" rel="noreferrer">Explain Drag and Drop in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-datatransfer-object-and-how-do-you-use-it-in-drag-and-drop" target="_blank" rel="noreferrer">What is the DataTransfer object and how do you use it in drag and drop?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-handle-file-drag-and-drop-in-html5" target="_blank" rel="noreferrer">How do you handle file drag and drop in HTML5?</a></li>
+</ol>
+<h3 id="html-html-web-worker">HTML Web Worker (5)</h3>
+<ol start="112">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-an-html-web-worker-and-why-is-it-needed" target="_blank" rel="noreferrer">What is an HTML Web Worker and why is it needed?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-create-and-communicate-with-a-web-worker" target="_blank" rel="noreferrer">How do you create and communicate with a Web Worker?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-types-of-web-workers" target="_blank" rel="noreferrer">What are the types of Web Workers?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-lifecycle-of-a-web-worker" target="_blank" rel="noreferrer">What is the lifecycle of a Web Worker?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-a-web-worker-and-a-service-worker" target="_blank" rel="noreferrer">What is the difference between a Web Worker and a Service Worker?</a></li>
+</ol>
+<h3 id="html-html-accessibility">HTML Accessibility (6)</h3>
+<ol start="117">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-aria-and-screenreaders-are-and-how-to-make-a-website-accessible" target="_blank" rel="noreferrer">What ARIA and screenreaders are, and how to make a website accessible?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-accessibility--aria-role-means-in-a-web-application" target="_blank" rel="noreferrer">What is accessibility &amp; ARIA role means in a web application?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-tabindex-attribute-and-how-does-it-affect-keyboard-navigation" target="_blank" rel="noreferrer">What is tabindex attribute and how does it affect keyboard navigation?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-skip-navigation-links-and-why-are-they-important" target="_blank" rel="noreferrer">What are skip navigation links and why are they important?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-aria-live-regions-and-when-should-you-use-them" target="_blank" rel="noreferrer">What are ARIA live regions and when should you use them?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-manage-focus-in-single-page-applications-spas" target="_blank" rel="noreferrer">How do you manage focus in Single Page Applications (SPAs)?</a></li>
+</ol>
+<h3 id="html-miscellaneous">Miscellaneous (12)</h3>
+<ol start="123">
+<li><a href="https://github.com/learning-zone/html-basics#q-how-to-use-data--attribute-in-html5" target="_blank" rel="noreferrer">How to use data- attribute in html5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-purpose-of-the-alt-attribute-on-images" target="_blank" rel="noreferrer">What is the purpose of the alt attribute on images?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-explain-some-of-the-pros-and-cons-for-css-animations-versus-javascript-animations" target="_blank" rel="noreferrer">Explain some of the pros and cons for CSS animations versus JavaScript animations?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-to-improve-the-page-load" target="_blank" rel="noreferrer">How to improve the page load?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-to-improve-website-performance" target="_blank" rel="noreferrer">How to improve website performance?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-desktop-first-and-mobile-first-design-approach" target="_blank" rel="noreferrer">What is desktop first and mobile first design approach?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-data--attributes-good-for" target="_blank" rel="noreferrer">What are data- attributes good for?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-to-make-page-responsive" target="_blank" rel="noreferrer">How to make page responsive?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-explain-microdata-in-html5" target="_blank" rel="noreferrer">Explain Microdata in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-can-i-get-indexed-better-by-search-engines" target="_blank" rel="noreferrer">How can I get indexed better by search engines?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-why-you-would-use-a-srcset-attribute-in-an-image-tag" target="_blank" rel="noreferrer">Why you would use a srcset attribute in an image tag?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-create-a-traffic-signal-light-in-html" target="_blank" rel="noreferrer">Create a traffic signal light in html?</a></li>
+</ol>
+<h3 id="html-html-media">HTML Media (4)</h3>
+<ol start="135">
+<li><a href="https://github.com/learning-zone/html-basics#q-how-to-use-the-html5-video-element" target="_blank" rel="noreferrer">How to use the HTML5 &lt;video&gt; element?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-to-use-the-html5-audio-element" target="_blank" rel="noreferrer">How to use the HTML5 &lt;audio&gt; element?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-picture-element-and-how-does-it-work" target="_blank" rel="noreferrer">What is the &lt;picture&gt; element and how does it work?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-to-add-subtitles-and-captions-to-an-html5-video" target="_blank" rel="noreferrer">How to add subtitles and captions to an HTML5 video?</a></li>
+</ol>
+<h3 id="html-html5-advanced-apis">HTML5 Advanced APIs (6)</h3>
+<ol start="139">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-server-sent-events-sse-api" target="_blank" rel="noreferrer">What is the Server-Sent Events (SSE) API?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-intersection-observer-api" target="_blank" rel="noreferrer">What is the Intersection Observer API?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-history-api-in-html5" target="_blank" rel="noreferrer">What is the History API in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-notification-api" target="_blank" rel="noreferrer">What is the Notification API?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-file-api-in-html5" target="_blank" rel="noreferrer">What is the File API in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-mathml-and-how-is-it-used-in-html5" target="_blank" rel="noreferrer">What is MathML and how is it used in HTML5?</a></li>
+</ol>
+<h3 id="html-service-workers-web-workers">Service Workers &amp; Web Workers (3)</h3>
+<ol start="145">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-a-web-worker-in-html5" target="_blank" rel="noreferrer">What is a Web Worker in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-a-service-worker" target="_blank" rel="noreferrer">What is a Service Worker?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-web-workers-and-service-workers" target="_blank" rel="noreferrer">What is the difference between Web Workers and Service Workers?</a></li>
+</ol>
+<h3 id="html-indexeddb-advanced-web-storage">IndexedDB &amp; Advanced Web Storage (2)</h3>
+<ol start="148">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-indexeddb-in-html5" target="_blank" rel="noreferrer">What is IndexedDB in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-websql" target="_blank" rel="noreferrer">What is WebSQL?</a></li>
+</ol>
+<h3 id="html-atomic-design-pixel-perfect-design">Atomic Design &amp; Pixel Perfect Design (2)</h3>
+<ol start="150">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-atomic-design-pattern" target="_blank" rel="noreferrer">What is Atomic Design Pattern?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-to-achieve-pixel-perfect-design-in-htmlcss" target="_blank" rel="noreferrer">How to achieve pixel perfect design in HTML/CSS?</a></li>
+</ol>
+<h3 id="html-seo-basics-advanced">SEO Basics &amp; Advanced (4)</h3>
+<ol start="152">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-core-web-vitals" target="_blank" rel="noreferrer">What are Core Web Vitals?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-structured-data-and-json-ld-for-seo" target="_blank" rel="noreferrer">What is structured data and JSON-LD for SEO?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-hreflang-tags-and-when-should-you-use-them" target="_blank" rel="noreferrer">What are hreflang tags and when should you use them?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-crawling-and-indexing-in-seo" target="_blank" rel="noreferrer">What is the difference between crawling and indexing in SEO?</a></li>
+</ol>
+<h3 id="html-html-performance-optimization">HTML Performance Optimization (6)</h3>
+<ol start="156">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-resource-hints-in-html5" target="_blank" rel="noreferrer">What are resource hints in HTML5?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-to-implement-lazy-loading-in-html" target="_blank" rel="noreferrer">How to implement lazy loading in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-async-and-defer-in-script-and-when-to-use-each" target="_blank" rel="noreferrer">What is the difference between async and defer in &lt;script&gt; and when to use each?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-content-security-policy-csp-and-how-is-it-configured-in-html" target="_blank" rel="noreferrer">What is Content Security Policy (CSP) and how is it configured in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-purpose-of-link-relpreload-and-how-does-it-improve-performance" target="_blank" rel="noreferrer">What is the purpose of &lt;link rel=&quot;preload&quot;&gt; and how does it improve performance?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-wcag-guidelines-and-accessibility-levels" target="_blank" rel="noreferrer">What are WCAG guidelines and accessibility levels?</a></li>
+</ol>
+<h3 id="html-html-tags-elements-intermediate">HTML Tags &amp; Elements (Intermediate) (14)</h3>
+<ol start="162">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-strong-and-b-em-and-i" target="_blank" rel="noreferrer">What is the difference between &lt;strong&gt; and &lt;b&gt;, &lt;em&gt; and &lt;i&gt;?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-details-and-summary-elements" target="_blank" rel="noreferrer">What are the &lt;details&gt; and &lt;summary&gt; elements?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-the-figure-and-figcaption-elements" target="_blank" rel="noreferrer">What are the &lt;figure&gt; and &lt;figcaption&gt; elements?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-time-element-and-why-is-it-useful" target="_blank" rel="noreferrer">What is the &lt;time&gt; element and why is it useful?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-the-hidden-attribute-and-display-none" target="_blank" rel="noreferrer">What is the difference between the hidden attribute and display: none?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-base-element-in-html" target="_blank" rel="noreferrer">What is the &lt;base&gt; element in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-dialog-element-in-html" target="_blank" rel="noreferrer">What is the &lt;dialog&gt; element in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-noscript-element" target="_blank" rel="noreferrer">What is the &lt;noscript&gt; element?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-src-and-href-attributes" target="_blank" rel="noreferrer">What is the difference between src and href attributes?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-innerhtml-textcontent-and-innertext" target="_blank" rel="noreferrer">What is the difference between innerHTML, textContent, and innerText?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-html-entities-and-when-do-you-use-them" target="_blank" rel="noreferrer">What are HTML entities and when do you use them?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-contenteditable-attribute" target="_blank" rel="noreferrer">What is the contenteditable attribute?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-html5-native-form-validation-and-what-are-constraint-validation-attributes" target="_blank" rel="noreferrer">What is HTML5 native form validation and what are constraint validation attributes?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-difference-between-get-and-post-methods-in-html-forms" target="_blank" rel="noreferrer">What is the difference between GET and POST methods in HTML forms?</a></li>
+</ol>
+<h3 id="html-web-components">Web Components (4)</h3>
+<ol start="176">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-shadow-dom-and-how-does-it-work" target="_blank" rel="noreferrer">What is Shadow DOM and how does it work?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-are-custom-elements-in-html5-web-components" target="_blank" rel="noreferrer">What are Custom Elements in HTML5 (Web Components)?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-template-element-in-html" target="_blank" rel="noreferrer">What is the &lt;template&gt; element in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-slot-element-in-web-components" target="_blank" rel="noreferrer">What is the &lt;slot&gt; element in Web Components?</a></li>
+</ol>
+<h3 id="html-html-security">HTML Security (4)</h3>
+<ol start="180">
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-subresource-integrity-sri-and-how-is-it-used" target="_blank" rel="noreferrer">What is Subresource Integrity (SRI) and how is it used?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-the-sandbox-attribute-on-iframe-and-how-does-it-enhance-security" target="_blank" rel="noreferrer">What is the sandbox attribute on &lt;iframe&gt; and how does it enhance security?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-how-do-you-prevent-cross-site-scripting-xss-in-html" target="_blank" rel="noreferrer">How do you prevent Cross-Site Scripting (XSS) in HTML?</a></li>
+<li><a href="https://github.com/learning-zone/html-basics#q-what-is-clickjacking-and-how-do-you-prevent-it-in-html" target="_blank" rel="noreferrer">What is Clickjacking and how do you prevent it in HTML?</a></li>
+</ol><h2 id="css">Part 2: CSS interview questions (212)</h2>
+<p class="repo-link">Source: <a href="https://github.com/learning-zone/css-basics" target="_blank" rel="noreferrer">github.com/learning-zone/css-basics</a></p>
+<h3 id="css-introduction">Introduction (5)</h3>
+<ol start="184">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-css" target="_blank" rel="noreferrer">What is CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-use-of-css-ruleset" target="_blank" rel="noreferrer">What is the use of css ruleset?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-possible-ways-to-apply-css-styles-to-a-web-page" target="_blank" rel="noreferrer">What are the possible ways to apply CSS styles to a web page?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-does-the-cascading-portion-of-css-mean" target="_blank" rel="noreferrer">What does the cascading portion of CSS mean?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-does-css-work-under-the-hood" target="_blank" rel="noreferrer">How does CSS work under the hood?</a></li>
+</ol>
+<h3 id="css-box-model">Box Model (12)</h3>
+<ol start="189">
+<li><a href="https://github.com/learning-zone/css-basics#q-explain-the-css-box-model-and-the-layout-components-that-it-consists-of" target="_blank" rel="noreferrer">Explain the CSS &quot;box model&quot; and the layout components that it consists of?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-box-sizing-content-box-and-box-sizing-border-box" target="_blank" rel="noreferrer">What is the difference between box-sizing: content-box and box-sizing: border-box?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-margin-collapsing-in-css" target="_blank" rel="noreferrer">What is margin collapsing in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-padding-and-margin" target="_blank" rel="noreferrer">What is the difference between padding and margin?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-block-formatting-context-bfc-and-how-does-it-affect-the-box-model" target="_blank" rel="noreferrer">What is the Block Formatting Context (BFC) and how does it affect the box model?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-does-the-outline-differ-from-border-in-the-css-box-model" target="_blank" rel="noreferrer">How does the outline differ from border in the CSS box model?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-calculate-the-total-width-and-height-of-an-element" target="_blank" rel="noreferrer">How do you calculate the total width and height of an element?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-does-margin-top-or-margin-bottom-have-an-effect-on-inline-elements" target="_blank" rel="noreferrer">Does margin-top or margin-bottom have an effect on inline elements?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-you-would-tell-the-browser-in-css-to-render-your-layout-in-different-box-models" target="_blank" rel="noreferrer">How you would tell the browser in CSS to render your layout in different box models?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-border-box-and-content-box" target="_blank" rel="noreferrer">What is the difference between border-box and content-box?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-purpose-of-the-box-sizing-property" target="_blank" rel="noreferrer">What is the purpose of the box-sizing property?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-does----box-sizing-border-box--do-what-are-its-advantages" target="_blank" rel="noreferrer">What does  * { box-sizing: border-box; } do? What are its advantages?</a></li>
+</ol>
+<h3 id="css-selectors-specificity">Selectors &amp; Specificity (8)</h3>
+<ol start="201">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-css-selectors" target="_blank" rel="noreferrer">What are the css selectors?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-contextual-selector" target="_blank" rel="noreferrer">What is contextual selector?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-pseudo-classes-and-pseudo-elements" target="_blank" rel="noreferrer">What is the difference between Pseudo-classes and pseudo-elements?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-combinator-selector" target="_blank" rel="noreferrer">What is Combinator selector?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-class-selectors-and-id-selectors" target="_blank" rel="noreferrer">What is the difference between class selectors and id selectors?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-the-nth-child-and-nth-of-type-selectors" target="_blank" rel="noreferrer">What is the difference between the &quot;nth-child()&quot; and &quot;nth-of-type()&quot; selectors?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-specificity" target="_blank" rel="noreferrer">What is specificity?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-in-css3-how-would-you-select" target="_blank" rel="noreferrer">In CSS3, how would you select?</a></li>
+</ol>
+<h3 id="css-positioning">Positioning (5)</h3>
+<ol start="209">
+<li><a href="https://github.com/learning-zone/css-basics#q-explain-css-position-property" target="_blank" rel="noreferrer">Explain CSS position Property?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-differences-between-relative-and-absolute-in-css" target="_blank" rel="noreferrer">What are the differences between relative and absolute in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-css-positioning" target="_blank" rel="noreferrer">What are the CSS positioning?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-all-the-ways-to-center-an-element-horizontally-and-vertically-in-css" target="_blank" rel="noreferrer">What are all the ways to center an element horizontally and vertically in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-does-position-sticky-work-and-what-are-its-common-pitfalls" target="_blank" rel="noreferrer">How does position: sticky work and what are its common pitfalls?</a></li>
+</ol>
+<h3 id="css-flexbox">Flexbox (4)</h3>
+<ol start="214">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-css-flexbox" target="_blank" rel="noreferrer">What is CSS flexbox?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-write-all-the-properties-of-the-flexbox" target="_blank" rel="noreferrer">Write all the properties of the flexbox?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-flex-grow-flex-shrink-and-flex-basis" target="_blank" rel="noreferrer">What is the difference between flex-grow, flex-shrink, and flex-basis?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-align-items-align-content-align-self-and-justify-content-in-flexbox" target="_blank" rel="noreferrer">What is the difference between align-items, align-content, align-self, and justify-content in Flexbox?</a></li>
+</ol>
+<h3 id="css-css-grid">CSS Grid (6)</h3>
+<ol start="218">
+<li><a href="https://github.com/learning-zone/css-basics#q-explain-css-grid-layout-with-example" target="_blank" rel="noreferrer">Explain CSS grid layout with example?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-when-to-use-css-grid-and-flexbox" target="_blank" rel="noreferrer">When to use css grid and flexbox?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-auto-fill-and-auto-fit-in-css-grid" target="_blank" rel="noreferrer">What is the difference between auto-fill and auto-fit in CSS Grid?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-css-subgrid-and-what-problem-does-it-solve" target="_blank" rel="noreferrer">What is CSS Subgrid and what problem does it solve?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-gap-property-in-css-and-how-does-it-work-in-flexbox-and-grid" target="_blank" rel="noreferrer">What is the gap property in CSS and how does it work in Flexbox and Grid?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-explain-the-usage-of-table-layout-property" target="_blank" rel="noreferrer">Explain the usage of &quot;table-layout&quot; property?</a></li>
+</ol>
+<h3 id="css-pseudo-classes-pseudo-elements">Pseudo-Classes &amp; Pseudo-Elements (12)</h3>
+<ol start="224">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-pseudo-element-and-pseudo-class" target="_blank" rel="noreferrer">What is pseudo element and pseudo class?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-does-the-before-and-after-pseudo-element-work" target="_blank" rel="noreferrer">How does the ::before and ::after pseudo-element work?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-root-pseudo-class-and-how-is-it-different-from-the-html-selector" target="_blank" rel="noreferrer">What is the :root pseudo-class and how is it different from the html selector?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-is-pseudo-class-and-how-does-it-simplify-selectors" target="_blank" rel="noreferrer">What is the :is() pseudo-class and how does it simplify selectors?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-where-pseudo-class-and-how-does-it-differ-from-is" target="_blank" rel="noreferrer">What is the :where() pseudo-class and how does it differ from :is()?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-has-pseudo-class-the-css-parent-selector" target="_blank" rel="noreferrer">What is the :has() pseudo-class (the CSS parent selector)?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-not-pseudo-class" target="_blank" rel="noreferrer">What is the :not() pseudo-class?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-structural-pseudo-classes-and-how-do-nth-child-expressions-work" target="_blank" rel="noreferrer">What are structural pseudo-classes and how do :nth-child() expressions work?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-ui-state-pseudo-classes-used-for-form-elements" target="_blank" rel="noreferrer">What are UI state pseudo-classes used for form elements?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-selection-pseudo-element" target="_blank" rel="noreferrer">What is the ::selection pseudo-element?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-placeholder-pseudo-element" target="_blank" rel="noreferrer">What is the ::placeholder pseudo-element?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-focus-and-focus-visible" target="_blank" rel="noreferrer">What is the difference between :focus and :focus-visible?</a></li>
+</ol>
+<h3 id="css-transitions-animations">Transitions &amp; Animations (9)</h3>
+<ol start="236">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-do-you-know-about-css-transitions" target="_blank" rel="noreferrer">What do you know about CSS Transitions?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-transition-and-animation-in-css" target="_blank" rel="noreferrer">What is the difference between transition and animation in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-css-keyframes-and-how-do-they-work" target="_blank" rel="noreferrer">What are CSS @keyframes and how do they work?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-css-animation-properties" target="_blank" rel="noreferrer">What are the CSS animation properties?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-animation-fill-mode-and-what-are-its-values" target="_blank" rel="noreferrer">What is animation-fill-mode and what are its values?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-transition-timing-function-property-and-what-values-does-it-accept" target="_blank" rel="noreferrer">What is the transition-timing-function property and what values does it accept?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-pause-and-resume-a-css-animation-using-javascript" target="_blank" rel="noreferrer">How do you pause and resume a CSS animation using JavaScript?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-will-change-property-and-when-should-you-use-it" target="_blank" rel="noreferrer">What is the will-change property and when should you use it?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-create-a-css-loading-spinner-animation" target="_blank" rel="noreferrer">How do you create a CSS loading spinner animation?</a></li>
+</ol>
+<h3 id="css-transforms">Transforms (8)</h3>
+<ol start="245">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-css-transform-property-and-what-are-its-common-functions" target="_blank" rel="noreferrer">What is the CSS transform property and what are its common functions?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-transform-origin-and-how-does-it-affect-transformations" target="_blank" rel="noreferrer">What is transform-origin and how does it affect transformations?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-translate-and-position-offset-for-moving-elements" target="_blank" rel="noreferrer">What is the difference between translate() and position offset for moving elements?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-perspective-property-in-css-3d-transforms" target="_blank" rel="noreferrer">What is the perspective property in CSS 3D transforms?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-transform-style-and-backface-visibility-in-css" target="_blank" rel="noreferrer">What is transform-style and backface-visibility in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-css-transforms-affect-stacking-context-and-document-flow" target="_blank" rel="noreferrer">How do CSS transforms affect stacking context and document flow?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-matrix-transform-function" target="_blank" rel="noreferrer">What is the matrix() transform function?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-style-and-animate-svg-elements-with-css" target="_blank" rel="noreferrer">How do you style and animate SVG elements with CSS?</a></li>
+</ol>
+<h3 id="css-media-queries-responsive-design">Media Queries &amp; Responsive Design (19)</h3>
+<ol start="253">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-media-queries-how-could-you-apply-css-rules-specific-to-a-media" target="_blank" rel="noreferrer">What are media queries? How could you apply css rules specific to a media?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-a-browser-determines-what-elements-match-a-css-selector" target="_blank" rel="noreferrer">How a browser determines what elements match a CSS selector?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-is-responsive-design-different-from-adaptive-design" target="_blank" rel="noreferrer">How is responsive design different from adaptive design?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-viewport-meta-tag-and-why-is-it-important-for-responsive-design" target="_blank" rel="noreferrer">What is the viewport meta tag and why is it important for responsive design?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-min-width-and-max-width-in-media-queries" target="_blank" rel="noreferrer">What is the difference between min-width and max-width in media queries?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-common-responsive-breakpoints-used-in-css" target="_blank" rel="noreferrer">What are common responsive breakpoints used in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-use-media-queries-to-target-orientation-portrait-vs-landscape" target="_blank" rel="noreferrer">How do you use media queries to target orientation (portrait vs. landscape)?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-create-a-responsive-navigation-menu-with-css-media-queries" target="_blank" rel="noreferrer">How do you create a responsive navigation menu with CSS media queries?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-and-not-and-only-operators-in-media-queries" target="_blank" rel="noreferrer">What are the and, not, and only operators in media queries?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-media-prefers-color-scheme-feature-and-how-do-you-use-it" target="_blank" rel="noreferrer">What is the @media (prefers-color-scheme) feature and how do you use it?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-media-prefers-reduced-motion-feature" target="_blank" rel="noreferrer">What is the @media (prefers-reduced-motion) feature?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-media-hover-and-media-pointer-feature" target="_blank" rel="noreferrer">What is the @media (hover) and @media (pointer) feature?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-media-print-query-and-how-do-you-optimise-a-page-for-printing" target="_blank" rel="noreferrer">What is the @media print query and how do you optimise a page for printing?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-fluid-images-and-how-do-you-implement-them-in-responsive-design" target="_blank" rel="noreferrer">What are fluid images and how do you implement them in responsive design?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-css-container-queries-and-how-are-they-different-from-media-queries" target="_blank" rel="noreferrer">What are CSS container queries and how are they different from media queries?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-clamp-function-and-how-does-it-help-with-responsive-typography" target="_blank" rel="noreferrer">What is the clamp() function and how does it help with responsive typography?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-css-units-vw-vh-vmin-and-vmax" target="_blank" rel="noreferrer">What are the CSS units vw, vh, vmin, and vmax?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-mobile-first-design-and-why-is-it-recommended" target="_blank" rel="noreferrer">What is mobile-first design and why is it recommended?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-css-frameworks-and-how-do-component-based-and-utility-first-frameworks-differ" target="_blank" rel="noreferrer">What are CSS frameworks and how do component-based and utility-first frameworks differ?</a></li>
+</ol>
+<h3 id="css-css-variables">CSS Variables (10)</h3>
+<ol start="272">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-do-css-custom-properties-variables-mean" target="_blank" rel="noreferrer">What do CSS Custom properties variables mean?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-css-variables-and-preprocessorsass-less-stylus-variables" target="_blank" rel="noreferrer">What is the difference between CSS variables and preprocessor(SASS, LESS, Stylus) variables?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-define-and-use-css-custom-properties-variables" target="_blank" rel="noreferrer">How do you define and use CSS custom properties (variables)?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-scope-of-css-custom-properties" target="_blank" rel="noreferrer">What is the scope of CSS custom properties?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-css-custom-properties-enable-dynamic-theming" target="_blank" rel="noreferrer">How do CSS custom properties enable dynamic theming?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-var-fallback-and-how-does-it-work" target="_blank" rel="noreferrer">What is the var() fallback and how does it work?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-can-css-custom-properties-be-used-inside-calc" target="_blank" rel="noreferrer">Can CSS custom properties be used inside calc()?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-css-custom-properties-work-with-media-queries-for-responsive-design" target="_blank" rel="noreferrer">How do CSS custom properties work with media queries for responsive design?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-limitations-of-css-custom-properties" target="_blank" rel="noreferrer">What are the limitations of CSS custom properties?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-use-css-custom-properties-for-a-design-token-system" target="_blank" rel="noreferrer">How do you use CSS custom properties for a design token system?</a></li>
+</ol>
+<h3 id="css-typography-text">Typography &amp; Text (15)</h3>
+<ol start="282">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-serif-and-sans-serif-fonts" target="_blank" rel="noreferrer">What is the difference between serif and sans-serif fonts?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-em-and-rem-units-in-typography" target="_blank" rel="noreferrer">What is the difference between em and rem units in typography?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-web-safe-fonts" target="_blank" rel="noreferrer">What are web-safe fonts?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-use-google-fonts-or-custom-fonts-with-font-face" target="_blank" rel="noreferrer">How do you use Google Fonts (or custom fonts) with @font-face?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-line-height-and-how-does-it-affect-text" target="_blank" rel="noreferrer">What is line-height and how does it affect text?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-font-weight-values-and-what-do-they-mean" target="_blank" rel="noreferrer">What are the font-weight values and what do they mean?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-text-transform-and-what-values-does-it-support" target="_blank" rel="noreferrer">What is text-transform and what values does it support?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-text-align-values-left-right-center-and-justify" target="_blank" rel="noreferrer">What is the difference between text-align values: left, right, center, and justify?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-letter-spacing-and-word-spacing" target="_blank" rel="noreferrer">What is letter-spacing and word-spacing?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-text-decoration-property" target="_blank" rel="noreferrer">What is the text-decoration property?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-text-overflow-and-how-does-it-work" target="_blank" rel="noreferrer">What is text-overflow and how does it work?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-white-space-property-in-css" target="_blank" rel="noreferrer">What is white-space property in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-word-break-and-overflow-wrap-in-css" target="_blank" rel="noreferrer">What is word-break and overflow-wrap in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-font-shorthand-property" target="_blank" rel="noreferrer">What is the font shorthand property?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-variable-font-and-how-is-it-used-in-css" target="_blank" rel="noreferrer">What is variable font and how is it used in CSS?</a></li>
+</ol>
+<h3 id="css-colors-gradients">Colors &amp; Gradients (15)</h3>
+<ol start="297">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-gradients-in-css" target="_blank" rel="noreferrer">What are gradients in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-different-ways-to-specify-colors-in-css" target="_blank" rel="noreferrer">What are the different ways to specify colors in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-rgb-and-hsl-color-models" target="_blank" rel="noreferrer">What is the difference between rgb() and hsl() color models?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-currentcolor-in-css" target="_blank" rel="noreferrer">What is currentColor in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-linear-gradient-and-radial-gradient" target="_blank" rel="noreferrer">What is the difference between linear-gradient() and radial-gradient()?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-conic-gradient-in-css" target="_blank" rel="noreferrer">What is conic-gradient() in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-repeating-gradients-in-css" target="_blank" rel="noreferrer">What are repeating gradients in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-opacity-in-css-and-how-does-it-differ-from-rgba-transparency" target="_blank" rel="noreferrer">What is opacity in CSS and how does it differ from rgba() transparency?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-css-color-mix-function" target="_blank" rel="noreferrer">What is the CSS color-mix() function?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-create-a-multi-color-gradient-with-specific-color-stops" target="_blank" rel="noreferrer">How do you create a multi-color gradient with specific color stops?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-rgba-hex-and-hsla" target="_blank" rel="noreferrer">What is the difference between RGBa, HEX and HSLa?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-object-fit-and-object-position-in-css" target="_blank" rel="noreferrer">What is object-fit and object-position in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-aspect-ratio-property-and-why-is-it-important" target="_blank" rel="noreferrer">What is the aspect-ratio property and why is it important?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-backdrop-filter-and-how-does-it-differ-from-filter" target="_blank" rel="noreferrer">What is backdrop-filter and how does it differ from filter?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-mix-blend-mode-in-css-and-when-would-you-use-it" target="_blank" rel="noreferrer">What is mix-blend-mode in CSS and when would you use it?</a></li>
+</ol>
+<h3 id="css-z-index-stacking-context">Z-index &amp; Stacking Context (7)</h3>
+<ol start="312">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-purpose-of-the-z-index-and-how-a-stacking-context-is-formed" target="_blank" rel="noreferrer">What is the purpose of the z-index and how a stacking context is formed?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-a-stacking-context-in-css-and-how-is-it-created" target="_blank" rel="noreferrer">What is a stacking context in CSS and how is it created?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-z-index-0-and-z-index-auto" target="_blank" rel="noreferrer">What is the difference between z-index: 0 and z-index: auto?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-does-z-index-work-with-non-positioned-elements" target="_blank" rel="noreferrer">How does z-index work with non-positioned elements?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-css-properties-trigger-a-new-stacking-context-without-using-z-index" target="_blank" rel="noreferrer">What CSS properties trigger a new stacking context without using z-index?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-use-isolation-isolate-to-control-stacking" target="_blank" rel="noreferrer">How do you use isolation: isolate to control stacking?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-debug-z-index-issues-in-css" target="_blank" rel="noreferrer">How do you debug z-index issues in CSS?</a></li>
+</ol>
+<h3 id="css-overflow-clipping">Overflow &amp; Clipping (10)</h3>
+<ol start="319">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-overflow-property-in-css-used-for" target="_blank" rel="noreferrer">What is the overflow property in CSS used for?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-word-wrapping-in-css" target="_blank" rel="noreferrer">What is word-wrapping in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-overflow-scroll-and-overflow-auto" target="_blank" rel="noreferrer">What is the difference between overflow: scroll and overflow: auto?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-overflow-x-and-overflow-y-work-independently" target="_blank" rel="noreferrer">How do overflow-x and overflow-y work independently?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-does-overflow-hidden-create-a-block-formatting-context-bfc" target="_blank" rel="noreferrer">How does overflow: hidden create a Block Formatting Context (BFC)?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-create-a-single-line-text-truncation-with-an-ellipsis" target="_blank" rel="noreferrer">How do you create a single-line text truncation with an ellipsis?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-overflow-clip-and-how-does-it-differ-from-overflow-hidden" target="_blank" rel="noreferrer">What is overflow: clip and how does it differ from overflow: hidden?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-clip-path-in-css-and-how-is-it-used-for-clipping-elements" target="_blank" rel="noreferrer">What is clip-path in CSS and how is it used for clipping elements?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-does-overflow-behave-with-absolutely-positioned-elements" target="_blank" rel="noreferrer">How does overflow behave with absolutely positioned elements?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-css-masking-and-how-does-it-differ-from-clip-path" target="_blank" rel="noreferrer">What is CSS masking and how does it differ from clip-path?</a></li>
+</ol>
+<h3 id="css-display-visibility">Display &amp; Visibility (7)</h3>
+<ol start="329">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-different-ways-to-visually-hide-content-and-make-it-available-only-for-screen-readers" target="_blank" rel="noreferrer">What are the different ways to visually hide content (and make it available only for screen readers)?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-css-bem" target="_blank" rel="noreferrer">What is CSS BEM?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-tweening-in-css" target="_blank" rel="noreferrer">What is tweening in css?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-explain-the-difference-between-visibility-hidden-and-display-none-what-are-the-pros-and-cons-of-using-displaynone" target="_blank" rel="noreferrer">Explain the difference between visibility: hidden; and display: none;? What are the pros and cons of using display:none?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-the-difference-between-block-inline-and-inline-block-element" target="_blank" rel="noreferrer">The difference between block, inline and inline-block element?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-css-opacity" target="_blank" rel="noreferrer">What is CSS opacity?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-display-contents-and-what-does-it-do" target="_blank" rel="noreferrer">What is display: contents and what does it do?</a></li>
+</ol>
+<h3 id="css-miscellaneous">Miscellaneous (51)</h3>
+<ol start="336">
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-counters-in-css3" target="_blank" rel="noreferrer">What are counters in CSS3?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-specify-units-in-the-css" target="_blank" rel="noreferrer">How do you specify units in the CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-which-one-would-you-prefer-among-px-em--or-pt-and-why" target="_blank" rel="noreferrer">Which one would you prefer among px, em % or pt and why?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-explain-the-meaning-of-each-of-these-css-units-for-expressing-length" target="_blank" rel="noreferrer">Explain the meaning of each of these CSS units for expressing length?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-css-preprocessor" target="_blank" rel="noreferrer">What is CSS preprocessor?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-resetting-and-normalizing-css" target="_blank" rel="noreferrer">What is the difference between &quot;resetting&quot; and &quot;normalizing&quot; CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-explain-css-block-formatting-context" target="_blank" rel="noreferrer">Explain CSS Block Formatting Context?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-float-property-and-what-float-do" target="_blank" rel="noreferrer">What is the float property and what float do?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-describe-clear-property-in-css" target="_blank" rel="noreferrer">Describe clear Property in css?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-explain-the-purpose-of-clearing-floats-in-css" target="_blank" rel="noreferrer">Explain the purpose of clearing floats in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-a-clearfix-in-css" target="_blank" rel="noreferrer">What is a clearfix in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-does-overflow-hidden-create-a-new-block-formatting-context" target="_blank" rel="noreferrer">Does overflow: hidden create a new block formatting context?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-can-you-load-css-resources-conditionally" target="_blank" rel="noreferrer">How can you load css resources conditionally?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-list-display-property-in-css" target="_blank" rel="noreferrer">List display property in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-retina-graphics-what-kind-of-techniques-do-you-use-to-handle-images-for-retina-screens" target="_blank" rel="noreferrer">What is retina graphics? What kind of techniques do you use to handle images for retina screens?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-is-there-any-reason-youd-want-to-use-translate-instead-of-absolute-positioning-or-vice-versa" target="_blank" rel="noreferrer">Is there any reason you&#x27;d want to use translate() instead of absolute positioning, or vice-versa?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-tell-what-each-of-these-tags-do-if-there-are-alternatives-which-are-preferable-why" target="_blank" rel="noreferrer">Tell what each of these tags do, if there are alternatives, which are preferable, why?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-at-rule" target="_blank" rel="noreferrer">What is At-Rule?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-can-the-gap-under-the-image-be-removed" target="_blank" rel="noreferrer">How can the gap under the image be removed?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-progressive-rendering" target="_blank" rel="noreferrer">What is progressive rendering?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-mobile-first-can-you-explain-the-difference-between-coding-a-website-to-be-responsive-versus-using-a-mobile-first-strategy" target="_blank" rel="noreferrer">What is mobile-first? Can you explain the difference between coding a website to be responsive versus using a mobile-first strategy?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-different-css-filters-you-can-use" target="_blank" rel="noreferrer">What are the different css filters you can use?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-enlist-the-various-fonts-properties" target="_blank" rel="noreferrer">Enlist the various fonts properties?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-enlist-the-various-background-properties-css" target="_blank" rel="noreferrer">Enlist the various background properties css?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-difference-between-em-and-rem-units" target="_blank" rel="noreferrer">What is the difference between em and rem units?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-does-important-mean-in-css" target="_blank" rel="noreferrer">What does !important mean in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-does-style2css-have-to-be-downloaded-and-parsed-before-paragraph-1-is-rendered-on-the-page" target="_blank" rel="noreferrer">Does style2.css have to be downloaded and parsed before Paragraph 1 is rendered on the page?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-does-style1css-have-to-be-downloaded-and-parsed-before-style2css-can-be-fetched" target="_blank" rel="noreferrer">Does style1.css have to be downloaded and parsed before style2.css can be fetched?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-is-the-concept-of-inheritance-applied-in-css" target="_blank" rel="noreferrer">How is the concept of inheritance applied in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-the-css-wide-value-keywords-inherit-initial-unset-and-revert" target="_blank" rel="noreferrer">What are the CSS-wide value keywords inherit, initial, unset, and revert?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-handle-browser-differences-in-your-user-base" target="_blank" rel="noreferrer">How do you handle browser differences in your user base?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-cascade" target="_blank" rel="noreferrer">What is Cascade?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-dom-document-object-model-and-how-is-it-linked-to-css" target="_blank" rel="noreferrer">What is DOM (Document Object Model) and how is it linked to CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-does-calc-work" target="_blank" rel="noreferrer">How does Calc() work?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-vendor-prefixes" target="_blank" rel="noreferrer">What are Vendor-Prefixes?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-property-that-is-used-for-controlling-image-scroll" target="_blank" rel="noreferrer">What is the property that is used for controlling image-scroll?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-accessibility-a11y-in-a-web-application" target="_blank" rel="noreferrer">What is Accessibility (a11y) in a web application?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-uiux" target="_blank" rel="noreferrer">What is UI/UX?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-serve-your-pages-for-feature-constrained-browsers-what-techniques-do-you-use" target="_blank" rel="noreferrer">How do you serve your pages for feature-constrained browsers? What techniques do you use?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-file-splitting-when-is-it-used" target="_blank" rel="noreferrer">What is file splitting? When is it used?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-dom-reflow" target="_blank" rel="noreferrer">What is DOM reflow?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-css-in-js-and-what-are-its-advantages-and-disadvantages" target="_blank" rel="noreferrer">What is CSS-in-JS and what are its advantages and disadvantages?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-postcss-and-how-does-it-differ-from-css-preprocessors-like-sass" target="_blank" rel="noreferrer">What is PostCSS and how does it differ from CSS preprocessors like Sass?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-lazy-loading-and-how-is-it-applied-in-css-contexts" target="_blank" rel="noreferrer">What is lazy loading and how is it applied in CSS contexts?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-critical-css-and-why-is-it-important-for-performance" target="_blank" rel="noreferrer">What is critical CSS and why is it important for performance?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-css-scroll-snap-and-how-do-you-implement-it" target="_blank" rel="noreferrer">What is CSS scroll-snap and how do you implement it?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-pointer-events-property-in-css" target="_blank" rel="noreferrer">What is the pointer-events property in CSS?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-the-css-layer-rule-and-why-is-it-useful" target="_blank" rel="noreferrer">What is the CSS @layer rule and why is it useful?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-are-css-logical-properties-and-why-are-they-important" target="_blank" rel="noreferrer">What are CSS Logical Properties and why are they important?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-what-is-content-visibility-and-how-does-it-improve-css-rendering-performance" target="_blank" rel="noreferrer">What is content-visibility and how does it improve CSS rendering performance?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-calculate-css-specificity-with-a-worked-example" target="_blank" rel="noreferrer">How do you calculate CSS specificity with a worked example?</a></li>
+</ol>
+<h3 id="css-technical-lead-role">Technical Lead Role (9)</h3>
+<ol start="387">
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-establish-and-enforce-css-coding-standards-across-a-team" target="_blank" rel="noreferrer">How do you establish and enforce CSS coding standards across a team?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-manage-css-architecture-for-large-scale-projects" target="_blank" rel="noreferrer">How do you manage CSS architecture for large-scale projects?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-conduct-effective-css-code-reviews" target="_blank" rel="noreferrer">How do you conduct effective CSS code reviews?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-handle-css-performance-optimization-as-a-tech-lead" target="_blank" rel="noreferrer">How do you handle CSS performance optimization as a tech lead?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-manage-cross-browser-css-compatibility-in-a-team" target="_blank" rel="noreferrer">How do you manage cross-browser CSS compatibility in a team?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-define-a-css-testing-strategy" target="_blank" rel="noreferrer">How do you define a CSS testing strategy?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-mentor-junior-developers-on-css-best-practices" target="_blank" rel="noreferrer">How do you mentor junior developers on CSS best practices?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-communicate-css-technical-debt-to-non-technical-stakeholders" target="_blank" rel="noreferrer">How do you communicate CSS technical debt to non-technical stakeholders?</a></li>
+<li><a href="https://github.com/learning-zone/css-basics#q-how-do-you-design-and-maintain-a-css-design-system-for-a-team" target="_blank" rel="noreferrer">How do you design and maintain a CSS design system for a team?</a></li>
+</ol><h2 id="js-output">Part 3: JavaScript &quot;what&#x27;s the output?&quot; questions (155)</h2>
+<p class="repo-link">Source: <a href="https://github.com/lydiahallie/javascript-questions" target="_blank" rel="noreferrer">github.com/lydiahallie/javascript-questions</a></p>
+<h3 id="js-output-questions-1-to-31">Questions 1 to 31 (31)</h3>
+<ol start="396">
+<li><a href="https://github.com/lydiahallie/javascript-questions#1-whats-the-output" target="_blank" rel="noreferrer">Q1: What&#x27;s the output?</a>: function sayHi() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#2-whats-the-output" target="_blank" rel="noreferrer">Q2: What&#x27;s the output?</a>: for (var i = 0; i &lt; 3; i++) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#3-whats-the-output" target="_blank" rel="noreferrer">Q3: What&#x27;s the output?</a>: const shape = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#4-whats-the-output" target="_blank" rel="noreferrer">Q4: What&#x27;s the output?</a>: +true;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#5-which-one-is-true" target="_blank" rel="noreferrer">Q5: Which one is true?</a>: const bird = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#6-whats-the-output" target="_blank" rel="noreferrer">Q6: What&#x27;s the output?</a>: let c = { greeting: &#x27;Hey!&#x27; };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#7-whats-the-output" target="_blank" rel="noreferrer">Q7: What&#x27;s the output?</a>: let a = 3;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#8-whats-the-output" target="_blank" rel="noreferrer">Q8: What&#x27;s the output?</a>: class Chameleon {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#9-whats-the-output" target="_blank" rel="noreferrer">Q9: What&#x27;s the output?</a>: let greeting;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#10-what-happens-when-we-do-this" target="_blank" rel="noreferrer">Q10: What happens when we do this?</a>: function bark() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#11-whats-the-output" target="_blank" rel="noreferrer">Q11: What&#x27;s the output?</a>: function Person(firstName, lastName) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#12-whats-the-output" target="_blank" rel="noreferrer">Q12: What&#x27;s the output?</a>: function Person(firstName, lastName) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#13-what-are-the-three-phases-of-event-propagation" target="_blank" rel="noreferrer">Q13: What are the three phases of event propagation?</a>: - A: Target &gt; Capturing &gt; Bubbling</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#14-all-object-have-prototypes" target="_blank" rel="noreferrer">Q14: All object have prototypes.</a>: - A: true</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#15-whats-the-output" target="_blank" rel="noreferrer">Q15: What&#x27;s the output?</a>: function sum(a, b) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#16-whats-the-output" target="_blank" rel="noreferrer">Q16: What&#x27;s the output?</a>: let number = 0;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#17-whats-the-output" target="_blank" rel="noreferrer">Q17: What&#x27;s the output?</a>: function getPersonInfo(one, two, three) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#18-whats-the-output" target="_blank" rel="noreferrer">Q18: What&#x27;s the output?</a>: function checkAge(data) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#19-whats-the-output" target="_blank" rel="noreferrer">Q19: What&#x27;s the output?</a>: function getAge(...args) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#20-whats-the-output" target="_blank" rel="noreferrer">Q20: What&#x27;s the output?</a>: function getAge() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#21-whats-the-value-of-sum" target="_blank" rel="noreferrer">Q21: What&#x27;s the value of sum?</a>: const sum = eval(&#x27;10*10+5&#x27;);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#22-how-long-is-cool_secret-accessible" target="_blank" rel="noreferrer">Q22: How long is cool_secret accessible?</a>: sessionStorage.setItem(&#x27;cool_secret&#x27;, 123);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#23-whats-the-output" target="_blank" rel="noreferrer">Q23: What&#x27;s the output?</a>: var num = 8;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#24-whats-the-output" target="_blank" rel="noreferrer">Q24: What&#x27;s the output?</a>: const obj = { 1: &#x27;a&#x27;, 2: &#x27;b&#x27;, 3: &#x27;c&#x27; };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#25-whats-the-output" target="_blank" rel="noreferrer">Q25: What&#x27;s the output?</a>: const obj = { a: &#x27;one&#x27;, b: &#x27;two&#x27;, a: &#x27;three&#x27; };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#26-the-javascript-global-execution-context-creates-two-things-for-you-the-global-object-and-the-this-keyword" target="_blank" rel="noreferrer">Q26: The JavaScript global execution context creates two things for you: the global object, and the &quot;this&quot; keyword.</a>: - A: true</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#27-whats-the-output" target="_blank" rel="noreferrer">Q27: What&#x27;s the output?</a>: for (let i = 1; i &lt; 5; i++) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#28-whats-the-output" target="_blank" rel="noreferrer">Q28: What&#x27;s the output?</a>: String.prototype.giveLydiaPizza = () =&gt; {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#29-whats-the-output" target="_blank" rel="noreferrer">Q29: What&#x27;s the output?</a>: const a = {};</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#30-whats-the-output" target="_blank" rel="noreferrer">Q30: What&#x27;s the output?</a>: const foo = () =&gt; console.log(&#x27;First&#x27;);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#31-what-is-the-eventtarget-when-clicking-the-button" target="_blank" rel="noreferrer">Q31: What is the event.target when clicking the button?</a>: Click!</li>
+</ol>
+<h3 id="js-output-questions-32-to-62">Questions 32 to 62 (31)</h3>
+<ol start="427">
+<li><a href="https://github.com/lydiahallie/javascript-questions#32-when-you-click-the-paragraph-whats-the-logged-output" target="_blank" rel="noreferrer">Q32: When you click the paragraph, what&#x27;s the logged output?</a>: Click here!</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#33-whats-the-output" target="_blank" rel="noreferrer">Q33: What&#x27;s the output?</a>: const person = { name: &#x27;Lydia&#x27; };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#34-whats-the-output" target="_blank" rel="noreferrer">Q34: What&#x27;s the output?</a>: function sayHi() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#35-which-of-these-values-are-falsy" target="_blank" rel="noreferrer">Q35: Which of these values are falsy?</a>: 0;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#36-whats-the-output" target="_blank" rel="noreferrer">Q36: What&#x27;s the output?</a>: console.log(typeof typeof 1);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#37-whats-the-output" target="_blank" rel="noreferrer">Q37: What&#x27;s the output?</a>: const numbers = [1, 2, 3];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#38-whats-the-output" target="_blank" rel="noreferrer">Q38: What&#x27;s the output?</a>: (() =&gt; {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#39-everything-in-javascript-is-either-a" target="_blank" rel="noreferrer">Q39: Everything in JavaScript is either a...</a>: - A: primitive or object</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#40-whats-the-output" target="_blank" rel="noreferrer">Q40: What&#x27;s the output?</a>: [[0, 1], [2, 3]].reduce(</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#41-whats-the-output" target="_blank" rel="noreferrer">Q41: What&#x27;s the output?</a>: !!null;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#42-what-does-the-setinterval-method-return-in-the-browser" target="_blank" rel="noreferrer">Q42: What does the setInterval method return in the browser?</a>: setInterval(() =&gt; console.log(&#x27;Hi&#x27;), 1000);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#43-what-does-this-return" target="_blank" rel="noreferrer">Q43: What does this return?</a>: [...&#x27;Lydia&#x27;];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#44-whats-the-output" target="_blank" rel="noreferrer">Q44: What&#x27;s the output?</a>: function* generator(i) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#45-what-does-this-return" target="_blank" rel="noreferrer">Q45: What does this return?</a>: const firstPromise = new Promise((res, rej) =&gt; {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#46-whats-the-output" target="_blank" rel="noreferrer">Q46: What&#x27;s the output?</a>: let person = { name: &#x27;Lydia&#x27; };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#47-whats-the-output" target="_blank" rel="noreferrer">Q47: What&#x27;s the output?</a>: const person = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#48-whats-the-output" target="_blank" rel="noreferrer">Q48: What&#x27;s the output?</a>: console.log(3 + 4 + &#x27;5&#x27;);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#49-whats-the-value-of-num" target="_blank" rel="noreferrer">Q49: What&#x27;s the value of num?</a>: const num = parseInt(&#x27;7*6&#x27;, 10);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#50-whats-the-output" target="_blank" rel="noreferrer">Q50: What&#x27;s the output?</a>: [1, 2, 3].map(num =&gt; {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#51-whats-the-output" target="_blank" rel="noreferrer">Q51: What&#x27;s the output?</a>: function getInfo(member, year) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#52-whats-the-output" target="_blank" rel="noreferrer">Q52: What&#x27;s the output?</a>: function greeting() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#53-whats-the-output" target="_blank" rel="noreferrer">Q53: What&#x27;s the output?</a>: function Car() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#54-whats-the-output" target="_blank" rel="noreferrer">Q54: What&#x27;s the output?</a>: (() =&gt; {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#55-whats-the-output" target="_blank" rel="noreferrer">Q55: What&#x27;s the output?</a>: class Dog {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#56-whats-the-output" target="_blank" rel="noreferrer">Q56: What&#x27;s the output?</a>: const set = new Set([1, 1, 2, 3, 4]);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#57-whats-the-output" target="_blank" rel="noreferrer">Q57: What&#x27;s the output?</a>: // counter.js</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#58-whats-the-output" target="_blank" rel="noreferrer">Q58: What&#x27;s the output?</a>: const name = &#x27;Lydia&#x27;;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#59-whats-the-output" target="_blank" rel="noreferrer">Q59: What&#x27;s the output?</a>: const numbers = [1, 2, 3, 4, 5];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#60-whats-the-output" target="_blank" rel="noreferrer">Q60: What&#x27;s the output?</a>: const user = { name: &#x27;Lydia&#x27;, age: 21 };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#61-whats-the-output" target="_blank" rel="noreferrer">Q61: What&#x27;s the output?</a>: const person = { name: &#x27;Lydia&#x27; };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#62-whats-the-output" target="_blank" rel="noreferrer">Q62: What&#x27;s the output?</a>: const settings = {</li>
+</ol>
+<h3 id="js-output-questions-63-to-93">Questions 63 to 93 (31)</h3>
+<ol start="458">
+<li><a href="https://github.com/lydiahallie/javascript-questions#63-whats-the-output" target="_blank" rel="noreferrer">Q63: What&#x27;s the output?</a>: let num = 10;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#64-whats-the-output" target="_blank" rel="noreferrer">Q64: What&#x27;s the output?</a>: const value = { number: 10 };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#65-whats-the-output" target="_blank" rel="noreferrer">Q65: What&#x27;s the output?</a>: [1, 2, 3, 4].reduce((x, y) =&gt; console.log(x, y));</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#66-with-which-constructor-can-we-successfully-extend-the-dog-class" target="_blank" rel="noreferrer">Q66: With which constructor can we successfully extend the Dog class?</a>: class Dog {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#67-whats-the-output" target="_blank" rel="noreferrer">Q67: What&#x27;s the output?</a>: // index.js</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#68-whats-the-output" target="_blank" rel="noreferrer">Q68: What&#x27;s the output?</a>: console.log(Number(2) === Number(2));</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#69-whats-the-output" target="_blank" rel="noreferrer">Q69: What&#x27;s the output?</a>: const name = &#x27;Lydia Hallie&#x27;;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#70-whats-the-output" target="_blank" rel="noreferrer">Q70: What&#x27;s the output?</a>: console.log(&#x27;🥑&#x27; + &#x27;💻&#x27;);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#71-how-can-we-log-the-values-that-are-commented-out-after-the-consolelog-statement" target="_blank" rel="noreferrer">Q71: How can we log the values that are commented out after the console.log statement?</a>: function* startGame() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#72-whats-the-output" target="_blank" rel="noreferrer">Q72: What&#x27;s the output?</a>: console.log(String.raw`Hello\nworld`);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#73-whats-the-output" target="_blank" rel="noreferrer">Q73: What&#x27;s the output?</a>: async function getData() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#74-whats-the-output" target="_blank" rel="noreferrer">Q74: What&#x27;s the output?</a>: function addToList(item, list) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#75-whats-the-output" target="_blank" rel="noreferrer">Q75: What&#x27;s the output?</a>: const box = { x: 10, y: 20 };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#76-whats-the-output" target="_blank" rel="noreferrer">Q76: What&#x27;s the output?</a>: const { firstName: myName } = { firstName: &#x27;Lydia&#x27; };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#77-is-this-a-pure-function" target="_blank" rel="noreferrer">Q77: Is this a pure function?</a>: function sum(a, b) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#78-what-is-the-output" target="_blank" rel="noreferrer">Q78: What is the output?</a>: const add = () =&gt; {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#79-what-is-the-output" target="_blank" rel="noreferrer">Q79: What is the output?</a>: const myLifeSummedUp = [&#x27;☕&#x27;, &#x27;💻&#x27;, &#x27;🍷&#x27;, &#x27;🍫&#x27;];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#80-what-is-the-output" target="_blank" rel="noreferrer">Q80: What is the output?</a>: const list = [1 + 2, 1 * 2, 1 / 2];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#81-what-is-the-output" target="_blank" rel="noreferrer">Q81: What is the output?</a>: function sayHi(name) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#82-what-is-the-output" target="_blank" rel="noreferrer">Q82: What is the output?</a>: var status = &#x27;😎&#x27;;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#83-what-is-the-output" target="_blank" rel="noreferrer">Q83: What is the output?</a>: const person = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#84-what-is-the-output" target="_blank" rel="noreferrer">Q84: What is the output?</a>: function checkAge(age) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#85-what-kind-of-information-would-get-logged" target="_blank" rel="noreferrer">Q85: What kind of information would get logged?</a>: fetch(&#x27;https://www.website.com/api/user/1&#x27;)</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#86-which-option-is-a-way-to-set-hasname-equal-to-true-provided-you-cannot-pass-true-as-an-argument" target="_blank" rel="noreferrer">Q86: Which option is a way to set hasName equal to true, provided you cannot pass true as an argument?</a>: function getName(name) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#87-whats-the-output" target="_blank" rel="noreferrer">Q87: What&#x27;s the output?</a>: console.log(&#x27;I want pizza&#x27;[0]);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#88-whats-the-output" target="_blank" rel="noreferrer">Q88: What&#x27;s the output?</a>: function sum(num1, num2 = num1) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#89-whats-the-output" target="_blank" rel="noreferrer">Q89: What&#x27;s the output?</a>: // module.js</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#90-whats-the-output" target="_blank" rel="noreferrer">Q90: What&#x27;s the output?</a>: class Person {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#91-whats-the-output" target="_blank" rel="noreferrer">Q91: What&#x27;s the output?</a>: let newList = [1, 2, 3].push(4);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#92-whats-the-output" target="_blank" rel="noreferrer">Q92: What&#x27;s the output?</a>: function giveLydiaPizza() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#93-whats-the-output" target="_blank" rel="noreferrer">Q93: What&#x27;s the output?</a>: const person = {</li>
+</ol>
+<h3 id="js-output-questions-94-to-124">Questions 94 to 124 (31)</h3>
+<ol start="489">
+<li><a href="https://github.com/lydiahallie/javascript-questions#94-whats-the-output" target="_blank" rel="noreferrer">Q94: What&#x27;s the output?</a>: function getItems(fruitList, ...args, favoriteFruit) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#95-whats-the-output" target="_blank" rel="noreferrer">Q95: What&#x27;s the output?</a>: function nums(a, b) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#96-whats-the-output" target="_blank" rel="noreferrer">Q96: What&#x27;s the output?</a>: class Person {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#97-whats-the-output" target="_blank" rel="noreferrer">Q97: What&#x27;s the output?</a>: const info = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#98-whats-the-output" target="_blank" rel="noreferrer">Q98: What&#x27;s the output?</a>: const getList = ([x, ...y]) =&gt; [x, y]</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#99-whats-the-output" target="_blank" rel="noreferrer">Q99: What&#x27;s the output?</a>: const name = &#x27;Lydia&#x27;;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#100-whats-the-value-of-output" target="_blank" rel="noreferrer">Q100: What&#x27;s the value of output?</a>: // 🎉✨ This is my 100th question! ✨🎉</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#101-whats-the-value-of-output" target="_blank" rel="noreferrer">Q101: What&#x27;s the value of output?</a>: const one = false || {} || null;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#102-whats-the-value-of-output" target="_blank" rel="noreferrer">Q102: What&#x27;s the value of output?</a>: const myPromise = () =&gt; Promise.resolve(&#x27;I have resolved!&#x27;);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#103-whats-the-value-of-output" target="_blank" rel="noreferrer">Q103: What&#x27;s the value of output?</a>: const set = new Set();</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#104-whats-its-value" target="_blank" rel="noreferrer">Q104: What&#x27;s its value?</a>: Promise.resolve(5);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#105-whats-its-value" target="_blank" rel="noreferrer">Q105: What&#x27;s its value?</a>: function compareMembers(person1, person2 = person) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#106-whats-its-value" target="_blank" rel="noreferrer">Q106: What&#x27;s its value?</a>: const colorConfig = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#107-whats-its-value" target="_blank" rel="noreferrer">Q107: What&#x27;s its value?</a>: console.log(&#x27;❤️&#x27; === &#x27;❤️&#x27;);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#108-which-of-these-methods-modifies-the-original-array" target="_blank" rel="noreferrer">Q108: Which of these methods modifies the original array?</a>: const emojis = [&#x27;✨&#x27;, &#x27;🥑&#x27;, &#x27;😍&#x27;];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#109-whats-the-output" target="_blank" rel="noreferrer">Q109: What&#x27;s the output?</a>: const food = [&#x27;🍕&#x27;, &#x27;🍫&#x27;, &#x27;🥑&#x27;, &#x27;🍔&#x27;];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#110-what-does-this-method-do" target="_blank" rel="noreferrer">Q110: What does this method do?</a>: JSON.parse();</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#111-whats-the-output" target="_blank" rel="noreferrer">Q111: What&#x27;s the output?</a>: let name = &#x27;Lydia&#x27;;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#112-whats-the-output" target="_blank" rel="noreferrer">Q112: What&#x27;s the output?</a>: function* generatorOne() {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#113-whats-the-output" target="_blank" rel="noreferrer">Q113: What&#x27;s the output?</a>: console.log(`${(x =&gt; x)(&#x27;I love&#x27;)} to program`);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#114-what-will-happen" target="_blank" rel="noreferrer">Q114: What will happen?</a>: let config = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#115-which-methods-will-return-the-value-hello-world" target="_blank" rel="noreferrer">Q115: Which method(s) will return the value &#x27;Hello world!&#x27;?</a>: const myMap = new Map();</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#116-whats-the-output" target="_blank" rel="noreferrer">Q116: What&#x27;s the output?</a>: const person = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#117-which-of-the-following-options-will-return-6" target="_blank" rel="noreferrer">Q117: Which of the following options will return 6?</a>: function sumValues(x, y, z) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#118-whats-the-output" target="_blank" rel="noreferrer">Q118: What&#x27;s the output?</a>: let num = 1;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#119-whats-the-output" target="_blank" rel="noreferrer">Q119: What&#x27;s the output?</a>: const person = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#120-whats-the-output" target="_blank" rel="noreferrer">Q120: What&#x27;s the output?</a>: const groceries = [&#x27;banana&#x27;, &#x27;apple&#x27;, &#x27;peanuts&#x27;];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#121-whats-the-output" target="_blank" rel="noreferrer">Q121: What&#x27;s the output?</a>: const config = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#122-whats-the-output" target="_blank" rel="noreferrer">Q122: What&#x27;s the output?</a>: const name = &#x27;Lydia Hallie&#x27;;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#123-whats-the-output" target="_blank" rel="noreferrer">Q123: What&#x27;s the output?</a>: const add = x =&gt; y =&gt; z =&gt; {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#124-whats-the-output" target="_blank" rel="noreferrer">Q124: What&#x27;s the output?</a>: async function* range(start, end) {</li>
+</ol>
+<h3 id="js-output-questions-125-to-155">Questions 125 to 155 (31)</h3>
+<ol start="520">
+<li><a href="https://github.com/lydiahallie/javascript-questions#125-whats-the-output" target="_blank" rel="noreferrer">Q125: What&#x27;s the output?</a>: const myFunc = ({ x, y, z }) =&gt; {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#126-whats-the-output" target="_blank" rel="noreferrer">Q126: What&#x27;s the output?</a>: function getFine(speed, amount) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#127-whats-the-output" target="_blank" rel="noreferrer">Q127: What&#x27;s the output?</a>: const spookyItems = [&#x27;👻&#x27;, &#x27;🎃&#x27;, &#x27;🕸&#x27;];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#128-whats-the-output" target="_blank" rel="noreferrer">Q128: What&#x27;s the output?</a>: const name = &#x27;Lydia Hallie&#x27;;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#129-whats-the-output" target="_blank" rel="noreferrer">Q129: What&#x27;s the output?</a>: const randomValue = 21;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#130-whats-the-output" target="_blank" rel="noreferrer">Q130: What&#x27;s the output?</a>: const myPromise = Promise.resolve(&#x27;Woah some cool data&#x27;);</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#131-whats-the-output" target="_blank" rel="noreferrer">Q131: What&#x27;s the output?</a>: const emojis = [&#x27;🥑&#x27;, [&#x27;✨&#x27;, &#x27;✨&#x27;, [&#x27;🍕&#x27;, &#x27;🍕&#x27;]]];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#132-whats-the-output" target="_blank" rel="noreferrer">Q132: What&#x27;s the output?</a>: class Counter {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#133-whats-the-output" target="_blank" rel="noreferrer">Q133: What&#x27;s the output?</a>: const myPromise = Promise.resolve(Promise.resolve(&#x27;Promise&#x27;)</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#134-how-can-we-invoke-sum-in-sumjs-from-indexjs" target="_blank" rel="noreferrer">Q134: How can we invoke sum in sum.js from index.js?</a>: // sum.js</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#135-whats-the-output" target="_blank" rel="noreferrer">Q135: What&#x27;s the output?</a>: const handler = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#136-which-of-the-following-will-modify-the-person-object" target="_blank" rel="noreferrer">Q136: Which of the following will modify the person object?</a>: const person = { name: &#x27;Lydia Hallie&#x27; };</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#137-which-of-the-following-will-modify-the-person-object" target="_blank" rel="noreferrer">Q137: Which of the following will modify the person object?</a>: const person = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#138-whats-the-output" target="_blank" rel="noreferrer">Q138: What&#x27;s the output?</a>: const add = x =&gt; x + x;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#139-whats-the-output" target="_blank" rel="noreferrer">Q139: What&#x27;s the output?</a>: class Counter {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#140-whats-missing" target="_blank" rel="noreferrer">Q140: What&#x27;s missing?</a>: const teams = [</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#141-whats-the-output" target="_blank" rel="noreferrer">Q141: What&#x27;s the output?</a>: const person = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#142-whats-the-output" target="_blank" rel="noreferrer">Q142: What&#x27;s the output?</a>: class Bird {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#143-which-of-the-options-results-in-an-error" target="_blank" rel="noreferrer">Q143: Which of the options result(s) in an error?</a>: const emojis = [&#x27;🎄&#x27;, &#x27;🎅🏼&#x27;, &#x27;🎁&#x27;, &#x27;⭐&#x27;];</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#144-what-do-we-need-to-add-to-the-person-object-to-get-lydia-hallie-21-as-the-output-of-person" target="_blank" rel="noreferrer">Q144: What do we need to add to the person object to get [&quot;Lydia Hallie&quot;, 21] as the output of [...person]?</a>: const person = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#145-whats-the-output" target="_blank" rel="noreferrer">Q145: What&#x27;s the output?</a>: let count = 0;</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#146-whats-the-output" target="_blank" rel="noreferrer">Q146: What&#x27;s the output?</a>: function getFruit(fruits) {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#147-whats-the-output" target="_blank" rel="noreferrer">Q147: What&#x27;s the output?</a>: class Calc {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#148-whats-the-output" target="_blank" rel="noreferrer">Q148: What&#x27;s the output?</a>: const user = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#149-whats-the-output" target="_blank" rel="noreferrer">Q149: What&#x27;s the output?</a>: const fruit = [&#x27;🍌&#x27;, &#x27;🍊&#x27;, &#x27;🍎&#x27;]</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#150-whats-the-output" target="_blank" rel="noreferrer">Q150: What&#x27;s the output?</a>: const animals = {};</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#151-whats-the-output" target="_blank" rel="noreferrer">Q151: What&#x27;s the output?</a>: const user = {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#152-whats-the-output" target="_blank" rel="noreferrer">Q152: What&#x27;s the output?</a>: const promise1 = Promise.resolve(&#x27;First&#x27;)</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#153-what-should-the-value-of-method-be-to-log--name-lydia-age-22-" target="_blank" rel="noreferrer">Q153: What should the value of method be to log { name: &quot;Lydia&quot;, age: 22 }?</a>: const keys = [&quot;name&quot;, &quot;age&quot;]</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#154-whats-the-output" target="_blank" rel="noreferrer">Q154: What&#x27;s the output?</a>: const createMember = ({ email, address = {}}) =&gt; {</li>
+<li><a href="https://github.com/lydiahallie/javascript-questions#155-whats-the-output" target="_blank" rel="noreferrer">Q155: What&#x27;s the output?</a>: let randomValue = { name: &quot;Lydia&quot; }</li>
+</ol><h2>How I'd use this</h2>
+<ul>
+<li>Answer out loud before you open the answer. Frontend interviews test how you explain, not what you recognise.</li>
+<li>Open DevTools while you revise CSS. Change a property, watch what happens, and you'll remember it.</li>
+<li>Do 10 JavaScript output questions a day. Write down why for every one you get wrong.</li>
+<li>Build the 3 things above, deploy them, and put the links on your resume.</li>
+</ul><p>
+        Next: <a href="/learn/518-javascript-interview-questions/">518 JavaScript interview questions</a>
+        and <a href="/learn/446-react-interview-questions/">446 React interview questions</a>.
+</p><p>
+        Follow
+<a href="https://www.instagram.com/avi_vashishta29/" target="_blank" rel="noreferrer">@avi_vashishta29</a>
+        for one practical AI dev resource a day.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

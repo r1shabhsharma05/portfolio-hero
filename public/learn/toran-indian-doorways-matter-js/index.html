@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toran: Five Indian Doorways You Can Walk Through | Rishabh Sharma</title>
+<meta name="description" content="How I built /lab/toran: Codex-generated doorway lintels, Matter.js strands made of each region's welcome in its own script, and bells that ring when you swipe." />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/toran-indian-doorways-matter-js/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Toran: Five Indian Doorways You Can Walk Through</h1>
+<p class="lede">How I built /lab/toran: Codex-generated doorway lintels, Matter.js strands made of each region's welcome in its own script, and bells that ring when you swipe.</p>
+<p class="meta">12 November 2026</p>
+<p>I saw a page go viral: a Chinese palace roof on cream paper, with a curtain of characters hanging under it that swung when the cursor passed through. Then a Japanese eave, then a yurt. The physics was simple. What made it work was that the picture looked handmade and the text hung from it like it belonged there.</p>
+<p>I wanted my own version of that, closer to home. <a href="https://www.avivashishta.com/lab/toran" target="_blank" rel="noreferrer">It is live at avivashishta.com/lab/toran</a>: five Indian doorways, each with a toran, the garland hung over a door to welcome guests. The strands are made of the welcome itself, written in that region&#39;s script, and they ring when you swipe through them.</p>
+<div class="highlight"><p><strong>The short version:</strong> every lintel, wall and floor is one Codex image, cut out with rembg. The strands are Matter.js chains pinned to the lintel's bottom edge. The welcome is drawn once into a long strip of correctly shaped text, and each strand bends that strip along its links, so Indic letters stay joined. A fast swipe plays a clip from my sound library, pitched per strand to a five-note scale.</p></div><h2>The five doors</h2>
+<table>
+<thead>
+<tr>
+<th>Door</th>
+<th>Welcome</th>
+<th>Script</th>
+<th>Bead</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Rajasthan</td>
+<td>पधारो म्हारे देस (come to my land)</td>
+<td>Devanagari</td>
+<td>Marigold</td>
+<td>Ghungroo bells</td>
+</tr>
+<tr>
+<td>Kerala</td>
+<td>സ്വാഗതം</td>
+<td>Malayalam</td>
+<td>Brass ring</td>
+<td>Temple brass</td>
+</tr>
+<tr>
+<td>Bengal</td>
+<td>স্বাগতম</td>
+<td>Bengali</td>
+<td>Shola pith</td>
+<td>Bright ping</td>
+</tr>
+<tr>
+<td>Punjab</td>
+<td>ਜੀ ਆਇਆਂ ਨੂੰ (you are welcome here)</td>
+<td>Gurmukhi</td>
+<td>Phulkari thread</td>
+<td>Wooden bead clack</td>
+</tr>
+<tr>
+<td>Varanasi</td>
+<td>स्वागतम् (Sanskrit)</td>
+<td>Devanagari</td>
+<td>Rudraksha</td>
+<td>One deep bell</td>
+</tr>
+</tbody></table>
+<h2>Step 1: the images, from Codex</h2>
+<p>Every image comes from the Codex CLI. The trick to making five images look like one set is a shared style block in every prompt, with only the object changing:</p>
+<blockquote>
+<p>A single isolated object, photographed like a premium handmade artefact, front-on, perfectly centred, wide (about 3:2), soft studio light from the top left, plain flat warm off-white background, no text, no people, nothing hanging below it. The bottom edge of the object must be clean and horizontal.</p>
+</blockquote>
+<p>That last line matters most. The strands hang from the bottom edge, so it has to be flat. The walls got their own rule: a plain surface with nothing in the centre, pale and low contrast, so text stays readable on top.</p>
+<p>Two things I learned running it:</p>
+<ul>
+<li><strong>Long prompts as an argument kill Codex</strong> (exit 137, no output). Write the prompt to a file and pipe it in: <code>codex exec --skip-git-repo-check -C out - &lt; prompt.txt</code>.</li>
+<li><strong>Run one job at a time.</strong> Parallel jobs failed silently.</li>
+</ul>
+<p>Each lintel was then cut out with <a href="https://github.com/danielgatis/rembg" target="_blank" rel="noreferrer">rembg</a>. The default model made two of Kerala&#39;s brass lamp cups see-through, so that one used <code>isnet-general-use</code> instead.</p>
+<h2>Step 2: strands that hang</h2>
+<p>Each strand is a chain of small circles joined by constraints, the first pinned to the lintel. Beads never collide with each other (they share a negative collision group), which keeps the curtain calm instead of tangling:</p>
+<pre><code class="language-ts">const beads = Array.from({ length: L }, (_, j) =&gt;
+  Bodies.circle(x, y + (j + 1) * sp, 5, { frictionAir: 0.05, collisionFilter: { group: -1 } }));
+const links = [Constraint.create({ pointA: pin, bodyB: beads[0], length: sp, stiffness: 1 })];
+for (let j = 1; j &lt; L; j++) links.push(Constraint.create({ bodyA: beads[j - 1], bodyB: beads[j], length: sp, stiffness: 1 }));
+</code></pre>
+<p>The pointer isn&#39;t a body. It pushes like wind: every bead near it gets a force along the pointer&#39;s velocity, so a slow hover sways the strands and a fast swipe throws them, and nothing ever sticks to the cursor.</p>
+<h2>Step 3: letters that stay joined</h2>
+<p>My first version put one letter on each bead, which is how the original works with Chinese characters. It looked broken. Hindi, Bengali and Punjabi letters hang from a shared top line, and vowel signs attach to the letter before them. Split स्वागतम् into single characters and the pieces fall apart.</p>
+<p>The fix is to never split the text. The phrase is drawn once, properly shaped by the browser, into a long horizontal strip. Each strand then draws that strip slice by slice along its chain, one slice per link, rotated to the link&#39;s angle:</p>
+<pre><code class="language-ts">for (let k = 0; k &lt; count; k++) {
+  const a = pts[k], b = pts[k + 1];
+  ctx.save(); ctx.translate(a.x, a.y); ctx.rotate(Math.atan2(b.y - a.y, b.x - a.x));
+  ctx.drawImage(strip, sx + k * sp, 0, sp, h, 0, -h / 2, sp, h); // true width, never the link&#39;s length
+  ctx.restore();
+}
+</code></pre>
+<p>The text now bends with the strand like a ribbon. The comment on the <code>drawImage</code> line is the second lesson: I first stretched each slice to fit its link, and when links pulled apart the letters stretched too. Draw them at their real size and they can&#39;t.</p>
+<p>Beads go only in the gaps between repeats of the phrase, and each region gets its own: marigolds, brass rings, white pith, phulkari diamonds, rudraksha. Every strand ends in a tassel, lamp, flower or bell.</p>
+<h2>Step 4: sound</h2>
+<p>The sounds are short clips from my own SFX library, not generated. Each strand plays the same clip at a different pitch, mapped across a five-note scale, so sweeping across the curtain plays a little run:</p>
+<pre><code class="language-ts">const SCALE = [1, 9/8, 5/4, 3/2, 5/3, 2, 9/4];
+const note = SCALE[Math.round(i / (n - 1) * (SCALE.length - 1))];
+src.playbackRate.value = stop.pitch * note;
+</code></pre>
+<p>A strand only rings if the pointer is moving fast and that strand hasn&#39;t rung in the last 160ms. Slow hovering stays quiet. Browsers block audio until you interact, so the first click on the page turns it on.</p>
+<h2>Step 5: leaving a door</h2>
+<p>The strands roll back up into the lintel like a blind, outer strands first, with the tassel riding up on the end. Then the lintel and wall fade, the next door slides in, and its strands unroll from the centre out. I first let them drop with gravity, which looked like a mess of stretched letters. Rolling them up is calmer and reads as the door closing.</p>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a page with one generated object at the top of a pale paper stage (a transparent PNG, its bottom edge flat) and a curtain of text strands hanging from that edge. Use Matter.js: each strand is a chain of small circle bodies joined by constraints with stiffness 1, the first pinned to a point on the object's bottom edge, all bodies in one negative collision group so they never collide. Make the outer strands a little shorter. Don't use a mouse constraint: on pointer move, push every body within about 40px along the pointer's velocity, scaled by distance.</p>
+<p>Draw on a canvas, not with Matter's renderer. Render the strand's phrase once into a long offscreen strip (repeated with gaps), then draw each strand by slicing that strip along the chain, one slice per link, rotated to the link's angle and drawn at its true width so the letters never stretch. Put a small bead in each gap and an ornament at the end of every strand. Add a soft offset shadow. When the pointer crosses a strand fast, play a short sound clip with Web Audio, pitched to a pentatonic scale by the strand's index, with a cooldown per strand. Start audio on the first click. Unroll new strands from the centre out, and roll them back up before switching to the next object. Respect prefers-reduced-motion.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

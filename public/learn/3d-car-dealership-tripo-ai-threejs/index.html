@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I Built a 3D Car Dealership Without Opening Blender | Rishabh Sharma</title>
+<meta name="description" content="Generating every vehicle from a single photo with Tripo AI, then shipping it on the web: the file:// CORS wall, the over-compression mistake that ruined the mes" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/3d-car-dealership-tripo-ai-threejs/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Roadmap</p>
+<h1>I Built a 3D Car Dealership Without Opening Blender</h1>
+<p class="lede">Generating every vehicle from a single photo with Tripo AI, then shipping it on the web: the file:// CORS wall, the over-compression mistake that ruined the meshes, weld() before simplify, a 164-part exploded view, and a refraction cursor shader.</p>
+<p class="meta">4 September 2026</p>
+<h2>Overview</h2>
+<p>
+        There are two ways a web developer has historically got 3D onto a page.
+        Learn Blender &mdash; which is months, not a weekend. Or buy from an asset
+        store, where you scroll for an hour, settle for something close enough,
+        and ship geometry that was never really yours.
+</p>
+<p>
+        I wanted a car dealership site with a configurator and an exploded view. I
+        can&rsquo;t model. So I generated every vehicle from a single photograph
+        with <a href="https://www.tripo3d.ai/" target="_blank" rel="noreferrer">Tripo AI</a>, dropped the meshes
+        into Three.js, and shipped it.
+</p>
+<p>
+        This is what actually happened, including the parts that went wrong
+        &mdash; the mesh I destroyed by over-compressing, the models that loaded
+        sideways, and the browser rule that cost me an afternoon.
+</p><h2>What Tripo gives you</h2>
+<p>
+        Tripo is image-to-3D and text-to-3D. You give it a reference photo, it
+        returns a mesh you can export as GLB, FBX, OBJ, STL or USDZ. The parts I
+        used:
+</p><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>What it does</th>
+<th>Where I used it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H3.1 / v3.1</strong></td>
+<td>High-detail generation, up to ~2M polygons</td>
+<td>Every car body</td>
+</tr>
+<tr>
+<td><strong>Smart Mesh</strong></td>
+<td>One-click low-poly with clean topology, ~2s</td>
+<td>The lighter fleet variants</td>
+</tr>
+<tr>
+<td><strong>SVG2 segmentation</strong></td>
+<td>Splits a mesh into its real parts</td>
+<td>The exploded view</td>
+</tr>
+<tr>
+<td><strong>Explosion view</strong></td>
+<td>Built into the viewer &mdash; one click, parts separate</td>
+<td>Confirming segmentation before export</td>
+</tr>
+<tr>
+<td><strong>8K textures</strong></td>
+<td>High-density PBR maps</td>
+<td>Close-up hero shots</td>
+</tr>
+</tbody>
+</table><p>
+        The segmentation is the one that surprised me. I expected to hand-author
+        the exploded view in code. Tripo shipped a car that already knew it was
+<strong>164 separate parts</strong> &mdash; panels, wheels, mirrors,
+        grille, spoiler &mdash; each a distinct mesh in the GLB. There&rsquo;s a
+        toggle in the viewer that blows it apart before you&rsquo;ve written a
+        line.
+</p><p>Useful links:</p>
+<ul>
+<li><a href="https://studio.tripo3d.ai/" target="_blank" rel="noreferrer">Tripo Studio</a> &mdash; the workspace</li>
+<li><a href="https://studio.tripo3d.ai/3d-model-gallery/" target="_blank" rel="noreferrer">3D model gallery</a> &mdash; community models, free to download</li>
+<li><a href="https://studio.tripo3d.ai/3d-model-gallery/sports-car?moegmented" target="_blank" rel="noreferrer">Sports cars filtered to <em>Segmented</em></a> &mdash; the ones that explode</li>
+<li><a href="https://studio.tripo3d.ai/3d-model-gallery/sports-car?model_type=smart_low_poly" target="_blank" rel="noreferrer">Sports cars filtered to <em>Smart Mesh</em></a> &mdash; the browser-friendly ones</li>
+<li><a href="https://studio.tripo3d.ai/3d-model/sleek-sports-car-with-aero-kit-carbon-fiber-accents-large-rear-wing-b398521d-658d-4410-9b22-22f63d9d9448" target="_blank" rel="noreferrer">The segmented car I used</a></li>
+</ul><h2>The first wall: browsers won&rsquo;t load meshes from <code>file://</code></h2>
+<p>
+        I exported five cars, dropped <code>index.html</code> next to a
+<code>models/</code> folder, double-clicked it, and got nothing.
+</p>
+<p>
+        This isn&rsquo;t a Three.js problem. A page opened as <code>file://</code>
+        is not allowed to <code>fetch()</code> other local files &mdash; it&rsquo;s
+        a CORS rule, and it applies to every browser. Your <code>.glb</code> sits
+        right there on disk and the page cannot read it.
+</p>
+<p>Two ways out:</p>
+<ol>
+<li><strong>Serve it.</strong> Any local server works.</li>
+<li>
+<strong>Inline it.</strong> Base64 the mesh into the HTML as a
+<code>data:</code> URI. <code>GLTFLoader</code> will load a data URI
+          happily.
+</li>
+</ol>
+<p>
+        Inlining is genuinely nice for a self-contained demo &mdash; one file, no
+        setup, works offline. It&rsquo;s what I did first. But at full quality my
+        five cars were <strong>238MB</strong>, which is not going in an HTML file.
+        So: server.
+</p><div class="code"># from the folder containing index.html
+python3 -m http.server 8756
+# &rarr; http://localhost:8756</div><p>
+        I wrapped that in a double-clickable <code>.command</code> so I&rsquo;d
+        stop opening the wrong file:
+</p><div class="code">#!/bin/bash
+cd "$(dirname "$0")/site" || exit 1<p>PORT=8756
+while nc -z 127.0.0.1 $PORT &gt;/dev/null 2&gt;&amp;1; do PORT=$((PORT+1)); done</p>
+<p>echo &quot;  <a href="http://localhost:$PORT" target="_blank" rel="noreferrer">http://localhost:$PORT</a>&quot;
+( sleep 1.5 &amp;&amp; open &quot;<a href="http://localhost:$PORT" target="_blank" rel="noreferrer">http://localhost:$PORT</a>&quot; ) &amp;</p>
+<p>if command -v python3 &gt;/dev/null 2&gt;&amp;1; then
+  exec python3 -m http.server $PORT
+elif command -v node &gt;/dev/null 2&gt;&amp;1; then
+  exec node -e &#39;
+const http=require(&quot;http&quot;),fs=require(&quot;fs&quot;),path=require(&quot;path&quot;);
+const port=Number(process.argv[1]);
+const types={&quot;.html&quot;:&quot;text/html&quot;,&quot;.glb&quot;:&quot;model/gltf-binary&quot;,&quot;.js&quot;:&quot;text/javascript&quot;};
+http.createServer((q,s)=&gt;{
+  let f=decodeURIComponent(q.url.split(&quot;?&quot;)[0]); if(f===&quot;/&quot;)f=&quot;/index.html&quot;;
+  fs.readFile(path.join(process.cwd(),f),(e,d)=&gt;{
+    if(e){s.writeHead(404);return s.end(&quot;not found&quot;)}
+    s.writeHead(200,{&quot;Content-Type&quot;:types[path.extname(f)]||&quot;application/octet-stream&quot;});
+    s.end(d);
+  });
+}).listen(port);&#39; $PORT
+fi</div></p>
+<p>
+        I also moved <code>index.html</code> into a <code>site/</code> subfolder so
+        it couldn&rsquo;t be double-clicked by accident. Sounds petty. Saved me
+        three more rounds of confusion.
+</p><h2>The mistake worth writing down: I over-compressed the meshes</h2>
+<p>
+        Tripo&rsquo;s full-detail exports are <strong>~1.9M triangles and
+        46&ndash;55MB each</strong>. That&rsquo;s a lot for a web page, so I ran
+        them through a decimator at a 1.2% ratio &mdash; 1.9M down to
+<strong>30,906 triangles</strong>, 45MB down to 750KB.
+</p>
+<p>The file size was beautiful. The cars looked terrible.</p>
+<p>
+        Car bodies are large, smooth, continuous surfaces. That&rsquo;s exactly the
+        geometry a decimator eats first, because a flat panel &ldquo;wastes&rdquo;
+        triangles by its metric. At 1.5% you get faceted door skins, dented roofs,
+        and creases that read as crash damage. Then I put a high-metalness paint
+        material on top, which turns every one of those ripples into a specular
+        highlight. Two mistakes compounding.
+</p>
+<p>
+<strong>The fix wasn&rsquo;t less compression, it was different
+        compression.</strong> Keep an order of magnitude more geometry, then
+        compress the <em>encoding</em> instead of the geometry:
+</p><div class="code">import { NodeIO } from '@gltf-transform/core';
+import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
+import { simplify, weld, prune, dedup, textureCompress, meshopt }
+  from '@gltf-transform/functions';
+import { MeshoptSimplifier, MeshoptEncoder } from 'meshoptimizer';
+import sharp from 'sharp';<p>await MeshoptEncoder.ready;
+await MeshoptSimplifier.ready;</p>
+<p>const io = new NodeIO()
+  .registerExtensions(ALL_EXTENSIONS)
+  .registerDependencies({ &#39;meshopt.encoder&#39;: MeshoptEncoder });</p>
+<p>const doc = await io.read(&#39;in.glb&#39;);</p>
+<p>await doc.transform(
+  weld(),                                  // MUST come first &mdash; see below
+  simplify({ simplifier: MeshoptSimplifier, ratio: 0.12, error: 0.001 }),
+  prune(),
+  dedup(),
+  textureCompress({ encoder: sharp, targetFormat: &#39;webp&#39;,
+                    resize: [1024, 1024], quality: 88 }),
+  meshopt({ encoder: MeshoptEncoder, level: &#39;high&#39; })
+);</p>
+<p>await io.write(&#39;out.glb&#39;, doc);</div></p>
+<p>
+<strong><code>weld()</code> first is not optional.</strong> Skip it and the
+        simplifier returns a non-indexed mesh &mdash; every triangle gets its own
+        three vertices, no shared normals. Three.js then shades it flat, and you
+        get a faceted car that looks like origami. I lost an hour to this because
+        my triangle counter read <code>getIndices()</code>, which returns
+<code>null</code> on unindexed geometry, so the pipeline cheerfully
+        reported <em>zero triangles</em> on a file that was clearly full of them.
+</p><p>The results:</p>
+<table>
+<thead>
+<tr><th>Model</th><th>Source</th><th>After</th></tr>
+</thead>
+<tbody>
+<tr><td>Segmented car</td><td>1,949,089 tris &middot; 45.2 MB</td><td>317,223 tris &middot; <strong>1.55 MB</strong></td></tr>
+<tr><td>Fleet car 1</td><td>1,890,938 tris &middot; 53.6 MB</td><td>226,912 tris &middot; <strong>1.58 MB</strong></td></tr>
+<tr><td>Fleet car 2</td><td>1,899,641 tris &middot; 54.7 MB</td><td>227,956 tris &middot; <strong>1.77 MB</strong></td></tr>
+<tr><td>Fleet car 3</td><td>1,890,538 tris &middot; 53.7 MB</td><td>226,843 tris &middot; <strong>1.61 MB</strong></td></tr>
+</tbody>
+</table><p>
+<strong>~35&times; smaller, and it still looks like a car.</strong>
+        Crucially the segmented model kept <strong>163 of its 164 parts</strong>
+        through the pipeline, so the exploded view survived. Five cars at that size
+        &mdash; about 7.6MB total &mdash; fit comfortably inline as base64 if you
+        want the single-file version.
+</p><p>
+        Loading meshopt-compressed GLBs needs one extra line on the loader:
+</p><div class="code">import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';<p>const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);</div></p>
+<h2>Normalising models you didn&rsquo;t make</h2>
+<p>
+        Generated meshes don&rsquo;t agree on scale, origin, or which way the
+        object faces. One of my cars ran along X while the rest ran along Z, so it
+        loaded broadside to the camera.
+</p>
+<p>
+        Rather than fixing each export by hand, the page normalises whatever
+        it&rsquo;s given:
+</p><div class="code">// 1. face them all the same way &mdash; long axis along Z
+let box  = new THREE.Box3().setFromObject(root);
+let size = box.getSize(new THREE.Vector3());<p>if (size.x &gt; size.z) {
+  root.rotation.y = Math.PI / 2;
+  root.updateMatrixWorld(true);
+  box  = new THREE.Box3().setFromObject(root);
+  size = box.getSize(new THREE.Vector3());
+}</p>
+<p>// 2. scale to a fixed footprint and seat on the floor
+const ctr = box.getCenter(new THREE.Vector3());
+const s   = 3.3 / Math.max(size.x, size.z, 1e-4);</p>
+<p>// holder centres and scales; the outer group is free to spin in place
+const holder = new THREE.Group();
+holder.add(root);
+holder.scale.setScalar(s);
+holder.position.set(-ctr.x * s, -box.min.y * s, -ctr.z * s);</p>
+<p>const car = new THREE.Group();
+car.add(holder);
+scene.add(car);</div></p>
+<p>
+        The two-group split matters. If you put the centring offset on the same
+        object you rotate for the turntable, the car orbits the world origin
+        instead of spinning on its own axis.
+</p><h2>The exploded view</h2>
+<p>
+        First attempt: move every part a fixed distance along its direction from
+        the centre. Panels flew off screen while parts near the middle barely
+        moved.
+</p>
+<p>
+        The fix is to make the displacement <strong>proportional</strong> to how
+        far each part already sits from the centre. That&rsquo;s what makes it read
+        as an assembly diagram rather than an explosion.
+</p>
+<p>
+        The second bug was subtler. I measured each part&rsquo;s centroid in
+<strong>world</strong> space and applied the offset in <strong>local</strong>
+        space. Fine until a model gets rotated by the normaliser &mdash; then every
+        direction is wrong. Measure in the same space you apply:
+</p><div class="code">// offsets in the part's own parent space, so root rotation and
+// holder scale can't skew the directions
+const localBox = new THREE.Box3();
+const centres = meshes.map(m =&gt; {
+  m.geometry.computeBoundingBox();
+  const b = m.geometry.boundingBox.clone().applyMatrix4(m.matrix);
+  localBox.union(b);
+  return b.getCenter(new THREE.Vector3());
+});<p>const c2 = localBox.getCenter(new THREE.Vector3());
+const parts = meshes.map((m, i) =&gt; ({
+  mesh: m,
+  off:  centres[i].clone().sub(c2),   // NOT normalised &mdash; proportional
+  home: m.position.clone()
+}));</div></p>
+<p>
+        And in the render loop, with a light stagger so parts don&rsquo;t move in
+        lockstep:
+</p><div class="code">const EX_K = 0.55;
+exAmt = damp(exAmt, exTarget, 5.5, dt);<p>if (parts.length &gt; 1 &amp;&amp; exAmt &gt; 0.0005) {
+  for (let i = 0; i &lt; parts.length; i++) {
+    const p = parts[i];
+    p.mesh.position
+      .copy(p.home)
+      .addScaledVector(p.off, exAmt * EX_K * (1 + (i % 7) * 0.05));
+  }
+}</div></p>
+<h2>Render modes</h2>
+<p>
+        Three ways to look at the same mesh, swapping materials rather than
+        reloading anything. Snapshot the original material on load, then switch:
+</p><div class="code">const xrayMat = new THREE.MeshBasicMaterial({
+  color: 0x86F2E4, transparent: true, opacity: 0.12,
+  blending: THREE.AdditiveBlending,
+  side: THREE.DoubleSide, depthWrite: false
+});<p>function applyMode(next) {
+  mode = next;
+  car.traverse(o =&gt; {
+    if (!o.isMesh) return;
+    const orig = o.userData.origMat;
+    if (mode === &#39;xray&#39;) o.material = xrayMat;
+    else {
+      o.material = orig;
+      (Array.isArray(orig) ? orig : [orig])
+        .forEach(m =&gt; { if (m) m.wireframe = (mode === &#39;wire&#39;); });
+    }
+  });
+}</div></p>
+<p>
+        Additive blending with <code>depthWrite: false</code> is the whole x-ray
+        trick &mdash; back faces stop occluding front faces, so you see brake discs
+        through the door skin.
+</p>
+<p>
+        I also tried a toon-shaded &ldquo;sketch&rdquo; mode with an inverted-hull
+        outline. One gotcha if you go there: <code>MeshBasicMaterial</code> does
+<strong>not</strong> declare <code>objectNormal</code> in its vertex shader,
+        so the usual normal-offset hack throws a compile error. Use the
+<code>normal</code> attribute directly:
+</p><div class="code">outlineMat.onBeforeCompile = s =&gt; {
+  s.vertexShader = s.vertexShader.replace(
+    '#include &lt;begin_vertex&gt;',
+    '#include &lt;begin_vertex&gt;\n  transformed += normalize(normal) * 0.009;'
+  );
+};</div><h2>Paint, without destroying the original</h2>
+<p>
+        A configurator that overwrites <code>material.map</code> and lerps
+<code>material.color</code> is destructive &mdash; one click and the
+        model&rsquo;s real texture is gone for the session. Snapshot first:
+</p><div class="code">bodyMats.forEach(m =&gt; {
+  m.userData.stock = {
+    color: m.color.clone(),
+    map: m.map,
+    metalness: 'metalness' in m ? m.metalness : null,
+    roughness: 'roughness' in m ? m.roughness : null
+  };
+});<p>function restoreStock() {
+  paintChosen = false;
+  bodyMats.forEach(m =&gt; {
+    const st = m.userData.stock;
+    if (!st) return;
+    m.color.copy(st.color);
+    m.map = st.map;
+    if (st.metalness !== null) m.metalness = st.metalness;
+    if (st.roughness !== null) m.roughness = st.roughness;
+    m.needsUpdate = true;
+  });
+}</div></p>
+<p>
+        Picking which materials count as &ldquo;the paint&rdquo; is a heuristic:
+        take the mesh with the largest bounding-box volume plus anything within 35%
+        of it. On these cars that lands on body panels and leaves wheels and glass
+        alone.
+</p>
+<p>
+        One tuning note: keep <strong>metalness low</strong>. I started at 0.9
+        because &ldquo;car paint is shiny&rdquo;, and it turned every surface
+        imperfection in a generated mesh into a highlight. Around 0.3&ndash;0.5
+        metalness with 0.3&ndash;0.4 roughness reads as clearcoat and is far more
+        forgiving.
+</p><h2>Scroll-driven camera</h2>
+<p>
+        The camera is on rails through the story section &mdash; keyframes,
+        interpolated by scroll position, with the render mode as part of each
+        keyframe:
+</p><div class="code">const SHOTS = [
+  { t:0.00, pos:[4.6,1.75,5.4], tgt:[0,.62,0], ex:0, ox:-1.35, mode:'standard' },
+  { t:0.20, pos:[0.1,1.15,6.6], tgt:[0,.58,0], ex:0, ox: 1.30, mode:'standard' },
+  { t:0.40, pos:[2.5,0.95,3.1], tgt:[0,.55,0], ex:0, ox:-1.10, mode:'wire'     },
+  { t:0.60, pos:[3.4,1.30,4.4], tgt:[0,.60,0], ex:0, ox: 1.20, mode:'xray'     },
+  { t:0.80, pos:[6.0,3.30,5.8], tgt:[0,.75,0], ex:1, ox:-1.30, mode:'standard' },
+  { t:1.00, pos:[4.4,2.05,5.1], tgt:[0,1.0,0], ex:0, ox: 0,    mode:'standard' }
+];<p>const smoothstep = x =&gt; x * x * (3 - 2 * x);</p>
+<p>function shotAt(t) {
+  let a = SHOTS[0], b = SHOTS[SHOTS.length - 1];
+  for (let i = 0; i &lt; SHOTS.length - 1; i++)
+    if (t &gt;= SHOTS[i].t &amp;&amp; t &lt;= SHOTS[i+1].t) { a = SHOTS[i]; b = SHOTS[i+1]; break; }
+  const k = smoothstep(clamp((t - a.t) / Math.max(b.t - a.t, 1e-6), 0, 1));
+  return {
+    pos: a.pos.map((v, i) =&gt; lerp(v, b.pos[i], k)),
+    tgt: a.tgt.map((v, i) =&gt; lerp(v, b.tgt[i], k)),
+    ex:  lerp(a.ex, b.ex, k),
+    ox:  lerp(a.ox, b.ox, k),
+    mode: k &lt; 0.5 ? a.mode : b.mode
+  };
+}</div></p>
+<p>
+<code>ox</code> is a lateral pan that pushes the car to the opposite side
+        from whichever side the copy sits on. Without it the headline lands on top
+        of the car on every other beat.
+</p><h3>The bug that made this look broken</h3>
+<p>
+        Smooth scrolling with a transformed wrapper needs a spacer element to give
+        the document its height. I measured that height once on load &mdash; before
+        the fonts had loaded and the cards were laid out &mdash; so it came out too
+        short, the browser clamped <code>scrollTo()</code>, and the camera silently
+        desynced from the copy. Every beat showed the wrong text.
+</p><div class="code">function measure() {
+  const h = smoothEl.scrollHeight;
+  if (h &gt; 0) spacer.style.height = h + 'px';
+  railEnd  = Math.max(rail.offsetHeight - innerHeight, 1);
+  studioTop = studio.offsetTop;
+}<p>// content height settles late &mdash; keep the scroll range honest
+new ResizeObserver(measure).observe(smoothEl);
+addEventListener(&#39;load&#39;, measure);
+document.fonts?.ready.then(measure);</div></p>
+<h3>And the one that made orbit impossible</h3>
+<p>
+        The smooth-scroll wrapper is <code>position: fixed</code> at
+<code>z-index: 5</code>, sitting over the canvas. It was swallowing every
+        drag before <code>OrbitControls</code> saw it. The 3D looked completely
+        dead to the mouse.
+</p><div class="code">#smooth { position: fixed; inset: 0 auto auto 0; width: 100%;
+          z-index: 5; pointer-events: none; }<p>/* opt the actual controls back in */
+.solid, #studio .deck, #studio .carbar, .navlinks { pointer-events: auto; }</div></p>
+<p>
+        If your Three.js scene ignores the mouse, check what&rsquo;s on top of the
+        canvas before you touch the controls config.
+</p><h2>A liquid cursor, and what not to copy</h2>
+<p>
+        I wanted the <a href="https://buttermax.net/" target="_blank" rel="noreferrer">buttermax</a> cursor &mdash;
+        that fluid trail that inverts the page as it passes. My first attempt
+        copied it literally: a density buffer used as a mask, inverting colour
+        inside the blob.
+</p>
+<p>
+        It looked awful. Buttermax works because the whole page is flat
+        yellow-on-black, so inverting is a clean palette swap. Invert a dark
+        photoreal render and you get a milky white smear.
+</p>
+<p>
+        So I kept the mechanism and changed what it does. The density field&rsquo;s
+<strong>gradient</strong> is treated as a surface slope, and the frame is
+        refracted through it &mdash; the image bends and splits into RGB along the
+        trail, and nothing brightens:
+</p><div class="code">float den  = texture2D(uTrail, vUv).r;
+float mask = smoothstep(0.04, 0.42, den) * uAmt;<p>// epsilon must match the TRAIL buffer&#39;s resolution, not the screen&#39;s
+float e  = 1.6 / uTrailSize;
+float gx = texture2D(uTrail, vUv + vec2(e,0.)).r - texture2D(uTrail, vUv - vec2(e,0.)).r;
+float gy = texture2D(uTrail, vUv + vec2(0.,e)).r - texture2D(uTrail, vUv - vec2(0.,e)).r;
+vec2  g  = vec2(gx, gy);
+float edge = clamp(length(g) * 3.2, 0.0, 1.0);</p>
+<p>vec2 disp = g * (0.038 + mask * 0.022);</p>
+<p>vec3 c;
+c.r = texture2D(uScene, vUv + disp * 1.24).r;
+c.g = texture2D(uScene, vUv + disp * 1.00).g;
+c.b = texture2D(uScene, vUv + disp * 0.76).b;</p>
+<p>c += pow(edge, 1.5) * vec3(0.55, 0.76, 1.0) * 0.20 * uAmt;
+c *= 1.0 + mask * 0.045 * uAmt;</div></p>
+<p>
+        That epsilon comment cost me a debugging round. I sized the gradient step to
+        the screen resolution while sampling a 320px buffer, so it read sub-pixel
+        and returned near-zero. The effect could only express itself as brightness
+        because the <em>shape</em> information wasn&rsquo;t there.
+</p>
+<p>
+        The trail itself only accumulates while the pointer is actually moving, so
+        it clears when you stop instead of parking a blob on screen:
+</p><div class="code">float speed = smoothstep(0.0006, 0.0090, vlen);
+float splat = exp(-dot(d, d) / uRadius) * 0.62 * speed * (uDt * 60.0);</div><p>Decay is time-based, not per-frame, so it feels the same at 60 and 120fps:</p><div class="code">trailMat.uniforms.uDecay.value = Math.pow(0.020, dt);</div><h2>Don&rsquo;t let the chrome outrun the mesh</h2>
+<p>
+        The page shows a live triangle count and framerate. If post-processing tanks
+        the framerate, that HUD starts lying about what the geometry costs. So the
+        page watches itself and backs off:
+</p><div class="code">if (f &lt; 34 &amp;&amp; !degraded) {
+  if (++slow &gt;= 4) {
+    degraded = true;
+    key.castShadow = false;
+    FX.on = false;
+    fxBtn.setAttribute('aria-pressed', 'false');
+    renderer.setPixelRatio(1);
+    resize(true);
+  }
+} else if (f &gt;= 46) slow = 0;</div><p>
+        Four consecutive slow samples, not one &mdash; a single stutter during mesh
+        upload shouldn&rsquo;t permanently degrade the page. And it flips the button
+        state so the user can see it happened rather than wondering why the effect
+        stopped.
+</p><h2>What I&rsquo;d tell you before you start</h2>
+<ul>
+<li>
+<strong>Pick the right generation mode for the destination.</strong> H3.1
+          at 2M triangles is for renders and 3D printing. For the web, Smart Mesh
+          gets you clean low-poly in about two seconds and skips the entire
+          decimation problem I created for myself.
+</li>
+<li>
+<strong><code>weld()</code> before you simplify.</strong> Always.
+          Unindexed geometry shades flat and your car will look like origami.
+</li>
+<li>
+<strong>Compress the encoding, not the geometry.</strong> Meshopt plus
+          WebP textures got me 35&times; with no visual cost. Decimation is the last
+          resort, not the first.
+</li>
+<li>
+<strong>Keep metalness low on generated meshes.</strong> They have surface
+          noise. A chrome material finds every bit of it.
+</li>
+<li>
+<strong>Check what&rsquo;s on top of your canvas</strong> before you debug
+          your controls.
+</li>
+</ul><p>
+        The honest headline: the 3D step stopped being the hard part. Sourcing
+        geometry used to be the wall &mdash; now it&rsquo;s a photo and a few
+        seconds. The remaining work is normalising what you&rsquo;re handed and
+        compressing it sensibly, and that&rsquo;s ordinary web engineering.
+</p><h2>Links</h2>
+<ul>
+<li>
+<a href="https://www.tripo3d.ai/" target="_blank" rel="noreferrer">Tripo AI</a> &middot;
+<a href="https://studio.tripo3d.ai/" target="_blank" rel="noreferrer">Studio</a> &middot;
+<a href="https://studio.tripo3d.ai/3d-model-gallery/" target="_blank" rel="noreferrer">Model gallery</a>
+</li>
+<li>
+<a href="https://threejs.org/" target="_blank" rel="noreferrer">Three.js</a> &mdash;
+<code>GLTFLoader</code>, <code>OrbitControls</code>,
+<code>MeshoptDecoder</code>
+</li>
+<li>
+<a href="https://gltf-transform.dev/" target="_blank" rel="noreferrer">glTF-Transform</a> &mdash; the
+          compression pipeline
+</li>
+<li>
+<a href="https://github.com/zeux/meshoptimizer" target="_blank" rel="noreferrer">meshoptimizer</a> &mdash;
+          simplifier and encoder
+</li>
+<li>
+<a href="https://buttermax.net/" target="_blank" rel="noreferrer">buttermax</a> &mdash; the cursor that
+          started the shader detour
+</li>
+</ul><p>
+<em>If you want to try Tripo, new accounts get bonus credits with invite
+        code <code>J0SG4G</code>.</em>
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>career-ops: The Open-Source Repo That Runs Your Job Search | Rishabh Sharma</title>
+<meta name="description" content="career-ops (72.5K GitHub stars, MIT) runs inside Claude Code or Codex to score job listings against your CV, flag ghost jobs, and draft tailored CVs and cover l" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/career-ops-open-source-ai-job-search/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Career</p>
+<h1>career-ops: The Open-Source Repo That Runs Your Job Search</h1>
+<p class="lede">career-ops (72.5K GitHub stars, MIT) runs inside Claude Code or Codex to score job listings against your CV, flag ghost jobs, and draft tailored CVs and cover letters without ever applying for you. Setup, India job boards to point it at, and how to use it well when only 5.9% of Indian tech postings are entry level.</p>
+<p class="meta">24 September 2026</p>
+<p>
+        You commented <strong>JOBS</strong>, so here's the setup. career-ops is
+        an open-source job search system that runs inside the AI coding CLI you
+        already use: Claude Code, Codex, OpenCode or Gemini CLI. It had 72,559
+        stars on GitHub on 24 September 2026.
+</p><h2>Why this matters right now</h2>
+<p>
+        Only <strong>5.9%</strong> of Indian tech job postings are entry or
+        junior level. That's 908 out of 15,429 LinkedIn and Naukri postings
+        between 29 May and 29 July 2026, or about eight senior roles for every
+        entry role. Only 0.4% are remote.
+        (<a href="https://www.prepnplaced.com/india-tech-hiring-report-2026" target="_blank" rel="noreferrer">PrepNPlaced India Tech Hiring Report 2026</a>)
+</p>
+<p>
+        With that few openings, sending more applications doesn't help much.
+        Better applications to the right roles do. That's the job this repo does.
+</p><div class="highlight">
+<p style="margin-bottom: 0">
+<strong>The short version:</strong> it scores each job against your CV,
+          flags fake listings and drafts a tailored CV and cover letter. It
+<em>never</em> applies or sends anything for you. You stay in control
+          of every send.
+</p>
+</div><h2 id="repo">The repo: career-ops-hq/career-ops <span class="stars">~72.5K ★</span></h2>
+<p class="repo-link">
+<a href="https://github.com/career-ops-hq/career-ops" target="_blank" rel="noreferrer">github.com/career-ops-hq/career-ops</a>
+</p>
+<p>
+        MIT licensed, and everything runs on your machine, so your CV doesn't
+        get uploaded to anyone's servers.
+</p><h2>What it does</h2>
+<ol>
+<li>
+<strong>Scores each listing from 1 to 5</strong> against your CV and
+          shows how it weighted each requirement, so you can see why a role
+          scored low.
+</li>
+<li><strong>Flags scams and ghost jobs</strong> before you waste an evening on them.</li>
+<li>
+<strong>Drafts an ATS-friendly CV and cover letter</strong> for each
+          role. It rewords what you have and doesn't invent experience.
+</li>
+<li><strong>Scans 100+ company job boards</strong> for new roles.</li>
+<li>
+<strong>Tracks your pipeline</strong> in a terminal dashboard and
+          generates interview prep in STAR format.
+</li>
+</ol>
+<p>
+        What it won't do: submit applications, send emails, or push you toward
+        roles that score under 4.0 unless you override it.
+</p><h2>Setup</h2>
+<p>From the project README:</p>
+<ol>
+<li>Install Node.js and one AI CLI, for example Claude Code or Codex.</li>
+<li>Run <code>npx @santifer/career-ops init</code>.</li>
+<li>Write your CV as a markdown file.</li>
+<li>Optional: install Playwright if you want PDF CVs.</li>
+</ol>
+<p>
+        No paid AI plan? The README lists OpenRouter's free tier and local
+        models as options.
+</p><h2>Where to point it if you're in India</h2>
+<ul>
+<li>
+<a href="https://wellfound.com/role/l/ai-engineer/india" target="_blank" rel="noreferrer">Wellfound: AI engineer jobs in India</a>.
+          700+ roles, including AI Engineer Intern listings, mostly in Bengaluru.
+</li>
+<li>
+<a href="https://internshala.com/fresher-jobs/artificial-intelligence-ai-jobs/" target="_blank" rel="noreferrer">Internshala: AI fresher jobs</a>.
+          Around 140 openings.
+</li>
+</ul><h2>How I'd use it</h2>
+<ul>
+<li>Only apply to roles that score 4 or higher. Read every draft before you send it.</li>
+<li>Five strong applications a week beat fifty copy-paste ones.</li>
+<li>
+          Link two shipped projects in every CV: a live URL and a GitHub repo
+          with a real README. The tool can reword your experience, but it can't
+          build projects for you.
+</li>
+<li>Use the rejection tracking. If the same gap keeps showing up, that's your next project.</li>
+</ul><p>
+        Need projects to link? Start with
+<a href="/learn/25-projects-to-build-to-get-hired-2026/">25 projects to build to get hired in 2026</a>,
+        then read
+<a href="/learn/what-2027-interviews-will-actually-ask/">what 2027 interviews will actually ask you</a>.
+</p><p>
+        Follow
+<a href="https://www.instagram.com/avi_vashishta29/" target="_blank" rel="noreferrer">@avi_vashishta29</a>
+        for one practical AI dev tool a day.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>502 Python Interview Questions to Crack Placements in 2027 | Rishabh Sharma</title>
+<meta name="description" content="502 free Python interview questions: 338 questions with answers in 22 topics, 100 coding exercises with solutions and 64 tricky output snippets, from three GitH" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/502-python-interview-questions/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Roadmap</p>
+<h1>502 Python Interview Questions to Crack Placements in 2027</h1>
+<p class="lede">502 free Python interview questions: 338 questions with answers in 22 topics, 100 coding exercises with solutions and 64 tricky output snippets, from three GitHub repos with 68K+ stars between them. Plus the 4 topics to start with and 3 things to build.</p>
+<p class="meta">5 October 2026</p>
+<p>
+        You commented <strong>python</strong>, so here are all 502, free, with a
+        link for each: 338 interview questions with written answers,
+        100 coding exercises with solutions, and 64
+        tricky "what's the output?" snippets. They come from three GitHub
+        repos, and every link jumps straight to its answer. I removed the
+        questions one repo repeats, so the count is unique questions.
+</p><div class="highlight">
+<p style="margin-bottom: 0">
+<strong>The short version:</strong> Python rounds test three things:
+          how well you know the language (Part 1), whether you can write it
+          (Part 2), and whether you understand what it actually does (Part 3).
+          Start with the 4 topics below, then build the 3 small things after.
+</p>
+</div><h2 id="repos">The three repos</h2>
+<h3>learning-zone/python-basics <span class="stars">~1.6K ★</span></h3>
+<p class="repo-link"><a href="https://github.com/learning-zone/python-basics" target="_blank" rel="noreferrer">github.com/learning-zone/python-basics</a></p>
+<p>338 Python interview questions with answers and code, in 22 topics from data types to concurrency.</p>
+<h3>zhiwehu/Python-programming-exercises <span class="stars">~29.7K ★</span></h3>
+<p class="repo-link"><a href="https://github.com/zhiwehu/Python-programming-exercises" target="_blank" rel="noreferrer">github.com/zhiwehu/Python-programming-exercises</a></p>
+<p>100 programming exercises, each with hints and a full solution. The first ones are labelled beginner to advanced.</p>
+<h3>satwikkansal/wtfpython <span class="stars">~37.1K ★</span></h3>
+<p class="repo-link"><a href="https://github.com/satwikkansal/wtfpython" target="_blank" rel="noreferrer">github.com/satwikkansal/wtfpython</a></p>
+<p>64 surprising Python snippets with explanations of why they behave the way they do. Interviewers love these.</p><h2 id="start">The 4 I'd start with</h2>
+<ol>
+<li><strong>Data types and mutability.</strong> <a href="https://github.com/learning-zone/python-basics#-2-data-types" target="_blank" rel="noreferrer">Data types</a>, <a href="https://github.com/learning-zone/python-basics#-6-core-data-structures" target="_blank" rel="noreferrer">core data structures</a> and <a href="https://github.com/learning-zone/python-basics#-15-mutable-vs-immutable" target="_blank" rel="noreferrer">mutable vs immutable</a>. Start with <a href="https://github.com/learning-zone/python-basics#q-is-a-tuple-mutable-or-immutable" target="_blank" rel="noreferrer">is a tuple mutable or immutable?</a></li>
+<li><strong>Functions, *args and **kwargs.</strong> <a href="https://github.com/learning-zone/python-basics#-7-functions" target="_blank" rel="noreferrer">Functions</a>, <a href="https://github.com/learning-zone/python-basics#-8-lambda-functions" target="_blank" rel="noreferrer">lambdas</a> and <a href="https://github.com/learning-zone/python-basics#q-what-are-args-kwargs-" target="_blank" rel="noreferrer">*args and **kwargs</a>.</li>
+<li><strong>Iterators, generators and decorators.</strong> <a href="https://github.com/learning-zone/python-basics#-16-iterators-and-generators" target="_blank" rel="noreferrer">Iterators and generators</a>, <a href="https://github.com/learning-zone/python-basics#-17-decorators" target="_blank" rel="noreferrer">decorators</a> and <a href="https://github.com/learning-zone/python-basics#-18-context-managers" target="_blank" rel="noreferrer">context managers</a>. This is where Python rounds separate juniors from seniors.</li>
+<li><strong>The "what's the output?" snippets.</strong> All 64 in <a href="#output">Part 3</a>. Read the snippet, guess the output, then read why.</li>
+</ol><h2 id="build">What to build to prove you get it</h2>
+<ol>
+<li>A <strong>decorator</strong> that times any function and logs slow calls.</li>
+<li>A <strong>generator</strong> that reads a huge log file line by line without loading it into memory.</li>
+<li>A <strong>context manager</strong> that opens a database connection and always closes it.</li>
+</ol>
+<p>You don't need all 502. You need to explain generators and decorators while writing one live.</p><h2 id="topics">Jump to a topic</h2>
+<p><a href="#introduction">Introduction</a> (30) · <a href="#data-types">Data Types</a> (34) · <a href="#dictionary">Dictionary</a> (8) · <a href="#operators">Operators</a> (10) · <a href="#control-flow-statements">Control Flow Statements</a> (20) · <a href="#core-data-structures">Core Data Structures</a> (27) · <a href="#functions">Functions</a> (24) · <a href="#lambda-functions">Lambda Functions</a> (8) · <a href="#modules-and-packages">Modules and Packages</a> (14) · <a href="#object-oriented-programming">Object-Oriented Programming</a> (28) · <a href="#exception-handling">Exception Handling</a> (12) · <a href="#file-handling">File Handling</a> (12) · <a href="#memory-management">Memory Management</a> (6) · <a href="#garbage-collector">Garbage Collector</a> (3) · <a href="#mutable-vs-immutable">Mutable vs Immutable</a> (5) · <a href="#iterators-and-generators">Iterators and Generators</a> (13) · <a href="#decorators">Decorators</a> (2) · <a href="#context-managers">Context Managers</a> (2) · <a href="#concurrency-and-parallelism">Concurrency and Parallelism</a> (7) · <a href="#testing-and-debugging">Testing and Debugging</a> (7) · <a href="#miscellaneous">Miscellaneous</a> (61) · <a href="#numerical-computing">Numerical Computing</a> (5) · <a href="#exercises">Coding exercises</a> (100) · <a href="#output">What's the output?</a> (64)</p><h2 id="questions">Part 1: Python interview questions with answers (338)</h2>
+<p class="repo-link">Source: <a href="https://github.com/learning-zone/python-basics" target="_blank" rel="noreferrer">github.com/learning-zone/python-basics</a></p>
+<h3 id="introduction">Introduction (30)</h3>
+<ol start="1">
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-python" target="_blank" rel="noreferrer">What is Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-can-python-do" target="_blank" rel="noreferrer">What can Python do?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-when-is-using-python-the-right-choice-for-a-project" target="_blank" rel="noreferrer">When is using Python the &quot;right choice&quot; for a project?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-some-drawbacks-of-the-python-language" target="_blank" rel="noreferrer">What are some drawbacks of the Python language?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-we-know-python-is-all-the-rage-these-days-but-to-be-truly-accepting-of-a-great-technology-you-must-know-its-pitfalls-as-well" target="_blank" rel="noreferrer">We know Python is all the rage these days. But to be truly accepting of a great technology, you must know its pitfalls as well?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-key-differences-between-python-2-and-3" target="_blank" rel="noreferrer">What are the key differences between Python 2 and 3?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-some-key-differences-to-bear-in-mind-when-coding-in-python-vs-java" target="_blank" rel="noreferrer">What are some key differences to bear in mind when coding in Python vs. Java?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-key-features-of-python" target="_blank" rel="noreferrer">What are the key features of Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-is-a-pyc-file-different-from-a-py-file" target="_blank" rel="noreferrer">How is a .pyc file different from a .py file?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-does-the-python-version-numbering-scheme-work" target="_blank" rel="noreferrer">How does the Python version numbering scheme work?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-implementation-in-python-program" target="_blank" rel="noreferrer">What Are The Implementation In Python Program?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-applications-of-python" target="_blank" rel="noreferrer">What Are Applications of Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-mention-five-benefits-of-using-python" target="_blank" rel="noreferrer">Mention five benefits of using Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-is-python-interpreted-or-compiled" target="_blank" rel="noreferrer">Is Python interpreted or compiled?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-some-alternative-implementations-to-cpython-when-and-why-might-you-use-them" target="_blank" rel="noreferrer">What are some alternative implementations to CPython? When and why might you use them?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-is-python-a-compiled-language" target="_blank" rel="noreferrer">Is Python a compiled language?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-why-python-instead-of-scala-on-spark-when-scala-has-better-performance" target="_blank" rel="noreferrer">Why Python instead of Scala on Spark when Scala has better performance?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-describe-some-features-of-python" target="_blank" rel="noreferrer">Describe some features of Python.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-does-python-execute-code" target="_blank" rel="noreferrer">How does Python execute code?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-difference-between-python-27-and-python-3" target="_blank" rel="noreferrer">What is the difference between Python 2.7+ and Python 3?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-is-python-compiled-if-yes-how-if-not-how" target="_blank" rel="noreferrer">Is Python compiled? If yes, how? If not, how?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-does-dynamically--duck-typed-mean" target="_blank" rel="noreferrer">What does dynamically / duck typed mean?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-when-would-i-not-use-python" target="_blank" rel="noreferrer">When would I not use Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-dry-and-how-can-i-apply-it-through-oop-or-fp" target="_blank" rel="noreferrer">What is DRY, and how can I apply it through OOP or FP?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-when-would-i-use-python" target="_blank" rel="noreferrer">When would I use Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-give-examples-of-python-frameworks" target="_blank" rel="noreferrer">Give examples of Python frameworks.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-is-python-interpreted" target="_blank" rel="noreferrer">How is Python interpreted?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-dynamic-typing" target="_blank" rel="noreferrer">What is Dynamic Typing?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-justify-this-statement-everything-is-an-object-in-python" target="_blank" rel="noreferrer">Justify this statement: Everything is an object in Python.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-difference-between-python-and-java" target="_blank" rel="noreferrer">What is the difference between Python and Java?</a></li>
+</ol>
+<h3 id="data-types">Data Types (34)</h3>
+<ol start="31">
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-i-convert-a-number-to-a-string" target="_blank" rel="noreferrer">How do I convert a number to a string?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-does-python-support-strongly-for-regular-expressions" target="_blank" rel="noreferrer">Does Python support strongly for regular expressions?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-perform-pattern-matching-in-python-explain" target="_blank" rel="noreferrer">How do you perform pattern matching in Python? Explain.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-write-a-regular-expression-that-will-accept-an-email-id-use-the-re-module" target="_blank" rel="noreferrer">Write a regular expression that will accept an email id. Use the re module.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-split-sub-subn-methods-of-re-module-in-python" target="_blank" rel="noreferrer">Explain split(), sub(), subn() methods of re module in Python.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-which-of-the-following-is-an-invalid-statement" target="_blank" rel="noreferrer">Which of the following is an invalid statement?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-output-of-the-following" target="_blank" rel="noreferrer">What is the output of the following?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-output-of-the-following-1" target="_blank" rel="noreferrer">What is the output of the following? (2)</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-output-of-the-following-2" target="_blank" rel="noreferrer">What is the output of the following? (3)</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-write-a-python-function-that-checks-whether-a-passed-string-is-palindrome-or-not" target="_blank" rel="noreferrer">Write a Python function that checks whether a passed string is palindrome Or not?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-join-and-split-in-python" target="_blank" rel="noreferrer">Explain join() and split() in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-is-python-case-sensitive" target="_blank" rel="noreferrer">Is Python case-sensitive?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-remove-the-leading-whitespace-in-a-string" target="_blank" rel="noreferrer">How do you remove the leading whitespace in a string?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-data-types-does-python-support" target="_blank" rel="noreferrer">What data types does Python support?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-docstring" target="_blank" rel="noreferrer">What is a docstring?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-slicing" target="_blank" rel="noreferrer">What is slicing?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-namedtuple" target="_blank" rel="noreferrer">What is a namedtuple?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-declare-a-comment-in-python" target="_blank" rel="noreferrer">How would you declare a comment in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-convert-a-string-into-an-int-in-python" target="_blank" rel="noreferrer">How would you convert a string into an int in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-take-input-in-python" target="_blank" rel="noreferrer">How do you take input in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-frozen-set-in-python" target="_blank" rel="noreferrer">What is a frozen set in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-will-you-capitalize-the-first-letter-of-a-string" target="_blank" rel="noreferrer">How will you capitalize the first letter of a string?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-will-you-check-if-all-characters-in-a-string-are-alphanumeric" target="_blank" rel="noreferrer">How will you check if all characters in a string are alphanumeric?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-concatenation" target="_blank" rel="noreferrer">What is the concatenation?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-will-you-find-in-a-string-the-first-word-that-rhymes-with-cake" target="_blank" rel="noreferrer">How will you find, in a string, the first word that rhymes with &#x27;cake&#x27;?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-calculate-the-length-of-a-string" target="_blank" rel="noreferrer">How do you calculate the length of a string?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-does-the-following-code-output" target="_blank" rel="noreferrer">What does the following code output?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-data-types-supports-in-python-language" target="_blank" rel="noreferrer">What are The Data Types Supports in Python Language?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-in-python-what-is-slicing" target="_blank" rel="noreferrer">In Python what is slicing?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-you-can-convert-a-number-to-a-string" target="_blank" rel="noreferrer">How you can convert a number to a string?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-some-built-in-types-in-python" target="_blank" rel="noreferrer">What are some built-in types in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-bindings--what-does-it-mean-for-a-value-to-be-bound-to-a-variable" target="_blank" rel="noreferrer">What are bindings — what does it mean for a value to be bound to a variable?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-unicode-string" target="_blank" rel="noreferrer">What is a Unicode string?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-indexing-and-slicing" target="_blank" rel="noreferrer">Explain indexing and slicing.</a></li>
+</ol>
+<h3 id="dictionary">Dictionary (8)</h3>
+<ol start="65">
+<li><a href="https://github.com/learning-zone/python-basics#q-how-is-the-implementation-of-pythons-dictionaries-done" target="_blank" rel="noreferrer">How is the Implementation of Python&#x27;s dictionaries done?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-dictionary-in-python" target="_blank" rel="noreferrer">What is a dictionary in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-get-a-list-of-all-the-keys-in-a-dictionary" target="_blank" rel="noreferrer">How do you get a list of all the keys in a dictionary?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-dictionary" target="_blank" rel="noreferrer">What is the Dictionary?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-create-a-dictionary" target="_blank" rel="noreferrer">How do you create a dictionary?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-dict" target="_blank" rel="noreferrer">Explain dict.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-create-a-dictionary-that-preserves-the-order-of-pairs" target="_blank" rel="noreferrer">How do you create a dictionary that preserves the order of pairs?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-can-you-use-a-mutable-data-structure-as-a-key-in-a-dictionary" target="_blank" rel="noreferrer">Can you use a mutable data structure as a key in a dictionary?</a></li>
+</ol>
+<h3 id="operators">Operators (10)</h3>
+<ol start="73">
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-the---and--operators-in-python" target="_blank" rel="noreferrer">Explain the //, %, and ** operators in Python.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-many-kinds-of-operators-do-we-have-in-python-explain-arithmetic-operators" target="_blank" rel="noreferrer">How many kinds of operators do we have in Python? Explain arithmetic operators.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-relational-operators-in-python" target="_blank" rel="noreferrer">Explain relational operators in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-assignment-operators-in-python" target="_blank" rel="noreferrer">What are assignment operators in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-logical-operators-in-python" target="_blank" rel="noreferrer">Explain logical operators in Python.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-membership-operators" target="_blank" rel="noreferrer">What are membership, operators?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-identity-operators-in-python" target="_blank" rel="noreferrer">Explain identity operators in Python.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-finally-tell-us-about-bitwise-operators-in-python" target="_blank" rel="noreferrer">Finally, tell us about bitwise operators in Python.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-work-with-numbers-other-than-those-in-the-decimal-number-system" target="_blank" rel="noreferrer">How would you work with numbers other than those in the decimal number system?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-mention-the-use-of--operator-in-python" target="_blank" rel="noreferrer">Mention the use of // operator in Python?</a></li>
+</ol>
+<h3 id="control-flow-statements">Control Flow Statements (20)</h3>
+<ol start="83">
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-built-in-function-used-in-python-to-iterate-over-a-sequence-of-numbers" target="_blank" rel="noreferrer">What is the built-in function used in Python to iterate over a sequence of numbers?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-statement-that-can-be-used-in-python-if-a-statement-is-required-syntactically-but-the-program-requires-no-action" target="_blank" rel="noreferrer">What is the statement that can be used in Python if a statement is required syntactically but the program requires no action?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-the-ternary-operator-in-python" target="_blank" rel="noreferrer">Explain the ternary operator in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-pass-statement-in-python" target="_blank" rel="noreferrer">What is the pass statement in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-if-you-are-ever-stuck-in-an-infinite-loop-how-will-you-break-out-of-it" target="_blank" rel="noreferrer">If you are ever stuck in an infinite loop, how will you break out of it?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-many-arguments-can-the-range-function-take" target="_blank" rel="noreferrer">How many arguments can the range() function take?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-control-flow-statements" target="_blank" rel="noreferrer">Explain Control flow statements.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-two-major-loop-statements" target="_blank" rel="noreferrer">What are the two major loop statements?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-under-what-circumstances-would-one-use-a--while-statement-rather-than-for" target="_blank" rel="noreferrer">Under what circumstances would one use a  while statement rather than for?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-happens-if-output-an-else-statement-after-after-block" target="_blank" rel="noreferrer">What happens if output an else statement after after block?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-the-use-of-break-and-continue-in-python-looping" target="_blank" rel="noreferrer">Explain the use of break and continue in Python looping.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-when-would-you-use-a-continue-statement-in-a-for-loop" target="_blank" rel="noreferrer">When would you use a continue statement in a for loop?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-when-would-you-use-a-break-statement-in-a-for-loop" target="_blank" rel="noreferrer">When would you use a break statement in a for loop?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-structure-of-a-for-loop" target="_blank" rel="noreferrer">What is the structure of a for loop?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-structure-of-a-while-loop" target="_blank" rel="noreferrer">What is the structure of a while loop?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-use-a-for-loop-and-illustrate-how-you-would-define-and-print-the-characters-in-a-string-out-one-per-line" target="_blank" rel="noreferrer">Use a for loop and illustrate how you would define and print the characters in a string out, one per line.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-given-the-string-i-loveqpython-use-afor-loop-and-illustrate-printing-each-character-tip-to-but-not-including-the-q" target="_blank" rel="noreferrer">Given the string &quot;I LoveQPython&quot; use afor loop and illustrate printing each character tip to, but not including the Q.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-given-the-string-i-love-python-print-out-each-character-except-for-the-spaces-using-a-for-loop" target="_blank" rel="noreferrer">Given the string &quot;I Love Python&quot; print out each character except for the spaces, using a for loop.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-for-loop-is-implemented-in-python-language-as-follows" target="_blank" rel="noreferrer">for loop is implemented in python language as follows:</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-pass-in-python" target="_blank" rel="noreferrer">What is pass in Python?</a></li>
+</ol>
+<h3 id="core-data-structures">Core Data Structures (27)</h3>
+<ol start="103">
+<li><a href="https://github.com/learning-zone/python-basics#q-is-it-possible-to-assign-multiple-var-to-values-in-list" target="_blank" rel="noreferrer">Is it possible to assign multiple var to values in list?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-write-a-sorting-algorithm-for-a-numerical-dataset-in-python" target="_blank" rel="noreferrer">Write a sorting algorithm for a numerical dataset in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-will-you-remove-last-object-from-a-list" target="_blank" rel="noreferrer">How will you remove last object from a list?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-negative-indexes-and-why-are-they-used" target="_blank" rel="noreferrer">What are negative indexes and why are they used?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-many-kinds-of-sequences-are-supported-by-python-what-are-they" target="_blank" rel="noreferrer">How many kinds of sequences are supported by Python? What are they?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-suppose-list1-is-2-33-222-14-25-what-is-list1-1-" target="_blank" rel="noreferrer">Suppose list1 is [2, 33, 222, 14, 25], What is list1[-1] ?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-differentiate-between-append-and-extend-methods" target="_blank" rel="noreferrer">Differentiate between append() and extend() methods.?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-which-of-the-following-is-not-the-correct-syntax-for-creating-a-set" target="_blank" rel="noreferrer">Which of the following is not the correct syntax for creating a set?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-write-a-python-program-to-calculate-the-sum-of-a-list-of-numbers" target="_blank" rel="noreferrer">Write a Python program to calculate the sum of a list of numbers?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-randomize-the-contents-of-a-list-in-place" target="_blank" rel="noreferrer">How would you randomize the contents of a list in-place?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-tuple-unpacking" target="_blank" rel="noreferrer">What is tuple unpacking?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-tuple" target="_blank" rel="noreferrer">What is a Tuple?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-list-comprehensions-feature-of-python-used-for" target="_blank" rel="noreferrer">What is List Comprehensions feature of Python used for?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-lambda-expressions-list-comprehensions-and-generator-expressions" target="_blank" rel="noreferrer">What are lambda expressions, list comprehensions and generator expressions?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-will-be-printed-out-by-the-second-append-statement-below" target="_blank" rel="noreferrer">What will be printed out by the second append() statement below?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-will-be-printed-out-by-the-last-statement-below" target="_blank" rel="noreferrer">What will be printed out by the last statement below?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-reverse-a-list" target="_blank" rel="noreferrer">How do you reverse a list?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-merge-two-sorted-lists" target="_blank" rel="noreferrer">How would you merge two sorted lists?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-tell-me-some-data-structures-in-python" target="_blank" rel="noreferrer">Tell me some data structures in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-list-comprehension-show-with-example" target="_blank" rel="noreferrer">What is List Comprehension? Show with example.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-create-a-list" target="_blank" rel="noreferrer">How do you create a list?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-list-comprehension-why-would-you-use-one" target="_blank" rel="noreferrer">What is a list comprehension? Why would you use one?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-listdict-comprehension" target="_blank" rel="noreferrer">What is list/dict comprehension?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-make-an-array-in-python" target="_blank" rel="noreferrer">How to make an array in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-when-to-use-list--tuple--set--dict" target="_blank" rel="noreferrer">When to use list / tuple / set / dict?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-when-to-use-list-comprehensions-and-when-to-avoid-them" target="_blank" rel="noreferrer">When to use list comprehensions and when to avoid them?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-difference-between-a-tuple-and-a-list-where-will-you-use-each" target="_blank" rel="noreferrer">What is the difference between a tuple and a list? Where will you use each?</a></li>
+</ol>
+<h3 id="functions">Functions (24)</h3>
+<ol start="130">
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-args-kwargs-" target="_blank" rel="noreferrer">What are *args, **kwargs ?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-can-i-pass-optional-or-keyword-parameters-from-one-function-to-another" target="_blank" rel="noreferrer">How can I pass optional or keyword parameters from one function to another?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-higher-ordered-functions" target="_blank" rel="noreferrer">What are higher ordered functions?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-help-and-dir-functions-in-python" target="_blank" rel="noreferrer">Explain help() and dir() functions in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-closure-in-python" target="_blank" rel="noreferrer">What is a closure in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-why-are-identifier-names-with-a-leading-underscore-disparaged" target="_blank" rel="noreferrer">Why are identifier names with a leading underscore disparaged?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-can-you-declare-multiple-assignments-in-one-statement" target="_blank" rel="noreferrer">How can you declare multiple assignments in one statement?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-function" target="_blank" rel="noreferrer">What is a function?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-recursion" target="_blank" rel="noreferrer">What is recursion?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-does-the-function-zip-do" target="_blank" rel="noreferrer">What does the function zip() do?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-counter-in-python" target="_blank" rel="noreferrer">What is a Counter in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-the-use-of-the-nonlocal-keyword-in-python" target="_blank" rel="noreferrer">Explain the use of the &#x27;nonlocal&#x27; keyword in Python.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-global-keyword" target="_blank" rel="noreferrer">What is the global keyword?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-mention-what-are-the-rules-for-local-and-global-variables-in-python" target="_blank" rel="noreferrer">Mention what are the rules for local and global variables in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-can-you-share-global-variables-across-modules" target="_blank" rel="noreferrer">How can you share global variables across modules?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-can-you-return-multiple-values-from-a-function" target="_blank" rel="noreferrer">How can you return multiple values from a function?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-fastest-way-to-swap-the-values-bound-to-two-variables" target="_blank" rel="noreferrer">What is the fastest way to swap the values bound to two variables?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-do-functions-return-something-even-if-there-is-not-a-return-statement" target="_blank" rel="noreferrer">Do functions return something even if there is not a return statement?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-pass-optional-or-keyword-arguments" target="_blank" rel="noreferrer">How to pass optional or keyword arguments.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-use-of-enumerate-in-python" target="_blank" rel="noreferrer">What is the use of enumerate() in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-namespace-vs-scope" target="_blank" rel="noreferrer">Namespace vs scope?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-create-a-python-function" target="_blank" rel="noreferrer">How do you create a Python function?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-does-a-function-return-values" target="_blank" rel="noreferrer">How does a function return values?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-happens-when-a-function-does-not-have-a-return-statement" target="_blank" rel="noreferrer">What happens when a function does not have a return statement?</a></li>
+</ol>
+<h3 id="lambda-functions">Lambda Functions (8)</h3>
+<ol start="154">
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-lambda-what-are-lambda-functions-" target="_blank" rel="noreferrer">What is lambda? What are Lambda Functions ?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-map-function-in-python" target="_blank" rel="noreferrer">What is map function in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-name-few-methods-that-are-used-to-implement-functionally-oriented-programming-in-python" target="_blank" rel="noreferrer">Name few methods that are used to implement Functionally Oriented Programming in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-a-few-methods-to-implement-functionally-oriented-programming-in-python" target="_blank" rel="noreferrer">Explain a few methods to implement Functionally Oriented Programming in Python.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-the-difference-between-map-reduce-and-filter" target="_blank" rel="noreferrer">Explain the difference between map(), reduce(), and filter()?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-can-you-implement-functional-programming-and-why-would-you" target="_blank" rel="noreferrer">How can you implement functional programming and why would you?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-map-filter-reduce-and-lambda" target="_blank" rel="noreferrer">Explain map(), filter(), reduce(), and lambda.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-map-filter-and-reduce-functions" target="_blank" rel="noreferrer">What are map(), filter(), and reduce() functions?</a></li>
+</ol>
+<h3 id="modules-and-packages">Modules and Packages (14)</h3>
+<ol start="162">
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-i-find-the-current-module-name" target="_blank" rel="noreferrer">How do I find the current module name?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-i-access-a-module-written-in-python-from-c" target="_blank" rel="noreferrer">How do I access a module written in Python from C?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-create-your-own-package-in-python" target="_blank" rel="noreferrer">How do you create your own package in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-purpose-of-pythonstartup-pythoncaseok-pythonhome--pythonpath-environment-variables" target="_blank" rel="noreferrer">What is the purpose of PYTHONSTARTUP, PYTHONCASEOK, PYTHONHOME &amp; PYTHONPATH environment variables?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-python-module" target="_blank" rel="noreferrer">What is a Python module?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-name-the-file-related-modules-in-python" target="_blank" rel="noreferrer">Name the File-related modules in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-pythonpath-variable" target="_blank" rel="noreferrer">What is the PYTHONPATH variable?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-where-is-mathpy-socketpy-regexpy-etc-source-file" target="_blank" rel="noreferrer">Where is math.py (socket.py, regex.py, etc.) source file?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-search-path-of-modules" target="_blank" rel="noreferrer">How to Search Path of Modules?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-packages" target="_blank" rel="noreferrer">What are the Packages?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-os-module" target="_blank" rel="noreferrer">OS Module</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-module-and-package-in-python" target="_blank" rel="noreferrer">What is module and package in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-should-i-import-an-entire-module" target="_blank" rel="noreferrer">Should I import an entire module?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-are-modules-used-in-a-python-program" target="_blank" rel="noreferrer">How are modules used in a Python program?</a></li>
+</ol>
+<h3 id="object-oriented-programming">Object-Oriented Programming (28)</h3>
+<ol start="176">
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-i-call-a-method-defined-in-a-base-class-from-a-derived-class-that-overrides-it" target="_blank" rel="noreferrer">How do I call a method defined in a base class from a derived class that overrides it?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-can-i-organize-my-code-to-make-it-easier-to-change-the-base-class" target="_blank" rel="noreferrer">How can I organize my code to make it easier to change the base class?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-inheritance-in-python-with-an-example" target="_blank" rel="noreferrer">Explain Inheritance in Python with an example?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-hierarchical-inheritance" target="_blank" rel="noreferrer">What is Hierarchical Inheritance?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-suppose-class-c-inherits-from-classes-a-and-b-as-class-cabclasses-a-and-b-both-have-their-own-versions-of-method-func-if-we-call-func-from-an-object-of-class-c-which-version-gets-invoked" target="_blank" rel="noreferrer">Suppose class C inherits from classes A and B as class C(A,B).Classes A and B both have their own versions of method func(). If we call func() from an object of class C, which version gets invoked?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-which-methodsfunctions-do-we-use-to-determine-the-type-of-instance-and-inheritance" target="_blank" rel="noreferrer">Which methods/functions do we use to determine the type of instance and inheritance?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-is-python-object-oriented-what-is-object-oriented-programming" target="_blank" rel="noreferrer">Is Python object oriented? what is object oriented programming?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-does-python-supports-interfaces-like-in-java-discuss" target="_blank" rel="noreferrer">Does Python supports interfaces like in Java? Discuss?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-accessors-mutators-property" target="_blank" rel="noreferrer">What are Accessors, mutators, @property?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-accessors-mutators-and-property" target="_blank" rel="noreferrer">What are accessors, mutators, and @property?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-do-you-mean-by-overriding-methods" target="_blank" rel="noreferrer">What do you mean by overriding methods?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-difference-between-methods--constructors" target="_blank" rel="noreferrer">What is the Difference Between Methods &amp; Constructors?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-encapsulation" target="_blank" rel="noreferrer">What is the Encapsulation?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-are-instance-variables-different-from-class-variables" target="_blank" rel="noreferrer">How are instance variables different from class variables?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-method-resolution-order-mro" target="_blank" rel="noreferrer">What is Method Resolution Order (MRO)?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-multiple-inheritance-and-when-should-you-use-it" target="_blank" rel="noreferrer">What is multiple inheritance and when should you use it?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-metaclass" target="_blank" rel="noreferrer">What is a metaclass?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-properties-and-what-is-the-point" target="_blank" rel="noreferrer">What are properties and what is the point?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-polymorphism-and-when-would-i-use-it" target="_blank" rel="noreferrer">What is polymorphism, and when would I use it?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-class-and-what-is-self" target="_blank" rel="noreferrer">What is a class and what is self?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-isinstance" target="_blank" rel="noreferrer">Explain isinstance()</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-static-methods-class-methods-and-instance-methods" target="_blank" rel="noreferrer">What are static methods, class methods, and instance methods?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-difference-between-new-style-and-old-style-classes" target="_blank" rel="noreferrer">Difference between new-style and old-style classes.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-metaclasses" target="_blank" rel="noreferrer">What are Metaclasses?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-descriptor" target="_blank" rel="noreferrer">What is a descriptor?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-mro-method-resolution-order" target="_blank" rel="noreferrer">What is MRO (Method Resolution Order)?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-is-a-python-class-created" target="_blank" rel="noreferrer">How is a Python class created?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-is-a-python-class-instantiated" target="_blank" rel="noreferrer">How is a Python class instantiated?</a></li>
+</ol>
+<h3 id="exception-handling">Exception Handling (12)</h3>
+<ol start="204">
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-the-use-of-try-except-raise-and-finally" target="_blank" rel="noreferrer">Explain the use of try: except: raise, and finally:</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-illustrate-the-proper-use-of-python-error-handling" target="_blank" rel="noreferrer">Illustrate the proper use of Python error handling.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-runtime-errors" target="_blank" rel="noreferrer">What are the Runtime Errors?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-abnormal-termination" target="_blank" rel="noreferrer">What is Abnormal Termination?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-try-block" target="_blank" rel="noreferrer">What is try Block?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-happens-if-you-have-an-error-in-an-__init__-statement" target="_blank" rel="noreferrer">What happens if you have an error in an __init__ statement?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-happens-in-python-if-you-try-to-divide-by-zero" target="_blank" rel="noreferrer">What happens in Python if you try to divide by zero?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-handle-exceptions" target="_blank" rel="noreferrer">How to handle exceptions?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-different-types-of-exceptions-in-python" target="_blank" rel="noreferrer">What are the different types of exceptions in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-write-your-own-custom-exception-handling" target="_blank" rel="noreferrer">How to write your own custom exception handling?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-why-does-exception-handling-have-a-finally-block" target="_blank" rel="noreferrer">Why does exception handling have a finally block?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-happens-if-an-error-occurs-that-is-not-handled-in-the-except-block" target="_blank" rel="noreferrer">What happens if an error occurs that is not handled in the except block?</a></li>
+</ol>
+<h3 id="file-handling">File Handling (12)</h3>
+<ol start="216">
+<li><a href="https://github.com/learning-zone/python-basics#q--how-do-i-copy-a-file-how-to-copy-object-in-python-diff-between-shallow-copy-and-deep-copy" target="_blank" rel="noreferrer">How do I copy a file? How to copy object in Python? Diff between shallow copy and deep copy?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-write-a-one-liner-that-will-count-the-number-of-capital-letters-in-a-file-your-code-should-work-even-if-the-file-is-too-big-to-fit-in-memory" target="_blank" rel="noreferrer">Write a one-liner that will count the number of capital letters in a file. Your code should work even if the file is too big to fit in memory?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-display-the-contents-of-text-file-in-reverse-orderhow-will-you-reverse-a-list" target="_blank" rel="noreferrer">How to display the contents of text file in reverse order?How will you reverse a list?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-write-a-python-program-to-read-a-random-line-from-a-file" target="_blank" rel="noreferrer">Write a Python program to read a random line from a file.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-write-a-python-program-to-count-the-number-of-lines-in-a-text-file" target="_blank" rel="noreferrer">Write a Python program to count the number of lines in a text file?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-write-python-logic-to-count-the-number-of-capital-letters-in-a-file" target="_blank" rel="noreferrer">Write Python logic to count the number of capital letters in a file?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-functions-or-methods-will-you-use-to-delete-a-file-in-python" target="_blank" rel="noreferrer">What functions or methods will you use to delete a file in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-file-handling" target="_blank" rel="noreferrer">What is File Handling?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-how-to-delete-a-file-in-python" target="_blank" rel="noreferrer">Explain how to delete a file in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-count-the-lines-in-a-file" target="_blank" rel="noreferrer">How would you count the lines in a file?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-access-a-file-on-a-linux-server-using-python" target="_blank" rel="noreferrer">How to access a file on a Linux server using Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-all-the-file-processing-modes-supported-by-python" target="_blank" rel="noreferrer">Explain all the file processing modes supported by Python.</a></li>
+</ol>
+<h3 id="memory-management">Memory Management (6)</h3>
+<ol start="228">
+<li><a href="https://github.com/learning-zone/python-basics#q-how-is-memory-managed-in-python" target="_blank" rel="noreferrer">How is memory managed in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-will-you-check-memory-leak-on-linux" target="_blank" rel="noreferrer">How will you check memory leak on Linux?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-importance-of-reference-counting" target="_blank" rel="noreferrer">What is the importance of reference counting?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-size-of-an-integer-in-python" target="_blank" rel="noreferrer">What is the size of an integer in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-does-python-manage-memory" target="_blank" rel="noreferrer">How does Python manage memory?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-will-you-measure-memory-on-a-linux-server" target="_blank" rel="noreferrer">How will you measure memory on a Linux server?</a></li>
+</ol>
+<h3 id="garbage-collector">Garbage Collector (3)</h3>
+<ol start="234">
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-garbage-collection" target="_blank" rel="noreferrer">What is Garbage Collection?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-why-isnt-all-memory-freed-when-python-exits" target="_blank" rel="noreferrer">Why isn&#x27;t all memory freed when Python exits?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-whenever-you-exit-python-is-all-memory-de-allocated" target="_blank" rel="noreferrer">Whenever you exit Python, is all memory de-allocated?</a></li>
+</ol>
+<h3 id="mutable-vs-immutable">Mutable vs Immutable (5)</h3>
+<ol start="237">
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-types-of-objects-support-in-python-language" target="_blank" rel="noreferrer">What Are The Types of Objects Support in Python Language?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-python-is-call-by-value-or-call-by-reference-how-are-arguments-passed-by-value-or-by-reference" target="_blank" rel="noreferrer">Python is Call by Value or Call by Reference? How are arguments passed by value or by reference?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-parameter-passing-mechanism-in-python" target="_blank" rel="noreferrer">Explain parameter-passing mechanism in python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-can-you-copy-an-object-in-python" target="_blank" rel="noreferrer">How can you copy an object in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-is-a-tuple-mutable-or-immutable" target="_blank" rel="noreferrer">Is a tuple mutable or immutable?</a></li>
+</ol>
+<h3 id="iterators-and-generators">Iterators and Generators (13)</h3>
+<ol start="242">
+<li><a href="https://github.com/learning-zone/python-basics#q-in-python-what-are-iterators" target="_blank" rel="noreferrer">In Python what are iterators?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-generators-in-python" target="_blank" rel="noreferrer">What are generators in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-so-what-is-an-iterator-then" target="_blank" rel="noreferrer">So, what is an iterator, then?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-generators-and-iterators-in-python" target="_blank" rel="noreferrer">Explain generators and iterators in python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-generator-what-can-it-be-used-for" target="_blank" rel="noreferrer">What is a generator? What can it be used for?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-generators" target="_blank" rel="noreferrer">What are Generators?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-iterators" target="_blank" rel="noreferrer">What are Iterators?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-can-a-generator-be-used-to-create-iterators-give-an-example" target="_blank" rel="noreferrer">Can a generator be used to create iterators? Give an example.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-can-iterators-be-used-to-create-generators" target="_blank" rel="noreferrer">Can iterators be used to create generators?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-iterators-and-generators" target="_blank" rel="noreferrer">What are iterators and generators?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-does-the-yield-statement-do" target="_blank" rel="noreferrer">What does the yield statement do?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-generator-why-would-i-use-one" target="_blank" rel="noreferrer">What is a generator? Why would I use one?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-yield" target="_blank" rel="noreferrer">What is yield?</a></li>
+</ol>
+<h3 id="decorators">Decorators (2)</h3>
+<ol start="255">
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-decorator-how-do-i-define-my-own" target="_blank" rel="noreferrer">What is a decorator? How do I define my own?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-why-use-function-decorators-give-an-example" target="_blank" rel="noreferrer">Why use function decorators? Give an example.</a></li>
+</ol>
+<h3 id="context-managers">Context Managers (2)</h3>
+<ol start="257">
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-the-use-with-statement-in-python" target="_blank" rel="noreferrer">Explain the use &quot;with&quot; statement in python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-with-statement-and-its-usage" target="_blank" rel="noreferrer">What is the with statement and its usage?</a></li>
+</ol>
+<h3 id="concurrency-and-parallelism">Concurrency and Parallelism (7)</h3>
+<ol start="259">
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-multithreading" target="_blank" rel="noreferrer">What is multithreading?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-why-do-not-my-signal-handlers-work" target="_blank" rel="noreferrer">Why do not my signal handlers work?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-why-is-that-none-of-my-threads-are-not-running-how-can-i-make-it-work" target="_blank" rel="noreferrer">Why is that none of my threads are not running? How can I make it work?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-threads-life-cycle" target="_blank" rel="noreferrer">What is Threads Life Cycle?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-scheduling" target="_blank" rel="noreferrer">What is scheduling?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-does-python-provide-thread-safe-multi-threading" target="_blank" rel="noreferrer">Does Python provide thread-safe multi-threading?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-do-you-mean-by-non-blocking-io" target="_blank" rel="noreferrer">What do you mean by non-blocking I/O?</a></li>
+</ol>
+<h3 id="testing-and-debugging">Testing and Debugging (7)</h3>
+<ol start="266">
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-debug-a-program-in-python-answer-in-brief" target="_blank" rel="noreferrer">How do you debug a program in Python? Answer in brief.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-list-some-pdb-commands" target="_blank" rel="noreferrer">List some pdb commands.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-command-do-we-use-to-debug-a-python-program" target="_blank" rel="noreferrer">What command do we use to debug a Python program?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-tools-that-help-to-find-bugs-or-perform-static-analysis" target="_blank" rel="noreferrer">What are the tools that help to find bugs or perform static analysis?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-unittest-in-python-whats-your-approach-to-unit-testing-in-python" target="_blank" rel="noreferrer">What is unittest in Python? What&#x27;s your approach to unit testing in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-perform-unit-testing-on-your-python-code" target="_blank" rel="noreferrer">How would you perform unit-testing on your Python code?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-i-test-a-python-program-or-component" target="_blank" rel="noreferrer">How do I test a Python program or component?</a></li>
+</ol>
+<h3 id="miscellaneous">Miscellaneous (61)</h3>
+<ol start="273">
+<li><a href="https://github.com/learning-zone/python-basics#q-what-will-be-the-output-of-the-code-below" target="_blank" rel="noreferrer">What will be the output of the code below?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-method" target="_blank" rel="noreferrer">What is a method?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-__slots__-and-when-is-it-useful" target="_blank" rel="noreferrer">What is __slots__ and when is it useful?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-monkey-patching--give-example-" target="_blank" rel="noreferrer">What is Monkey patching ? Give example ?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-serialization-and-deserialization--pickling-and-unpicking" target="_blank" rel="noreferrer">Explain serialization and deserialization / Pickling and unpicking?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-open-a-file-cscorestxt-for-writing" target="_blank" rel="noreferrer">How to open a file c:\scores.txt for writing?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-tkinter" target="_blank" rel="noreferrer">What is TkInter?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-retrieve-data-from-a-table-in-mysql-database-through-python-code" target="_blank" rel="noreferrer">How to retrieve data from a table in MySQL database through Python code?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-generate-a-random-number-in-python" target="_blank" rel="noreferrer">How would you generate a random number in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-with-python-how-do-you-find-out-which-directory-you-are-currently-in" target="_blank" rel="noreferrer">With Python, how do you find out which directory you are currently in?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-make-a-python-script-executable-on-unix" target="_blank" rel="noreferrer">How would you make a Python script executable on Unix?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-differentiate-between-the-append-and-extend-methods-of-a-list" target="_blank" rel="noreferrer">Differentiate between the append() and extend() methods of a list.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-json-describe-in-brief-how-youd-convert-json-data-into-python-data" target="_blank" rel="noreferrer">What is JSON? Describe in brief how you&#x27;d convert JSON data into Python data?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-execute-a-python-script" target="_blank" rel="noreferrer">How do you execute a Python Script?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-namespace-in-python" target="_blank" rel="noreferrer">What is a namespace in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-the-differences-between-local-and-global-namespaces" target="_blank" rel="noreferrer">Explain the differences between local and global namespaces.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-name-the-four-main-types-of-namespaces-in-python" target="_blank" rel="noreferrer">Name the four main types of namespaces in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-when-would-you-use-triple-quotes-as-a-delimiter" target="_blank" rel="noreferrer">When would you use triple quotes as a delimiter?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-use-gui-that-comes-with-python-to-test-your-code" target="_blank" rel="noreferrer">How to use GUI that comes with Python to test your code?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-i-make-a-python-script-executable-on-unix" target="_blank" rel="noreferrer">How do I make a Python script executable on UNIX?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-i-find-undefined-g-symbols-__builtin_new-or-__pure_virtual" target="_blank" rel="noreferrer">How do I find undefined g++ symbols __builtin_new or __pure_virtual?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-i-send-mail-from-a-python-script" target="_blank" rel="noreferrer">How do I send mail from a Python script?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-can-i-mimic-cgi-form-submission-methodpost-i-would-like-to-retrieve-web-pages-that-are-the-result-of-posting-a-form" target="_blank" rel="noreferrer">How can I mimic CGI form submission (METHOD=POST)? I would like to retrieve web pages that are the result of posting a form.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-executing-dml-commands-through-python-programs" target="_blank" rel="noreferrer">Executing DML Commands Through Python Programs?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-python-is-interpreted" target="_blank" rel="noreferrer">How Python is interpreted?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-how-can-you-make-a-python-script-executable-on-unix" target="_blank" rel="noreferrer">Explain how can you make a Python Script executable on Unix?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-how-can-you-generate-random-numbers-in-python" target="_blank" rel="noreferrer">Explain how can you generate random numbers in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-mention-the-use-of-the-split-function-in-python" target="_blank" rel="noreferrer">Mention the use of the split function in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-mention-what-is-the-difference-between-django-pyramid-and-flask" target="_blank" rel="noreferrer">Mention what is the difference between Django, Pyramid, and Flask?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-how-you-can-minimize-the-memcached-server-outages-in-your-python-development" target="_blank" rel="noreferrer">Explain how you can minimize the Memcached server outages in your Python Development?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-what-is-dogpile-effect-how-can-you-prevent-this-effect" target="_blank" rel="noreferrer">Explain what is Dogpile effect? How can you prevent this effect?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-how-memcached-should-not-be-used-in-your-python-project" target="_blank" rel="noreferrer">Explain how Memcached should not be used in your Python project?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-flask--its-benefits" target="_blank" rel="noreferrer">What is Flask &amp; its benefits?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-mention-what-is-flask-wtf-and-what-are-their-features" target="_blank" rel="noreferrer">Mention what is Flask-WTF and what are their features?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-what-is-the-common-way-for-the-flask-script-to-work" target="_blank" rel="noreferrer">Explain what is the common way for the Flask script to work?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-how-you-can-access-sessions-in-flask" target="_blank" rel="noreferrer">Explain how you can access sessions in Flask?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-is-flask-an-mvc-model-and-if-yes-give-an-example-showing-mvc-pattern-for-your-application" target="_blank" rel="noreferrer">Is Flask an MVC model and if yes give an example showing MVC pattern for your application?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-database-connection-in-python-flask" target="_blank" rel="noreferrer">Explain database connection in Python Flask?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-the-standard-python-libraries-commonly-used" target="_blank" rel="noreferrer">What are the standard Python libraries commonly used?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-serialization-formats-in-python" target="_blank" rel="noreferrer">What are serialization formats in Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-version-of-azure-data-factory-are-you-using" target="_blank" rel="noreferrer">What version of Azure Data Factory are you using?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-execute-java-code-from-python" target="_blank" rel="noreferrer">How to execute Java code from Python?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-find-pid-of-a-process-and-how-much-resources-it-is-taking-on-linux" target="_blank" rel="noreferrer">How to find PID of a process and how much resources it is taking on Linux?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-tools-for-data-ingestion" target="_blank" rel="noreferrer">What are tools for data ingestion?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-inheritance" target="_blank" rel="noreferrer">What is inheritance?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-differentiate-between-append-and-extend-methods-of-a-list" target="_blank" rel="noreferrer">Differentiate between append() and extend() methods of a list.</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-explain-ctypes-and-why-you-would-use-them" target="_blank" rel="noreferrer">Explain ctypes and why you would use them?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-do-you-go-about-packaging-python-code" target="_blank" rel="noreferrer">How do you go about packaging Python code?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-does-__some_variable__-dunder--magic-attribute-mean" target="_blank" rel="noreferrer">What does __some_variable__ (dunder / magic attribute) mean?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-difference-between-str-and-repr" target="_blank" rel="noreferrer">What is the difference between str() and repr()?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-middlewares" target="_blank" rel="noreferrer">What are Middlewares?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-generate-random-numbers" target="_blank" rel="noreferrer">How to generate random numbers?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-virtualenv" target="_blank" rel="noreferrer">What is virtualenv?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-a-context-processor" target="_blank" rel="noreferrer">What is a context processor?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-exec-and-eval" target="_blank" rel="noreferrer">What are exec() and eval()?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-pass-command-line-arguments" target="_blank" rel="noreferrer">How to pass command-line arguments?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-are-ord-and-chr" target="_blank" rel="noreferrer">What are ord() and chr()?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-difference-between-input-and-raw_input" target="_blank" rel="noreferrer">Difference between input() and raw_input()?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-why-do-we-write-if-__name__--__main__-in-a-python-script" target="_blank" rel="noreferrer">Why do we write if __name__ == &quot;__main__&quot; in a Python script?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-pep-8" target="_blank" rel="noreferrer">What is PEP 8?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-parameters-should-you-check-when-a-server-is-down" target="_blank" rel="noreferrer">What parameters should you check when a server is down?</a></li>
+</ol>
+<h3 id="numerical-computing">Numerical Computing (5)</h3>
+<ol start="334">
+<li><a href="https://github.com/learning-zone/python-basics#q-how-to-get-indices-of-n-maximum-values-in-a-numpy-array" target="_blank" rel="noreferrer">How to get indices of N maximum values in a NumPy array?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-the-difference-between-numpy-and-scipy" target="_blank" rel="noreferrer">What is the difference between NumPy and SciPy?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-name-few-python-modules-for-statistical-numerical-and-scientific-computations-" target="_blank" rel="noreferrer">Name few Python modules for Statistical, Numerical and scientific computations ?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-what-is-numpy-is-it-better-than-a-list" target="_blank" rel="noreferrer">What is NumPy? Is it better than a list?</a></li>
+<li><a href="https://github.com/learning-zone/python-basics#q-how-would-you-create-an-empty-numpy-array" target="_blank" rel="noreferrer">How would you create an empty NumPy array?</a></li>
+</ol><h2 id="exercises">Part 2: Coding exercises with solutions (100)</h2>
+<p class="repo-link">Source: <a href="https://github.com/zhiwehu/Python-programming-exercises" target="_blank" rel="noreferrer">github.com/zhiwehu/Python-programming-exercises</a></p>
+<h3 id="exercises-1-to-25">Exercises 1 to 25 (25)</h3>
+<ol start="339">
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-1" target="_blank" rel="noreferrer">Exercise 1: Write a program which will find all such numbers which are divisible by 7 but are not a multiple of 5,...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-2" target="_blank" rel="noreferrer">Exercise 2: Write a program which can compute the factorial of a given numbers.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-3" target="_blank" rel="noreferrer">Exercise 3: With a given integral number n, write a program to generate a dictionary that contains (i, i*i) such that...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-4" target="_blank" rel="noreferrer">Exercise 4: Write a program which accepts a sequence of comma-separated numbers from console and generate a list and a...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-5" target="_blank" rel="noreferrer">Exercise 5: Define a class which has at least two methods:</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-6" target="_blank" rel="noreferrer">Exercise 6: Write a program that calculates and prints the value according to the given formula:</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-7" target="_blank" rel="noreferrer">Exercise 7: Write a program which takes 2 digits, X,Y as input and generates a 2-dimensional array. The element value...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-8" target="_blank" rel="noreferrer">Exercise 8: Write a program that accepts a comma separated sequence of words as input and prints the words in a...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-9" target="_blank" rel="noreferrer">Exercise 9: Question£º</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-10" target="_blank" rel="noreferrer">Exercise 10: Write a program that accepts a sequence of whitespace separated words as input and prints the words after...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-11" target="_blank" rel="noreferrer">Exercise 11: Write a program which accepts a sequence of comma separated 4 digit binary numbers as its input and then...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-12" target="_blank" rel="noreferrer">Exercise 12: Write a program, which will find all such numbers between 1000 and 3000 (both included) such that each...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-13" target="_blank" rel="noreferrer">Exercise 13: Write a program that accepts a sentence and calculate the number of letters and digits.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-14" target="_blank" rel="noreferrer">Exercise 14: Write a program that accepts a sentence and calculate the number of upper case letters and lower case letters.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-15" target="_blank" rel="noreferrer">Exercise 15: Write a program that computes the value of a+aa+aaa+aaaa with a given digit as the value of a.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-16" target="_blank" rel="noreferrer">Exercise 16: Use a list comprehension to square each odd number in a list. The list is input by a sequence of...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-17" target="_blank" rel="noreferrer">Exercise 17: Write a program that computes the net amount of a bank account based a transaction log from console input....</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-18" target="_blank" rel="noreferrer">Exercise 18: A website requires the users to input username and password to register. Write a program to check the...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-19" target="_blank" rel="noreferrer">Exercise 19: You are required to write a program to sort the (name, age, height) tuples by ascending order where name...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-20" target="_blank" rel="noreferrer">Exercise 20: Define a class with a generator which can iterate the numbers, which are divisible by 7, between a given...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-21" target="_blank" rel="noreferrer">Exercise 21: Question</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-22" target="_blank" rel="noreferrer">Exercise 22: Write a program to compute the frequency of the words from the input. The output should output after...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-23" target="_blank" rel="noreferrer">Exercise 23: Write a method which can calculate square value of number</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-24" target="_blank" rel="noreferrer">Exercise 24: </a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-25" target="_blank" rel="noreferrer">Exercise 25: Define a class, which have a class parameter and have a same instance parameter.</a></li>
+</ol>
+<h3 id="exercises-26-to-50">Exercises 26 to 50 (25)</h3>
+<ol start="364">
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-26" target="_blank" rel="noreferrer">Exercise 26: Define a function which can compute the sum of two numbers.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-27" target="_blank" rel="noreferrer">Exercise 27: Define a function that can convert a integer into a string and print it in console.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-28" target="_blank" rel="noreferrer">Exercise 28: Define a function that can convert a integer into a string and print it in console.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-29" target="_blank" rel="noreferrer">Exercise 29: Define a function that can receive two integral numbers in string form and compute their sum and then...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-30" target="_blank" rel="noreferrer">Exercise 30: Define a function that can accept two strings as input and concatenate them and then print it in console.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-31" target="_blank" rel="noreferrer">Exercise 31: Define a function that can accept two strings as input and print the string with maximum length in...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-32" target="_blank" rel="noreferrer">Exercise 32: Define a function that can accept an integer number as input and print the &quot;It is an even number&quot; if the...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-32" target="_blank" rel="noreferrer">Exercise 33: Define a function which can print a dictionary where the keys are numbers between 1 and 3 (both included)...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-34" target="_blank" rel="noreferrer">Exercise 34: Define a function which can print a dictionary where the keys are numbers between 1 and 20 (both included)...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-35" target="_blank" rel="noreferrer">Exercise 35: Define a function which can generate a dictionary where the keys are numbers between 1 and 20 (both...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-36" target="_blank" rel="noreferrer">Exercise 36: Define a function which can generate a dictionary where the keys are numbers between 1 and 20 (both...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-37" target="_blank" rel="noreferrer">Exercise 37: Define a function which can generate and print a list where the values are square of numbers between 1 and...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-38" target="_blank" rel="noreferrer">Exercise 38: Define a function which can generate a list where the values are square of numbers between 1 and 20 (both...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-39" target="_blank" rel="noreferrer">Exercise 39: Define a function which can generate a list where the values are square of numbers between 1 and 20 (both...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-40" target="_blank" rel="noreferrer">Exercise 40: Define a function which can generate a list where the values are square of numbers between 1 and 20 (both...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-41" target="_blank" rel="noreferrer">Exercise 41: Define a function which can generate and print a tuple where the value are square of numbers between 1 and...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-42" target="_blank" rel="noreferrer">Exercise 42: With a given tuple (1,2,3,4,5,6,7,8,9,10), write a program to print the first half values in one line and...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-43" target="_blank" rel="noreferrer">Exercise 43: Write a program to generate and print another tuple whose values are even numbers in the given tuple...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-44" target="_blank" rel="noreferrer">Exercise 44: Write a program which accepts a string as input to print &quot;Yes&quot; if the string is &quot;yes&quot; or &quot;YES&quot; or &quot;Yes&quot;,...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-45" target="_blank" rel="noreferrer">Exercise 45: Write a program which can filter even numbers in a list by using filter function. The list is:...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-46" target="_blank" rel="noreferrer">Exercise 46: Write a program which can map() to make a list whose elements are square of elements in...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-47" target="_blank" rel="noreferrer">Exercise 47: Write a program which can map() and filter() to make a list whose elements are square of even number in...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-48" target="_blank" rel="noreferrer">Exercise 48: Write a program which can filter() to make a list whose elements are even number between 1 and 20 (both...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-49" target="_blank" rel="noreferrer">Exercise 49: Write a program which can map() to make a list whose elements are square of numbers between 1 and 20 (both...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-50" target="_blank" rel="noreferrer">Exercise 50: Define a class named American which has a static method called printNationality.</a></li>
+</ol>
+<h3 id="exercises-51-to-75">Exercises 51 to 75 (25)</h3>
+<ol start="389">
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-51" target="_blank" rel="noreferrer">Exercise 51: Define a class named American and its subclass NewYorker.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-52" target="_blank" rel="noreferrer">Exercise 52: Define a class named Circle which can be constructed by a radius. The Circle class has a method which can...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-53" target="_blank" rel="noreferrer">Exercise 53: Define a class named Rectangle which can be constructed by a length and width. The Rectangle class has a...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-54" target="_blank" rel="noreferrer">Exercise 54: Define a class named Shape and its subclass Square. The Square class has an init function which takes a...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-55" target="_blank" rel="noreferrer">Exercise 55: Please raise a RuntimeError exception.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-56" target="_blank" rel="noreferrer">Exercise 56: Write a function to compute 5/0 and use try/except to catch the exceptions.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-57" target="_blank" rel="noreferrer">Exercise 57: Define a custom exception class which takes a string message as attribute.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-58" target="_blank" rel="noreferrer">Exercise 58: Assuming that we have some email addresses in the &quot;username@companyname.com&quot; format, please write program...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-59" target="_blank" rel="noreferrer">Exercise 59: Assuming that we have some email addresses in the &quot;username@companyname.com&quot; format, please write program...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-60" target="_blank" rel="noreferrer">Exercise 60: Write a program which accepts a sequence of words separated by whitespace as input to print the words...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-61" target="_blank" rel="noreferrer">Exercise 61: Print a unicode string &quot;hello world&quot;.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-62" target="_blank" rel="noreferrer">Exercise 62: Write a program to read an ASCII string and to convert it to a unicode string encoded by utf-8.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-63" target="_blank" rel="noreferrer">Exercise 63: Write a special comment to indicate a Python source code file is in unicode.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-64" target="_blank" rel="noreferrer">Exercise 64: Write a program to compute 1/2+2/3+3/4+...+n/n+1 with a given n input by console (n&gt;0).</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-65" target="_blank" rel="noreferrer">Exercise 65: Write a program to compute:</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-66" target="_blank" rel="noreferrer">Exercise 66: The Fibonacci Sequence is computed based on the following formula:</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-67" target="_blank" rel="noreferrer">Exercise 67: The Fibonacci Sequence is computed based on the following formula:</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-68" target="_blank" rel="noreferrer">Exercise 68: Please write a program using generator to print the even numbers between 0 and n in comma separated form...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-69" target="_blank" rel="noreferrer">Exercise 69: Please write a program using generator to print the numbers which can be divisible by 5 and 7 between 0...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-70" target="_blank" rel="noreferrer">Exercise 70: Please write assert statements to verify that every number in the list [2,4,6,8] is even.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-71" target="_blank" rel="noreferrer">Exercise 71: Please write a program which accepts basic mathematic expression from console and print the evaluation result.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-72" target="_blank" rel="noreferrer">Exercise 72: Please write a binary search function which searches an item in a sorted list. The function should return...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-73" target="_blank" rel="noreferrer">Exercise 73: Please write a binary search function which searches an item in a sorted list. The function should return...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-74" target="_blank" rel="noreferrer">Exercise 74: Please generate a random float where the value is between 10 and 100 using Python math module.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-75" target="_blank" rel="noreferrer">Exercise 75: Please generate a random float where the value is between 5 and 95 using Python math module.</a></li>
+</ol>
+<h3 id="exercises-76-to-100">Exercises 76 to 100 (25)</h3>
+<ol start="414">
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-76" target="_blank" rel="noreferrer">Exercise 76: Please write a program to output a random even number between 0 and 10 inclusive using random module and...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-77" target="_blank" rel="noreferrer">Exercise 77: Please write a program to output a random number, which is divisible by 5 and 7, between 0 and 10...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-78" target="_blank" rel="noreferrer">Exercise 78: Please write a program to generate a list with 5 random numbers between 100 and 200 inclusive.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-79" target="_blank" rel="noreferrer">Exercise 79: Please write a program to randomly generate a list with 5 even numbers between 100 and 200 inclusive.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-80" target="_blank" rel="noreferrer">Exercise 80: Please write a program to randomly generate a list with 5 numbers, which are divisible by 5 and 7 ,...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-81" target="_blank" rel="noreferrer">Exercise 81: Please write a program to randomly print a integer number between 7 and 15 inclusive.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-82" target="_blank" rel="noreferrer">Exercise 82: Please write a program to compress and decompress the string &quot;hello world!hello world!hello world!hello...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-83" target="_blank" rel="noreferrer">Exercise 83: Please write a program to print the running time of execution of &quot;1+1&quot; for 100 times.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-84" target="_blank" rel="noreferrer">Exercise 84: Please write a program to shuffle and print the list [3,6,7,8].</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-85" target="_blank" rel="noreferrer">Exercise 85: Please write a program to shuffle and print the list [3,6,7,8].</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-86" target="_blank" rel="noreferrer">Exercise 86: Please write a program to generate all sentences where subject is in [&quot;I&quot;, &quot;You&quot;] and verb is in [&quot;Play&quot;,...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-87" target="_blank" rel="noreferrer">Exercise 87: Please write a program to print the list after removing delete even numbers in [5,6,77,45,22,12,24].</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-88" target="_blank" rel="noreferrer">Exercise 88: By using list comprehension, please write a program to print the list after removing delete numbers which...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-89" target="_blank" rel="noreferrer">Exercise 89: By using list comprehension, please write a program to print the list after removing the 0th, 2nd, 4th,6th...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-90" target="_blank" rel="noreferrer">Exercise 90: By using list comprehension, please write a program generate a 3*5*8 3D array whose each element is 0.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-91" target="_blank" rel="noreferrer">Exercise 91: By using list comprehension, please write a program to print the list after removing the 0th,4th,5th...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-92" target="_blank" rel="noreferrer">Exercise 92: By using list comprehension, please write a program to print the list after removing the value 24 in...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-93" target="_blank" rel="noreferrer">Exercise 93: With two given lists [1,3,6,78,35,55] and [12,24,35,24,88,120,155], write a program to make a list whose...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-94" target="_blank" rel="noreferrer">Exercise 94: With a given list [12,24,35,24,88,120,155,88,120,155], write a program to print this list after removing...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-95" target="_blank" rel="noreferrer">Exercise 95: Define a class Person and its two child classes: Male and Female. All classes have a method &quot;getGender&quot;...</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-96" target="_blank" rel="noreferrer">Exercise 96: Please write a program which count and print the numbers of each character in a string input by console.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-97" target="_blank" rel="noreferrer">Exercise 97: Please write a program which accepts a string from console and print it in reverse order.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-98" target="_blank" rel="noreferrer">Exercise 98: Please write a program which accepts a string from console and print the characters that have even indexes.</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-99" target="_blank" rel="noreferrer">Exercise 99: Please write a program which prints all permutations of [1,2,3]</a></li>
+<li><a href="https://github.com/zhiwehu/Python-programming-exercises/blob/master/100%2B%20Python%20challenging%20programming%20exercises%20for%20Python%203.md#question-100" target="_blank" rel="noreferrer">Exercise 100: Write a program to solve a classic ancient Chinese puzzle:</a></li>
+</ol><h2 id="output">Part 3: Tricky &quot;what&#x27;s the output?&quot; snippets (64)</h2>
+<p class="repo-link">Source: <a href="https://github.com/satwikkansal/wtfpython" target="_blank" rel="noreferrer">github.com/satwikkansal/wtfpython</a></p>
+<h3 id="strain-your-brain">Strain your brain! (31)</h3>
+<ol start="439">
+<li><a href="https://github.com/satwikkansal/wtfpython#-first-things-first-" target="_blank" rel="noreferrer">First things first!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-strings-can-be-tricky-sometimes" target="_blank" rel="noreferrer">Strings can be tricky sometimes</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-be-careful-with-chained-operations" target="_blank" rel="noreferrer">Be careful with chained operations</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-how-not-to-use-is-operator" target="_blank" rel="noreferrer">How not to use is operator</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-hash-brownies" target="_blank" rel="noreferrer">Hash brownies</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-deep-down-were-all-the-same" target="_blank" rel="noreferrer">Deep down, we&#x27;re all the same.</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-disorder-within-order-" target="_blank" rel="noreferrer">Disorder within order</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-keep-trying-" target="_blank" rel="noreferrer">Keep trying...</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-for-what" target="_blank" rel="noreferrer">For what?</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-evaluation-time-discrepancy" target="_blank" rel="noreferrer">Evaluation time discrepancy</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-is-not--is-not-is-not-" target="_blank" rel="noreferrer">is not ... is not is (not ...)</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-a-tic-tac-toe-where-x-wins-in-the-first-attempt" target="_blank" rel="noreferrer">A tic-tac-toe where X wins in the first attempt!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-schrödingers-variable-" target="_blank" rel="noreferrer">Schrödinger&#x27;s variable</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-the-chicken-egg-problem-" target="_blank" rel="noreferrer">The chicken-egg problem</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-subclass-relationships" target="_blank" rel="noreferrer">Subclass relationships</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-methods-equality-and-identity" target="_blank" rel="noreferrer">Methods equality and identity</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-all-true-ation-" target="_blank" rel="noreferrer">All-true-ation</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-the-surprising-comma" target="_blank" rel="noreferrer">The surprising comma</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-strings-and-the-backslashes" target="_blank" rel="noreferrer">Strings and the backslashes</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-not-knot" target="_blank" rel="noreferrer">not knot!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-half-triple-quoted-strings" target="_blank" rel="noreferrer">Half triple-quoted strings</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-whats-wrong-with-booleans" target="_blank" rel="noreferrer">What&#x27;s wrong with booleans?</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-class-attributes-and-instance-attributes" target="_blank" rel="noreferrer">Class attributes and instance attributes</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-yielding-none" target="_blank" rel="noreferrer">yielding None</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-yielding-from-return-" target="_blank" rel="noreferrer">Yielding from... return!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-nan-reflexivity-" target="_blank" rel="noreferrer">Nan-reflexivity</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-mutating-the-immutable" target="_blank" rel="noreferrer">Mutating the immutable!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-the-disappearing-variable-from-outer-scope" target="_blank" rel="noreferrer">The disappearing variable from outer scope</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-the-mysterious-key-type-conversion" target="_blank" rel="noreferrer">The mysterious key type conversion</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-lets-see-if-you-can-guess-this" target="_blank" rel="noreferrer">Let&#x27;s see if you can guess this?</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-exceeds-the-limit-for-integer-string-conversion" target="_blank" rel="noreferrer">Exceeds the limit for integer string conversion</a></li>
+</ol>
+<h3 id="slippery-slopes">Slippery Slopes (16)</h3>
+<ol start="470">
+<li><a href="https://github.com/satwikkansal/wtfpython#-modifying-a-dictionary-while-iterating-over-it" target="_blank" rel="noreferrer">Modifying a dictionary while iterating over it</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-stubborn-del-operation" target="_blank" rel="noreferrer">Stubborn del operation</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-the-out-of-scope-variable" target="_blank" rel="noreferrer">The out of scope variable</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-deleting-a-list-item-while-iterating" target="_blank" rel="noreferrer">Deleting a list item while iterating</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-lossy-zip-of-iterators-" target="_blank" rel="noreferrer">Lossy zip of iterators</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-loop-variables-leaking-out" target="_blank" rel="noreferrer">Loop variables leaking out!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-beware-of-default-mutable-arguments" target="_blank" rel="noreferrer">Beware of default mutable arguments!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-catching-the-exceptions" target="_blank" rel="noreferrer">Catching the Exceptions</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-same-operands-different-story" target="_blank" rel="noreferrer">Same operands, different story!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-name-resolution-ignoring-class-scope" target="_blank" rel="noreferrer">Name resolution ignoring class scope</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-rounding-like-a-banker-" target="_blank" rel="noreferrer">Rounding like a banker</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-needles-in-a-haystack-" target="_blank" rel="noreferrer">Needles in a Haystack</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-splitsies-" target="_blank" rel="noreferrer">Splitsies</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-wild-imports-" target="_blank" rel="noreferrer">Wild imports</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-all-sorted-" target="_blank" rel="noreferrer">All sorted?</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-midnight-time-doesnt-exist" target="_blank" rel="noreferrer">Midnight time doesn&#x27;t exist?</a></li>
+</ol>
+<h3 id="the-hidden-treasures">The Hidden treasures! (9)</h3>
+<ol start="486">
+<li><a href="https://github.com/satwikkansal/wtfpython#-okay-python-can-you-make-me-fly" target="_blank" rel="noreferrer">Okay Python, Can you make me fly?</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-goto-but-why" target="_blank" rel="noreferrer">goto, but why?</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-brace-yourself" target="_blank" rel="noreferrer">Brace yourself!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-lets-meet-friendly-language-uncle-for-life" target="_blank" rel="noreferrer">Let&#x27;s meet Friendly Language Uncle For Life</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-even-python-understands-that-love-is-complicated" target="_blank" rel="noreferrer">Even Python understands that love is complicated</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-yes-it-exists" target="_blank" rel="noreferrer">Yes, it exists!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-ellipsis-" target="_blank" rel="noreferrer">Ellipsis</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-inpinity" target="_blank" rel="noreferrer">Inpinity</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-lets-mangle" target="_blank" rel="noreferrer">Let&#x27;s mangle</a></li>
+</ol>
+<h3 id="appearances-are-deceptive">Appearances are deceptive! (3)</h3>
+<ol start="495">
+<li><a href="https://github.com/satwikkansal/wtfpython#-skipping-lines" target="_blank" rel="noreferrer">Skipping lines?</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-teleportation" target="_blank" rel="noreferrer">Teleportation</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-well-something-is-fishy" target="_blank" rel="noreferrer">Well, something is fishy...</a></li>
+</ol>
+<h3 id="miscellaneous-2">Miscellaneous (5)</h3>
+<ol start="498">
+<li><a href="https://github.com/satwikkansal/wtfpython#--is-faster" target="_blank" rel="noreferrer">+= is faster</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-lets-make-a-giant-string" target="_blank" rel="noreferrer">Let&#x27;s make a giant string!</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-slowing-down-dict-lookups-" target="_blank" rel="noreferrer">Slowing down dict lookups</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-bloating-instance-dicts-" target="_blank" rel="noreferrer">Bloating instance dicts</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-minor-ones-" target="_blank" rel="noreferrer">Minor Ones</a></li>
+</ol><h2>How I'd use this</h2>
+<ul>
+<li>Answer each question out loud before you open the answer. Interviews test explaining, not recognising.</li>
+<li>Do the coding exercises without looking at the hints first. Time yourself: 15 minutes each.</li>
+<li>For every output snippet you get wrong, write one line on why. That's your revision sheet for the night before.</li>
+<li>Build the 3 things above and push them to GitHub. "I wrote my own context manager" beats "I know Python" on a resume.</li>
+</ul><p>
+        Doing JavaScript too? Read
+<a href="/learn/518-javascript-interview-questions/">518 JavaScript interview questions</a>.
+</p><p>
+        Follow
+<a href="https://www.instagram.com/avi_vashishta29/" target="_blank" rel="noreferrer">@avi_vashishta29</a>
+        for one practical AI dev resource a day.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

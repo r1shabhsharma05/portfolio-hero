@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Made of Things: My Name Where Every Letter Turns Into Something From My Life | Rishabh Sharma</title>
+<meta name="description" content="Type motion where each letter of my name turns into a glossy 3D thing: my laptop, a rocket for the YC startups, my coffee and a 3D emoji of me, made with Codex." />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/made-of-things-type-motion/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Made of Things: My Name Where Every Letter Turns Into Something From My Life</h1>
+<p class="lede">Type motion where each letter of my name turns into a glossy 3D thing: my laptop, a rocket for the YC startups, my coffee and a 3D emoji of me, made with Codex. Six modes (lens, pop, shuffle, wave, sticker, burst), one spring per letter, no libraries.</p>
+<p class="meta">14 November 2026</p>
+<p>I saw a type experiment on Threads where you run the cursor over a headline and the letters under it turn into little 3D objects: a rocket, a nerd face, a pair of headphones. I wanted my own version, with my name, where every object is something from my life. <a href="https://www.avivashishta.com/lab/things" target="_blank" rel="noreferrer">Play with it at avivashishta.com/lab/things</a>.</p>
+<p>It opens with the things dealing into a spinning ring around a loading counter. At 100% each one flies out of the ring into a letter of my name and turns into that letter. Then move over &quot;Rishabh Sharma&quot; and the letters under your cursor turn back into things, with a label saying what each one has to do with me. There are no buttons on the page: press 1 to 6 to change how the letters move.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex makes eighteen glossy 3D emoji, one of them me (from my illustrated avatar), and macOS Vision cuts them out. Every letter is a slot holding the glyph and an image. Each slot has one number, how far it has turned, from 0 (the letter) to 1 (the thing). Each mode only sets where that number wants to go; one spring per slot gets it there, so every mode overshoots and settles the same way.</p></div><h2>Step 1: the things (Codex)</h2>
+<p>Eighteen things across my three worlds. Build: a laptop, a rocket (the two YC startups), a robot (my AI agents), a keycap, a lightning bolt. Brand: a camera, a ring light, a mic, a phone, a heart, a clapperboard. Learn: books, a pencil, a graduation cap, a light bulb, a mug of coffee, some sparkles. And me: a 3D emoji head made from my avatar, attached as a reference image.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Subject: a 3D emoji head of the young Indian man in the attached reference image: his big curly black hair, thin black rectangular glasses, warm brown skin, a friendly confident smile. Keep his likeness (hair, glasses, face shape) but make it a cute glossy 3D emoji head, head only, no body.</p>
+<p>Style: a premium glossy 3D emoji icon: soft rounded chunky shapes, smooth glossy plastic and soft clay materials, bright saturated colours, soft studio lighting with gentle highlights, a slight three-quarter view, one single object only, centered with generous empty margin, on a pure seamless flat white background (#ffffff), no ground shadow, no text, no logos. Square 1:1, 1024x1024.</p>
+</div>
+</div><pre><code class="language-bash">codex exec --skip-git-repo-check -C ./raw -i avatar.png -- - &lt; avi-smile.txt
+bun scripts/prepare-things.mjs ./raw
+</code></pre>
+<p>Two things to know: <code>-i</code> takes several files, so put <code>--</code> before the <code>-</code> that reads the prompt from stdin, or Codex treats it as another image. And run the jobs one at a time; parallel ones fail silently. The prepare script cuts each one out with macOS Vision (<code>scripts/cutout.swift</code>), trims it, and pads it into a 360px square so every thing fills the same box as a letter.</p>
+<h2>Step 2: a slot per letter</h2>
+<p>Each letter is a span with the glyph and an image stacked on top of it. Layout never changes: the thing is absolutely positioned over its letter, so nothing reflows while letters turn.</p>
+<pre><code class="language-tsx">&lt;span className={styles.slot}&gt;
+  &lt;span className={styles.glyph}&gt;{ch}&lt;/span&gt;
+  &lt;img className={styles.obj} alt=&quot;&quot; /&gt;
+&lt;/span&gt;
+</code></pre>
+<p>One <code>requestAnimationFrame</code> loop owns every slot. It writes transforms directly (React only renders the text once), and only when the string changed:</p>
+<pre><code class="language-ts">const g = clamp(1 - s.a, 0, 1.3);  // the letter shrinks as the thing grows
+const o = Math.max(0, s.a);
+glyph.style.transform = `translate3d(0,${lift}px,0) scale(${g})`;
+img.style.transform = `translate3d(-50%,-50%,0) rotate(${s.rot}deg) scale(${o})`;
+</code></pre>
+<p>The clamp lets the letter grow past full size, so when a thing springs back into its letter, the letter lands slightly too big and bounces.</p>
+<h2>Step 3: six modes, one spring</h2>
+<p>Every mode just picks a target for each slot:</p>
+<ul>
+<li><strong>Lens:</strong> distance from the pointer, through a smoothstep. The nearest letter becomes the biggest thing and leans away from the cursor.</li>
+<li><strong>Pop:</strong> touch a letter and it turns into the next thing for 0.9 seconds.</li>
+<li><strong>Shuffle:</strong> near the pointer the things flicker like a slot machine; in a ring around them the letters scramble.</li>
+<li><strong>Wave:</strong> a sine wave travels along the name, lifting letters into things as it passes. Your pointer&#39;s side of the screen steers it.</li>
+<li><strong>Sticker:</strong> click a letter to stick a thing on it, with a die-cut white edge (four 1px <code>drop-shadow</code>s) and a random tilt.</li>
+<li><strong>Burst:</strong> click and every nearby thing is thrown out with gravity and spin, and the letters grow back with a bounce.</li>
+</ul>
+<p>Then one spring moves each slot toward its target:</p>
+<pre><code class="language-ts">s.v += ((target - s.a) * 240 - s.v * 19) * dt;  // a little underdamped
+s.a += s.v * dt;
+</code></pre>
+<p>With those numbers it overshoots by about 8%, which is the whole feel. One spring for all six modes means switching mode mid-motion never jumps.</p>
+<h2>The loader and the hand-off</h2>
+<p>While the images download, they deal into a ring one by one, in step with a counter in the middle. The ring spins slowly (each item spins the other way inside it, so the things stay upright) and opens out as the count climbs. The counter follows the real downloads but never runs faster than about 1.4 seconds, so the ring still has time to deal when everything is cached.</p>
+<p>At 100% the counter lifts away and the letters take over. Each letter finds its thing in the ring, reads where it is on screen and how big it is, and starts its own image there:</p>
+<pre><code class="language-ts">const r = ringImg.getBoundingClientRect();
+s.fx = r.left + r.width / 2 - s.cx;   // offset from the letter to the ring item
+s.fy = r.top + r.height / 2 - s.cy;
+s.s0 = r.width / (fs * 0.94);         // the ring item&#39;s size, as a fraction of the letter&#39;s
+ringItem.style.visibility = &quot;hidden&quot;; // the letter&#39;s copy takes its place in the same frame
+</code></pre>
+<p>Then the offset eases to zero along a small arc while the thing grows, 45ms apart left to right. Once a thing arrives, its target goes back to 0 and the spring turns it into the letter, which lands a little too big and bounces. Things nobody took shrink away. Because the letter&#39;s copy starts exactly where the ring item was, you never see the swap. If nobody moves for a few seconds after that, a ghost pointer drifts over the name so the page is never still.</p>
+<h2>The small things</h2>
+<ul>
+<li><strong>Captions:</strong> in lens and pop, the biggest thing gets a small label underneath: &quot;Coffee first&quot;, &quot;Two YC startups&quot;.</li>
+<li><strong>No controls on the page.</strong> Keys 1 to 6 switch between the modes, and typing a letter sets off every matching letter, so it works from the keyboard too.</li>
+<li><strong>The longest word fits the screen:</strong> the loop measures each word and shrinks the font if one is wider than the page.</li>
+<li><strong>Preloaded and decoded</strong> before the intro, so swapping a thing is just changing the image <code>src</code>.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a type motion page (React, no animation libraries). A big serif headline, where every letter is a span holding the glyph plus an absolutely positioned cut-out 3D object image (about 1em square) on top of it. Each letter has a value a from 0 (letter) to 1 (object) driven by a spring: v += ((target - a) * 240 - v * 19) * dt; a += v * dt. Each frame, scale the glyph by clamp(1 - a, 0, 1.3) and the object by max(0, a). Write transforms directly in one requestAnimationFrame loop.</p>
+<p>Modes only set the target: lens (smoothstep of distance to the pointer, radius about 1em), pop (hovered letter becomes the next object for 0.9 s), shuffle (objects cycle every 90 ms near the pointer and letters scramble in a ring around it), wave (a travelling sine wave), sticker (click to toggle, white die-cut edge from drop-shadows) and burst (click throws nearby objects out with gravity and spin while the letters grow back). While the images load, deal them into a slowly spinning ring around a percentage counter. At 100%, start each letter's object at its ring item's screen position and size, hide the ring item, fly it to the letter on an eased arc, then spring it back into the letter, left to right. Show a caption under the biggest object, and let a ghost pointer wander over the text when idle.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Descent: A Replit Site Where Scrolling Falls Through Seven Worlds Hidden Inside a Book | Rishabh Sharma</title>
+<meta name="description" content="A scroll-driven infinite zoom through 15 nested illustrations, from a bookshop into a book, a ship, a snow globe and out to a star, then back again. How the han" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/the-descent-infinite-zoom-book-webgl-replit/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>The Descent: A Replit Site Where Scrolling Falls Through Seven Worlds Hidden Inside a Book</h1>
+<p class="lede">A scroll-driven infinite zoom through 15 nested illustrations, from a bookshop into a book, a ship, a snow globe and out to a star, then back again. How the hand-written WebGL shader, the slow-down at each world, the loader and the ink-reveal type work, what I removed, and what still has seams.</p>
+<p class="meta">29 September 2026</p>
+<h2>Overview</h2>
+<p>
+        The Descent opens on an old title page: <em>The Book Without End</em>,
+        with <em>a tale within a tale</em> underneath, and the lettering
+        soaks in like ink. When you scroll, you don't move down the page. You
+        move <em>into</em> it. A bookshop at night has an open book on a
+        reading stand. Inside the book is a ship on a moonlit sea. Through
+        the ship's porthole is the captain's cabin, and on the chart table is
+        a snow globe with a village inside it. It goes on through an attic, an
+        observatory and out to a single star, and then the star turns out to
+        contain the bookshop you started in.
+</p>
+<p>
+<strong>Try it:</strong>
+<a href="https://inkwell-press-the-descent.replit.app" target="_blank" rel="noreferrer"
+          >inkwell-press-the-descent.replit.app</a>. Scroll slowly, and scroll back up to reverse the journey.
+</p>
+<p>
+        I built it with <a href="https://replit.com/" target="_blank" rel="noreferrer">Replit Agent</a> as a
+        landing page for Inkwell Press, a made-up publisher of illustrated
+        fiction. It's a piece of visual storytelling, not a working shop:
+        there's no catalogue, checkout or backend. This post covers how it
+        works, taken from the shipped code rather than the agent's summary,
+        what I changed along the way, and what still isn't right.
+</p><div class="highlight">
+<p>
+<strong>What it is:</strong> 15 illustrated image layers, each one
+          sitting in the exact centre of the one before it at half the size,
+          composited by a hand-written WebGL 1 shader. Scroll position sets
+          the zoom. Seven of the layers are named worlds where the scroll
+          slows down and a line of the story fades in.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> Vite, plain TypeScript, raw WebGL 1 with a
+          Canvas 2D fallback. No Three.js and no animation library. The whole
+          script is about 19&nbsp;KB. Type is IM Fell English and IM Fell
+          English SC. Images are WebP: 3072×1728 on desktop (5.3&nbsp;MB for
+          all 15), 1536×864 on phones (1.7&nbsp;MB).
+</p>
+</div><h2>The seven worlds</h2>
+<p>
+        Each named world has an "establishing" image, where you arrive, and a
+        "portal" image, which zooms into the object that leads to the next
+        world. Seven worlds use 14 images. The 15th is a loop image that
+        takes you from inside the star back to the shop.
+</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr><th>World</th><th>What you see</th><th>The way in</th><th>Story line</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>The Shop</td>
+<td>A small bookshop at night, rain on the windows</td>
+<td>An antique book open on its stand</td>
+<td><em>(the title page)</em></td>
+</tr>
+<tr>
+<td>The Sea</td>
+<td>A three-masted ship on a moonlit sea</td>
+<td>One glowing porthole</td>
+<td>"Beyond the page, the sea lay waiting."</td>
+</tr>
+<tr>
+<td>The Cabin</td>
+<td>A captain's cabin by candlelight</td>
+<td>A snow globe on the chart table</td>
+<td>"In the captain's keeping, a winter slept."</td>
+</tr>
+<tr>
+<td>The Village</td>
+<td>A snowy mountain village at blue hour</td>
+<td>One warm cottage window</td>
+<td>"One window kept the night at bay."</td>
+</tr>
+<tr>
+<td>The Attic</td>
+<td>A writer's attic study at night</td>
+<td>A gilded painting on the wall</td>
+<td>"Within, a world hung upon the wall."</td>
+</tr>
+<tr>
+<td>The Observatory</td>
+<td>An old domed observatory</td>
+<td>A brass telescope eyepiece</td>
+<td>"And there, a glass was turned toward heaven."</td>
+</tr>
+<tr>
+<td>The Star</td>
+<td>An ink-blue, teal and amber nebula</td>
+<td>One white-gold star</td>
+<td>"Even the stars had a story within."</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+        Every story line describes the portal, not the world. That's the
+        point of them: each line tells you where you're about to go next.
+</p><h2>How the zoom works</h2>
+<p>
+        The whole effect rests on one rule, which the shader's opening comment
+        states: every image is the level nested inside the previous one,
+        filling exactly its centre half. If the shop is 100% wide, the book's
+        page is exactly 50% wide in the middle of it. The sea image is drawn
+        into that 50%, the porthole takes the middle 25%, and so on.
+</p>
+<p>
+        Because of that, the zoom is one number. Scroll position is converted
+        to a depth <code>z</code> between 0 and 15. The integer part picks
+        which image is the outermost layer, and the fractional part sets its
+        scale to <code>2<sup>fract(z)</sup></code>, a value between 1 and 2.
+        When it reaches 2, the next image fills the screen at exactly scale 1,
+        so the shader moves one level down and starts again. Nothing jumps,
+        because both frames look identical.
+</p>
+<p>
+        On each frame the shader samples up to four images at once: the
+        current one at <code>q</code>, the next at <code>q × 2</code>, then
+<code>q × 4</code> and <code>q × 8</code>. Each inner image is blended
+        over the outer one with a soft rectangular mask (a 3% feather at the
+        edges), which is what hides the border between them. Four layers is
+        enough because anything deeper is too small to see.
+</p><h3>Scrolling slows down at each world</h3>
+<p>
+        If scroll mapped straight to depth, you would fly past every world at
+        the same speed. Instead, the zoom speed drops to a quarter within a
+        quarter level of each named world, then smoothly returns to full
+        speed by half a level away. The code builds a 6,000-entry lookup table
+        of "scroll needed per bit of depth" when the page loads, and finds your
+        depth each frame with a binary search.
+</p>
+<p>
+        I measured the result from the shipped numbers: the areas near the
+        seven worlds are 23% of the depth, but they take up 48% of the scroll.
+        So you spend about half your time looking at the worlds and only half
+        travelling between them. That's the most important piece of pacing in
+        the site.
+</p>
+<p>
+        The page is 3.5 screen heights of scroll per level on desktop (52.5
+        screens in total) and 2 per level on phones. The actual scroll
+        position is smoothed, moving 10% closer to the target each frame, so a
+        hard flick of the trackpad still reads as a smooth descent.
+</p><h3>The loop</h3>
+<p>
+        When you reach the bottom of the page, the script jumps you back to the
+        top. Because the 15th image is the loop image, which leads back into
+        the shop, you just keep going and don't notice the jump. The title page
+        only shows on the first pass; after one loop it stays hidden. Adding
+<code>?loop=0</code> to the URL turns looping off.
+</p><h2>What makes it feel physical</h2>
+<p>
+        With nothing but a zoom it looks like a slideshow. These smaller
+        effects, all in the one fragment shader, are what make it look like
+        travelling:
+</p>
+<ul>
+<li>
+<strong>Zoom blur that depends on speed.</strong> The shader averages
+          up to 8 samples along a line toward the centre. The blur strength
+          comes from how fast you're scrolling, so it's sharp when you stop
+          and streaks when you go fast. When you're still it takes just one
+          sample; on phones it takes at most 4.
+</li>
+<li>
+<strong>Colour fringing at the edges</strong> (chromatic aberration),
+          also based on speed, and turned off on phones.
+</li>
+<li>
+<strong>A slight spiral.</strong> The whole image rotates by up to
+          about 1.4° over one full loop, following a sine wave, so the
+          descent feels like it's turning very slowly.
+</li>
+<li>
+<strong>Drift.</strong> Moving the pointer shifts the view up to
+          1.2% of the frame, eased so it lags behind your hand. On phones,
+          touch position does the same, and on Android the device's tilt
+          sensor can drive it too. iOS needs a permission prompt for the tilt
+          sensor, so the code doesn't use it there.
+</li>
+<li>
+<strong>Painted "life".</strong> A small amount of animated noise
+          moves the texture coordinates, so the paintings shimmer slightly.
+          It's held still in the middle of the frame, so the part you're
+          heading toward stays sharp.
+</li>
+<li>
+<strong>Grain and vignette:</strong> film grain at 7% (stronger in
+          dark areas) and a 40% vignette. A 3% overscan keeps the drift from
+          showing the edge of the image.
+</li>
+</ul><h2>Loading 15 large images without stalling</h2>
+<p>
+        The desktop images add up to 5.3&nbsp;MB. The loader never tries to
+        fetch all of them. It keeps six GPU texture slots and a "wanted" list
+        of the current level, the next three, and one more in whichever
+        direction you're scrolling. Other details from the loader:
+</p>
+<ul>
+<li>At most three images download at once, sorted by how soon you'll need them.</li>
+<li>Only one texture is uploaded to the GPU per frame, so uploads don't cause visible stutter.</li>
+<li>A failed image gets three attempts in total, with waits of 0.4 and then 1.6 seconds between them.</li>
+<li>Decoded images more than six levels away are dropped from memory.</li>
+<li>
+          Until the first four levels are ready, you see a static poster JPEG
+          of the shop. The WebGL canvas fades in over it after that, so the
+          first screen never looks broken.
+</li>
+<li>
+          Phones (up to 820px wide) get the 1536px images. The pixel ratio
+          is capped at 2 everywhere (1.5 in the Canvas 2D fallback).
+</li>
+</ul>
+<p>
+        The renderer also handles <code>webglcontextlost</code>. If the
+        browser takes the GPU context away, which happens on phones more than
+        you'd expect, it rebuilds the program and uploads the textures again
+        rather than leaving a black screen. If WebGL isn't available at all,
+        a Canvas 2D renderer takes over. It draws the same four nested images
+        with <code>drawImage</code> and a gradient vignette, without the blur,
+        grain or shimmer.
+</p><h2>What I changed along the way</h2><h3>A title page instead of a landing page</h3>
+<p>
+        The first version was a normal publisher homepage laid over the zoom:
+        a header, navigation, buttons, a progress display, and a scroll
+        prompt, with lines like "Small print runs. Big worlds." at each stop.
+        I had all of it removed. The images carry the whole thing, and every
+        piece of UI made it feel more like a website and less like a book.
+</p>
+<p>
+        What replaced it is a title page. The imprint, the title, a thin gold
+        rule and the subtitle each reveal with a CSS mask: a gradient that
+        goes from solid to transparent is slid across the text, so it looks
+        like ink spreading from left to right. They're staggered over about
+        six seconds. The type is IM Fell English, a digitised 17th-century
+        typeface, with the small-caps version for the imprint and the large
+        initial "T".
+</p>
+<p>
+        That "T" was being clipped. It's set 1.32× larger than the rest of
+        the title with <code>line-height: 0</code>, so it sticks out past the
+        title's box. The fix was padding around the title
+        (<code>.3em .12em .12em</code>) so the letter has room.
+</p><h3>Bringing the story back</h3>
+<p>
+        Removing the promotional copy also removed the only text in the later
+        worlds, which left them feeling empty. So I asked for the story to
+        come back as one line per world, in the bottom-right corner. The lines
+        use the same italic type and the same ink reveal as the title, with no
+        panel or background behind them, just a soft text shadow so they're
+        readable on bright images.
+</p>
+<p>
+        Their timing comes from depth, not from time. A line starts to appear
+        0.62 levels before its world, is fully shown by 0.2 before, and fades
+        out between 0.22 and 0.55 after. It also rises 6px as it appears. If
+        you stop scrolling halfway through a line's reveal, it stays
+        half-revealed, which makes it feel like part of the scroll rather than
+        an animation playing over it.
+</p><h3>Reduced motion and no JavaScript</h3>
+<p>
+        A tiny inline script in the <code>&lt;head&gt;</code> adds a
+<code>zoom</code> class to the page unless
+<code>prefers-reduced-motion</code> is on. Every part of the zoom
+        layout depends on that class. Without it, either because you asked for
+        less motion or because JavaScript didn't run, you get the same seven
+        worlds as a normal page: a heading, the image and the story line for
+        each. The same markup is also what screen readers get in the zoom
+        version, where it's visually hidden, so the world names, image
+        descriptions and story text are always available.
+</p><h2>What still isn't right</h2>
+<p>
+        I'd rather say this than have you find it:
+</p>
+<ul>
+<li>
+<strong>Some transitions show seams.</strong> The feathered mask
+          hides the edge of each image, but where the painted texture doesn't
+          match on both sides of the border, you can see it as you pass
+          through.
+</li>
+<li>
+<strong>Round portals stretch.</strong> The porthole, the snow globe
+          and the telescope eyepiece are circles, but each inner image is a
+          16:9 rectangle. Around a few of them the zoom visibly stretches.
+          The fix would be to paint the images so each portal really fills
+          its centre rectangle, not a code change.
+</li>
+<li>
+<strong>Leftover copy.</strong> The page's meta description still
+          says Inkwell publishes "Twelve books a year", and the old headlines
+          are still in the JavaScript bundle, though they're never displayed.
+</li>
+<li>
+<strong>Not every caption has been checked by eye.</strong> The
+          build passed its checks and the preview renders, but I haven't
+          scrolled through every world on every device to watch each new line
+          appear.
+</li>
+</ul><h2>A prompt to build your own</h2>
+<p>
+        I didn't keep this as one prompt; the site came together over several
+        rounds. This is a single prompt I wrote afterwards from the shipped
+        code, so you can get the same structure in one go. Bring your own
+        images, or ask the agent to generate them, and read the note after it
+        first.
+</p><div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt" id="descent-prompt">Build an "infinite zoom" storytelling landing page: scrolling travels inward through a chain of illustrated worlds nested inside each other, and loops back to the start.<p>Images</p>
+<ul>
+<li>15 images at 16:9 (3072×1728 for desktop, 1536×864 for screens ≤820px wide), WebP.</li>
+<li>The rule everything depends on: each image must be exactly what you&#39;d see inside the centre half of the previous image. Image N+1 fills the middle 50% of image N.</li>
+<li>7 named worlds, 2 images each: an establishing shot, then a &quot;portal&quot; shot that zooms toward the object leading to the next world. The 15th image leads from the last world back into the first, so the loop is seamless.</li>
+</ul>
+<p>Renderer</p>
+<ul>
+<li>Hand-written WebGL 1, one full-screen triangle pair, one fragment shader. No Three.js.</li>
+<li>Scroll position maps to a depth z in [0, 15). floor(z) picks the outer image; scale it by 2^fract(z). Composite it with the next 3 images at q×2, q×4, q×8, each blended in with a feathered rectangular mask (~3% feather).</li>
+<li>Cover-fit the 16:9 plate to any viewport, with 3% overscan.</li>
+<li>Radial zoom blur toward the centre (up to 8 taps, 4 on mobile, 1 when still), strength based on scroll speed. Speed-based chromatic aberration at the edges, desktop only.</li>
+<li>Rotate the whole stack up to ~1.4° over one loop as a sine wave.</li>
+<li>Pointer moves the view up to 1.2% of the frame, eased. Use touch position on mobile.</li>
+<li>Subtle animated noise on the texture coordinates, held still in the centre of the frame. Film grain ~7%, vignette ~40%.</li>
+<li>Canvas 2D fallback if WebGL is unavailable. Handle webglcontextlost / restored.</li>
+</ul>
+<p>Pacing</p>
+<ul>
+<li>Page height: 3.5 viewport heights per level on desktop, 2 on mobile, with a sticky full-screen stage.</li>
+<li>Slow the zoom to 1/4 speed within 0.25 levels of each named world, smoothly back to full speed by 0.5 levels. Precompute a lookup table and invert it with a binary search.</li>
+<li>Smooth the scroll position (move 10% toward the target per frame). Scrolling up reverses. At the bottom, jump to the top without a visible change; ?loop=0 disables looping.</li>
+</ul>
+<p>Loading</p>
+<ul>
+<li>Keep 6 GPU texture slots. Wanted list: current level, the next 3, and one more in the scroll direction. Max 3 downloads at once, 1 GPU upload per frame, 3 attempts per image with backoff, drop decoded images more than 6 levels away.</li>
+<li>Show a static poster JPEG until the first 4 levels are on the GPU, then fade the canvas in.</li>
+</ul>
+<p>Type and story</p>
+<ul>
+<li>Opening title page in IM Fell English (small caps for the imprint and a large initial letter): imprint, title, thin gold rule, italic subtitle. Reveal each with a sliding gradient mask so it looks like ink soaking in. Give the large initial enough padding that it isn&#39;t clipped. Fade the title out over the first half-level, and don&#39;t show it again after a loop.</li>
+<li>One italic story line per world after the first, bottom-right, no panel, soft text shadow. Tie it to depth, not time: reveal from 0.62 to 0.2 levels before the world, fade out 0.22 to 0.55 after, same ink mask, rising 6px.</li>
+<li>No header, navigation, buttons, progress bar or scroll prompt.</li>
+</ul>
+<p>Accessibility</p>
+<ul>
+<li>Only enable the zoom layout when JavaScript runs and prefers-reduced-motion is off (add a class from an inline head script). Otherwise show the worlds as a normal page: heading, image with alt text, and story line for each. Keep that markup for screen readers in the zoom version.</div></div></li>
+</ul>
+<p>
+        The images are the hard part, and the prompt can't fix that for you.
+        The code will composite whatever you give it, but if image N+1 doesn't
+        really match the centre of image N, you'll see a seam on every
+        transition. Test the chain at small size first by placing each image
+        at half scale in the centre of the one before it, and check the
+        borders before you build anything.
+</p><h2>Recap</h2>
+<ul>
+<li>
+          The Descent is 15 images, each nested in the centre half of the
+          previous one, so the entire zoom is a single number:
+<code>2<sup>fract(z)</sup></code>.
+</li>
+<li>
+          Scrolling slows to a quarter speed near each of the seven worlds,
+          so half your scroll is spent looking at them rather than travelling
+          between them.
+</li>
+<li>
+          Speed-based blur, a slight spiral, pointer drift, shimmer and grain
+          make the zoom feel like movement. A windowed loader keeps only six
+          images on the GPU at once.
+</li>
+<li>
+          I removed the landing-page UI, added an ink-reveal title page, and
+          brought back one story line per world. Reduced motion and no-JS both
+          get a static version.
+</li>
+<li>
+          Seams and stretched round portals are still visible in places.
+          Those need better images, not more code.
+</li>
+<li>
+          Try it at
+<a href="https://inkwell-press-the-descent.replit.app" target="_blank" rel="noreferrer"
+            >inkwell-press-the-descent.replit.app</a>.
+</li>
+</ul><p>
+        More scroll-driven Replit builds:
+<a href="/learn/prompt-scroll-scrubbed-cinematic-site-webgl-replit/"
+          >a scroll-scrubbed cinematic WebGL site</a>,
+<a href="/learn/prompt-premium-property-site-scroll-choreography-replit/"
+          >a premium property site with scroll choreography</a>, and
+<a href="/learn/cosmo-3d-robot-companion-threejs-replit/"
+          >Cosmo, a 3D robot companion you can boop and throw</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

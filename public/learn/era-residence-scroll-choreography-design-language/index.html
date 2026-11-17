@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Design Language of Era Residence: Scroll as Choreography | Rishabh Sharma</title>
+<meta name="description" content="A breakdown of era-residence.com: split-text reveals with matching exits, a different parallax per section built on sticky rather than pin, viewport-gated video" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/era-residence-scroll-choreography-design-language/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>The Design Language of Era Residence: Scroll as Choreography</h1>
+<p class="lede">A breakdown of era-residence.com: split-text reveals with matching exits, a different parallax per section built on sticky rather than pin, viewport-gated video, continuous theme swapping, and a logo whose spin speed tracks your scroll velocity.</p>
+<p class="meta">7 September 2026</p>
+<h2>Overview</h2>
+<p>
+        Most property websites treat scroll as a scrollbar problem &mdash; get the
+        visitor from the hero to the contact form with as little friction as
+        possible.
+<a href="https://www.era-residence.com/" target="_blank" rel="noreferrer" rel="noopener">Era Residence</a>,
+        the marketing site for a residential development in Estepona, treats
+        scroll as the entire medium. Nothing on the page is static; every section
+        has its own rhythm, its own entrance, its own exit, and the whole thing is
+        stitched together by a handful of quiet feedback mechanisms that never let
+        you forget the page is listening to you.
+</p><div class="highlight">
+<p style="margin-bottom: 0">
+<strong>What this is:</strong> a look at how that design language is
+          built &mdash; the fonts, the palette, the parallax, the video and image
+          treatment, and the small orchestration details that make it feel
+          considered rather than assembled.
+</p>
+</div><h2>1. Type as terrain, not text</h2>
+<p>
+        The typography does two jobs at once: it has to read as a luxury
+        Mediterranean development, and it has to survive being sliced apart,
+        rotated, and flown across the screen dozens of times per page &mdash;
+        because nearly every piece of text on the site is animated in via
+        character, word or line splitting (GSAP&rsquo;s SplitText). That
+        constraint shapes the choice. A high-contrast serif carries the big
+        statements &mdash; &ldquo;Crafted to Endure,&rdquo; &ldquo;Light &amp;
+        Flow,&rdquo; &ldquo;Your Private Sanctuary&rdquo; &mdash; where the flare
+        of a serif reads as considered even mid-flight, rotated 90&deg; and
+        rotating back to rest. A cleaner sans handles the surrounding copy,
+        labels, and UI chrome, where legibility during motion matters more than
+        character.
+</p>
+<p>
+        The interesting decision is architectural, not stylistic: text never
+        simply appears.
+</p>
+<ul>
+<li>
+<strong>Headlines</strong> split into characters and rotate in from
+          90&deg; with a 10rem horizontal offset.
+</li>
+<li>
+<strong>Sub-headings</strong> split into words and characters and flip
+          in on the Y-axis.
+</li>
+<li>
+<strong>Body paragraphs</strong> split into lines and rise from behind a
+          mask, like a blind lifting rather than text fading up.
+</li>
+</ul>
+<p>
+        Three different physical metaphors for three different type roles, applied
+        consistently across all twenty-six sections. That consistency reads as
+        intentional &mdash; the same headline treatment in the hero as in the
+        footer, the same paragraph-reveal in the amenities grid as in the location
+        panel.
+</p><h2>2. A palette that argues for warmth without shouting it</h2>
+<p>
+        Nothing about the color system is loud. The site leans into warm neutrals
+        &mdash; sandstone, terracotta-adjacent, sun-bleached masonry &mdash; which
+        is exactly the palette a Mediterranean coastal development should reach
+        for, but it is applied with restraint: large fields of near-white and warm
+        grey give the imagery room to carry the color, and the site&rsquo;s actual
+        accent color shows up sparingly, mostly in small UI moments (the scrollbar
+        fill, active states, tab highlights) rather than as a design flourish. The
+        effect is that photography and video do the color work, and the interface
+        stays quiet enough not to compete with a listing photo of a terrace at
+        golden hour.
+</p>
+<p>
+        There is also a <code>[data-theme]</code> and <code>[data-bg]</code> system
+        running under the hood &mdash; sections are tagged <code>light</code>,
+<code>dark</code>, or <code>color</code>, and as you scroll a ScrollTrigger
+        watches which theme-tagged element sits behind a fixed piece of UI (like
+        the logo) and swaps its color classes accordingly. It is the same trick
+        dark-mode toggles use, but applied continuously as you scroll rather than
+        as a single switch &mdash; so the top-left mark and nav labels are always
+        legible against whatever is currently behind them, without you ever
+        noticing the swap happen.
+</p><h2>3. Parallax that is different on every section, on purpose</h2>
+<p>
+        This is the site&rsquo;s real signature: there is no single parallax effect
+        reused down the page. Each section gets a distinct scroll-linked behavior,
+        hand-tuned to what that section is trying to say.
+</p>
+<ul>
+<li>
+<strong>The hero</strong> does not just parallax &mdash; it dives. As you
+          scroll through an oversized wrapper (3.3&times; the viewport height), the
+          foreground content lifts away faster than the background image, and once
+          they separate, the background scales from 1&times; to 2&times; with its
+          transform origin pinned low in the frame, so the motion reads as a camera
+          pushing into the terrace rather than an image sliding.
+</li>
+<li>
+<strong>The &ldquo;Benefits&rdquo; intro</strong> animates something
+          almost nobody animates: <code>word-spacing</code>. A line of type
+          physically pulls its words apart as you scroll past it, so the sentence
+          itself seems to stretch under the weight of the scroll.
+</li>
+<li>
+<strong>The location section</strong> turns sideways. The vertical scroll
+          distance is mathematically tied to how wide the horizontal content track
+          is, so you scroll down and the content slides across &mdash; with title
+          lines drifting at different rates in opposite directions and a decorative
+          flower drifting counter to the content, giving the section real depth
+          instead of a flat sideways pan.
+</li>
+<li>
+<strong>The architecture section</strong> uses two
+<code>clip-path</code> &ldquo;curtains&rdquo; that peel open like a
+          shutter, then the whole intro scales up 1.84&times; while flower motifs
+          push outward to the edges of the frame &mdash; the visual grammar of a
+          camera pulling back to reveal a wider shot.
+</li>
+<li>
+<strong>The footer</strong> closes the show by literally shrinking the
+          page: as you approach the bottom, the entire body clips inward into a
+          smaller frame while the footer content scales up underneath it, so the
+          site appears to contract into a closing card.
+</li>
+</ul>
+<p>
+        No two of these use the same easing, the same duration, or the same trigger
+        range. That is a lot of bespoke work for what could have been one reusable
+        &ldquo;fade and slide&rdquo; component &mdash; and it is exactly why the
+        site does not feel like a template. Underneath the variety, though, there is
+        real discipline: every one of these is built from CSS
+<code>position: sticky</code> plus a scroll-linked timeline, never
+        GSAP&rsquo;s heavier pin mechanism &mdash; which is why none of it stutters
+        even while the page is also running a custom-eased smooth-scroll layer.
+</p><h2>4. Video and image as texture, not content</h2>
+<p>
+        Video on this site is not used for narrative &mdash; it is used as ambient
+        texture. Short, looping, muted clips (bougainvillea flowers swaying, water,
+        foliage) sit behind or beside text blocks purely to add a sense of a living
+        place, and they are gated so they only play while their section is actually
+        on-screen &mdash; the moment a clip scrolls out of view it pauses, and it
+        resumes exactly where it left off when you scroll back. That is not a
+        performance afterthought; it is why a page with this much simultaneous
+        animation never feels like it is fighting itself for GPU time.
+</p>
+<p>
+        Images follow a similar discipline in how they are revealed rather than just
+        how they are compressed. A hero image does not fade in &mdash; it is masked
+        by a wipe, or clipped by a polygon that opens like a shutter, or scaled from
+        a slightly zoomed-in starting point down to rest, so the &ldquo;load&rdquo;
+        of an image becomes a designed moment rather than a pop. Different sections
+        choose different unveiling geometry (a straight wipe here, an angled
+<code>clip-path</code> there), which is the image equivalent of the parallax
+        variety above &mdash; the same principle of &ldquo;no two reveals are
+        identical&rdquo; applied to photography instead of type.
+</p><h2>5. Entry and exit, not just entry</h2>
+<p>
+        The detail that separates this from a typical scroll-reveal site is that
+        everything has a symmetrical, opposite-direction exit. Most sites animate
+        content in and then simply leave it there, or fade it out generically when
+        you scroll away. Here, every reveal primitive &mdash; the character flip,
+        the word rotation, the line-mask rise, the <code>clip-path</code> wipe
+        &mdash; has a mirrored version that plays in reverse when you scroll back up
+        past it, or when you navigate away entirely. Text that flew in rotating
+        forward flies out rotating backward; lines that rose up sink back down.
+</p>
+<p>
+        It is a small thing, but it is what makes scrolling back up through the page
+        feel like rewinding a specific sequence rather than just re-triggering
+        effects out of order &mdash; and it is the same mechanism that makes the
+        page-to-page transitions (this is technically a single-page app under the
+        hood) feel like one continuous piece of film rather than a hard cut between
+        documents.
+</p><h2>6. The logo that is always listening</h2>
+<p>
+        The clearest piece of ambient feedback on the whole site is the smallest:
+        the mark in the top-left corner never stops spinning, and its spin speed is
+        tied directly to how fast you are scrolling. Scroll gently and it settles at
+        a slow, constant rotation. Flick the page hard and it spins up in that same
+        direction; let go and it eases back down to its resting speed over the
+        following second.
+</p>
+<p>
+        It is a tiny detail, but it is doing real communicative work &mdash; a
+        persistent, low-key confirmation that your scroll input is being tracked and
+        responded to in real time, everywhere on the page, independent of whatever
+        section-specific animation happens to be running. Most feedback on a
+        scrolling site is local &mdash; a progress bar, a section indicator. This
+        one is global and constant, which is why it registers as a piece of brand
+        personality rather than a UI widget.
+</p><h2>7. Making you wait, on purpose</h2>
+<p>
+        Before any of this starts, the site makes you wait &mdash; deliberately. A
+        full-screen preloader holds the page behind an arch-shaped mask while the
+        logo&rsquo;s letters assemble, a progress bar fills along a hand-tuned
+        easing curve (not linear &mdash; it surges and settles the way a real
+        loading process does), and the arch itself widens and lifts as the bar
+        completes, then dives upward off the top of the screen to reveal the hero
+        underneath. Only once that sequence finishes does the page unlock scrolling
+        and hand control to the visitor.
+</p>
+<p>
+        The reasoning is defensible even though it costs a few seconds: this is a
+        site built entirely on a custom smooth-scroll engine, dozens of scroll-linked
+        timelines, and heavy imagery, and letting someone start scrolling before all
+        of that is registered and measured would mean broken triggers, mistimed
+        reveals, or a jarring layout shift mid-animation. The preloader is not
+        stalling for its own sake &mdash; it is making sure the elaborate
+        choreography that follows never has to correct itself in front of you. It
+        also does the polite thing on repeat visits: if you have already been to the
+        site this session, it recognises that and plays a short version of the same
+        sequence instead of making you sit through the full intro twice.
+</p><h2>What actually makes it work</h2>
+<p>
+        None of these ideas &mdash; scroll-linked type reveals, section-specific
+        parallax, ambient scroll feedback, a gated loader &mdash; are individually
+        novel. Scroll-triggered animation is one of the most common patterns on the
+        modern web, and any one of these effects shows up somewhere on thousands of
+        sites.
+</p>
+<p>
+        What makes Era Residence read as considered rather than default is the
+        combination:
+</p>
+<ul>
+<li>No two sections share an animation.</li>
+<li>Every entrance has a matching, opposite-direction exit.</li>
+<li>
+          The small feedback details &mdash; the spinning logo, the theme-swapping
+          UI &mdash; run continuously rather than as one-off flourishes.
+</li>
+<li>
+          The whole system is built on a shared timing language: a handful of named
+          eases and durations reused everywhere, so that even though every section
+          looks different, the site never feels inconsistent.
+</li>
+<li>
+          Everything scroll-linked rides on <code>position: sticky</code> rather
+          than a heavyweight pin, so the variety costs nothing in smoothness.
+</li>
+</ul>
+<p>
+        The variety is deliberate; the discipline underneath it is what keeps that
+        variety from turning into noise.
+</p>
+<p>
+        I have since turned all of this into a single build brief for an agent —
+<a href="/learn/prompt-premium-property-site-scroll-choreography-replit/"
+          >the prompt I used to build a premium property site on Replit</a> — with the sticky-over-pin rule, the mirrored exits, and this site's
+        own missing reduced-motion branch written in as corrections.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cosmo: The Replit Prompt I Used to Polish a 3D Robot Companion (and What Actually Shipped) | Rishabh Sharma</title>
+<meta name="description" content="A single-file Three.js robot you can boop, pet, throw and upset, with 11 moods, two hidden meters, spring physics, synthesised sound and a MediaPipe webcam Mirr" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/cosmo-3d-robot-companion-threejs-replit/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Cosmo: The Replit Prompt I Used to Polish a 3D Robot Companion (and What Actually Shipped)</h1>
+<p class="lede">A single-file Three.js robot you can boop, pet, throw and upset, with 11 moods, two hidden meters, spring physics, synthesised sound and a MediaPipe webcam Mirror mode. The full Replit polish prompt, which parts shipped and which were cut, and the tail-clipping and emote-timing fixes.</p>
+<p class="meta">24 September 2026</p>
+<h2>Overview</h2>
+<p>
+        Cosmo is a small floating robot that sits on a stand in the middle of
+        your browser. You can boop its head, pet it, grab it and fling it into
+        the edge of the screen, and it remembers how you treated it. If you are
+        gentle for long enough its eyes turn pink. If you keep hitting it, it
+        stops talking to you until you apologise with enough head pats. Leave
+        it alone for half a minute and it falls asleep. Turn on Mirror mode and
+        it watches you through the webcam: it copies your smile, waves back
+        when you wave, and dances when you hold up a peace sign.
+</p>
+<p>
+<strong>Try it:</strong>
+<a href="https://poddy-animated-robot-companion.replit.app" target="_blank" rel="noreferrer"
+          >poddy-animated-robot-companion.replit.app</a>. It started out named Poddy, which is why the URL says so.
+</p>
+<p>
+        I built it with <a href="https://replit.com/" target="_blank" rel="noreferrer">Replit Agent</a> as one
+        self-contained HTML file: Three.js, a rigged GLB model embedded as
+        base64, and every sound made live with the Web Audio API. Once the
+        behaviour worked, I sent the agent one long prompt asking it to improve
+        only the look. This post has that prompt, what the agent built, and the
+        part worth knowing before you copy it: most of what I asked for
+        didn't end up in the final build, and the robot looks better for it.
+</p><div class="highlight">
+<p>
+<strong>What it is:</strong> a full-viewport Three.js scene with one
+          rigged robot on a three-tier stand, 11 moods with their own eye
+          shapes and LED colours, spring-driven physics for grabbing and
+          throwing, a typed-out speech bubble, synthesised sound effects, and
+          an optional webcam Mirror mode that uses MediaPipe face and gesture
+          tracking.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> Three.js r169, GLTFLoader, MediaPipe Tasks
+          Vision 0.10.14 (loaded from a CDN only when you turn on Mirror mode),
+          Web Audio API. The downloadable version is one ~11&nbsp;MB HTML file
+          with the model inside it. The robot is
+<em>Poddy M1</em> by Exmoor beast on Sketchfab (CC-BY-4.0).
+</p>
+</div><h2>What Cosmo does</h2>
+<p>
+        Before the polish pass, it's worth seeing how much behaviour is here.
+        The prompt below says "keep all interactions, mood logic, and Mirror
+        mode exactly as they are", and this table is everything that sentence
+        protects. I pulled the numbers from the shipped code.
+</p><div class="tablewrap">
+<table>
+<thead>
+<tr><th>You do</th><th>Cosmo does</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Tap the head</td>
+<td>Boops and blinks: "boop!", "beep", "*blink*". Mood: happy.</td>
+</tr>
+<tr>
+<td>Tap the body</td>
+<td>Flinches: "hey!", "that tickles". Mood: startled.</td>
+</tr>
+<tr>
+<td>Double-tap</td>
+<td>A burst of hearts and "come here!". Mood: smitten.</td>
+</tr>
+<tr>
+<td>Slowly stroke the head</td>
+<td>
+                A pet happens every ~90px of slow drag. It purrs, tilts its
+                head toward your cursor, and builds affection.
+</td>
+</tr>
+<tr>
+<td>Press and hold (260&nbsp;ms)</td>
+<td>
+                Picks it up: "put me down!". Let go fast enough and it spins
+                off with "wheeeee!".
+</td>
+</tr>
+<tr>
+<td>Swipe fast across it</td>
+<td>
+                Counts as a hit. It gets knocked back in the direction of your
+                swipe, and heavier hits send it spinning.
+</td>
+</tr>
+<tr>
+<td>Throw it into the edge of the screen</td>
+<td>Bounces off with "ow, wall" or "who put that there", then gets dizzy.</td>
+</tr>
+<tr>
+<td>Poke 5 times in 3 seconds</td>
+<td>"quit poking!", "i will bite". Mood: furious.</td>
+</tr>
+<tr>
+<td>Hit it 6 times in 14 seconds</td>
+<td>
+                Sulks and turns away: "i'm not talking to you". Pet it 5 times
+                to be forgiven, or it gets bored of sulking after 22 seconds.
+</td>
+</tr>
+<tr>
+<td>Ignore it</td>
+<td>Curious after 18 seconds, asleep with snoring after 32.</td>
+</tr>
+<tr>
+<td>Come back after 5 seconds away</td>
+<td>Waves at you from the side your cursor came in on.</td>
+</tr>
+<tr>
+<td>Keys W D T G S N</td>
+<td>Wave, Dance, Ta-da, Gasp, Sulk, Nap (same as the bottom dock).</td>
+</tr>
+<tr>
+<td>Key H</td>
+<td>Hides every control so you can record a clean video.</td>
+</tr>
+</tbody>
+</table>
+</div><h3>The two hidden meters</h3>
+<p>
+        Two numbers, <code>patience</code> and <code>affection</code>, sit
+        underneath all of that, both between 0 and 1. Hits lower both. Pets
+        raise both. Patience slowly refills and affection slowly fades, so you
+        have to keep being nice to it. When no emote is playing, the resting
+        mood comes from the meters: patience under 0.3 makes Cosmo angry,
+        affection over 0.75 makes it smitten, otherwise calm. That's why it
+        feels like it has a memory: the same poke gets a different reaction
+        depending on how the last minute went.
+</p><h3>The 11 moods</h3>
+<p>
+        Each mood has a colour, an eye shape (width, height, tilt, and a lid
+        curve) and a glow strength. The mood chip in the top-left shows the
+        name Cosmo would use for it, not the internal one.
+</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr><th>Mood</th><th>Chip says</th><th>LED</th></tr>
+</thead>
+<tbody>
+<tr><td>calm</td><td>calm</td><td><span class="sw" style="background:#3dff5a"></span><code>#3dff5a</code></td></tr>
+<tr><td>happy</td><td>happy</td><td><span class="sw" style="background:#3dffc0"></span><code>#3dffc0</code></td></tr>
+<tr><td>love</td><td>smitten</td><td><span class="sw" style="background:#ff4fb3"></span><code>#ff4fb3</code></td></tr>
+<tr><td>surprised</td><td>startled</td><td><span class="sw" style="background:#ffd43f"></span><code>#ffd43f</code></td></tr>
+<tr><td>hurt</td><td>ouch</td><td><span class="sw" style="background:#ff5a3a"></span><code>#ff5a3a</code></td></tr>
+<tr><td>angry</td><td>furious</td><td><span class="sw" style="background:#ff2d24"></span><code>#ff2d24</code></td></tr>
+<tr><td>sad</td><td>sulking</td><td><span class="sw" style="background:#4a86ff"></span><code>#4a86ff</code></td></tr>
+<tr><td>dizzy</td><td>dizzy</td><td><span class="sw" style="background:#b26bff"></span><code>#b26bff</code></td></tr>
+<tr><td>sleepy</td><td>asleep</td><td><span class="sw" style="background:#2dbfa3"></span><code>#2dbfa3</code></td></tr>
+<tr><td>excited</td><td>wheee</td><td><span class="sw" style="background:#ffe14a"></span><code>#ffe14a</code></td></tr>
+<tr><td>curious</td><td>curious</td><td><span class="sw" style="background:#5ae8ff"></span><code>#5ae8ff</code></td></tr>
+</tbody>
+</table>
+</div><h3>Mirror mode</h3>
+<p>
+        Mirror mode turns on the webcam and loads MediaPipe's face landmarker
+        and gesture recogniser. They take turns on alternate frames, so
+        neither one slows the render loop much. From the face, Cosmo gets your
+        head's yaw, pitch and roll (from a handful of landmarks around the
+        cheeks, nose, eyes and chin) and the blendshape scores for smiling,
+        jaw open, brows and blinks. It then copies your expression:
+</p>
+<ul>
+<li>Mouth open or brows raised → <strong>startled</strong></li>
+<li>Smiling → <strong>happy</strong></li>
+<li>Brows down → <strong>furious</strong></li>
+</ul>
+<p>
+        Hands go through the gesture recogniser. A gesture has to hold for 5
+        detections at over 60% confidence before Cosmo reacts, with a
+        2.5-second cooldown, so it doesn't react to a hand just passing
+        through the frame:
+</p>
+<ul>
+<li><strong>Thumbs up:</strong> "we did it", happy</li>
+<li><strong>Thumbs down:</strong> "harsh", sad</li>
+<li><strong>Peace sign:</strong> "party time!" and a dance</li>
+<li><strong>I-love-you sign:</strong> hearts</li>
+<li><strong>Closed fist:</strong> flinches, "don't hit me!"</li>
+<li><strong>Pointing up:</strong> looks up, "what? where?"</li>
+</ul>
+<p>
+        Waving isn't a MediaPipe gesture, so it's detected by hand. The code
+        keeps 1.3 seconds of wrist positions and counts how often the
+        horizontal direction reverses. Three or more reversals with your hand
+        in the top three-quarters of the frame counts as a wave, and Cosmo
+        waves back with the arm on the same side.
+</p><h2>The polish prompt</h2>
+<p>
+        This is the prompt I sent once the behaviour was finished. It's
+        written as a wishlist from a motion designer, and it's worth reading
+        to the end before you paste it, because the next section is about how
+        much of it Replit Agent (correctly) dropped.
+</p><div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt" id="cosmo-prompt">Upgrade the visual polish of poddy-local.html (Three.js interactive robot hero). Keep all interactions, mood logic, and Mirror mode exactly as they are. Only improve how it looks.<p>Scene and lighting</p>
+<ul>
+<li>Add post-processing with EffectComposer: UnrealBloomPass so only the emissive parts glow (threshold ~0.85, strength ~0.6, radius ~0.4), a subtle chromatic aberration and film grain pass, and SMAA.</li>
+<li>Swap RoomEnvironment for a moody studio HDRI (dark, with soft rectangular key lights) so the chrome shows crisp highlight strips instead of flat grey reflections.</li>
+<li>Build a three-point light rig: warm soft key from top-left, a cool rim light from behind, and a mood-colored rim from below. Blend every light to the new color over 0.4s when the mood changes.</li>
+<li>Make the body read as deep gunmetal: lower albedo, roughness ~0.18, clearcoat on the head.</li>
+</ul>
+<p>Background</p>
+<ul>
+<li>Replace the flat gradient with a slow volumetric-fog look: layered noise planes at different depths, tinted by the mood color and lit most strongly behind Poddy.</li>
+<li>Make the floor a dark, glossy, reflective surface (MeshReflectorMaterial-style, blurred reflection) with a soft contact shadow and a glowing hover ring under Poddy that pulses with his float.</li>
+<li>Give the floating dust depth of field: near particles large and blurry, far ones tiny and sharp, drifting in slow parallax with the cursor.</li>
+</ul>
+<p>Motion feel</p>
+<ul>
+<li>Make everything move with springs (stiffness/damping) instead of linear damping, so the head turn, arm swings and knockbacks overshoot slightly.</li>
+<li>Add squash and stretch on hits and landings (scale the body 0.9/1.1 for ~120ms).</li>
+<li>Add a camera that drifts subtly with the pointer (±2° orbit), and a quick zoom punch-in on big bonks.</li>
+<li>When the mood changes, run a soft color wave across the scene from Poddy outward.</li>
+</ul>
+<p>FX</p>
+<ul>
+<li>Replace the flat sprites with glowing particle bursts: sparks with motion-blur streaks on hits, hearts that float up and fade with a soft bloom, and dizzy stars that leave short trails.</li>
+<li>Make the eyes feel like a real LED screen: add scanline/pixel-grid shader and a faint screen flicker on the face glass.</li>
+</ul>
+<p>UI</p>
+<ul>
+<li>Make the HUD more refined: frosted glass with a 1px inner highlight, smaller type, more letter-spacing, and a mood chip whose LED actually glows (box-shadow in the mood color).</li>
+<li>Style the speech bubble as a small LED-matrix panel that types its text out one letter at a time.</li>
+<li>Add a short intro on load: the camera starts close and dark, Poddy&#39;s eyes power on, the lights sweep in, then he waves.</li>
+</ul>
+<p>Performance</p>
+<ul>
+<li>Keep 60fps on a MacBook Air: cap pixel ratio at 1.75, and if FPS drops below 45 for 2s, automatically turn off bloom and the reflections.</li>
+<li>Respect prefers-reduced-motion by skipping the camera drift, shake and intro.</li>
+</ul>
+<p>Deliver it as a single self-contained HTML file with the GLB still embedded.</div></p>
+</div><h2>What shipped, and what didn't</h2>
+<p>
+        I read through the final build's source to check this, not the
+        agent's summary. There's no <code>EffectComposer</code>, bloom pass,
+        SMAA, HDRI or reflector anywhere in it. Replit Agent tried several
+        background ideas, then settled on something much quieter, and every
+        version with more effects looked worse. The robot is the only thing
+        on screen that should be moving; fog, dust and bloom all took
+        attention away from it.
+</p><div class="tablewrap">
+<table>
+<thead>
+<tr><th>Asked for</th><th>In the final build</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Springs instead of linear damping</td>
+<td>
+<strong>Shipped.</strong> A small spring integrator
+                (acceleration = −stiffness × offset − damping × velocity) drives
+                the joints, and the robot's position springs back to the stand
+                after a throw. The physics runs in fixed steps of at most 1/30
+                of a second, so a dropped frame doesn't make it jump.
+</td>
+</tr>
+<tr>
+<td>Cap pixel ratio at 1.75</td>
+<td><strong>Shipped</strong>, exactly as written.</td>
+</tr>
+<tr>
+<td>Frosted HUD with a 1px inner highlight, more letter-spacing</td>
+<td>
+<strong>Shipped.</strong> <code>backdrop-filter: blur(10px)</code>
+                plus <code>inset 0 1px 1px rgba(255,255,255,.15)</code> on every
+                panel.
+</td>
+</tr>
+<tr>
+<td>A mood LED that actually glows</td>
+<td>
+<strong>Shipped.</strong> A 9px square with a double
+<code>box-shadow</code> in the mood colour, and the COSMO
+                wordmark gets a faint text-shadow in the same colour.
+</td>
+</tr>
+<tr>
+<td>Speech bubble types one letter at a time</td>
+<td>
+<strong>Shipped</strong>, at 40&nbsp;ms per character. Longer
+                lines stay on screen longer.
+</td>
+</tr>
+<tr>
+<td>Mood-coloured light</td>
+<td>
+<strong>Partly.</strong> One point light takes the mood colour.
+                The rest is a warm key from the top-left, a cool light from
+                behind, a hemisphere fill and, added later, a soft overhead
+                spotlight on the stand.
+</td>
+</tr>
+<tr>
+<td>Respect prefers-reduced-motion</td>
+<td><strong>Shipped</strong>, though with no intro, camera drift or shake in the final build, there's little left for it to switch off.</td>
+</tr>
+<tr>
+<td>Volumetric fog background</td>
+<td>
+<strong>Replaced</strong> with a navy gradient drawn onto a 2D
+                canvas: a 48px grid at 8.5% opacity, two thin orbital circles
+                around the robot and four crosshair ticks. It costs nothing to
+                render and makes the scene look like a design tool's canvas.
+</td>
+</tr>
+<tr>
+<td>Floating dust with depth of field</td>
+<td><strong>Removed.</strong> The dust and particle layers were taken out entirely.</td>
+</tr>
+<tr>
+<td>Reflective floor with a glowing ring</td>
+<td>
+<strong>Replaced</strong> with a three-tier metal stand
+                (roughness 0.38, metalness 0.55). The accent ring was pink at
+                first and ended up muted blue.
+</td>
+</tr>
+<tr>
+<td>Bloom, chromatic aberration, grain, SMAA, HDRI</td>
+<td><strong>Not used.</strong> Standard antialiasing and tone mapping at 1.05 exposure.</td>
+</tr>
+<tr>
+<td>Camera drift, zoom punch-in, intro sequence</td>
+<td>
+<strong>Not used.</strong> The camera stays still. It loads,
+                says "hi!" and waves; that's the whole intro.
+</td>
+</tr>
+<tr>
+<td>Automatic quality fallback below 45fps</td>
+<td>Not needed, since there's no bloom or reflection pass to turn off.</td>
+</tr>
+</tbody>
+</table>
+</div><p>
+        What I take from this: the lines that actually improved the build
+        were the ones about how things <em>move</em> (springs, typing speed)
+        and how the UI <em>feels</em> (glass, the glowing LED). The ambitious
+        rendering lines produced experiments that got deleted. If you write a
+        prompt like this, put the motion and UI lines first and treat the
+        rendering lines as optional extras.
+</p><h2>The follow-up: two bugs and a rename</h2>
+<p>
+        The second pass renamed Poddy to Cosmo everywhere: the header, the
+        page title, the loading screen ("BOOTING COSMO…"), the iframe's
+        accessible title, and the download filename, which is now
+<code>cosmo.html</code>. It also fixed two bugs that are common in
+        any rigged character in Three.js, so they're worth knowing about.
+</p><h3>The tail sank into the stand</h3>
+<p>
+        Cosmo's tail swings with its animation, and at the bottom of the swing
+        it went through the top of the stand. Moving the whole model up
+        doesn't fix this, because the tail's lowest point changes every frame.
+        The fix is to check the vertices themselves. When the model loads, the
+        code runs every animation clip once, records the model's bounding box,
+        and keeps a list of every vertex within 0.65 units of the lowest point.
+        Each frame it moves just those vertices into world space, finds the
+        lowest one near the stand, and if it's closer than 0.07 units to the
+        stand's top, lifts the robot by that amount and cancels any downward
+        velocity. Checking only a short list of vertices keeps this cheap.
+</p><h3>Wave and Dance ended almost immediately</h3>
+<p>
+        Replit's changelog says the durations were being applied incorrectly.
+        In the fixed build, every action stores its duration in milliseconds
+        (<code>dur * 1000</code>) because the clock it's compared against is
+<code>performance.now()</code>. A Wave now lasts 2 seconds and a Dance
+        4.8. The action's strength also eases in over the first 0.3 seconds
+        and out over the last 0.45, so the arms don't snap into or out of the
+        pose. If your animations finish instantly, mixing up seconds and
+        milliseconds is the first thing to check.
+</p><h3>Verified in a browser with software rendering</h3>
+<p>
+        The agent tested this in a headless browser with software WebGL, not
+        just by reading the code. That's possible because the page exposes a
+        small debug object, <code>window.__poddy</code>, with
+<code>emote()</code>, <code>bonk()</code>, <code>pet()</code>, a
+<code>ready</code> flag and <code>tailClearance</code>. A test can
+        wait until the robot is ready, trigger a Dance, and read back how
+        close the tail got to the stand, all without a GPU. If you want an
+        agent to check its own work on a WebGL project, give it a hook like
+        this.
+</p><h2>Details worth taking from it</h2>
+<ul>
+<li>
+<strong>Every sound is synthesised.</strong> A boop is two sine
+          sweeps. A bonk is a falling 210→55&nbsp;Hz sine plus a short burst
+          of bandpass-filtered noise. A snore is 1.1 seconds of noise through
+          a filter that sweeps down. There are no audio files, so it works
+          offline, and the <code>AudioContext</code> is only created on your
+          first tap.
+</li>
+<li>
+<strong>The model is inside the page.</strong> The GLB is stored as
+          base64 in a <code>&lt;script type="text/plain"&gt;</code> tag and
+          decoded with <code>atob</code> on load. One file, with no loader
+          URLs and no CORS problems, and the download button still works.
+</li>
+<li>
+<strong>Only the eyes glow.</strong> A small change to the material
+          shader uses the emissive texture as a mask. The screen area goes
+          near-black and the eyes take the mood colour, so the LED face works
+          without bloom.
+</li>
+<li>
+<strong>Mobile adjusts the field of view.</strong> On a portrait
+          screen the FOV widens up to 1.55×, so the robot and stand stay in
+          frame instead of being cropped.
+</li>
+<li>
+<strong>MediaPipe only loads when you ask for it.</strong> The
+          vision bundle and its WASM files come from jsDelivr only when you
+          press Mirror. Visitors who never do don't download it.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          Cosmo is a single-file Three.js robot with 11 moods, two hidden
+          meters (patience and affection), spring physics, synthesised sound
+          and a MediaPipe Mirror mode.
+</li>
+<li>
+          The polish prompt asked for a lot of rendering effects. What
+          shipped were the motion and UI changes. The rendering effects were
+          tried and removed because they took attention away from the robot.
+</li>
+<li>
+          The follow-up fixed a tail that clipped into the stand (with a
+          per-frame check of the lowest vertices) and emotes that ended too
+          early (seconds vs milliseconds), and renamed Poddy to Cosmo.
+</li>
+<li>
+          Try it at
+<a href="https://poddy-animated-robot-companion.replit.app" target="_blank" rel="noreferrer"
+            >poddy-animated-robot-companion.replit.app</a>, and use the download button in the top-right to get the whole
+          thing as one HTML file.
+</li>
+</ul><p>
+        More Replit builds in this shape:
+<a href="/learn/prompt-luma-floor-lamp-lit-hero-replit/"
+          >a floor lamp hero with a brass switch that lights the page</a>,
+<a href="/learn/prompt-lumina-interactive-light-gallery-replit/"
+          >an interactive light gallery with pull-chain physics</a>, and
+<a href="/learn/ascii-studio-replit-image-3d-webcam-ascii-art/"
+          >ASCII Studio, which turns images, 3D models and your webcam into
+          ASCII art</a>.
+</p><p class="meta">
+        Robot model: "Poddy M1 – Stylized Floating Robot" by Exmoor beast on
+        Sketchfab, licensed CC-BY-4.0.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

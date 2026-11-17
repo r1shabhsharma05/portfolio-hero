@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Claw: A Toy Store Where You Win the Toys | Rishabh Sharma</title>
+<meta name="description" content="How I built a toy store whose hero is a claw machine: a Codex photo of an empty cabinet, ten Codex toys cut out with macOS Vision, Matter.js bodies shaped like " />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/the-claw-a-store-you-win/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>The Claw: A Toy Store Where You Win the Toys</h1>
+<p class="lede">How I built a toy store whose hero is a claw machine: a Codex photo of an empty cabinet, ten Codex toys cut out with macOS Vision, Matter.js bodies shaped like each toy, and a claw that holds on (sometimes). Prompts and code inside.</p>
+<p class="meta">13 November 2026</p>
+<p>Everyone has put money into a claw machine and walked away with nothing. That feeling is a better store front than any hero banner, so I built a toy store where the hero is the machine. Every toy in the glass is for sale, and every toy can be won. <a href="https://www.avivashishta.com/lab/claw" target="_blank" rel="noreferrer">Play it at avivashishta.com/lab/claw</a>.</p>
+<p>Move over the glass to aim. Click (or press space, or hit the yellow button on the cabinet) to drop. The claw goes down until it touches a toy, closes, and lifts. If it still has the toy at the top, it carries it to the chute and lets go, the toy rolls out of the flap at the bottom and it is in your bag. Some toys hold better than others, and every third try is a sure thing, because a store that never lets you win is just a slot machine.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex makes one photo of an empty claw machine and one product shot of each toy. A script cuts the toys out with macOS Vision and turns each outline into a convex polygon. The page drops two of each toy into the glass as Matter.js bodies with those shapes, draws them on a canvas laid exactly over the glass in the photo, and moves a hand-drawn chrome claw with a small state machine.</p></div><h2>Step 1: an empty machine (Codex)</h2>
+<p>The cabinet is the stage, so it has to be empty: no toys and no claw, because both are going to move. It also has to be straight on, so the glass is a rectangle I can lay a canvas over.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A perfectly straight-on, orthographic front view of a glossy cobalt blue arcade claw machine cabinet, centered, filling most of the frame height with a little margin. The upper part is a large clear glass display box, completely EMPTY inside (no prizes, no toys, no claw), with a plain flat pale grey floor inside and soft warm lights along its top edge; a slim chrome gantry rail runs across the top inside the glass. Below the glass is a cobalt blue base with a small control panel ledge (one red ball-top joystick and one big yellow button) and, at the bottom right, a square brushed chrome prize chute opening with a flap. Chrome feet. Pale warm grey seamless studio background, soft even light, symmetric, photoreal product photo. No text, no words, no logos, no stickers anywhere. Portrait 2:3, 1024x1536.</p>
+</div>
+</div><p>Then I measured the photo once: where the rail is, where the floor is, where the chute and the yellow button are, as fractions of the image. Those four numbers are the whole layout:</p>
+<pre><code class="language-ts">const GLASS = { l: 0.122, t: 0.133, r: 0.879, b: 0.573 }; // from the rail to the middle of the floor
+const CHUTE = { l: 0.64, t: 0.755, r: 0.835, b: 0.876 };
+const BUTTON = { x: 0.596, y: 0.628, r: 0.045 };
+</code></pre>
+<p>The canvas sits at <code>GLASS</code>, so the claw&#39;s carriage runs on the photo&#39;s own rail and the toys sit on the photo&#39;s own floor. The yellow button is a real <code>&lt;button&gt;</code> placed over the printed one.</p>
+<h2>Step 2: the toys</h2>
+<p>Ten original toys, one prompt, only the description changes. &quot;An original design, no logos, no brand&quot; matters here: ask for a vinyl figure without it and you get something that looks a lot like a famous one.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A collectible toy product photo of a glossy vinyl art toy of a chubby little astronaut in a white space suit with a round gold-tinted visor and small cobalt blue backpack. The toy alone, an original design, no text, no logos, no brand, front three-quarter view, centered with generous margin, on a pure seamless white background (#FFFFFF), soft studio light, a very faint contact shadow only, photoreal, crisp detail. Square 1:1, 1024x1024.</p>
+</div>
+</div><h2>Step 3: cut out, and give each toy its shape</h2>
+<p>The prep script cuts each toy out with macOS Vision (the same subject lifting as &quot;Copy Subject&quot; in Photos), trims it and saves it as WebP with alpha. Then it reads the alpha at quarter size, takes the convex hull of every solid pixel and drops points until 14 are left:</p>
+<pre><code class="language-js">// Drops the point that adds the least area until there are at most n left.
+while (h.length &gt; n) {
+  let best = 0, min = Infinity;
+  h.forEach((p, i) =&gt; { const a = area(h[i - 1], p, h[i + 1]); if (a &lt; min) { min = a; best = i; } });
+  h.splice(best, 1);
+}
+</code></pre>
+<p>That polygon is the toy in Matter.js. A duck rolls like a duck and the gift box stacks like a box. Boxes for everything would look fine standing still and wrong the moment the pile moves.</p>
+<pre><code class="language-bash">bun scripts/prepare-claw.mjs ./raw
+</code></pre>
+<h2>Step 4: the pile</h2>
+<p>Two of each toy rain into the glass when the page opens, a tenth of a second apart, which is also the loading animation. Plush toys get high friction and almost no bounce; the ceramic cat, the tin robot and the vinyl astronaut are heavier and slide. On the right is the prize hole: no floor, behind a low acrylic wall. Anything that falls through it is a win, and the same toy drops back into the top of the machine a moment later so the pile never runs out.</p>
+<h2>Step 5: the claw</h2>
+<p>The claw is drawn, not photographed, because it has to open and close: a cable, a chrome hub and three prongs (the middle one squashed to look like it points at you). It isn&#39;t a physics body. It is a small state machine: move, down, close, up, carry, release, home. Going down, it stops where the highest toy under it begins:</p>
+<pre><code class="language-ts">const b = near(S.x); // the toy whose top is under the claw
+const floor = Math.min(H - 14, b ? b.bounds.min.y + 30 : H - 14);
+</code></pre>
+<p>When it closes, it picks the nearest toy within reach and ties it on with a soft Matter.js constraint, so the toy swings as it rises. Whether it slips is decided right then, from the toy&#39;s grip, and if it is going to slip it lets go at a random height on the way up. It feels unfair in exactly the way the real ones do.</p>
+<pre><code class="language-ts">const holds = S.sure || Math.random() &lt; toy.grip;
+const c = Matter.Constraint.create({ pointA: { x: S.x, y: S.y }, bodyB: b, pointB: { x: 0, y: -12 }, length: 0, stiffness: 0.06, damping: 0.12 });
+S.held = { body: b, c, slipAt: holds ? -1 : TOP + (S.y - TOP) * (0.3 + Math.random() * 0.4) };
+</code></pre>
+<h2>The small things</h2>
+<ul>
+<li><strong>It plays itself.</strong> After nine quiet seconds the machine goes into attract mode and has a go on its own, like a real one in an arcade. Its wins don&#39;t go in your bag.</li>
+<li><strong>The store is real enough.</strong> The toy under the claw shows its name, price and grip on the left with a Buy button. The shelf on the right lists every toy with &quot;Try for it&quot;, which aims the claw at the highest copy and drops.</li>
+<li><strong>The prize comes out of the chute.</strong> A copy of the toy slides out of the flap in the photo, then the &quot;You won&quot; card pops up and the bag count bumps.</li>
+<li><strong>Five coins, then Top up.</strong> Every third paid try holds whatever it grabs.</li>
+<li><strong>Sound</strong> from my Reels SFX library: a latch for the drop, a click when it closes, a thud when it slips, a ding when you win.</li>
+<li><strong>Keys:</strong> ← → to move, space to drop.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a full-screen claw machine store page (React, Matter.js, canvas). Assets: cabinet.webp (a straight-on photo of an empty claw machine) and one cut-out WebP per toy, plus each toy's outline as a convex polygon. Lay a canvas exactly over the glass in the photo (its position as fractions of the image). In it, make a Matter.js world: walls, a floor up to 70% across, then a hole behind a low wall. Drop two of each toy in as bodies made from their polygons and draw each toy's image at its body's position and angle.</p>
+<p>Draw a claw (cable, hub, three prongs that open and close) and move it with a state machine: follow the pointer, on click move to the target, go down until just inside the top of the highest toy under it, close, attach the nearest toy with a soft constraint, lift (with a chance to let go part way, based on the toy's grip), carry to above the hole and open. A toy that falls through the hole is won: show it sliding out of the chute in the photo and add it to the bag. Every third try always holds. Show the toy under the claw with its price and a Buy button, and a shelf of all toys with "Try for it".</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

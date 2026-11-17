@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt I Used to Build Lumina, an Interactive Light Gallery on Replit (Pull-Chain Physics, Drag-and-Drop Rooms, and a Full Light Console) | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable Replit Agent prompt for a pure-black fullscreen gallery of three photoreal lamps, each turned on by a different physical mechanic — a Matter.js" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-lumina-interactive-light-gallery-replit/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt I Used to Build Lumina, an Interactive Light Gallery on Replit (Pull-Chain Physics, Drag-and-Drop Rooms, and a Full Light Console)</h1>
+<p class="lede">A copy-pasteable Replit Agent prompt for a pure-black fullscreen gallery of three photoreal lamps, each turned on by a different physical mechanic — a Matter.js pull chain, a drag-to-dim paper lantern, and a hold-to-ignite neon tube. Edge-masked photos, procedural Web Audio, no sound files.</p>
+<p class="meta">18 August 2026</p>
+<h2>Overview</h2>
+<p>
+        A fullscreen slider on pure black. Three photoreal lamps, one per slide,
+        every one of them switched <em>off</em>. There is no button, no toggle,
+        no "click here" — you turn each light on the way you would turn on the
+        real object. You grab the pull chain hanging off the Edison pendant and
+        yank it. You press and drag up the paper lantern to bring it from ember
+        to daylight. You press and <em>hold</em> the neon tube until it sputters
+        and catches.
+</p>
+<p>
+        That is the whole site. No copy, no nav bar, no scroll. It is a mood
+        piece, and the entire effect rests on two things being right: the photos
+        having no visible edge against the black, and each mechanic feeling like
+        a physical object rather than a click handler with a delay on it.
+</p>
+<p>
+        It is a static single-page app — no backend, no database, no router — so
+        it went into
+<a href="https://replit.com/" target="_blank" rel="noreferrer">Replit Agent</a> as one message. The
+        prompt below is the entire build.
+</p><div class="highlight">
+<p>
+<strong>What it produces:</strong> a
+<code>100dvh</code> black canvas with a Framer Motion cross-fade
+          between three slides, a monospace <code>01 / 03</code> counter, and
+          three completely different interaction models — a Matter.js rope with a
+          brass knob you can physically drag, a drag-delta-to-brightness mapping
+          with RGB interpolation from ember to warm white, and a 1.2-second
+          hold-to-ignite with an abort state.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> React + Vite + TypeScript, Tailwind, Framer
+          Motion, Matter.js, and the Web Audio API. Every sound in the piece is
+          synthesized at runtime from oscillators and filtered noise — there is
+          not a single audio file in the bundle.
+</p>
+</div><h2>Generate the three images first</h2>
+<p>
+        Do this before the agent starts wiring anything. The three photos go into
+<code>attached_assets/</code> — either from Replit's own image generation
+        or uploaded from wherever you make them. The exact prompts are in Step 1
+        of the build prompt, but the three rules that matter for all of them:
+</p>
+<ul>
+<li>
+<strong>Pure black (#000) seamless background.</strong> Not "dark
+          grey", not "dark studio". The page background is <code>#000</code> and
+          any other value shows up as a rectangle.
+</li>
+<li>
+<strong>The light source rendered OFF.</strong> The glow is a CSS layer
+          you control. If it is baked into the photo, the lamp is on before the
+          user touches it and the entire premise is gone.
+</li>
+<li>
+<strong>Single subject, no props, no hands, no text.</strong> Anything
+          else in frame has to be masked too, and it will not mask cleanly.
+</li>
+</ul><h2>The prompt</h2>
+<p>Paste the whole thing at once.</p><div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt" id="lumina-prompt">Build **Lumina — an Awwwards-style interactive light gallery**: a single-page, fullscreen slider with three photoreal lamp "slides", each with its own physical interaction mechanic. The whole site is pure black; the product photos are edge-masked so they dissolve into that black with no visible image border. Every light is *off* until the user physically turns it on. This is a mood piece — restraint, real physics, zero UI chrome.<p><strong>Stack — use exactly this, no substitutions:</strong></p>
+<ul>
+<li>React + Vite + TypeScript</li>
+<li>Tailwind CSS</li>
+<li>Framer Motion (slide transitions, opacity/glow tweens)</li>
+<li>Matter.js (pull-chain physics, slide 1 only)</li>
+<li>Web Audio API for all sound — procedural oscillators/noise, <strong>no audio files, no TTS/SFX APIs</strong></li>
+<li>No backend, no database, no auth, no router. Fully static SPA.</li>
+</ul>
+<hr>
+<h2>Step 1 — Assets</h2>
+<p>Create <code>attached_assets/</code> and generate three photoreal images at 1024×1024 or larger. Each must be shot on a <strong>pure black (#000) seamless background</strong>, single subject, no props, no text, no hands, dramatic studio lighting, product-photography realism, light source rendered <strong>OFF / unlit</strong> (the glow is added in CSS, not baked into the photo).</p>
+<ol>
+<li><code>edison.png</code> — a bare Edison filament pendant bulb hanging from a black fabric cord, brass socket, visible coiled tungsten filament, unlit, hanging in the upper-right of frame with cord running to the top edge. Macro clarity on the filament.</li>
+<li><code>noguchi.png</code> — an Akari-style Noguchi paper lantern, ribbed washi paper over a bamboo frame, centered, unlit, soft matte paper texture.</li>
+<li><code>neon.png</code> — a raw bent glass neon tube, an abstract single-stroke curve, visible electrodes and clear glass, unlit and colorless, floating centered.</li>
+</ol>
+<p>Load them as Vite imports, not string paths.</p>
+<h2>Step 2 — Gallery shell (<code>Gallery.tsx</code>)</h2>
+<ul>
+<li>Fullscreen (<code>100dvh</code>), <code>bg-black</code>, <code>overflow-hidden</code>, cursor stays default.</li>
+<li>One slide visible at a time. Framer Motion <code>AnimatePresence</code> cross-fade (opacity + a 40px directional x-drift, ~0.7s, custom ease <code>[0.22, 1, 0.36, 1]</code>). No hard cuts.</li>
+<li>Navigation: left/right chevron buttons (thin, low-opacity white, hover to full), <code>ArrowLeft</code>/<code>ArrowRight</code> keys, and touch swipe (&gt;50px horizontal delta). No dots.</li>
+<li>Counter bottom-left: <code>01 / 03</code> — monospace, tracking-widest, <code>text-white/40</code>.</li>
+<li>Slide title + one-line caption bottom-right, small caps, <code>text-white/50</code>, fading in ~300ms after the slide lands.</li>
+<li><strong>Nav must never be swallowed by a slide&#39;s pointer handlers</strong> — give nav <code>z-50</code> and scope all interaction listeners to the slide&#39;s own overlay div (see Step 5).</li>
+</ul>
+<h2>Step 3 — The edge mask (applies to every slide photo)</h2>
+<p>Every photo fades into the background rather than sitting in a box:</p>
+<pre><code class="language-css">-webkit-mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+</code></pre>
+<p>Compose a second vertical mask (or a radial one) if a photo&#39;s top/bottom edge still shows. Glow layers sit <em>above</em> the photo using <code>mix-blend-mode: screen</code> with a soft radial gradient, opacity driven by the slide&#39;s lit state.</p>
+<h2>Step 4 — Slide 1: Edison Pendant (Matter.js pull chain)</h2>
+<p>A real hanging chain you can grab and yank to toggle the bulb.</p>
+<ul>
+<li>Matter.js <code>Engine</code> + <code>MouseConstraint</code> on a transparent canvas layered over the photo, anchored to the pendant&#39;s socket in the upper-right.</li>
+<li>Chain = 8–12 small circle bodies linked by stiff constraints, plus a heavier brass <strong>knob</strong> body at the bottom. Render the chain yourself over the canvas (thin brass line + knob circle) — no Matter renderer debug wireframes.</li>
+<li><strong>Pre-settle:</strong> step the engine ~120 ticks <em>before</em> first paint so the chain hangs still on mount. No spring-in jolt, ever.</li>
+<li><strong>Damping:</strong> high <code>frictionAir</code> (~0.05–0.08) so it swings like a real weighted chain, not a rubber band.</li>
+<li><strong>Toggle rule:</strong> fire the toggle when the knob is dragged past a threshold (~70–90px below rest) <em>while the pointer is down</em>. Then <strong>disarm</strong> — set an <code>armed = false</code> flag so the elastic rebound after release cannot fire a second toggle. Re-arm only once the knob has returned within ~15px of rest and the pointer is up.</li>
+<li>On: warm amber glow composite over the bulb (<code>screen</code> blend, radial gradient <code>#ffb45a</code> → transparent), the filament brightens, and the whole scene gains a subtle warm vignette. Off: everything drops back to black over ~250ms.</li>
+<li>Sound: a mechanical <strong>click</strong> (short filtered noise burst + 2kHz ping) plus a faint electrical <strong>spark</strong> on ignition.</li>
+</ul>
+<h2>Step 5 — Slide 2: Noguchi Lantern (drag to dim)</h2>
+<ul>
+<li>Press and drag anywhere vertically: up = brighter, down = dimmer. Map drag delta to a <code>brightness</code> value 0→1, clamped, with smoothing (lerp toward target each frame).</li>
+<li>Color follows brightness by <strong>RGB interpolation</strong>, deep ember → warm white: <code>rgb(120, 40, 15)</code> at 0 → <code>rgb(255, 244, 224)</code> at 1. Interpolate the channels, don&#39;t cross-fade two fixed layers.</li>
+<li>Two stacked glow layers over the photo — an inner tight radial and an outer bloom — both <code>mix-blend-mode: screen</code>, opacity and blur scaling with brightness. The paper texture must stay readable at full brightness (cap glow opacity ~0.85).</li>
+<li>Subtle ambient spill on the background: a huge low-opacity radial behind the lantern, same interpolated color.</li>
+<li>No sound on this slide, or at most a near-silent filament hum — keep it quiet by design.</li>
+</ul>
+<h2>Step 6 — Slide 3: Raw Neon (hold to ignite)</h2>
+<ul>
+<li><strong>Hold-to-ignite:</strong> pointer down starts a 1.2s timer with a visible progress cue (the tube flickers/stutters faintly while charging). Release before 1.2s = abort.</li>
+<li>Attach <code>pointerdown/up/leave</code> to a <strong>scoped overlay div inside the slide</strong>, never to <code>window</code> — otherwise nav clicks ignite the tube.</li>
+<li>Once lit: the tube&#39;s hue <strong>drifts slowly with vertical cursor position</strong> (e.g. 180°–320° across the viewport height), eased so it never snaps. Glow = colored radial + a tight core stroke, both <code>screen</code> blend.</li>
+<li>Sound, all procedural:<ul>
+<li><em>ignite</em>: sputtering crackle — bursts of filtered white noise at randomized short intervals over ~600ms</li>
+<li><em>running</em>: soft 50Hz + 100Hz sine hum at very low gain, looping while lit</li>
+<li><em>abort</em>: a short electric fizzle (noise burst through a fast-decaying bandpass)</li>
+</ul>
+</li>
+</ul>
+<h2>Step 7 — Sound module (<code>sound.ts</code>)</h2>
+<p>One shared <code>AudioContext</code>, lazily created <strong>on first user gesture</strong> (browser autoplay policy). Export <code>playClick()</code>, <code>playSpark()</code>, <code>playIgnite()</code>, <code>startHum()</code>, <code>stopHum()</code>, <code>playFizzle()</code>. Everything built from <code>OscillatorNode</code>, <code>BufferSource</code> white noise, <code>BiquadFilterNode</code>, and <code>GainNode</code> envelopes. Master gain ~0.15 — this should feel tactile, not loud. Ship a small mute toggle in the corner at <code>text-white/30</code>.</p>
+<h2>Constraints &amp; acceptance checks</h2>
+<ul>
+<li>60fps: use <code>requestAnimationFrame</code> for physics/glow, never React state for per-frame values — drive glow via refs + direct style writes or Framer Motion <code>MotionValue</code>s.</li>
+<li>Clean up every engine, rAF, listener and audio node on slide unmount. Switching slides ten times must not leak or stack hums.</li>
+<li>Mobile: touch works for all three mechanics; on narrow screens scale the photo to <code>contain</code> and keep the interaction hit-areas generous.</li>
+<li>Respect <code>prefers-reduced-motion</code> — skip the drift/flicker, keep the toggles.</li>
+<li>No placeholder Lorem text, no framework badges, no cookie banner, no scrollbars.</li>
+<li><strong>Verify before you finish:</strong> chain hangs still on load; one pull = one toggle (never two); nav buttons work on the neon slide without igniting it; no visible rectangular edge on any photo; no audio files in the bundle.</div></div></li>
+</ul>
+<h2>Why the prompt is written this way</h2>
+<p>
+        The first version of this was three sentences — "a black gallery of
+        three lamps you can turn on, make it feel real" — and what came back was
+        three photos in visible boxes with click-to-toggle opacity. Everything
+        below is a clause that exists because its absence produced a specific,
+        repeatable failure.
+</p><h3>Name the mask, or you get a rectangle</h3>
+<p>
+        This is the clause the whole aesthetic depends on, and it is the one a
+        short prompt never produces. Ask for "a photo on a black background" and
+        you get exactly that — an <code>&lt;img&gt;</code> on a black div. Even
+        with a perfect #000 studio shot, JPEG ringing, the compressor's
+        near-black clipping, and any hint of a floor shadow draw a faint but
+        unmistakable rectangle. The eye finds it instantly, and the piece stops
+        being an object floating in the dark and becomes a picture of one.
+</p>
+<p>
+        Hence the exact CSS in the prompt rather than a description of it:
+</p>
+<div class="code">-webkit-mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);</div>
+<p>
+        The <code>18%</code> / <code>82%</code> stops are the tuning. Pull them
+        inward and the subject itself starts fading; push them outward and the
+        edge reappears. And the <code>-webkit-</code> prefix is not optional
+        decoration — Safari still wants it, and without it the mask silently does
+        nothing on exactly the browser most likely to be looking at a piece like
+        this.
+</p>
+<p>
+        The follow-on clause — <em>compose a second vertical mask if the top or
+        bottom edge still shows</em> — matters because a horizontal gradient only
+        solves two of four sides. Say it up front and you avoid a round trip
+        where you describe a line at the bottom of one photo and the agent
+        rebuilds the whole slide.
+</p><h3>Pre-settle the physics, or the chain snaps into place on mount</h3>
+<p>
+<em>Step the engine ~120 ticks before first paint.</em>
+</p>
+<p>
+        A Matter.js chain is built by placing bodies at their intended positions
+        and linking them with constraints. Those constraints are never satisfied
+        at t=0 — the bodies are approximately right, the solver has not run, and
+        gravity has not been applied. So the first thing the user sees, every
+        single load, is a chain visibly falling and bouncing into place. It reads
+        as a loading glitch, not as a physical object that was already hanging
+        there before you arrived.
+</p>
+<p>
+        A hundred and twenty synchronous steps before the first paint costs a few
+        milliseconds and the chain is simply <em>hanging</em> when the slide
+        appears. This applies to every rope, cloth, and pendulum you will ever
+        build in a physics engine, and almost nobody writes it down.
+</p><h3>The disarm flag — one pull, one toggle</h3>
+<p>
+        This is the clause I would keep if I could keep only one:
+</p>
+<blockquote>
+        Fire the toggle when the knob is dragged past a threshold while the
+        pointer is down. Then disarm — set <code>armed = false</code> so the
+        elastic rebound after release cannot fire a second toggle. Re-arm only
+        once the knob has returned within ~15px of rest and the pointer is up.
+</blockquote>
+<p>
+        The obvious implementation is "if knob.y &gt; threshold, toggle". It works
+        perfectly the first time you test it slowly, and it is broken. Let go of
+        a real weighted chain and it does not stop at rest — it overshoots up,
+        swings back down, and crosses your threshold again on the way through.
+        Depending on how hard you yanked, the light toggles twice and ends up
+        back off, or three times and ends up on, and the behaviour changes with
+        every pull. You get a switch that appears to work intermittently, which
+        is the worst possible outcome for a piece whose entire point is
+        tactility.
+</p>
+<p>
+        The general pattern: <strong>any threshold crossing on a physical,
+        oscillating value needs an arm/disarm latch</strong>, and the re-arm
+        condition has to be a return to rest, not merely crossing back over the
+        threshold. Two conditions on the re-arm — near rest <em>and</em> pointer
+        up — because releasing mid-yank should not immediately re-arm either.
+</p><h3>Scope the listeners to the slide, not to window</h3>
+<p>
+<em>Attach <code>pointerdown/up/leave</code> to a scoped overlay div
+        inside the slide, never to <code>window</code>.</em>
+</p>
+<p>
+        Agents reach for <code>window.addEventListener('pointerdown', ...)</code>
+        by reflex, because it always fires and it sidesteps every question about
+        where in the tree the handler belongs. On this site that means pressing
+        the "next slide" chevron holds the neon tube's ignite timer down. Click
+        the arrow, hold a beat too long, and the tube lights as the slide leaves.
+        Then the slide unmounts mid-timer and the hum never stops.
+</p>
+<p>
+        The paired clause is <em>give nav <code>z-50</code></em>. Two separate
+        failure modes, same root cause: the interaction surface and the chrome
+        both want the whole viewport. State the stacking order and the event
+        scope explicitly and both go away.
+</p><h3>Refs and rAF, never React state, for per-frame values</h3>
+<p>
+<em>Never React state for per-frame values — drive glow via refs + direct
+        style writes or Framer Motion <code>MotionValue</code>s.</em>
+</p>
+<p>
+        The default shape for "drag to dim" in React is
+<code>const [brightness, setBrightness] = useState(0)</code> updated on
+        every pointer move. That is a full render — reconciliation, effects, the
+        lot — sixty times a second, on a component tree that also has a canvas and
+        two blurred radial gradients in it. It is smooth on a desktop and visibly
+        chunky on a phone, which is the worst way to find out.
+</p>
+<p>
+        The brightness value has no business in React's render cycle: nothing
+        about the component's <em>structure</em> depends on it, only two style
+        properties do. Keep it in a ref, write it to the element in the rAF loop,
+        and React renders once. Framer Motion's <code>MotionValue</code> is the
+        same idea with a nicer API — it deliberately lives outside state for
+        exactly this reason.
+</p><h3>Interpolate the channels, don't cross-fade two layers</h3>
+<p>
+<em>Interpolate the RGB channels, don't cross-fade two fixed layers.</em>
+</p>
+<p>
+        Asked for "ember at low brightness, warm white at high", the natural
+        implementation is two absolutely-positioned glow divs with opposing
+        opacities. It looks wrong in the middle, and it looks wrong in a way
+        that is hard to name until you see the fix: at 50% you are not looking at
+        a mid-temperature light, you are looking at a translucent orange light
+        stacked on a translucent white one. Two ghosts, not one lamp.
+</p>
+<p>
+        Interpolating <code>rgb(120, 40, 15)</code> to
+<code>rgb(255, 244, 224)</code> channel by channel gives you a single
+        light source that genuinely changes colour temperature, which is what a
+        dimmer physically does — the filament gets hotter and the spectrum
+        shifts. One layer, three lerps.
+</p>
+<p>
+        The <code>0.85</code> opacity cap is the other half of it. Let the glow
+        reach 1.0 and the lantern's washi texture blows out to a flat white
+        blob — you have turned your photoreal paper lantern into a circle. The
+        light has to stay <em>behind</em> the paper.
+</p><h3>Hold-to-ignite needs a visible charge and a real abort</h3>
+<p>
+        A 1.2-second hold with no feedback is indistinguishable from a broken
+        button. The user presses, nothing happens, they let go at 800ms, and they
+        conclude the neon slide does not work. So the tube flickers and stutters
+        while charging — that is the progress bar, disguised as the thing a real
+        tube does before it strikes.
+</p>
+<p>
+        The abort state carries the same weight. Releasing early is not "nothing
+        happened", it is a short electric fizzle — the sound of a tube failing to
+        catch. It confirms the input was received and tells you what to do
+        differently, without a single word of UI.
+</p><h3>Synthesize the audio, and create the context on a gesture</h3>
+<p>
+<em>No audio files, no TTS/SFX APIs. One shared
+<code>AudioContext</code>, lazily created on first user gesture.</em>
+</p>
+<p>
+        Ban the files and the agent has to actually build the sounds: filtered
+        noise bursts for the click, a randomized crackle envelope for the ignite,
+        two low sines for the running hum. They come out better than stock
+        samples for this — procedural sound is parametric, so the click can be
+        tied to the knob's velocity and the crackle is different every time. It
+        also keeps the bundle tiny and sidesteps licensing entirely.
+</p>
+<p>
+        The lazy context is a hard browser requirement, not a nicety. Construct
+        an <code>AudioContext</code> at module load and Chrome creates it
+<code>suspended</code>; every sound after that is silently dropped, with
+        no error, until something resumes it. The symptom is "audio works
+        sometimes" — specifically, it works after a hot reload where you had
+        already clicked, and not on a fresh load. Create it inside the first
+        gesture handler and it is running from the start.
+</p>
+<p>
+<code>startHum()</code> / <code>stopHum()</code> as an explicit pair,
+        rather than a single fire-and-forget, is what makes the cleanup clause
+        enforceable — the hum is the one node with an unbounded lifetime, and it
+        is the one that stacks.
+</p><h3>Acceptance checks the agent can actually run</h3>
+<p>
+        The last block is a list of things to verify, and every item is
+        observable rather than aspirational:
+</p>
+<ul>
+<li>chain hangs still on load</li>
+<li>one pull = one toggle, never two</li>
+<li>nav buttons work on the neon slide without igniting it</li>
+<li>no visible rectangular edge on any photo</li>
+<li>no audio files in the bundle</li>
+</ul>
+<p>
+        "Make it feel polished" is not checkable and the agent will assert it is
+        done. "One pull = one toggle, never two" is checkable, and it maps
+        directly onto the bug that clause was written to prevent. Ending a build
+        prompt with the specific failures restated as pass/fail tests is worth
+        more than any amount of adjectives earlier in it.
+</p><h2>Knobs to turn first</h2>
+<ul>
+<li>
+<strong>Mask stops (18% / 82%).</strong> The single most visible number
+          in the build. Tune per photo — a subject that fills the frame needs
+          the stops pushed out to 8% / 92% or you eat the object.
+</li>
+<li>
+<strong><code>frictionAir</code> (0.05–0.08).</strong> The entire feel
+          of the chain. Below ~0.03 it whips like elastic; above ~0.12 it moves
+          through treacle. This is the number to fiddle with while actually
+          pulling the chain, not while reading code.
+</li>
+<li>
+<strong>Pull threshold (70–90px).</strong> How hard the yank has to be.
+          Too low and brushing the knob toggles it; too high and it feels stiff
+          on a phone where there is less room to drag.
+</li>
+<li>
+<strong>Hold duration (1.2s).</strong> Long enough to feel like
+          charging, short enough not to feel broken. Under 700ms it reads as a
+          slow click; past ~1.6s people give up.
+</li>
+<li>
+<strong>Glow opacity cap (0.85).</strong> The line between "lit paper
+          lantern" and "white circle". Lower it before you raise it.
+</li>
+<li>
+<strong>Master gain (0.15).</strong> Deliberately quiet. This is
+          incidental sound on a page nobody expected to make noise — it should be
+          discoverable, not startling.
+</li>
+<li>
+<strong>Hue drift range (180°–320°).</strong> Cyan through magenta,
+          which is the believable range for neon. Widen it into the greens and
+          yellows and it stops looking like gas and starts looking like a hue
+          slider.
+</li>
+</ul><h2>If it comes out wrong</h2>
+<ul>
+<li>
+<strong>A faint rectangle around a photo.</strong> Either the mask is
+          only horizontal and the top/bottom edges are showing, or the image
+          background is not truly #000. Check the image first — sample a corner
+          pixel before you touch the CSS.
+</li>
+<li>
+<strong>The chain drops and bounces on every load.</strong> The
+          pre-settle loop is missing, or it is running inside a
+<code>useEffect</code> that fires after the first paint. It has to
+          complete before the canvas is first drawn.
+</li>
+<li>
+<strong>One pull toggles the light twice.</strong> No disarm flag, or
+          the re-arm condition is "knob crossed back above the threshold" instead
+          of "knob is near rest and the pointer is up".
+</li>
+<li>
+<strong>The neon lights when you click the next arrow.</strong>
+          Pointer handlers are on <code>window</code>. Scope them to the slide's
+          overlay div and give the nav a higher z-index.
+</li>
+<li>
+<strong>The hum keeps playing after you leave the slide.</strong> No
+<code>stopHum()</code> in the unmount cleanup. Switch slides ten times
+          and count how many hums you can hear — they stack.
+</li>
+<li>
+<strong>No sound at all until you reload.</strong> The
+<code>AudioContext</code> was created at module load and is suspended.
+          Create it inside the first gesture, or call <code>resume()</code> from
+          one.
+</li>
+<li>
+<strong>Dragging the lantern is smooth on desktop, chunky on a
+          phone.</strong> Brightness is in React state and every pointer move is
+          a render. Move it to a ref and write the style in the rAF loop.
+</li>
+<li>
+<strong>Mid-brightness lantern looks like two overlapping
+          lights.</strong> Two glow layers cross-fading instead of one layer with
+          interpolated RGB.
+</li>
+<li>
+<strong>The lantern blows out to a white blob at full
+          brightness.</strong> Glow opacity is reaching 1.0. Cap it around 0.85
+          so the paper texture survives.
+</li>
+<li>
+<strong>The bulb photo is already glowing.</strong> The generated image
+          has the light baked in. Regenerate with "unlit / powered off" stated
+          explicitly — this is worth a retry rather than a workaround, because
+          nothing in CSS can turn a lit bulb off.
+</li>
+<li>
+<strong>Debug wireframes over the pendant.</strong> Matter's own
+<code>Render</code> module is running. Step the engine headlessly and
+          draw the chain yourself.
+</li>
+<li>
+<strong>Swipe on mobile fires the slide interaction instead of
+          navigating.</strong> The swipe threshold and the drag mechanic are
+          fighting. Require a horizontal delta greater than the vertical one
+          before treating a gesture as navigation.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          If the look depends on a specific CSS technique, paste the CSS. "Fade
+          into the background" produces a rectangle; a
+<code>mask-image</code> gradient with named stops does not.
+</li>
+<li>
+          Pre-settle any physics simulation before the first paint. Users should
+          never watch a rope find its resting position.
+</li>
+<li>
+          Threshold crossings on oscillating physical values need an arm/disarm
+          latch, and re-arming has to mean "back at rest", not "back across the
+          line".
+</li>
+<li>
+          Say where listeners attach. <code>window</code> is the default an agent
+          reaches for and it is why chrome and content fight.
+</li>
+<li>
+          Per-frame values belong in refs and rAF, not React state. Nothing
+          structural depends on them.
+</li>
+<li>
+          Interpolate a colour instead of cross-fading two of them when you want
+          one light that changes, not two lights sharing an opacity budget.
+</li>
+<li>
+          A hold gesture needs a visible charge and an audible abort, or it is
+          indistinguishable from a dead control.
+</li>
+<li>
+          Ban the asset category and the agent has to synthesize. "No audio
+          files" is what gets you real Web Audio instead of an npm package
+          wrapping three MP3s.
+</li>
+<li>
+          End the prompt with observable pass/fail checks, each one restating a
+          specific bug you already know it will produce.
+</li>
+</ul><p>
+        If you want more prompts in this shape, there is
+<a href="/learn/prompt-threejs-ice-wall-punch-shatter-hero-reveal/"
+          >a punch-through ice wall in Three.js</a>,
+<a href="/learn/prompt-kinetic-wind-wall-threejs-vertex-shader/"
+          >a kinetic wind wall of 2,000 metal blades</a>, and
+<a href="/learn/prompt-hook-lab-instagram-hook-generator-emergent/"
+          >a full-stack hook generator built in Emergent</a>, and
+<a href="/learn/prompt-luma-floor-lamp-lit-hero-replit/"
+          >a single floor lamp that lights an entire page</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

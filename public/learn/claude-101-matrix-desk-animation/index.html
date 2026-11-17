@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claude 101: How I Made the Matrix Desk Animation | Rishabh Sharma</title>
+<meta name="description" content="The 3x3 grid reveal edit from my reel, broken down frame by frame. Exact timings, the flash recipe, how to shoot it, and the prompt I used to get Claude to edit" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/claude-101-matrix-desk-animation/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Claude 101: How I Made the Matrix Desk Animation</h1>
+<p class="lede">The 3x3 grid reveal edit from my reel, broken down frame by frame. Exact timings, the flash recipe, how to shoot it, and the prompt I used to get Claude to edit it for me.</p>
+<p class="meta">31 October 2026</p>
+<p>You commented &quot;matrix&quot;, so here&#39;s the full breakdown.</p>
+<p>The edit: my desk starts dark, then gets rebuilt piece by piece in a 3x3 grid. Each piece pops in with a flash, right on the beat. The whole frame flashes, drops back to dark, rebuilds twice as fast, and then cuts to me sitting down and putting my headphones on.</p>
+<p>I didn&#39;t open Premiere for this. I gave Claude a reference reel and my raw clip, and it went through the reference frame by frame, measured every pop and flash, and rebuilt the edit on my footage. Below are the numbers it pulled out, so you can make this in any editor, plus the prompt if you want Claude to do it for you.</p>
+<hr>
+<h2>The idea in one line</h2>
+<p>You need two versions of the same locked-off shot: an <strong>&quot;off&quot; plate</strong> (dark desk) and an <strong>&quot;on&quot; plate</strong> (lit desk). Split the frame into a 3x3 grid and reveal the &quot;on&quot; plate one cell at a time on top of the &quot;off&quot; plate.</p>
+<p>That&#39;s the whole trick. The timing and the flashes are what make it look good.</p>
+<hr>
+<h2>Step 1: Shoot it (the reverse hack)</h2>
+<p>Getting the desk to &quot;turn on&quot; in order is easier backwards.</p>
+<ol>
+<li><strong>Lock the camera.</strong> Tripod, nothing moves. Every frame has to line up for the grid to work.</li>
+<li><strong>Start with everything ON</strong> and record.</li>
+<li><strong>Turn things off one by one</strong>: monitors, desk lamp, LED strip, side lamp.</li>
+<li><strong>Reverse the clip in your editor.</strong> Now the desk powers up one piece at a time, and you get both plates from a single take.</li>
+<li>Also grab a few seconds of you sitting down at the lit desk. That&#39;s the payoff shot at the end.</li>
+</ol>
+<p>I shot mine on an iPhone in 4K HDR. If the colours look washed out after export, apply your editor&#39;s HDR to SDR conversion, or just work in Rec.709.</p>
+<p><strong>Tip:</strong> Look at your frame and crop out anything that isn&#39;t the desk, like a door edge or a wall corner. A clean, flat frame makes the grid look intentional.</p>
+<hr>
+<h2>Step 2: The grid</h2>
+<p>Split the frame into a <strong>3x3 grid</strong> of equal cells (on a 1920x1080 timeline, each cell is 640x360).</p>
+<p>In your editor, put the <strong>dark plate on the bottom track</strong>, then stack <strong>9 copies of the lit plate</strong> above it, each cropped to one cell. Every cell just switches on at its frame.</p>
+<hr>
+<h2>Step 3: The exact timings</h2>
+<p>These come from the reference reel at <strong>23.976 fps</strong>. Times are in seconds from the start.</p>
+<h3>Build 1 (slow, one cell per beat)</h3>
+<table>
+<thead>
+<tr>
+<th>Time (s)</th>
+<th>Frame</th>
+<th>Cell that pops in</th>
+<th>What it shows on my desk</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.13</td>
+<td>3</td>
+<td>Top left</td>
+<td>Lamp glow</td>
+</tr>
+<tr>
+<td>0.67</td>
+<td>16</td>
+<td>Middle left</td>
+<td>Lamp head</td>
+</tr>
+<tr>
+<td>1.04</td>
+<td>25</td>
+<td>Middle right</td>
+<td>Side lamp + laptop</td>
+</tr>
+<tr>
+<td>1.59</td>
+<td>38</td>
+<td>Center</td>
+<td>Main monitor</td>
+</tr>
+<tr>
+<td>2.00</td>
+<td>48</td>
+<td>Bottom left</td>
+<td>Desk</td>
+</tr>
+<tr>
+<td>2.29</td>
+<td>55</td>
+<td>Top center</td>
+<td>Wall</td>
+</tr>
+<tr>
+<td>2.59</td>
+<td>62</td>
+<td>Bottom right</td>
+<td>LED glow</td>
+</tr>
+<tr>
+<td>2.92</td>
+<td>70</td>
+<td>Top right</td>
+<td>Wall</td>
+</tr>
+<tr>
+<td>3.25</td>
+<td>78</td>
+<td>Bottom center</td>
+<td>Keyboard</td>
+</tr>
+<tr>
+<td><strong>3.59</strong></td>
+<td><strong>86</strong></td>
+<td><strong>FULL FRAME FLASH (1 frame)</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>3.63</td>
+<td>87</td>
+<td>Hard cut back to the dark plate</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3>Build 2 (fast, one cell every 2 frames)</h3>
+<table>
+<thead>
+<tr>
+<th>Time (s)</th>
+<th>Frame</th>
+<th>Cell</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4.38</td>
+<td>105</td>
+<td>Bottom left</td>
+</tr>
+<tr>
+<td>4.46</td>
+<td>107</td>
+<td>Bottom center</td>
+</tr>
+<tr>
+<td>4.55</td>
+<td>109</td>
+<td>Bottom right</td>
+</tr>
+<tr>
+<td>4.63</td>
+<td>111</td>
+<td>Middle right</td>
+</tr>
+<tr>
+<td>4.71</td>
+<td>113</td>
+<td>Top right</td>
+</tr>
+<tr>
+<td>4.80</td>
+<td>115</td>
+<td>Top center</td>
+</tr>
+<tr>
+<td>4.88</td>
+<td>117</td>
+<td>Top left</td>
+</tr>
+<tr>
+<td>4.96</td>
+<td>119</td>
+<td>Middle left</td>
+</tr>
+<tr>
+<td>5.01</td>
+<td>120</td>
+<td>Center</td>
+</tr>
+<tr>
+<td><strong>5.09</strong></td>
+<td><strong>122</strong></td>
+<td><strong>FULL FRAME FLASH (2 frames, fading)</strong></td>
+</tr>
+<tr>
+<td><strong>5.17</strong></td>
+<td><strong>124</strong></td>
+<td><strong>Live payoff clip + end text</strong></td>
+</tr>
+</tbody></table>
+<p>Build 2 goes round the outside of the grid and lands on the center last. That&#39;s what makes it feel like it&#39;s &quot;locking in&quot; before the final flash.</p>
+<p><strong>Order tip for Build 1:</strong> pick the order based on what&#39;s in each cell. I went lamp, then side lamp, then monitor, so the desk powers on in a way that makes sense. The timing stays the same either way.</p>
+<hr>
+<h2>Step 4: The flash (this is what sells it)</h2>
+<p>Every cell flashes for <strong>2 frames</strong> when it pops in. It isn&#39;t a white fade. It&#39;s an exposure blowout that settles back down.</p>
+<table>
+<thead>
+<tr>
+<th>Frame</th>
+<th>What to do</th>
+<th>Rough setting</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pop frame</td>
+<td>Blow it out: blacks lift to dark grey, mid-tones go almost white</td>
+<td>Exposure about +2.5 stops (or Brightness +60 to +70)</td>
+</tr>
+<tr>
+<td>Next frame</td>
+<td>Halfway back</td>
+<td>Exposure about +1.3 stops</td>
+</tr>
+<tr>
+<td>After that</td>
+<td>Normal</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p><strong>Full frame flashes:</strong></p>
+<ul>
+<li><strong>First one (3.59s):</strong> one frame, whole image at about +3 stops, then hard cut to dark.</li>
+<li><strong>Final one (5.09s):</strong> two frames. +3 stops, then about +1.5 stops, then the live clip starts at normal exposure.</li>
+</ul>
+<p>Keyframe exposure, not opacity. If you fade a white solid in on top, it looks flat. Pushing exposure keeps the image visible inside the flash, and that&#39;s the look.</p>
+<hr>
+<h2>Step 5: Text</h2>
+<p>There are two pieces of text, both copied from the reference layout:</p>
+<ol>
+<li><strong>Title, during Build 1:</strong> &quot;CLAUDE 101&quot; in a heavy wide font, with &quot;NEW MATRIX ANIMATION&quot; in condensed caps right below it. Put it <strong>on the dark plate layer</strong>, under the grid cells, so the tiles cover it as they pop in. It&#39;s gone once the center cell lands.<ul>
+<li>Fonts I used: <strong>Archivo Black</strong> + <strong>Barlow Condensed Medium</strong> (both free on Google Fonts)</li>
+<li>Size: big line cap height about 3.6% of frame height, centred just below the middle</li>
+</ul>
+</li>
+<li><strong>CTA, after the final flash:</strong> a single bold line in <strong>Inter Bold</strong>, centred slightly below the middle, on screen from 5.17s to the end.</li>
+</ol>
+<hr>
+<h2>Step 6: Audio</h2>
+<p>Use the trending audio from the original reel. All the timings above are built around its beats, so if you line the video up with the start of the audio, every pop lands on the beat.</p>
+<hr>
+<h2>Want Claude to do it instead?</h2>
+<p>That&#39;s how I made mine. My setup: Claude in the desktop app (Cowork), with my Downloads folder connected so it could read the reference reel and my raw footage directly.</p>
+<p>Paste this:</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Look at [reference].mp4 frame by frame. It's a 3x3 grid reveal edit. Measure the exact frame where each grid cell pops in, the full frame flashes, and how bright each flash frame is.</p>
+<p>Then recreate the same edit with my clip [your clip].mov:<br>
+- The clip is a shutdown, so reverse it. The dark end is the base plate and the fully lit desk is what the tiles reveal.<br>
+- Crop out anything that isn't the desk.<br>
+- Match the reference's timing and flash curves exactly.<br>
+- Reveal order for the first build: [lamp, side lamp, monitor, ...]<br>
+- After the final flash, cut to [the part where I sit down / your payoff moment].<br>
+- Title during the build: "[YOUR TITLE]" / "[SUBTITLE]", styled like the reference.<br>
+- End text: "[YOUR CTA]".<br>
+- Use the reference audio.</p>
+<p>Export 1080p at 23.976 fps.</p>
+</div>
+</div><p>Under the hood, Claude:</p>
+<ol>
+<li>Extracted every frame of the reference and measured each grid cell&#39;s brightness, which gave it the exact pop and flash frames.</li>
+<li>Compared each flash frame to the clean frame after it to build tone curves, so the flashes match the reference exactly instead of being eyeballed.</li>
+<li>Pulled only the clips it needed from my 4K footage on my Mac: the dark plate, the lit plate and the headphones shot.</li>
+<li>Composited all 266 frames in Python with numpy and encoded them with ffmpeg, using the original audio.</li>
+</ol>
+<p>It took three versions. Each change I asked for was a sentence or two, not a re-edit.</p>
+<hr>
+<h2>Common mistakes</h2>
+<ul>
+<li><strong>Camera moved between plates.</strong> Cells won&#39;t line up and you&#39;ll see seams. Use a tripod and don&#39;t touch it.</li>
+<li><strong>Auto exposure on your phone.</strong> When the lights change, the phone adjusts and the &quot;off&quot; plate looks lit. Lock exposure (long press on iPhone) before you start turning things off.</li>
+<li><strong>Fading instead of popping.</strong> Cells should appear in one frame, with the flash doing the transition.</li>
+<li><strong>Flash too long.</strong> Two frames per cell. Any longer and it feels slow.</li>
+</ul>
+<hr>
+<p>Made one? Tag me <strong>@avi_vashishta29</strong> and I&#39;ll check it out.</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

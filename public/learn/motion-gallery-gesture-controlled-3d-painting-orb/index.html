@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Motion Gallery: A 3D Painting Orb You Rotate With Your Hands (MediaPipe + React Three Fiber) | Rishabh Sharma</title>
+<meta name="description" content="Thirteen famous paintings on a Fibonacci sphere you spin by pinching the air. The object-fit: cover maths for Three.js textures, pinch-and-drag and two-hand-zoo" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/motion-gallery-gesture-controlled-3d-painting-orb/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Motion Gallery: A 3D Painting Orb You Rotate With Your Hands (MediaPipe + React Three Fiber)</h1>
+<p class="lede">Thirteen famous paintings on a Fibonacci sphere you spin by pinching the air. The object-fit: cover maths for Three.js textures, pinch-and-drag and two-hand-zoom gesture handling with MediaPipe, an alpha WebGL canvas over a live webcam, and the CSS fallback for when there is no WebGL context.</p>
+<p class="meta">25 August 2026</p>
+<h2>Overview</h2>
+<p>
+<a           href="https://gesture-controlled-3-d-gallery.replit.app"
+          rel="nofollow"
+          >Motion Gallery</a>
+        is a browser-based art experience: thirteen famous paintings arranged
+        around a slowly rotating sphere, which you spin by dragging with a mouse
+        — or by pinching the air in front of your webcam. Nothing about the
+        camera feed leaves the machine; hand detection runs locally in the
+        browser through MediaPipe.
+</p><div class="highlight">
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> React + TypeScript on Vite,
+<code>three</code> with <code>@react-three/fiber</code> and
+<code>@react-three/drei</code> for the scene,
+<code>@mediapipe/tasks-vision</code> for hand tracking, Tailwind for
+          layout, <code>lucide-react</code> for the one icon, and hand-written
+          CSS for the no-WebGL fallback.
+</p>
+</div><h2>The interface is one button</h2>
+<p>
+        The finished screen is a full-bleed 3D orb and a single circular camera
+        toggle in the top-right corner. No wordmark, no heading, no
+        instructions, no bottom control bar, no tracking dots, no gesture
+        labels, no status readout. When the camera is off, the orb sits on the
+        dark gallery background. When it's on, the mirrored webcam feed fills
+        the screen behind the paintings.
+</p>
+<p>
+        That restraint was the last and largest edit, not the first draft — more
+        on the subtraction pass below.
+</p><h2>The orb: a Fibonacci sphere, not a ring</h2>
+<p>
+        The obvious way to place paintings in 3D is a circle at eye level, and
+        it looks obvious. Instead the positions come from a Fibonacci-style
+        spherical distribution: for each painting, derive a vertical spherical
+        angle from its index, add a horizontal golden-angle rotation, and
+        convert to X/Y/Z. Points land near-evenly over the whole sphere with no
+        clustering at the poles and no visible seam. Each painting is then
+        oriented to face outward from the centre.
+</p>
+<p>Every artwork is the same physical object:</p>
+<ul>
+<li>a <code>3 × 2</code> plane geometry</li>
+<li>a Three.js physical material, rendered double-sided</li>
+<li>a dark plane just behind it, acting as a frame</li>
+</ul>
+<p>
+        Lighting is a warm orange directional light, a cool cyan directional
+        light from the opposite side, ambient fill, and a city-style environment
+        map for reflections. The two-tone rig is what keeps a sphere of flat
+        rectangles from reading as flat.
+</p><h3>Eased state instead of direct state</h3>
+<p>
+        Rotation and zoom are each stored twice — a target value and a current
+        value. Input writes only to the target; every frame,
+<code>useFrame</code> interpolates the current value toward it. Dragging
+        and gestures both go through the same two variables, which is why a
+        jittery hand landmark doesn't produce a jittery orb: the easing is a
+        low-pass filter that the gesture code gets for free. When nothing is
+        driving the target, the orb keeps rotating slowly on its own.
+</p><h2>The bit that actually took thought: not stretching the paintings</h2>
+<p>
+        Every frame in the scene is <code>3:2</code>. Real paintings are not.
+<em>The Great Wave off Kanagawa</em> is wide,
+<em>The Birth of Venus</em> is wider, <em>The Creation of Adam</em> is a
+        different shape again — and mapping a texture straight onto the plane
+        stretches all of them. On a Botticelli, stretching is not a rendering
+        artefact, it's vandalism.
+</p>
+<p>
+        In CSS this is one line: <code>object-fit: cover</code>. In Three.js you
+        implement it yourself, per texture, from four numbers:
+</p>
+<ol>
+<li>the source image's aspect ratio</li>
+<li>the destination frame's aspect ratio (always 1.5 here)</li>
+<li>
+          how much of the texture should stay visible — horizontally if the
+          source is wider than the frame, vertically if it's taller
+</li>
+<li>
+          the <code>repeat</code> and <code>offset</code> needed to keep the
+          visible window centred
+</li>
+</ol>
+<p>
+        Set <code>texture.repeat</code> to that fraction and
+<code>texture.offset</code> to half the remainder, and you have cover
+        behaviour: original proportions intact, frame completely filled, the
+        excess cropped evenly off both edges, nothing squashed. The CSS fallback
+        gallery gets the same result the easy way, with the actual
+<code>object-fit: cover</code>.
+</p><h2>Thirteen paintings, stored locally</h2>
+<p>
+        The gallery started life with eleven photographs of cars. Swapping the
+        subject for public-domain art is what turned a tech demo into something
+        worth looking at:
+</p>
+<ul>
+<li><em>The Starry Night</em></li>
+<li><em>The Last Supper</em></li>
+<li><em>The School of Athens</em></li>
+<li><em>The Birth of Venus</em></li>
+<li><em>Liberty Leading the People</em></li>
+<li><em>The Third of May 1808</em></li>
+<li><em>The Fighting Temeraire</em></li>
+<li><em>The Hay Wain</em></li>
+<li><em>Impression, Sunrise</em></li>
+<li>
+<em>A Sunday Afternoon on the Island of La Grande Jatte</em>
+</li>
+<li><em>The Great Wave off Kanagawa</em></li>
+<li><em>The Garden of Earthly Delights</em></li>
+<li><em>The Creation of Adam</em></li>
+</ul>
+<p>
+        All thirteen files live in the repository under
+<code>attached_assets/paintings/</code>. Nothing is fetched from a
+        remote image host at runtime, so the gallery can't be broken by someone
+        else's hotlink policy.
+</p><h2>Mouse controls, so a webcam is optional</h2>
+<p>
+        Gesture control is the headline, not the requirement. Dragging anywhere
+        on the scene maps pointer movement on X to horizontal orb rotation and
+        movement on Y to vertical rotation. The scroll wheel moves the camera's
+        Z position, clamped to a range that stops you from passing through the
+        orb, drifting infinitely far away, or landing anywhere the camera
+        becomes unstable.
+</p><h2>Camera plumbing</h2>
+<p>
+        The webcam is a full-screen HTML <code>&lt;video&gt;</code> element,
+        mounted at all times so the tracking hook always holds a valid reference
+        — mounting it on demand is how you end up with a hook racing a ref that
+        is still <code>null</code>. It sits behind the Three.js canvas, uses
+<code>object-fit: cover</code>, is mirrored with
+<code>scaleX(-1)</code> so movement matches the viewer's intuition, and
+        is muted with <code>playsInline</code>. Invisible while disabled, fully
+        visible while enabled.
+</p>
+<p>
+        The canvas above it requests an alpha-enabled WebGL context. That single
+        flag is what lets the video show through between the paintings.
+</p>
+<p>Pressing the toggle:</p>
+<ol>
+<li>requests webcam permission</li>
+<li>attaches the stream to the full-screen video</li>
+<li>initialises hand recognition</li>
+<li>reveals the video behind the orb</li>
+</ol>
+<p>
+        Pressing it again stops the stream and the tracking loop. The button
+        swaps between a camera and a camera-off icon and carries an accessible
+        label, but shows no visible text.
+</p><h2>Gestures</h2>
+<p>
+        MediaPipe Tasks Vision loads only after the user enables the camera, and
+        runs on the CPU delegate deliberately — the GPU is already busy
+        rendering the orb, and competing for it costs more frames than the
+        faster inference wins back.
+</p><h3>Pinch and drag</h3>
+<p>
+        Each frame, measure the distance between the relevant fingertip
+        landmarks. When it falls below the grab threshold, store the hand
+        position; on subsequent frames, feed the delta from the stored position
+        into horizontal and vertical rotation, exactly as a mouse drag would.
+        Releasing the pinch clears the stored position. Because it reuses the
+        drag path rather than paralleling it, the orb behaves like a physical
+        object you've grabbed.
+</p><h3>Two-hand zoom</h3>
+<p>
+        With both hands visible, measure the distance between the two hand
+        centres and compare it to the previous frame. Hands apart zooms in,
+        hands together zooms out, clamped to the same safe range as the scroll
+        wheel — one clamp, two inputs.
+</p>
+<p>
+        All of this is invisible. There are no tracking circles, hand counts,
+        gesture names, or telemetry anywhere on screen, and no backend endpoint
+        receives a single frame.
+</p><h2>Two passes of taking things away</h2>
+<p>
+        The version before this one had a Spiral mode, a dark translucent scrim
+        over the camera with a saturation filter and a vignette, tracking
+        crosshairs, hand-position markers, live gesture names, a
+<em>Sensor Status</em> panel with <em>Standby</em> and
+<em>Tracking Active</em> states, corner decoration lines, Motion Gallery
+        branding, two rows of instructions, and a hardware-acceleration warning.
+</p>
+<p>
+        The scrim existed to keep overlaid text readable. Once the text was
+        gone, so was the reason for the scrim — and the camera now shows at full
+        brightness with the painting orb rendering straight over it. The dark
+        vignette stays for the camera-off state, where it's doing real work as a
+        gallery wall rather than fighting a video.
+</p>
+<p>
+        Spiral mode came out completely: its state, its button, its geometry,
+        its scroll maths, its animation loop, its hand and mouse handlers, its
+        fallback rendering, its CSS, and its keyframes. Half-removing a mode is
+        how you get dead branches that break the next refactor. One experience,
+        one code path.
+</p>
+<p>
+        Framer Motion went with the animated panels it was animating. The
+        remaining transitions are Tailwind opacity classes.
+</p><h2>When there is no WebGL context</h2>
+<p>
+        Some preview environments and older devices can't reliably create one.
+        Rather than mounting the canvas and hoping, the app tests for WebGL
+        first and, if it's missing, renders a CSS orb instead: the same thirteen
+        paintings, correct proportions via <code>object-fit: cover</code>,
+        rotating on a CSS animation, with the camera still able to show through
+        behind it. A React error boundary around the Three.js scene catches
+        anything that fails after mount and switches to the same fallback.
+</p>
+<p>
+        Notably, the fallback displays no warning text. A visitor on an old
+        laptop gets a slightly simpler gallery, not an apology.
+</p><h2>Where things live</h2>
+<ul>
+<li>
+<code>src/pages/gallery-page.tsx</code> — page composition: the
+          full-screen video, the gallery, the toggle, and the two visual states
+</li>
+<li>
+<code>src/components/gallery-3d.tsx</code> — WebGL detection, the
+          canvas, orb geometry and distribution, texture cropping, lighting,
+          mouse and hand controls, smoothing, the static fallback, and the error
+          boundary
+</li>
+<li>
+<code>src/hooks/use-hand-tracking.ts</code> — stream acquisition,
+          MediaPipe setup, per-frame recognition, pinch distance, per-hand
+          positions, start/stop, cleanup
+</li>
+<li>
+<code>src/components/camera-status.tsx</code> — now just the toggle
+          button. The filename is a fossil of the telemetry panel it used to be
+</li>
+<li>
+<code>src/index.css</code> — theme, dark gallery background, fallback
+          orb, painting cropping, rotation keyframes
+</li>
+<li>
+<code>attached_assets/paintings/</code> — the thirteen local images
+</li>
+</ul><h2>What I verified, and what I couldn't</h2>
+<p>
+        TypeScript passes, Vite starts, the workflow runs, and the page loads
+        clean. All thirteen paintings appear, mouse drag rotates, wheel zoom
+        responds, the crops hold their proportions, the video element covers, no
+        Spiral code path survives anywhere in the tree, and the visible UI is
+        the camera button and nothing else. The final layout was inspected at
+<code>1440 × 1000</code>.
+</p>
+<div class="highlight">
+<p style="margin-bottom: 0">
+          The honest gap: the automated browser I tested in has no physical
+          camera, so no real webcam stream was ever displayed during
+          verification. The stream acquisition, full-screen video layer,
+          start/stop lifecycle, and MediaPipe activation path are all
+          implemented and exercised up to the point where a device is required —
+          but the gesture loop itself has only been verified by hand, on a
+          laptop with a webcam.
+</p>
+</div><h2>Takeaways</h2>
+<div class="highlight">
+<ul style="margin: 0">
+<li>
+<strong>Ease everything through a target value.</strong> Noisy
+            gesture input needs no dedicated smoothing if the renderer is
+            already interpolating toward a target.
+</li>
+<li>
+<strong>Route new inputs into existing ones.</strong> Pinch-drag
+            writes to the same rotation targets as the mouse and shares the
+            mouse's zoom clamp — two inputs, one set of edge cases.
+</li>
+<li>
+<strong               >Give the CPU delegate to MediaPipe when WebGL owns the
+              GPU.</strong>
+            Faster inference isn't a win if you pay for it in frames.
+</li>
+<li>
+<strong>Re-derive the texture crop yourself.</strong>
+<code>object-fit: cover</code> has no Three.js equivalent; it's four
+            numbers, and skipping it stretches the art.
+</li>
+<li>
+<strong>Remove features, don't disable them.</strong> A mode with
+            its state and handlers left in place is a trap for the next change.
+</li>
+</ul>
+</div><p>
+        Try it:
+<a           href="https://gesture-controlled-3-d-gallery.replit.app"
+          rel="nofollow"
+          >gesture-controlled-3-d-gallery.replit.app</a>. Enable the camera, pinch, and pull the sphere around.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

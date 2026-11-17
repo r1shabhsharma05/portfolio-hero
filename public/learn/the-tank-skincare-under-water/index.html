@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Tank: A Skincare Store Under Water | Rishabh Sharma</title>
+<meta name="description" content="How I built a skincare store where the products drift in a tank of water: stir it with the pointer, click a bottle and it rises through the bubbles with its ing" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/the-tank-skincare-under-water/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>The Tank: A Skincare Store Under Water</h1>
+<p class="lede">How I built a skincare store where the products drift in a tank of water: stir it with the pointer, click a bottle and it rises through the bubbles with its ingredients floating up beside it. Codex photos, a 2D canvas and one WebGL water pass.</p>
+<p class="meta">13 November 2026</p>
+<p>Skincare ads are always wet: a serum bottle half under water, light rippling over it. The store pages are always dry. I wanted the store to be the ad, so the whole page is a tank of water with the products drifting in it. <a href="https://www.avivashishta.com/lab/tank" target="_blank" rel="noreferrer">Dive in at avivashishta.com/lab/tank</a>.</p>
+<p>Move the pointer and the water ripples and the bottles near it get pushed along. Click one and it rises to just under the surface through a stream of bubbles, its ingredients float up beside it, and the water takes on its colour.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex makes one photo of an empty tank of water and one product shot of each bottle, which macOS Vision cuts out. Every frame, a 2D canvas draws the tank, the bottles where a little spring physics has put them, and the bubbles. Then one WebGL pass takes that picture and makes it water: it bends it with a slow wobble and with rings where the pointer went, and lays moving caustic light over the top.</p></div><h2>Step 1: the tank and the bottles (Codex)</h2>
+<p>The tank has to be empty, so the products can be anywhere in it:</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Looking into a large clear glass aquarium tank full of clean pale aqua water, empty, no fish, no plants, a smooth pale sand-coloured floor, soft rays of sunlight coming down from the surface at the top with gentle caustic light patterns on the floor and back, a few tiny bubbles, calm, bright, airy, high-end skincare advertising photography, photoreal. No text, no logos, no products. Landscape 3:2, 1536x1024.</p>
+</div>
+</div><p>The bottles are ordinary product shots on white with blank labels (&quot;any label left completely blank&quot; keeps Codex from inventing a brand), cut out with macOS Vision:</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A luxury skincare product photo of a frosted glass serum bottle with a white rubber dropper top. Minimal and unbranded, any label left completely blank, no text, no logos. Standing upright, front view, centered with generous margin, on a pure seamless white background (#FFFFFF), soft studio light, a very faint contact shadow only, photoreal, crisp. Square 1:1, 1024x1024.</p>
+</div>
+</div><pre><code class="language-bash">bun scripts/prepare-tank.mjs ./raw
+</code></pre>
+<h2>Step 2: draw it dry</h2>
+<p>The scene is drawn first as if there were no water: the tank photo covering the screen, the bottles back to front, the bubbles on top. Each bottle is a small spring pulled back toward a home spot that itself drifts in a slow current, with a little rotation, so they bob and turn. The pointer pushes bottles near it with its own speed, and the chosen bottle&#39;s home moves up toward the surface. Bubbles are just circles with a highlight; a rising bottle sheds a stream of them.</p>
+<h2>Step 3: then make it wet</h2>
+<p>That picture is uploaded as a texture every frame, and one fragment shader draws it with water in front. Three things do the work:</p>
+<pre><code class="language-glsl">// A slow wobble everywhere,
+vec2 d = vec2(n(uv * 6. + uTime * .25) - .5, n(uv * 6. - uTime * .2 + 9.) - .5) * .006;
+// rings where the pointer stirred it,
+float ring = sin((dist - front) * 60.) * exp(-pow((dist - front) * 9., 2.)) * exp(-r.z * 1.6) * r.w;
+d += v / max(dist, 1e-3) / a * ring * .012;
+// and light from above.
+col += vec3(1., 1., .96) * caustic(uv * a * 3.) * (.1 + depth * .14);
+</code></pre>
+<p>The ripples are six slots of (position, age, strength) that the pointer fills as it moves fast enough; each ring travels out and dies away. The caustics are three layers of warped sine grids raised to a high power, so only their crossings light up: the bright net that sun throws through moving water. Deeper is darker and a little bluer, and when a product is chosen the whole tank is tinted toward its colour.</p>
+<h2>The small things</h2>
+<ul>
+<li><strong>The ingredients rise like bubbles</strong> into the product card, one after another.</li>
+<li><strong>The others sink a little and fade</strong> while one is up, so it is clearly the one.</li>
+<li><strong>A plain list at the bottom</strong> for anyone who would rather not fish for a bottle.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build an underwater product page (React, canvas 2D plus one WebGL pass, no libraries). Assets: a photo of an empty water tank and cut-out product photos. Each frame, draw into an offscreen 2D canvas: the tank photo cover-fit, the products (each a damped spring toward a home spot that drifts slowly, pushed by the pointer's velocity when it is near), and rising bubbles. Upload that canvas as a texture and draw it full screen with a fragment shader that offsets the lookup by low-frequency noise over time and by up to six expanding ripple rings from where the pointer moved, adds caustics (warped sine grids raised to the 8th power) stronger near the top, darkens with depth and multiplies by a tint.</p>
+<p>Clicking a product moves its home up and to the left, scales it up, emits bubbles behind it as it rises, dims the others and tints the water its colour. Show its name, ingredients (animated in like bubbles), price and Add to bag.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

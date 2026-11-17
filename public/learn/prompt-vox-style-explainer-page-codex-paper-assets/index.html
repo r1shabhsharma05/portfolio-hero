@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You | Rishabh Sharma</title>
+<meta name="description" content="How I turned my portfolio into a scroll-driven Vox explainer: Codex generated the paper, tape, marker and halftone assets, and one CSS variable per chapter runs" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-vox-style-explainer-page-codex-paper-assets/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</h1>
+<p class="lede">How I turned my portfolio into a scroll-driven Vox explainer: Codex generated the paper, tape, marker and halftone assets, and one CSS variable per chapter runs every animation.</p>
+<p class="meta">22 October 2026</p>
+<p>Vox explainers have a look you recognise in one frame. A scanned document, a yellow highlighter swiping across one sentence, a red marker circling a number, a black-and-white cut-out of someone with a white sticker border and a piece of masking tape holding it down. Then the camera pushes in on the line that matters.</p>
+<p>I wanted my portfolio to feel like that. Not a video about it: the page itself, playing as you scroll. It&#39;s live at <a href="https://www.avivashishta.com/lab/explained" target="_blank" rel="noreferrer">avivashishta.com/lab/explained</a>, and the window above this post is that page running.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex generated every analog asset (paper, tape, torn edges, a highlighter stroke, a marker circle, an arrow, a push-pin, a map and a halftone cut-out of my avatar). Each chapter is a tall section with a pinned stage. One loop writes a single number per chapter, <code>--p</code>, and CSS turns it into every highlight, slap, pin drop and camera move.</p></div><h2>What makes something look like Vox</h2>
+<p>Before writing code I listed what you actually see in those videos, because &quot;make it look like Vox&quot; is too vague for a model:</p>
+<ul>
+<li><strong>Paper everywhere.</strong> Backgrounds are scanned paper, not flat colour. Things are cut out, torn and taped down.</li>
+<li><strong>The highlighted document.</strong> A real-looking page of text, and a highlighter swipes the key phrase while the camera zooms in on it.</li>
+<li><strong>Marker on top.</strong> Red circles, arrows and handwritten notes drawn over the footage.</li>
+<li><strong>Halftone cut-outs.</strong> People and objects as black-and-white newspaper prints with a thick white border.</li>
+<li><strong>Chapter cards.</strong> A full-screen colour block with a number and a word, then it tears away.</li>
+<li><strong>Charts and maps that build.</strong> Bars grow, pins drop, callouts slap in.</li>
+<li><strong>Texture that moves.</strong> Grain and a slight wobble on the ink, because it was drawn by hand.</li>
+</ul>
+<p>Every one of those became a part of the page: the numbers are a highlighted document, Build is a timeline with pinned screenshots, Brand is a bar chart with the brand clippings taped over it, and Learn is a map with a pin in India.</p>
+<h2>Generating the assets with Codex</h2>
+<p>I didn&#39;t want stock textures, so I asked the Codex CLI (<code>codex exec</code>, which has image generation built in) for each piece. A small script runs them all in parallel:</p>
+<pre><code class="language-bash"># gen.sh name &quot;brief&quot; [reference image]
+codex exec --skip-git-repo-check -C &quot;$OUT&quot; --image &quot;$REF&quot; -- \
+  &quot;Use your image generation tool to create exactly ONE image, then copy the PNG to $OUT/raw/$NAME.png. \
+   Style context: an asset for a Vox-style explainer page (paper collage, halftone print, highlighter, marker). \
+   Image brief: $BRIEF&quot;
+</code></pre>
+<p>One gotcha: <code>--image</code> takes several files, so without the <code>--</code> it swallows your prompt as a second image path and Codex exits with &quot;No prompt provided&quot;.</p>
+<p>The trick that made the assets usable is asking for backgrounds that are easy to remove:</p>
+<ul>
+<li><strong>Ink on white for anything I want to recolour.</strong> The highlighter stroke, the marker circle, the arrow and the torn paper strip are black on white. A few lines of Python turn brightness into alpha, and the result becomes a CSS mask, so one torn strip can be blue, red or yellow.</li>
+<li><strong>Solid magenta or green for real objects.</strong> Tape, the push-pin and the cut-out are on <code>#FF00FF</code> or <code>#00FF00</code>, then chroma-keyed with a despill so the edges don&#39;t glow pink.</li>
+<li><strong>A reference image for the cut-out.</strong> I passed my illustrated avatar with <code>--image</code> and asked for the same face as a halftone newspaper print with a hand-cut white border. It kept the curls and the glasses.</li>
+</ul>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy asset briefs</button>
+<div class="prompt">
+<p>PAPER: A seamless, tileable, square scan of plain uncoated off-white paper (very light warm grey), with subtle fibres and slight grain. No folds, stains, text, shadows or vignette. Evenly lit and flat.</p>
+<p>HIGHLIGHTER: A single straight horizontal stroke of a broad chisel-tip highlighter, solid black ink on pure white, swiped once left to right: flat edges, faint streaks along the stroke, a darker blob where it starts and an angled chisel end. Wide 3:1, nothing else.</p>
+<p>MARKER CIRCLE: A single loose ellipse drawn with a thick black felt marker on pure white in one quick motion, ends overlapping and overshooting, like circling a word in a newspaper. Wide 2:1.</p>
+<p>TORN STRIP: A long horizontal strip of paper with both long edges torn by hand, fibrous and jagged. The strip is solid black on pure white, no shadow.</p>
+<p>TAPE: Three separate pieces of beige semi-translucent masking tape, torn at both ends and slightly wrinkled, photographed flat from above on a perfectly flat solid magenta (#FF00FF) background, no shadows.</p>
+<p>CUT-OUT (attach a photo or avatar): Turn the attached portrait into a collage cut-out: a black-and-white newspaper halftone print with coarse visible dots, the same pose and face, surrounded by a thick, slightly irregular hand-cut white paper border. Solid magenta (#FF00FF) background, no shadow.</p>
+<p>MAP: A vintage printed map of South Asia centred on India, Vox explainer style: India in a muted warm grey, neighbours lighter, thin dark borders, halftone dots on the ocean, no labels or text.</p>
+</div>
+</div><h2>The prompt for the page</h2>
+<p>Paste this into Claude Code, Cursor or Replit along with your own content. It describes the system, not my files.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a scroll-driven page that looks like a Vox explainer video. React and plain CSS, no animation library and no canvas. I have these assets in /public/vox: paper.webp (tileable), highlighter.webp, circle.webp, arrow.webp and torn.webp (black shapes on transparent, to use as CSS masks), tape-1..3.webp, pin.webp, map.webp and a halftone cut-out of me.</p>
+<p>STRUCTURE: a title card, then one section per chapter, then an end card. Each chapter is a section whose height is N screens (calc(var(--len) * 100svh)) with a child stage that is position: sticky, top 0, 100svh tall, overflow hidden. The stage is what the viewer watches; the section's height is how long it plays.</p>
+<p>ONE NUMBER PER CHAPTER: a single requestAnimationFrame loop measures each section and writes its progress as a CSS variable --p (0 when the stage pins, 1 when it lets go). Don't jump to the scroll position: ease toward it every frame with p += (target - p) * (1 - exp(-dt * 9)), so motion glides at any scroll speed and frame rate. Skip sections more than a screen away, and skip the write when the value hasn't changed.</p>
+<p>TIMED PIECES IN CSS: give any element a window with inline --a and --b, and one class computes its own progress: --t: clamp(0, (var(--p) - var(--a)) / (var(--b) - var(--a)), 1). Everything else only reads --t. The default entrance is a slap: opacity clamp(0, t * 4, 1), and with --e = (1 - t) * (1 - t), rotate(var(--r) - 6deg * e) scale(1 + .3 * e), so it lands oversized and turned and eases out.</p>
+<p>THE HIGHLIGHTER: a mark element whose ::before is yellow, masked by highlighter.webp stretched to 100% 100%, with clip-path: inset(0 calc((1 - var(--t)) * 100%) 0 0) so it swipes left to right. mix-blend-mode: multiply so the text stays crisp on top. Keep each highlighted phrase on one line (white-space: nowrap).</p>
+<p>THE MARKER CIRCLE: red background, two masks intersected: circle.webp and conic-gradient(#000 calc(var(--t) * 360deg), transparent 0). It draws itself around the number.</p>
+<p>THE CAMERA: a wrapper with data-cam holding keyframes [p, x%, y%, scale, rotate]. The same loop interpolates them with smoothstep and writes the transform. Use it to push in on each highlighted line in turn, and to pan a three-panel timeline sideways. On phones multiply the zoom, drift and rotation by about .35, but not the panel pans. Don't put will-change on a camera that zooms, or the text scales as a blurry bitmap.</p>
+<p>CHAPTER CARDS: each chapter opens on a full-bleed card in that chapter's colour with a big number and title. It slides up and away as --t of its window (.06 to .14) runs, and a torn strip in the same colour hangs off its bottom edge, so it looks torn off.</p>
+<p>TEXTURE ON TWOS: only the texture runs at 12 frames a second. An SVG filter (feTurbulence + feDisplacementMap, scale 4) gives hand-drawn ink a wobble; reseed it every other texture frame. Apply it to static ink only (circles, arrows, torn edges), never to something animating every frame. Give every stage a grain layer whose background-position jumps each texture frame, and a soft inset vignette.</p>
+<p>REDUCED MOTION: no loop, --p is 1 everywhere, sections are their natural height, stages are not sticky, and the timeline panels stack vertically, so everything is visible and nothing moves.</p>
+<p>Build the clock and the --t system first, then the highlighted document chapter, then the rest.</p>
+</div>
+</div><h2>Concept 1: one variable per chapter</h2>
+<p>The whole page runs on this:</p>
+<pre><code class="language-css">.k { --t: clamp(0, (var(--p) - var(--a, 0)) / (var(--b, 1) - var(--a, 0)), 1); }
+</code></pre>
+<p><code>--p</code> lives on the chapter. Each piece declares its own window inline, <code>style={{ &quot;--a&quot;: .2, &quot;--b&quot;: .3 }}</code>, and gets a private <code>--t</code> that runs from 0 to 1 inside it. Custom properties resolve where they are declared, so a highlight inside a callout inside the camera still gets its own <code>--t</code> from the same <code>--p</code>.</p>
+<p>That made choreography a matter of picking numbers. The first highlight in the numbers chapter is <code>.2 to .3</code>, the camera arrives on that line at <code>.2</code>, and the second highlight starts at <code>.28</code>, while the camera is still settling. Scroll back up and everything rewinds, because it is a function of scroll and not a timeline that played once.</p>
+<h2>Concept 2: stepped texture, smooth motion</h2>
+<p>My first version moved everything at 12 frames a second, which is what Vox does: graphics animated on twos so they feel hand-made. In a video that works. On a page you scroll with your own hand, it felt like lag. The page jumped behind your finger.</p>
+<p>So I split it. <strong>Motion is smooth, texture is stepped.</strong> The loop eases <code>--p</code> toward the scroll position every frame, while the marker boil and the grain update twelve times a second:</p>
+<pre><code class="language-ts">const follow = 1 - Math.exp(-dt * 9);
+beat.p += (target - beat.p) * follow;              // every frame: the camera glides
+if (now - lastTexture &gt; 1000 / 12) {               // on twos: the paper feels alive
+  turbulence.setAttribute(&quot;seed&quot;, String(frame % 7));
+  stage.style.setProperty(&quot;--grain-x&quot;, `${(frame * 37) % 240}px`);
+}
+</code></pre>
+<p>You still get the handmade wobble on every circle and torn edge, but nothing you control stutters.</p>
+<h2>Concept 3: assets as masks, colour from CSS</h2>
+<p>Every hand-drawn asset is black on transparent and used only as a mask:</p>
+<pre><code class="language-css">.torn { background: var(--c); mask: url(&quot;/vox/torn.webp&quot;) 0 50% / 100% 100% no-repeat; }
+</code></pre>
+<p>One torn strip becomes the blue, red and yellow bars on the title card, the ripped bottom edge of every chapter card, and the three doors on the end card. The colours stay the site&#39;s own tokens, so it still looks like my site and not a template.</p>
+<p>The marker circle uses two masks at once, the scanned ellipse and a conic sweep, intersected:</p>
+<pre><code class="language-css">mask: url(&quot;/vox/circle.webp&quot;) center / 100% 100% no-repeat,
+      conic-gradient(from 20deg, #000 calc(var(--t) * 360deg), transparent 0);
+mask-composite: intersect;
+</code></pre>
+<p>As <code>--t</code> goes to 1 the sweep opens and the circle looks like it&#39;s being drawn.</p>
+<h2>Concept 4: the camera is just keyframes</h2>
+<p>The document doesn&#39;t move. A wrapper around it does, through keyframes written as data:</p>
+<pre><code class="language-tsx">&lt;div data-cam={JSON.stringify([
+  [.12, 0, 0, 1.25, -2],  // start close and tilted
+  [.2, 8, 14, 1.55, -1],  // push in on line one
+  [.46, -6, 2, 1.5, 0],   // drift to line two
+  [.92, 0, 0, 1, 0],      // pull out to the whole page
+])}&gt;
+</code></pre>
+<p>Between two keyframes the loop uses smoothstep, so the camera always eases in and out like a real move. The Build timeline is the same thing with whole-panel pans: three panels side by side, and the camera holds on each company while its screenshot, pin, card and stat land.</p>
+<h2>Concept 5: real data, real links</h2>
+<p>Nothing on the page is typed in by hand. The document reads <code>data/stats.json</code>, the timeline reads the same list as the Build page, the brand clippings come from the media kit&#39;s markdown files, the chart ranks every Reel by views, and the headlines are the latest posts. When I update my numbers, the explainer updates too.</p>
+<p>Every chapter also ends on a door to the real page: Build, the media kit, or Learn. The explainer is a trailer for the site, not a dead end.</p>
+<p>That also led to a small feature across the blog: posts can have real outputs. Anything I build for a post lives on the site under <code>/lab</code>, and the post names it with <code>output: &quot;/lab/explained&quot;</code> in its frontmatter. The post then opens with the live page running in a window, and the page links back to its post. The <a href="/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/">Deal hero post</a> and the <a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/">homepage ring post</a> do the same now.</p>
+<h2>What I&#39;d steal from this</h2>
+<p>Even if you never build a Vox page, the <code>--p</code> and <code>--t</code> pattern is worth keeping. One number per section from JavaScript, everything else in CSS. It&#39;s scrubbable, reversible and cheap, and choreography becomes a list of windows you can read at a glance.</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

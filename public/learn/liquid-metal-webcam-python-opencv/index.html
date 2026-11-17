@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Turning Your Webcam Into Liquid Metal With 400 Lines of Python | Rishabh Sharma</title>
+<meta name="description" content="A real-time mercury/chrome webcam effect at 77 fps without TouchDesigner and without a GPU: a three-line wave equation, gradient-driven refraction, specular lig" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/liquid-metal-webcam-python-opencv/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Turning Your Webcam Into Liquid Metal With 400 Lines of Python</h1>
+<p class="lede">A real-time mercury/chrome webcam effect at 77 fps without TouchDesigner and without a GPU: a three-line wave equation, gradient-driven refraction, specular lighting from the same gradient, and a feedback loop that makes the image melt.</p>
+<p class="meta">4 September 2026</p>
+<h2>Overview</h2>
+<p>
+        I wanted the effect you have seen in TouchDesigner reels: you wave a hand
+        at the camera and the whole image behaves like the surface of mercury
+        &mdash; ripples spreading from your fingertips, your face smearing into
+        chrome, the room melting behind you.
+</p>
+<p>
+        TouchDesigner is the obvious tool. But the entire thing is four ideas
+        stacked on top of each other, and all four are a handful of NumPy and
+        OpenCV calls. So I built it in Python instead. It runs at 77 fps at
+        960&times;540.
+</p><div class="highlight">
+<p>
+<strong>What it does:</strong> a live webcam filter that turns the frame
+          into a rippling liquid-metal surface you can touch with your hands
+          &mdash; wave propagation, refraction, specular chrome highlights, ink
+          contours, and a feedback loop that makes gestures smear and melt over
+          seconds.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> Python, NumPy, OpenCV, MediaPipe Hands. No GPU,
+          no shaders, no node graph. Roughly 400 lines.
+</p>
+</div><p>Here is how each layer works.</p><h2>1. The water is a wave equation, and it is three lines</h2>
+<p>
+        The whole simulation is a 2D height field &mdash; one float per pixel, at
+        half the resolution of the video. Every frame you update it with the
+        discretised wave equation:
+</p>
+<div class="code">next = 2 &middot; average(neighbours) &minus; previous</div>
+<p>
+        That is it. Each point gets pulled toward the average of the points around
+        it, and the <code>&minus; previous</code> term is what makes it
+<em>overshoot</em> and oscillate instead of just blurring toward
+        flatness. Multiply the result by a damping factor slightly under 1.0 and
+        the ripples lose energy and eventually die.
+</p>
+<p>
+        In code, the &ldquo;average of neighbours, times two&rdquo; is a
+        convolution kernel whose weights sum to 2.0:
+</p>
+<div class="code">WAVE_K = np.array([[0.15, 0.35, 0.15],
+                   [0.35, 0.00, 0.35],
+                   [0.15, 0.35, 0.15]], dtype=np.float32)<p>nxt = cv2.filter2D(self.cur, -1, WAVE_K, borderType=cv2.BORDER_REPLICATE)
+nxt -= self.prev
+nxt *= damping
+self.prev, self.cur = self.cur, nxt</div></p>
+<p>
+        Most implementations of this use only the four orthogonal neighbours.
+        Including the diagonals costs nothing &mdash; it is the same single
+<code>filter2D</code> call &mdash; and the ripples come out noticeably
+        rounder. With a 4-tap kernel you can see the square grid in the
+        wavefronts.
+</p>
+<p>
+<code>damping</code> is the personality knob. At 0.955 you get a pool:
+        rings spread, ring, and settle. At 0.9965 energy barely leaves, ripples
+        pile up on top of each other and the surface never resolves. That is the
+        melt.
+</p><h2>2. The image bends along the slope of the water</h2>
+<p>
+        The height field is invisible. What you actually see is what it does to
+        the pixels underneath it &mdash; and real refraction bends light by the
+<em>slope</em> of the surface, not its height. A flat spot passes the
+        image straight through no matter how high it sits; a steep wall shoves it
+        sideways.
+</p>
+<p>
+        So: take the gradient, use it as a displacement map, and let
+<code>cv2.remap</code> do the rest.
+</p>
+<div class="code">gx = cv2.Sobel(self.cur, cv2.CV_32F, 1, 0, ksize=3)
+gy = cv2.Sobel(self.cur, cv2.CV_32F, 0, 1, ksize=3)<p>map_x = base_x + gx * strength   # base_x/base_y are a meshgrid, built once
+map_y = base_y + gy * strength</p>
+<p>out = cv2.remap(src, map_x, map_y, cv2.INTER_LINEAR,
+                borderMode=cv2.BORDER_REFLECT_101)</div></p>
+<p>
+<code>strength</code> is &ldquo;how many pixels a unit of slope displaces
+        you.&rdquo; Around 26 it reads as water. Around 100 the image tears apart
+        into ribbons.
+</p>
+<p>Two details that matter more than they look:</p>
+<p>
+<strong>Build the meshgrid once.</strong> <code>np.meshgrid</code> for a
+        960&times;540 frame allocates two 2 MB float arrays. Doing that 30 times a
+        second is pure waste. Allocate <code>base_x</code>/<code>base_y</code> at
+        startup and write into preallocated <code>map_x</code>/<code>map_y</code>
+        with <code>cv2.multiply(..., dst=)</code> and
+<code>cv2.add(..., dst=)</code>.
+</p>
+<p>
+<strong>Simulate at half resolution.</strong> The height field lives at
+        480&times;270 and only the gradient gets upscaled to frame size before the
+        remap. Water is smooth &mdash; you lose nothing visually, and you quarter
+        the cost of the most expensive part of the loop.
+</p><h2>3. The chrome look is the same gradient, reused</h2>
+<p>
+        The mercury quality is not in the warping. Warping alone gives you a
+        funhouse mirror &mdash; recognisable, but flat and plasticky. What sells
+        liquid metal is specular lighting, and the gradient you already computed
+<em>is</em> the surface normal.
+</p>
+<p>Dot it with a light direction and add the result to the pixels:</p>
+<div class="code">lit = np.clip((gx * 0.75 + gy * 0.75) * (spec * 90.0), -150, 150)
+out += lit[..., None]</div>
+<p>
+        Slopes tilted toward the light go white, slopes tilted away go black. That
+        is the whole thing &mdash; and because it is driven by the same field that
+        is doing the warping, the highlights track the deformation perfectly.
+        Free, essentially.
+</p>
+<p>
+        I added one more term: an ink pass that darkens the steepest slopes, which
+        produces the black contour lines you see outlining the blobs in
+        liquid-metal footage.
+</p><h2>4. Feedback is what makes it <em>melt</em></h2>
+<p>
+        This is the one that turns a nice ripple effect into the thing I was
+        actually after, and it is a one-liner.
+</p>
+<p>
+        Instead of warping the fresh camera frame each time, blend the
+<strong>previous warped output</strong> back in as the source:
+</p>
+<div class="code">src = cv2.addWeighted(frame, 1.0 - fb, self.prev_out, fb, 0.0)</div>
+<p>
+        At <code>fb = 0</code>, every frame is warped once from clean video &mdash;
+        ripples on glass. At <code>fb = 0.86</code>, each frame is warping
+        something that has already been warped, over and over. Distortion
+        compounds. A gesture from two seconds ago is still smeared across the
+        frame, being re-bent by whatever you are doing now. That is the melting.
+</p>
+<p>
+        It self-corrects, too: when the water goes flat, output &asymp; input, and
+        the feedback loop converges back to the live frame within about fifteen
+        frames. So it melts under your hands and reheals when you stop.
+</p><h2>5. Hands, and why velocity is the whole trick</h2>
+<p>
+        MediaPipe Hands gives you 21 landmarks per hand at maybe 8 ms a frame on
+        CPU. Run it on a 320px-wide copy of the frame &mdash; you do not need
+        detail to find a hand, and full-res detection roughly triples the cost.
+</p>
+<p>
+        The naive integration is: for each landmark, stamp a dimple at that
+        position. It looks wrong. You get a hand-shaped dent that follows you
+        around like a cursor, not something touching water.
+</p>
+<p>Two fixes make it feel physical.</p>
+<p>
+<strong>Draw the stroke, not the point.</strong> At 30 fps a fast hand
+        moves 40+ pixels between frames. Stamping circles gives you a dotted line
+        of separate splashes. Instead, draw a <em>line</em> from where the landmark
+        was last frame to where it is now:
+</p>
+<div class="code">speed = np.hypot(x - px, y - py)
+if speed &gt; 1.0:
+    surface.drag(px, py, x, y, radius, amount)
+else:
+    surface.splash(x, y, radius, amount * 0.5)</div>
+<p>Now a swipe leaves a continuous wake.</p>
+<p>
+<strong>Scale amplitude by speed.</strong> A hand resting in frame should
+        barely dimple the surface; a fast swipe should gash it. One multiplier:
+</p>
+<div class="code">amount = amp * (1.0 + speed_amp * min(speed / 8.0, 3.0))</div>
+<p>
+        That single line is most of the difference between &ldquo;an effect is
+        happening near my hand&rdquo; and &ldquo;I am touching this.&rdquo;
+</p>
+<p>
+        One bug worth flagging: I originally keyed the per-hand position history by
+        MediaPipe&rsquo;s detection index. When the detection order flips between
+        frames &mdash; which it does &mdash; hand 0 becomes hand 1, and every
+        landmark reports a velocity equal to the distance between your two hands.
+        You get a random explosion across the frame. Key on the handedness label
+        (<code>"Left"</code> / <code>"Right"</code>) instead.
+</p><h2>The bug that ate the picture</h2>
+<p>
+        First full run of the melt preset rendered a <strong>completely black
+        frame</strong>. Not glitchy &mdash; black.
+</p>
+<p>
+        The cause is specific to running the wave sim at damping 0.9965. Energy
+        barely leaves the system, and my hands were pumping energy in every frame,
+        so the height field ratcheted upward until it hit the safety clip at
+        &plusmn;6. Once it is clipped everywhere, everything is a plateau at
+        maximum slope. The ink pass, which darkens steep slopes, dutifully
+        darkened <em>every pixel in the frame</em>.
+</p>
+<p>
+        The fix is not a harder clip &mdash; that just makes the plateau arrive
+        sooner. It is a governor on total energy: measure the RMS of the field, and
+        if it is above target, scale the whole thing down.
+</p>
+<div class="code">rms = float(np.sqrt(np.mean(nxt * nxt)) + 1e-6)
+if rms &gt; energy:
+    k = (energy / rms) ** 0.35
+    nxt *= k
+    self.prev *= k       # scale both buffers or you inject a false velocity</div>
+<p>
+        The <code>** 0.35</code> matters &mdash; it makes the correction gentle,
+        spread over several frames, so you do not hear the sim &ldquo;duck&rdquo;
+        every time you move fast. Scaling both buffers matters too: they encode
+        position <em>and</em> implicitly velocity, and touching only one shoves
+        energy back in through the side door.
+</p>
+<p>
+        Result: a surface that churns indefinitely and never saturates. Exactly the
+        behaviour I wanted from damping &asymp; 1, without the mud.
+</p><h2>Performance</h2>
+<p>Measured on synthetic frames, effect only:</p>
+<table>
+<thead>
+<tr>
+<th>Resolution</th>
+<th>ms/frame</th>
+<th>fps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>960&times;540</td>
+<td>12.9</td>
+<td>77</td>
+</tr>
+<tr>
+<td>1280&times;720</td>
+<td>25.5</td>
+<td>39</td>
+</tr>
+</tbody>
+</table>
+<p>
+        MediaPipe adds roughly 8 ms. 960&times;540 leaves comfortable headroom for
+        30 fps capture, which is why it is the default. Everything is
+<code>cv2</code> calls on contiguous float32 arrays &mdash; there is no
+        Python loop over pixels anywhere, and there is no GPU involved at all.
+</p><h2>What I would do next</h2>
+<ul>
+<li>
+<strong>Chromatic aberration.</strong> Offset the R and B channels by
+          slightly different amounts in the remap. Real refraction is
+          wavelength-dependent, and it is three lines for a big jump in
+          believability.
+</li>
+<li>
+<strong>Segmentation-gated water.</strong> Use MediaPipe&rsquo;s selfie
+          segmentation so the background melts while the subject stays sharp, or
+          the exact inverse.
+</li>
+<li>
+<strong>Depth as amplitude.</strong> The z coordinate is right there in
+          the landmarks. Hands closer to the camera should hit harder.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          A wave field is <code>2 &middot; average(neighbours) &minus; previous</code>,
+          times a damping factor &mdash; one <code>filter2D</code>, and the
+          diagonals are free.
+</li>
+<li>
+          Refraction is driven by the <em>gradient</em> of the field, not its
+          height. Gradient &rarr; displacement map &rarr; <code>cv2.remap</code>.
+</li>
+<li>
+          The same gradient is the surface normal, so specular chrome and ink
+          contours cost almost nothing extra.
+</li>
+<li>
+          Feeding the previous output back in as the source is what turns ripples
+          into melting &mdash; and it self-heals when the surface flattens.
+</li>
+<li>
+          For hands: draw strokes between frames rather than stamping points, scale
+          amplitude by speed, and key history on handedness, never detection index.
+</li>
+<li>
+          At damping near 1, clip the field and you get a black frame. Govern total
+          RMS energy instead, gently, scaling both buffers.
+</li>
+<li>
+          Simulate at half resolution and preallocate every buffer. That is most of
+          the gap between 30 and 77 fps.
+</li>
+</ul><p>
+        The core insight is that a wave field, a gradient, and a
+<code>remap</code> get you most of the way to effects that look like they
+        needed a node graph and a GPU. The remaining 20% is feedback and velocity
+        &mdash; and those are one line each.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mission: NASA's Perseverance Rover, Flown to Mars by Your Scroll | Rishabh Sharma</title>
+<meta name="description" content="How I turned NASA's public Perseverance 3D model into a scroll-driven CAD drawing: designed, assembled, launched on an Atlas V, landed in Jezero and driven. Thr" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/perseverance-mission-scroll-cad-drawing/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Mission: NASA's Perseverance Rover, Flown to Mars by Your Scroll</h1>
+<p class="lede">How I turned NASA's public Perseverance 3D model into a scroll-driven CAD drawing: designed, assembled, launched on an Atlas V, landed in Jezero and driven. Three.js, hidden lines, prompts inside.</p>
+<p class="meta">12 November 2026</p>
+<p>I saw a space company&#39;s site that scrolls a wireframe satellite through its life, from design to orbit, and wanted one that felt less like a demo and more like a real engineering drawing. So I used a real spacecraft. <a href="https://www.avivashishta.com/lab/mission" target="_blank" rel="noreferrer">It is live at avivashishta.com/lab/mission</a>: NASA&#39;s Perseverance rover, drawn like CAD, carried through its actual mission by your scroll.</p>
+<p>You start on the drafting floor with the rover in pieces, slowly turning (drag it to turn it yourself). Scroll and it assembles, one subsystem at a time, each named as it flies in, then dimensioned. The aeroshell closes round it, an Atlas V 541 plots in on the pad at Cape Canaveral, and it lifts off: boosters away, fairing open, stage separation. Seven months of cruise, Mars on approach, the sky crane lowering it into Jezero Crater on three cables, and then it drives.</p>
+<div class="highlight"><p><strong>The short version:</strong> the rover is NASA/JPL-Caltech's public 3D model, baked down to bare geometry (1.8 MB). Everything is drawn in two passes: a fill in the page colour that hides what is behind it, and the edges as thin lines, plus a faint ghost of the hidden edges. The rocket and the pad are built in code from published dimensions. One number, the scroll position from 0 to 1, drives every camera move, part and engine.</p></div><h2>Step 1: a real model, baked to geometry</h2>
+<p>My first version was a satellite I modelled myself, and it looked made up, because it was. Realism comes cheap if you start from the real thing: NASA publishes its spacecraft models in the public domain at <a href="https://github.com/nasa/NASA-3D-Resources" target="_blank" rel="noreferrer">github.com/nasa/NASA-3D-Resources</a>, Perseverance included.</p>
+<p>The file is built to be looked at in colour: textures, materials, a skinned cable, Draco compression. A line drawing needs none of that. A small <a href="https://gltf-transform.dev" target="_blank" rel="noreferrer">gltf-transform</a> script keeps only positions, normals and the node names (the page animates parts by name), then compresses with meshopt:</p>
+<pre><code class="language-js">for (const mesh of root.listMeshes()) for (const prim of mesh.listPrimitives()) {
+  prim.setMaterial(mat);
+  for (const sem of prim.listSemantics()) if (sem !== &quot;POSITION&quot; &amp;&amp; sem !== &quot;NORMAL&quot;) prim.setAttribute(sem, null);
+}
+for (const n of root.listNodes()) n.setSkin(null); // one cable is skinned; a drawing doesn&#39;t need it
+for (const t of root.listTextures()) t.dispose();
+await doc.transform(prune({ keepLeaves: true }), dedup(), weld(), meshopt({ encoder: MeshoptEncoder }));
+</code></pre>
+<p>Drop the skin but not the joints it pointed at, and three.js crashes while loading (<code>normalizeSkinWeights</code>). Remove both.</p>
+<p>One more surgery happens in the browser. NASA&#39;s file has all six wheels in one mesh, so they can&#39;t turn. The page sorts its triangles by which corner of the rover their centre sits in, and makes six meshes, one per axle.</p>
+<h2>Step 2: drawing like CAD</h2>
+<p>What makes it read as an engineering drawing and not a wireframe is <strong>hidden line removal</strong>. A wireframe shows every edge through the whole object, which is noise. A drawing shows only the edges you could actually see.</p>
+<p>Every part is drawn three times:</p>
+<ol>
+<li><strong>A fill in the page&#39;s own colour</strong>, pushed slightly back with <code>polygonOffset</code>. You can&#39;t see it, but it hides whatever is behind it.</li>
+<li><strong>The edges</strong>, from <code>EdgesGeometry</code> at a 28 degree threshold, so flat panels don&#39;t show their triangles.</li>
+<li><strong>A ghost of the same edges</strong> at 4% opacity with the depth test off, so hidden structure is just barely there, like construction lines.</li>
+</ol>
+<p>To pick out one subsystem, its fill turns solid blue with a little shading. That is the only colour on the page.</p>
+<h2>Step 3: a pen that plots it in</h2>
+<p>After the download, nothing appears at once. A plane sweeps across the model and lines only exist behind it, with a bright blue pen line at the front, like a plotter drawing it. It is three lines in the shader:</p>
+<pre><code class="language-glsl">float s = dot(vW, uRevealDir);          // how far along the sweep this pixel is
+if (s &gt; uReveal) discard;               // not drawn yet
+float pen = exp(-pow((uReveal - s) * 3., 2.)); // bright just behind the front
+</code></pre>
+<p>The rocket uses the same plane, pointed down, so it plots in from the nose to the pad while the camera pulls back.</p>
+<h2>Step 4: the rocket and the pad, from the numbers</h2>
+<p>NASA&#39;s repo doesn&#39;t have the Atlas V, so I built it from its published dimensions: a 3.81 m core booster 32.5 m long with the RD-180&#39;s two nozzles, four 1.58 m solid boosters, the Centaur upper stage and the 5.4 m fairing in two halves, hinged so they peel open. Almost all of it is bodies of revolution, so one helper does most of the work: give it a profile (radius, height pairs) and it draws a hidden fill plus a ring at every profile point and a few meridians, the way an engineer would draw a cylinder, instead of every triangle.</p>
+<p>The pad is Space Launch Complex 41: the mobile platform, an umbilical tower, four lightning towers with catenary wires between them, and the rails. The exhaust is 5,200 points with additive blending.</p>
+<p>One honest cheat: the rover&#39;s deployed size doesn&#39;t fit inside a true-scale aeroshell, so the shell and rocket are drawn 1.3 times larger. Nobody notices, and everything else is to scale.</p>
+<h2>Step 5: one number drives everything</h2>
+<p>The page is 1,300 viewport heights tall and the canvas is fixed. The scroll position, 0 to 1, is the whole timeline. Each phase starts at a fixed point (assemble at 0.14, launch at 0.32, cruise at 0.52, land at 0.63, explore at 0.82), and every event is a <code>smooth(start, end, p)</code> ramp:</p>
+<pre><code class="language-ts">const ignite = smooth(.392, .4, p);                               // the core lights
+const lift = ramp(.4, .52, p) ** 2.3 * 520;                       // slow off the pad, then fast
+const srbOn = smooth(.398, .402, p) * (1 - smooth(.43, .436, p)); // boosters burn, then go out
+const fairSep = er(.452, .472, p);                                // the fairing halves peel away
+</code></pre>
+<p>The camera works the same way: a list of keyframes (position, target, field of view), eased between. Long lenses from far away keep the perspective flat, which is what makes it feel like a drawing and not a game. Scrubbing backwards just runs everything in reverse for free, because nothing is stored, it is all computed from <code>p</code>.</p>
+<h2>Step 6: the turntable</h2>
+<p>On the first screen the rover turns slowly on its own, and you can drag it any way. When you let go it coasts, then settles back into the slow spin. As you scroll into assembly the drag fades out and the camera eases back onto its path, the short way round:</p>
+<pre><code class="language-ts">const wrap = (a: number) =&gt; Math.atan2(Math.sin(a), Math.cos(a)); // any angle to -π..π
+off.applyAxisAngle(Y, wrap(orbit.yaw) * orbit.weight);            // weight goes 1 to 0 as assembly begins
+</code></pre>
+<p>Without <code>wrap</code>, a rover you spun five times would unspin five times on the way out.</p>
+<h2>The small things</h2>
+<ul>
+<li><strong>The loader is a title block</strong>, the box in the corner of an engineering drawing, with the real download in MB filling a bar.</li>
+<li><strong>Labels follow the parts.</strong> Each subsystem&#39;s name is projected from its 3D centre every frame, so it rides beside the part as it flies home, and only shows during assembly.</li>
+<li><strong>The mast unfolds and pans</strong> by rotating NASA&#39;s own nodes about an axis in world space, so the hierarchy in the file just works.</li>
+<li><strong>The terrain is contour lines</strong> (marching squares over a noise heightmap), so Mars is a topo map, not a texture.</li>
+<li><strong>No post-processing.</strong> A composer with an output pass turned my near-black background grey; clearing to pure black fixed it, and CSS adds the grain and vignette.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a scroll-driven page (React + three.js) that tells the story of a real object as a CAD drawing. Load a public 3D model (for example from github.com/nasa/NASA-3D-Resources), baked to positions and normals only. Draw every mesh three ways: a fill in the background colour with polygonOffset so it hides what is behind it, EdgesGeometry at about 28 degrees as thin lines, and the same edges at 4% opacity with depthTest off as a ghost of the hidden lines. Highlighting a part turns its fill solid blue with simple shading.</p>
+<p>Make the page about 1300vh tall with a fixed canvas, and compute one progress value p from 0 to 1 from the scroll. Every event is smoothstep(start, end, p): parts exploding out and flying home in order, camera keyframes (position, target, fov) eased between, with long lenses from far away. Plot the model in with a reveal plane in the shader (discard where dot(worldPos, dir) is beyond a uniform, add a bright pen line just behind it). Project each part's centre to the screen every frame to place an HTML label beside it. On the first screen let the user drag to orbit with inertia and a slow auto spin, and fade the orbit out as the next phase starts, wrapping the angle so it returns the short way. Add a segmented progress bar of the phases at the bottom that jumps to each. Respect prefers-reduced-motion.</p>
+</div>
+</div><p>The rover model is by NASA/JPL-Caltech, from NASA&#39;s 3D Resources.</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

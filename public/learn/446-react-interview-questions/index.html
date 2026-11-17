@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>446 React Interview Questions to Crack Frontend Placements | Rishabh Sharma</title>
+<meta name="description" content="446 React interview questions for frontend placements, each linked to a full written answer with code: hooks, React 18/19 features, core React, Router, Redux an" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/446-react-interview-questions/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Roadmap</p>
+<h1>446 React Interview Questions to Crack Frontend Placements</h1>
+<p class="lede">446 React interview questions for frontend placements, each linked to a full written answer with code: hooks, React 18/19 features, core React, Router, Redux and testing. 354 current plus 92 legacy, from sudheerj/reactjs-interview-questions (45K stars, MIT licensed).</p>
+<p class="meta">1 October 2026</p>
+<p>
+        You commented <strong>react</strong>, so here are all 446 questions.
+        They come from <a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">sudheerj/reactjs-interview-questions</a>,
+        and every one has a full written answer with code in the repo. Each
+        link below jumps straight to its answer. I pulled the list from the
+        repo's README on 1 October 2026.
+</p><div class="highlight">
+<p style="margin-bottom: 0">
+<strong>The short version:</strong> 354 current questions plus 92
+          legacy ones, sorted by topic. Do Hooks and Modern React first,
+          answer each question out loud, then build one small project that
+          uses what you just read. That project is what you talk about in the
+          interview.
+</p>
+</div><p>
+        Heads up: 92 of the 446 sit in the repo's "Old Q&amp;A" section.
+        Those are older class-component and legacy-API questions the author
+        keeps separate. They still come up in some interviews and in old
+        codebases, but start with the current ones. 80 of the questions
+        (mostly in Old Q&amp;A) don't get their own anchor on GitHub, so those
+        links open the README and you'll need Ctrl + F.
+</p><h2 id="repos">The repo</h2>
+<h3>sudheerj/reactjs-interview-questions <span class="stars">~45K ★</span></h3>
+<p class="repo-link"><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">github.com/sudheerj/reactjs-interview-questions</a></p>
+<p>A long-running list of React interview questions with written answers and code examples, kept up to date with React 18 and 19. MIT licensed and free.</p><h2 id="start">The 4 sections I'd start with</h2>
+<ol>
+<li><strong><a href="#hooks">Hooks</a> (55 questions).</strong> useState, useEffect, useRef, useMemo, useCallback, useReducer and custom hooks. Most frontend rounds live here.</li>
+<li><strong><a href="#modern-react-features-react-18-19">Modern React Features, React 18/19</a> (37).</strong> Concurrent rendering, Server Components, Server Actions, the use hook, useOptimistic. This is what separates you from people who learned React in 2021.</li>
+<li><strong><a href="#core-react">Core React</a> (77).</strong> JSX, virtual DOM, reconciliation, props vs state, keys. The fundamentals every round starts with.</li>
+<li><strong><a href="#react-router">React Router</a> (11).</strong> Protected routes, 404 pages, query params, loaders and actions.</li>
+</ol><h2 id="build">What to build after</h2>
+<p>A small app with a protected route, one custom hook, a form using Actions and one optimistic update. Deploy it with a live link.</p><h2 id="topics">Jump to a topic</h2>
+<p><a href="#core-react">Core React</a> (77) · <a href="#hooks">Hooks</a> (55) · <a href="#modern-react-features-react-18-19">Modern React Features (React 18/19)</a> (37) · <a href="#react-router">React Router</a> (11) · <a href="#react-redux">React Redux</a> (34) · <a href="#react-testing">React Testing</a> (6) · <a href="#react-internationalization">React Internationalization</a> (6) · <a href="#react-native">React Native</a> (4) · <a href="#react-supported-libraries-and-integration">React Supported Libraries and Integration</a> (13) · <a href="#miscellaneous">Miscellaneous</a> (111) · <a href="#old-q-a-legacy">Old Q&amp;A (legacy)</a> (92)</p><h2 id="questions">All questions by topic (446)</h2>
+<p class="repo-link">Source: <a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">github.com/sudheerj/reactjs-interview-questions</a></p>
+<h3 id="core-react">Core React (77)</h3>
+<ol start="1">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-react" target="_blank" rel="noreferrer">What is React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-history-behind-react-evolution" target="_blank" rel="noreferrer">What is the history behind React evolution?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-major-features-of-react" target="_blank" rel="noreferrer">What are the major features of React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-jsx" target="_blank" rel="noreferrer">What is JSX?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-an-element-and-a-component" target="_blank" rel="noreferrer">What is the difference between an Element and a Component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-create-components-in-react" target="_blank" rel="noreferrer">How to create components in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#when-to-use-a-class-component-over-a-function-component" target="_blank" rel="noreferrer">When to use a Class Component over a Function Component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-pure-components" target="_blank" rel="noreferrer">What are Pure Components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-state-in-react" target="_blank" rel="noreferrer">What is state in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-props-in-react" target="_blank" rel="noreferrer">What are props in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-state-and-props" target="_blank" rel="noreferrer">What is the difference between state and props?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-html-and-react-event-handling" target="_blank" rel="noreferrer">What is the difference between HTML and React event handling?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-synthetic-events-in-react" target="_blank" rel="noreferrer">What are synthetic events in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-inline-conditional-expressions" target="_blank" rel="noreferrer">What are inline conditional expressions?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-key-prop-and-what-is-the-benefit-of-using-it-in-arrays-of-elements" target="_blank" rel="noreferrer">What is "key" prop and what is the benefit of using it in arrays of elements?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-virtual-dom" target="_blank" rel="noreferrer">What is Virtual DOM?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-virtual-dom-works" target="_blank" rel="noreferrer">How Virtual DOM works?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-shadow-dom-and-virtual-dom" target="_blank" rel="noreferrer">What is the difference between Shadow DOM and Virtual DOM?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-react-fiber" target="_blank" rel="noreferrer">What is React Fiber?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-main-goal-of-react-fiber" target="_blank" rel="noreferrer">What is the main goal of React Fiber?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-controlled-components" target="_blank" rel="noreferrer">What are controlled components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-uncontrolled-components" target="_blank" rel="noreferrer">What are uncontrolled components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-createelement-and-cloneelement" target="_blank" rel="noreferrer">What is the difference between createElement and cloneElement?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-lifting-state-up-in-react" target="_blank" rel="noreferrer">What is Lifting State Up in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-higher-order-components" target="_blank" rel="noreferrer">What are Higher-Order Components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-children-prop" target="_blank" rel="noreferrer">What is children prop?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-write-comments-in-react" target="_blank" rel="noreferrer">How to write comments in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-reconciliation" target="_blank" rel="noreferrer">What is reconciliation?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#does-the-lazy-function-support-named-exports" target="_blank" rel="noreferrer">Does the lazy function support named exports?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-react-uses-classname-over-class-attribute" target="_blank" rel="noreferrer">Why React uses className over class attribute?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-fragments" target="_blank" rel="noreferrer">What are fragments?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-fragments-are-better-than-container-divs" target="_blank" rel="noreferrer">Why fragments are better than container divs?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-portals-in-react" target="_blank" rel="noreferrer">What are portals in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-stateless-components" target="_blank" rel="noreferrer">What are stateless components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-stateful-components" target="_blank" rel="noreferrer">What are stateful components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-apply-validation-on-props-in-react" target="_blank" rel="noreferrer">How to apply validation on props in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-advantages-of-react" target="_blank" rel="noreferrer">What are the advantages of React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-limitations-of-react" target="_blank" rel="noreferrer">What are the limitations of React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-recommended-ways-for-static-type-checking" target="_blank" rel="noreferrer">What are the recommended ways for static type checking?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-use-of-react-dom-package" target="_blank" rel="noreferrer">What is the use of react-dom package?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-reactdomserver" target="_blank" rel="noreferrer">What is ReactDOMServer?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-use-innerhtml-in-react" target="_blank" rel="noreferrer">How to use innerHTML in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-use-styles-in-react" target="_blank" rel="noreferrer">How to use styles in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-events-are-different-in-react" target="_blank" rel="noreferrer">How events are different in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-impact-of-indexes-as-keys" target="_blank" rel="noreferrer">What is the impact of indexes as keys?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-conditionally-render-components" target="_blank" rel="noreferrer">How do you conditionally render components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-we-need-to-be-careful-when-spreading-props-on-dom-elements" target="_blank" rel="noreferrer">Why we need to be careful when spreading props on DOM elements?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-memoize-a-component" target="_blank" rel="noreferrer">How do you memoize a component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-you-implement-server-side-rendering-or-ssr" target="_blank" rel="noreferrer">How you implement Server Side Rendering or SSR?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-enable-production-mode-in-react" target="_blank" rel="noreferrer">How to enable production mode in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#do-hooks-replace-render-props-and-higher-order-components" target="_blank" rel="noreferrer">Do Hooks replace render props and higher order components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-a-switching-component" target="_blank" rel="noreferrer">What is a switching component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-pointer-events-supported-in-react" target="_blank" rel="noreferrer">What are the Pointer Events supported in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-should-component-names-start-with-capital-letter" target="_blank" rel="noreferrer">Why should component names start with capital letter?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#are-custom-dom-attributes-supported-in-react-v16" target="_blank" rel="noreferrer">Are custom DOM attributes supported in React v16?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-loop-inside-jsx" target="_blank" rel="noreferrer">How to loop inside JSX?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-access-props-in-attribute-quotes" target="_blank" rel="noreferrer">How do you access props in attribute quotes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-react-proptype-array-with-shape" target="_blank" rel="noreferrer">What is React proptype array with shape?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-conditionally-apply-class-attributes" target="_blank" rel="noreferrer">How to conditionally apply class attributes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-react-and-reactdom" target="_blank" rel="noreferrer">What is the difference between React and ReactDOM?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-reactdom-is-separated-from-react" target="_blank" rel="noreferrer">Why ReactDOM is separated from React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-use-react-label-element" target="_blank" rel="noreferrer">How to use React label element?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-combine-multiple-inline-style-objects" target="_blank" rel="noreferrer">How to combine multiple inline style objects?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-re-render-the-view-when-the-browser-is-resized" target="_blank" rel="noreferrer">How to re-render the view when the browser is resized?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-pretty-print-json-with-react" target="_blank" rel="noreferrer">How to pretty print JSON with React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-cant-you-update-props-in-react" target="_blank" rel="noreferrer">Why can't you update props in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-focus-an-input-element-on-page-load" target="_blank" rel="noreferrer">How to focus an input element on page load?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-can-we-find-the-version-of-react-at-runtime-in-the-browser" target="_blank" rel="noreferrer">How can we find the version of React at runtime in the browser?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-add-google-analytics-for-react-router" target="_blank" rel="noreferrer">How to add Google Analytics for React Router?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-apply-vendor-prefixes-to-inline-styles-in-react" target="_blank" rel="noreferrer">How do you apply vendor prefixes to inline styles in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-import-and-export-components-using-react-and-es6" target="_blank" rel="noreferrer">How to import and export components using React and ES6?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-exceptions-on-react-component-naming" target="_blank" rel="noreferrer">What are the exceptions on React component naming?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#is-it-possible-to-use-asyncawait-in-plain-react" target="_blank" rel="noreferrer">Is it possible to use async/await in plain React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-common-folder-structures-for-react" target="_blank" rel="noreferrer">What are the common folder structures for React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-popular-packages-for-animation" target="_blank" rel="noreferrer">What are the popular packages for animation?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-benefit-of-styles-modules" target="_blank" rel="noreferrer">What is the benefit of styles modules?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-popular-react-specific-linters" target="_blank" rel="noreferrer">What are the popular React-specific linters?</a></li>
+</ol>
+<h3 id="hooks">Hooks (55)</h3>
+<ol start="78">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-does-reactjs-work-behind-the-scenes" target="_blank" rel="noreferrer">How does ReactJS work behind the scenes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-is-usereducer-different-from-usestate" target="_blank" rel="noreferrer">How is useReducer Different from useState?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-usecontext-what-are-the-steps-to-follow-for-usecontext" target="_blank" rel="noreferrer">What is useContext? What are the steps to follow for useContext?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-use-cases-of-usecontext-hook" target="_blank" rel="noreferrer">What are the use cases of useContext hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#when-to-use-client-and-server-components" target="_blank" rel="noreferrer">When to use client and server components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-differences-between-page-router-and-app-router-in-nextjs" target="_blank" rel="noreferrer">What are the differences between page router and app router in nextjs?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-you-describe-the-usememo-hook" target="_blank" rel="noreferrer">Can you describe the useMemo() Hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-hooks-be-used-in-class-components" target="_blank" rel="noreferrer">Can Hooks be used in class components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-an-updater-function-should-an-updater-function-be-used-in-all-cases" target="_blank" rel="noreferrer">What is an updater function? Should an updater function be used in all cases?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-usestate-take-a-function-as-an-initial-value" target="_blank" rel="noreferrer">Can useState take a function as an initial value?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-types-of-values-can-usestate-hold" target="_blank" rel="noreferrer">What types of values can useState hold?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-happens-if-you-call-usestate-conditionally" target="_blank" rel="noreferrer">What happens if you call useState conditionally?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#is-usestate-synchronous-or-asynchronous" target="_blank" rel="noreferrer">Is useState Synchronous or Asynchronous?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-you-explain-how-usestate-works-internally" target="_blank" rel="noreferrer">Can you explain how useState works internally?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-usereducer-why-do-you-use-usereducer" target="_blank" rel="noreferrer">What is useReducer? Why do you use useReducer?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-does-usereducer-works-explain-with-an-example" target="_blank" rel="noreferrer">How does useReducer works? Explain with an example</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-you-combine-usereducer-with-usecontext" target="_blank" rel="noreferrer">Can you combine **useReducer** with **useContext**?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-you-dispatch-multiple-actions-in-a-row-with-usereducer" target="_blank" rel="noreferrer">Can you dispatch multiple actions in a row with useReducer?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#is-dispatch-from-usereducer-asynchronous-and-does-it-update-state-immediately" target="_blank" rel="noreferrer">Is dispatch from useReducer asynchronous and does it update state immediately?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-does-usecontext-works-explain-with-an-example" target="_blank" rel="noreferrer">How does useContext works? Explain with an example</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-you-use-multiple-contexts-in-one-component" target="_blank" rel="noreferrer">Can You Use Multiple Contexts in One Component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#whats-a-common-pitfall-when-using-usecontext-with-objects" target="_blank" rel="noreferrer">What's a common pitfall when using useContext with objects?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-would-the-context-value-be-for-no-matching-provider" target="_blank" rel="noreferrer">What would the context value be for no matching provider?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-reactive-dependencies-in-the-useeffect-dependency-array-affect-its-execution-behavior" target="_blank" rel="noreferrer">How do reactive dependencies in the useEffect dependency array affect its execution behavior?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#when-and-how-often-does-react-invoke-the-setup-and-cleanup-functions-inside-a-useeffect-hook" target="_blank" rel="noreferrer">When and how often does React invoke the setup and cleanup functions inside a useEffect hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-happens-if-you-return-a-promise-from-useeffect" target="_blank" rel="noreferrer">What happens if you return a Promise from useEffect??</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-you-have-multiple-useeffect-hooks-in-a-single-component" target="_blank" rel="noreferrer">Can you have multiple useEffect hooks in a single component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-prevent-infinite-loops-with-useeffect" target="_blank" rel="noreferrer">How to prevent infinite loops with useEffect?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-usecases-of-uselayouteffect" target="_blank" rel="noreferrer">What are the usecases of useLayoutEffect?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-does-uselayouteffect-work-during-server-side-rendering-ssr" target="_blank" rel="noreferrer">How does useLayoutEffect work during server-side rendering (SSR)?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-happens-if-you-use-uselayouteffect-for-non-layout-logic" target="_blank" rel="noreferrer">What happens if you use useLayoutEffect for non-layout logic?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-does-uselayouteffect-cause-layout-thrashing" target="_blank" rel="noreferrer">How does useLayoutEffect cause layout thrashing?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-use-useref-to-access-a-dom-element-in-react-give-an-example" target="_blank" rel="noreferrer">How Do You Use useRef to Access a DOM Element in React? Give an example.</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-you-use-useref-to-persist-values-across-renders" target="_blank" rel="noreferrer">Can you use useRef to persist values across renders??</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-useref-be-used-to-store-previous-values" target="_blank" rel="noreferrer">Can useRef be used to store previous values?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#is-it-possible-to-access-a-ref-in-the-render-method" target="_blank" rel="noreferrer">Is it possible to access a ref in the render method?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-common-usecases-of-useref-hook" target="_blank" rel="noreferrer">What are the common usecases of useRef hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-useimperativehandle-hook-give-an-example" target="_blank" rel="noreferrer">What is useImperativeHandle Hook? Give an example.</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#when-should-you-use-useimperativehandle" target="_blank" rel="noreferrer">When should you use useImperativeHandle?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#is-that-possible-to-use-useimperativehandle-without-forwardref" target="_blank" rel="noreferrer">Is that possible to use useImperativeHandle without forwardRef?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-is-usememo-different-from-usecallback" target="_blank" rel="noreferrer">How is useMemo different from useCallback?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#does-usememo-prevent-re-rendering-of-child-components" target="_blank" rel="noreferrer">Does useMemo prevent re-rendering of child components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-usecallback-and-why-is-it-used" target="_blank" rel="noreferrer">What is useCallback and why is it used?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-custom-react-hooks-and-how-can-you-develop-one" target="_blank" rel="noreferrer">What are Custom React Hooks, and How Can You Develop One?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-does-react-fiber-works-explain-in-detail" target="_blank" rel="noreferrer">How does React Fiber works? Explain in detail.</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-useid-hook-and-when-should-you-use-it" target="_blank" rel="noreferrer">What is the useId hook and when should you use it?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-usedeferredvalue-hook" target="_blank" rel="noreferrer">What is the useDeferredValue hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-usetransition-hook-and-how-does-it-differ-from-usedeferredvalue" target="_blank" rel="noreferrer">What is the useTransition hook and how does it differ from useDeferredValue?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-usesyncexternalstore-hook" target="_blank" rel="noreferrer">What is the useSyncExternalStore hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-useinsertioneffect-hook" target="_blank" rel="noreferrer">What is the useInsertionEffect hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-share-state-logic-between-components-using-custom-hooks" target="_blank" rel="noreferrer">How do you share state logic between components using custom hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-usedebugvalue-hook" target="_blank" rel="noreferrer">What is the useDebugValue hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-handle-cleanup-in-useeffect" target="_blank" rel="noreferrer">How do you handle cleanup in useEffect?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-differences-between-useeffect-and-useevent-experimental" target="_blank" rel="noreferrer">What are the differences between useEffect and useEvent (experimental)?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-best-practices-for-using-react-hooks" target="_blank" rel="noreferrer">What are the best practices for using React Hooks?</a></li>
+</ol>
+<h3 id="modern-react-features-react-18-19">Modern React Features (React 18/19) (37)</h3>
+<ol start="133">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-key-features-introduced-in-react-18" target="_blank" rel="noreferrer">What are the key features introduced in React 18?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-key-features-introduced-in-react-19" target="_blank" rel="noreferrer">What are the key features introduced in React 19?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-use-hook-in-react-19" target="_blank" rel="noreferrer">What is the use() hook in React 19?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-server-actions-in-react-19" target="_blank" rel="noreferrer">What are Server Actions in React 19?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-useformstate-and-useformstatus-hooks" target="_blank" rel="noreferrer">What are useFormState and useFormStatus hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-useoptimistic-hook" target="_blank" rel="noreferrer">What is the useOptimistic hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-react-compiler-react-forget" target="_blank" rel="noreferrer">What is the React Compiler (React Forget)?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-streaming-ssr-and-how-does-react-18-improve-it" target="_blank" rel="noreferrer">What is Streaming SSR and how does React 18+ improve it?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-rendertopipeablestream-and-how-is-it-different-from-rendertostring" target="_blank" rel="noreferrer">What is renderToPipeableStream and how is it different from renderToString?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-hocs-and-hooks" target="_blank" rel="noreferrer">What is the difference between HOCs and Hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#does-reactmemo-prevent-context-consumers-from-re-rendering" target="_blank" rel="noreferrer">Does React.memo prevent Context consumers from re-rendering?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-would-you-create-a-reusable-context" target="_blank" rel="noreferrer">How would you create a reusable Context?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-is-redux-toolkit-recommended-over-redux" target="_blank" rel="noreferrer">Why is Redux Toolkit recommended over Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-client-state-and-server-state" target="_blank" rel="noreferrer">What is the difference between client state and server state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-prevent-unnecessary-redux-re-renders" target="_blank" rel="noreferrer">How do you prevent unnecessary Redux re-renders?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-createselector" target="_blank" rel="noreferrer">What is createSelector?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-normalized-redux-state" target="_blank" rel="noreferrer">What is normalized Redux state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-is-normalized-state-important-for-performance" target="_blank" rel="noreferrer">Why is normalized state important for performance?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-redux-middleware" target="_blank" rel="noreferrer">What is Redux middleware?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-redux-middleware-signature" target="_blank" rel="noreferrer">What is the Redux middleware signature?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-happens-when-you-dispatch-an-action" target="_blank" rel="noreferrer">What happens when you dispatch an action?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-would-you-structure-redux-in-a-large-application" target="_blank" rel="noreferrer">How would you structure Redux in a large application?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-handle-cross-slice-communication" target="_blank" rel="noreferrer">How do you handle cross-slice communication?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-redux-serializable-values" target="_blank" rel="noreferrer">What are Redux serializable values?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-handle-race-conditions-in-redux" target="_blank" rel="noreferrer">How do you handle race conditions in Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-persist-redux-state" target="_blank" rel="noreferrer">How do you persist Redux state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-debug-a-redux-performance-problem" target="_blank" rel="noreferrer">How do you debug a Redux performance problem?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-should-be-stored-in-redux-vs-derived-with-selectors" target="_blank" rel="noreferrer">What should be stored in Redux vs derived with selectors?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#would-you-put-all-api-data-into-redux" target="_blank" rel="noreferrer">Would you put all API data into Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-browserrouter-hashrouter-and-memoryrouter" target="_blank" rel="noreferrer">What is the difference between BrowserRouter, HashRouter, and MemoryRouter?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-dynamic-routes-and-what-are-route-parameters" target="_blank" rel="noreferrer">What are dynamic routes and what are route parameters?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-navigate-programmatically-in-react-router" target="_blank" rel="noreferrer">How do you navigate programmatically in React Router?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-link-navlink-and-a" target="_blank" rel="noreferrer">What is the difference between Link, NavLink, and &lt;a&gt;?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-implement-protectedprivate-routes" target="_blank" rel="noreferrer">How do you implement protected/private routes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-handle-404--not-found-routes" target="_blank" rel="noreferrer">How do you handle 404 / Not Found routes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-loaders-actions-and-data-apis-in-modern-react-router" target="_blank" rel="noreferrer">What are loaders, actions, and data APIs in modern React Router?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-query-parameters-work" target="_blank" rel="noreferrer">How do query parameters work?</a></li>
+</ol>
+<h3 id="react-router">React Router (11)</h3>
+<ol start="170">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-react-router" target="_blank" rel="noreferrer">What is React Router?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-react-router-is-different-from-history-library" target="_blank" rel="noreferrer">How React Router is different from history library?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-router-components-of-react-router-v6" target="_blank" rel="noreferrer">What are the &lt;Router&gt; components of React Router v6?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-purpose-of-push-and-replace-methods-of-history" target="_blank" rel="noreferrer">What is the purpose of push() and replace() methods of history?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-programmatically-navigate-using-react-router-v4" target="_blank" rel="noreferrer">How do you programmatically navigate using React Router v4?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-get-query-parameters-in-react-router-v4" target="_blank" rel="noreferrer">How to get query parameters in React Router v4?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-you-get-router-may-have-only-one-child-element-warning" target="_blank" rel="noreferrer">Why you get "Router may have only one child element" warning?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-pass-params-to-historypush-method-in-react-router-v4" target="_blank" rel="noreferrer">How to pass params to history.push method in React Router v4?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-implement-default-or-notfound-page" target="_blank" rel="noreferrer">How to implement _default_ or _NotFound_ page?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-get-history-on-react-router-v4" target="_blank" rel="noreferrer">How to get history on React Router v4?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-perform-automatic-redirect-after-login" target="_blank" rel="noreferrer">How to perform automatic redirect after login?</a></li>
+</ol>
+<h3 id="react-redux">React Redux (34)</h3>
+<ol start="181">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-flux" target="_blank" rel="noreferrer">What is flux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-redux" target="_blank" rel="noreferrer">What is Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-core-principles-of-redux" target="_blank" rel="noreferrer">What are the core principles of Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-downsides-of-redux-compared-to-flux" target="_blank" rel="noreferrer">What are the downsides of Redux compared to Flux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-mapstatetoprops-and-mapdispatchtoprops" target="_blank" rel="noreferrer">What is the difference between mapStateToProps() and mapDispatchToProps()?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-i-dispatch-an-action-in-reducer" target="_blank" rel="noreferrer">Can I dispatch an action in reducer?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-access-redux-store-outside-a-component" target="_blank" rel="noreferrer">How to access Redux store outside a component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-drawbacks-of-mvw-pattern" target="_blank" rel="noreferrer">What are the drawbacks of MVW pattern?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#are-there-any-similarities-between-redux-and-rxjs" target="_blank" rel="noreferrer">Are there any similarities between Redux and RxJS?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-reset-state-in-redux" target="_blank" rel="noreferrer">How to reset state in Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-react-context-and-react-redux" target="_blank" rel="noreferrer">What is the difference between React context and React Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-are-redux-state-functions-called-reducers" target="_blank" rel="noreferrer">Why are Redux state functions called reducers?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-make-ajax-request-in-redux" target="_blank" rel="noreferrer">How to make AJAX request in Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#should-i-keep-all-components-state-in-redux-store" target="_blank" rel="noreferrer">Should I keep all component's state in Redux store?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-proper-way-to-access-redux-store" target="_blank" rel="noreferrer">What is the proper way to access Redux store?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-component-and-container-in-react-redux" target="_blank" rel="noreferrer">What is the difference between component and container in React Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-purpose-of-the-constants-in-redux" target="_blank" rel="noreferrer">What is the purpose of the constants in Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-different-ways-to-write-mapdispatchtoprops" target="_blank" rel="noreferrer">What are the different ways to write mapDispatchToProps()?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-use-of-the-ownprops-parameter-in-mapstatetoprops-and-mapdispatchtoprops" target="_blank" rel="noreferrer">What is the use of the ownProps parameter in mapStateToProps() and mapDispatchToProps()?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-structure-redux-top-level-directories" target="_blank" rel="noreferrer">How to structure Redux top level directories?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-redux-saga" target="_blank" rel="noreferrer">What is redux-saga?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-mental-model-of-redux-saga" target="_blank" rel="noreferrer">What is the mental model of redux-saga?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-differences-between-call-and-put-in-redux-saga" target="_blank" rel="noreferrer">What are the differences between call() and put() in redux-saga?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-redux-thunk" target="_blank" rel="noreferrer">What is Redux Thunk?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-differences-between-redux-saga-and-redux-thunk" target="_blank" rel="noreferrer">What are the differences between redux-saga and redux-thunk?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-redux-devtools" target="_blank" rel="noreferrer">What is Redux DevTools?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-features-of-redux-devtools" target="_blank" rel="noreferrer">What are the features of Redux DevTools?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-redux-selectors-and-why-use-them" target="_blank" rel="noreferrer">What are Redux selectors and why use them?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-redux-form" target="_blank" rel="noreferrer">What is Redux Form?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-main-features-of-redux-form" target="_blank" rel="noreferrer">What are the main features of Redux Form?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-add-multiple-middlewares-to-redux" target="_blank" rel="noreferrer">How to add multiple middlewares to Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-set-initial-state-in-redux" target="_blank" rel="noreferrer">How to set initial state in Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-relay-is-different-from-redux" target="_blank" rel="noreferrer">How Relay is different from Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-an-action-in-redux" target="_blank" rel="noreferrer">What is an action in Redux?</a></li>
+</ol>
+<h3 id="react-testing">React Testing (6)</h3>
+<ol start="215">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-shallow-renderer-in-react-testing" target="_blank" rel="noreferrer">What is Shallow Renderer in React testing?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-testrenderer-package-in-react" target="_blank" rel="noreferrer">What is TestRenderer package in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-purpose-of-reacttestutils-package" target="_blank" rel="noreferrer">What is the purpose of ReactTestUtils package?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-jest" target="_blank" rel="noreferrer">What is Jest?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-advantages-of-jest-over-jasmine" target="_blank" rel="noreferrer">What are the advantages of Jest over Jasmine?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#give-a-simple-example-of-jest-test-case" target="_blank" rel="noreferrer">Give a simple example of Jest test case</a></li>
+</ol>
+<h3 id="react-internationalization">React Internationalization (6)</h3>
+<ol start="221">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-react-intl" target="_blank" rel="noreferrer">What is React Intl?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-main-features-of-react-intl" target="_blank" rel="noreferrer">What are the main features of React Intl?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-two-ways-of-formatting-in-react-intl" target="_blank" rel="noreferrer">What are the two ways of formatting in React Intl?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-use-formattedmessage-as-placeholder-using-react-intl" target="_blank" rel="noreferrer">How to use &lt;FormattedMessage&gt; as placeholder using React Intl?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-access-current-locale-with-react-intl" target="_blank" rel="noreferrer">How to access current locale with React Intl?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-format-date-using-react-intl" target="_blank" rel="noreferrer">How to format date using React Intl?</a></li>
+</ol>
+<h3 id="react-native">React Native (4)</h3>
+<ol start="227">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-react-native-and-react" target="_blank" rel="noreferrer">What is the difference between React Native and React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-test-react-native-apps" target="_blank" rel="noreferrer">How to test React Native apps?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-do-logging-in-react-native" target="_blank" rel="noreferrer">How to do logging in React Native?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-debug-your-react-native" target="_blank" rel="noreferrer">How to debug your React Native?</a></li>
+</ol>
+<h3 id="react-supported-libraries-and-integration">React Supported Libraries and Integration (13)</h3>
+<ol start="231">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-reselect-and-how-it-works" target="_blank" rel="noreferrer">What is reselect and how it works?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-flow" target="_blank" rel="noreferrer">What is Flow?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-flow-and-proptypes" target="_blank" rel="noreferrer">What is the difference between Flow and PropTypes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-use-font-awesome-icons-in-react" target="_blank" rel="noreferrer">How to use Font Awesome icons in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-react-dev-tools" target="_blank" rel="noreferrer">What is React Dev Tools?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-is-devtools-not-loading-in-chrome-for-local-files" target="_blank" rel="noreferrer">Why is DevTools not loading in Chrome for local files?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-use-polymer-in-react" target="_blank" rel="noreferrer">How to use Polymer in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-advantages-of-react-over-vuejs" target="_blank" rel="noreferrer">What are the advantages of React over Vue.js?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-react-and-angular" target="_blank" rel="noreferrer">What is the difference between React and Angular?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-react-tab-is-not-showing-up-in-devtools" target="_blank" rel="noreferrer">Why React tab is not showing up in DevTools?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-styled-components" target="_blank" rel="noreferrer">What are Styled Components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#give-an-example-of-styled-components" target="_blank" rel="noreferrer">Give an example of Styled Components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-relay" target="_blank" rel="noreferrer">What is Relay?</a></li>
+</ol>
+<h3 id="miscellaneous">Miscellaneous (111)</h3>
+<ol start="244">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-main-features-of-reselect-library" target="_blank" rel="noreferrer">What are the main features of Reselect library?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#give-an-example-of-reselect-usage" target="_blank" rel="noreferrer">Give an example of Reselect usage?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-redux-only-be-used-with-react" target="_blank" rel="noreferrer">Can Redux only be used with React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#do-you-need-to-have-a-particular-build-tool-to-use-redux" target="_blank" rel="noreferrer">Do you need to have a particular build tool to use Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-redux-form-initialvalues-get-updated-from-state" target="_blank" rel="noreferrer">How Redux Form initialValues get updated from state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-react-proptypes-allow-different-types-for-one-prop" target="_blank" rel="noreferrer">How React PropTypes allow different types for one prop?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-i-import-an-svg-file-as-react-component" target="_blank" rel="noreferrer">Can I import an SVG file as react component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-render-hijacking-in-react" target="_blank" rel="noreferrer">What is render hijacking in react?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-pass-numbers-to-react-component" target="_blank" rel="noreferrer">How to pass numbers to React component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#do-i-need-to-keep-all-my-state-into-redux-should-i-ever-use-react-internal-state" target="_blank" rel="noreferrer">Do I need to keep all my state into Redux? Should I ever use react internal state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-purpose-of-registerserviceworker-in-react" target="_blank" rel="noreferrer">What is the purpose of registerServiceWorker in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-react-memo-function" target="_blank" rel="noreferrer">What is React memo function?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-react-lazy-function" target="_blank" rel="noreferrer">What is React lazy function?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-prevent-unnecessary-updates-using-setstate" target="_blank" rel="noreferrer">How to prevent unnecessary updates using setState?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-render-array-strings-and-numbers-in-react-16-version" target="_blank" rel="noreferrer">How do you render Array, Strings and Numbers in React 16 Version?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-hooks" target="_blank" rel="noreferrer">What are hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-rules-need-to-be-followed-for-hooks" target="_blank" rel="noreferrer">What rules need to be followed for hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-ensure-hooks-followed-the-rules-in-your-project" target="_blank" rel="noreferrer">How to ensure hooks followed the rules in your project?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-differences-between-flux-and-redux" target="_blank" rel="noreferrer">What are the differences between Flux and Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-benefits-of-react-router-v4" target="_blank" rel="noreferrer">What are the benefits of React Router V4?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-you-describe-about-componentdidcatch-lifecycle-method-signature" target="_blank" rel="noreferrer">Can you describe about componentDidCatch lifecycle method signature?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#in-which-scenarios-do-error-boundaries-not-catch-errors" target="_blank" rel="noreferrer">In which scenarios do error boundaries not catch errors?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-behavior-of-uncaught-errors-in-react-16" target="_blank" rel="noreferrer">What is the behavior of uncaught errors in react 16?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-proper-placement-for-error-boundaries" target="_blank" rel="noreferrer">What is the proper placement for error boundaries?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-benefit-of-component-stack-trace-from-error-boundary" target="_blank" rel="noreferrer">What is the benefit of component stack trace from error boundary?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-default-props" target="_blank" rel="noreferrer">What are default props?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-purpose-of-displayname-class-property" target="_blank" rel="noreferrer">What is the purpose of displayName class property?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-browser-support-for-react-applications" target="_blank" rel="noreferrer">What is the browser support for react applications?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-code-splitting" target="_blank" rel="noreferrer">What is code-splitting?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-keyed-fragments" target="_blank" rel="noreferrer">What are Keyed Fragments?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#does-react-support-all-html-attributes" target="_blank" rel="noreferrer">Does React support all HTML attributes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#when-component-props-defaults-to-true" target="_blank" rel="noreferrer">When component props defaults to true?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-nextjs-and-major-features-of-it" target="_blank" rel="noreferrer">What is NextJS and major features of it?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-pass-an-event-handler-to-a-component" target="_blank" rel="noreferrer">How do you pass an event handler to a component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-prevent-a-function-from-being-called-multiple-times" target="_blank" rel="noreferrer">How to prevent a function from being called multiple times?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-jsx-prevents-injection-attacks" target="_blank" rel="noreferrer">How JSX prevents Injection Attacks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-update-rendered-elements" target="_blank" rel="noreferrer">How do you update rendered elements?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-say-that-props-are-readonly" target="_blank" rel="noreferrer">How do you say that props are readonly?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-conditions-to-safely-use-the-index-as-a-key" target="_blank" rel="noreferrer">What are the conditions to safely use the index as a key?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#should-keys-be-globally-unique" target="_blank" rel="noreferrer">Should keys be globally unique?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-popular-choice-for-form-handling" target="_blank" rel="noreferrer">What is the popular choice for form handling?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-advantages-of-formik-over-redux-form-library" target="_blank" rel="noreferrer">What are the advantages of formik over redux form library?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-are-you-not-required-to-use-inheritance" target="_blank" rel="noreferrer">Why are you not required to use inheritance?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-i-use-web-components-in-react-application" target="_blank" rel="noreferrer">Can I use web components in react application?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-dynamic-import" target="_blank" rel="noreferrer">What is dynamic import?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-loadable-components" target="_blank" rel="noreferrer">What are loadable components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-suspense-component" target="_blank" rel="noreferrer">What is suspense component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-route-based-code-splitting" target="_blank" rel="noreferrer">What is route based code splitting?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-purpose-of-default-value-in-context" target="_blank" rel="noreferrer">What is the purpose of default value in context?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-diffing-algorithm" target="_blank" rel="noreferrer">What is diffing algorithm?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-rules-covered-by-diffing-algorithm" target="_blank" rel="noreferrer">What are the rules covered by diffing algorithm?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#when-do-you-need-to-use-refs" target="_blank" rel="noreferrer">When do you need to use refs?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#must-prop-be-named-as-render-for-render-props" target="_blank" rel="noreferrer">Must prop be named as render for render props?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-problems-of-using-render-props-with-pure-components" target="_blank" rel="noreferrer">What are the problems of using render props with pure components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-windowing-technique" target="_blank" rel="noreferrer">What is windowing technique?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-print-falsy-values-in-jsx" target="_blank" rel="noreferrer">How do you print falsy values in JSX?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-typical-use-case-of-portals" target="_blank" rel="noreferrer">What is the typical use case of portals?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-set-default-value-for-uncontrolled-component" target="_blank" rel="noreferrer">How do you set default value for uncontrolled component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-your-favorite-react-stack" target="_blank" rel="noreferrer">What is your favorite React stack?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-real-dom-and-virtual-dom" target="_blank" rel="noreferrer">What is the difference between Real DOM and Virtual DOM?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-add-bootstrap-to-a-react-application" target="_blank" rel="noreferrer">How to add Bootstrap to a react application?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-you-list-down-top-websites-or-applications-using-react-as-front-end-framework" target="_blank" rel="noreferrer">Can you list down top websites or applications using react as front end framework?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#is-it-recommended-to-use-css-in-js-technique-in-react" target="_blank" rel="noreferrer">Is it recommended to use CSS In JS technique in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#do-i-need-to-rewrite-all-my-class-components-with-hooks" target="_blank" rel="noreferrer">Do I need to rewrite all my class components with hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-useeffect-hook-how-to-fetch-data-with-react-hooks" target="_blank" rel="noreferrer">What is useEffect hook? How to fetch data with React Hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#is-hooks-cover-all-use-cases-for-classes" target="_blank" rel="noreferrer">Is Hooks cover all use cases for classes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-stable-release-for-hooks-support" target="_blank" rel="noreferrer">What is the stable release for hooks support?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-do-we-use-array-destructuring-square-brackets-notation-in-usestate" target="_blank" rel="noreferrer">Why do we use array destructuring (square brackets notation) in useState?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-sources-used-for-introducing-hooks" target="_blank" rel="noreferrer">What are the sources used for introducing hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-access-imperative-api-of-web-components" target="_blank" rel="noreferrer">How do you access imperative API of web components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-formik" target="_blank" rel="noreferrer">What is formik?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-typical-middleware-choices-for-handling-asynchronous-calls-in-redux" target="_blank" rel="noreferrer">What are typical middleware choices for handling asynchronous calls in Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#do-browsers-understand-jsx-code" target="_blank" rel="noreferrer">Do browsers understand JSX code?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#describe-about-data-flow-in-react" target="_blank" rel="noreferrer">Describe about data flow in react?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-mobx" target="_blank" rel="noreferrer">What is MobX?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-differences-between-redux-and-mobx" target="_blank" rel="noreferrer">What are the differences between Redux and MobX?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#should-i-learn-es6-before-learning-reactjs" target="_blank" rel="noreferrer">Should I learn ES6 before learning ReactJS?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#explain-concurrent-rendering-with-an-example" target="_blank" rel="noreferrer">Explain concurrent rendering with an example</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-async-mode-and-concurrent-mode" target="_blank" rel="noreferrer">What is the difference between async mode and concurrent mode?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-purpose-of-eslint-plugin-for-hooks" target="_blank" rel="noreferrer">What is the purpose of eslint plugin for hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-imperative-and-declarative-in-react" target="_blank" rel="noreferrer">What is the difference between Imperative and Declarative in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-benefits-of-using-typescript-with-reactjs" target="_blank" rel="noreferrer">What are the benefits of using TypeScript with ReactJS?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-make-sure-that-user-remains-authenticated-on-page-refresh-while-using-context-api-state-management" target="_blank" rel="noreferrer">How do you make sure that user remains authenticated on page refresh while using Context API State Management?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-benefits-of-new-jsx-transform" target="_blank" rel="noreferrer">What are the benefits of new JSX transform?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-is-the-new-jsx-transform-different-from-old-transform" target="_blank" rel="noreferrer">How is the new JSX transform different from old transform??</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-react-server-components" target="_blank" rel="noreferrer">What are React Server components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-prop-drilling" target="_blank" rel="noreferrer">What is prop drilling?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-difference-between-usestate-and-useref-hook" target="_blank" rel="noreferrer">What is the difference between useState and useRef hook?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-a-wrapper-component" target="_blank" rel="noreferrer">What is a wrapper component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-differences-between-useeffect-and-uselayouteffect-hooks" target="_blank" rel="noreferrer">What are the differences between useEffect and useLayoutEffect hooks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-differences-between-functional-and-class-components" target="_blank" rel="noreferrer">What are the differences between Functional and Class Components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-strict-mode-in-react" target="_blank" rel="noreferrer">What is strict mode in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-benefit-of-strict-mode" target="_blank" rel="noreferrer">What is the benefit of strict mode?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-does-strict-mode-render-twice-in-react" target="_blank" rel="noreferrer">Why does strict mode render twice in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-rules-of-jsx" target="_blank" rel="noreferrer">What are the rules of JSX?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-reason-behind-multiple-jsx-tags-to-be-wrapped" target="_blank" rel="noreferrer">What is the reason behind multiple JSX tags to be wrapped?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-prevent-mutating-array-variables" target="_blank" rel="noreferrer">How do you prevent mutating array variables?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-capture-phase-events" target="_blank" rel="noreferrer">What are capture phase events?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-does-react-updates-screen-in-an-application" target="_blank" rel="noreferrer">How does React updates screen in an application?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-does-react-batch-multiple-state-updates" target="_blank" rel="noreferrer">How does React batch multiple state updates?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#is-it-possible-to-prevent-automatic-batching" target="_blank" rel="noreferrer">Is it possible to prevent automatic batching?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-react-hydration" target="_blank" rel="noreferrer">What is React hydration?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-update-objects-inside-state" target="_blank" rel="noreferrer">How do you update objects inside state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-update-nested-objects-inside-state" target="_blank" rel="noreferrer">How do you update nested objects inside state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-update-arrays-inside-state" target="_blank" rel="noreferrer">How do you update arrays inside state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-do-you-use-immer-library-for-state-updates" target="_blank" rel="noreferrer">How do you use immer library for state updates?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-benefits-of-preventing-the-direct-state-mutations" target="_blank" rel="noreferrer">What are the benefits of preventing the direct state mutations?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-preferred-and-non-preferred-array-operations-for-updating-the-state" target="_blank" rel="noreferrer">What are the preferred and non-preferred array operations for updating the state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-will-happen-by-defining-nested-function-components" target="_blank" rel="noreferrer">What will happen by defining nested function components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#can-i-use-keys-for-non-list-items" target="_blank" rel="noreferrer">Can I use keys for non-list items?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-guidelines-to-be-followed-for-writing-reducers" target="_blank" rel="noreferrer">What are the guidelines to be followed for writing reducers?</a></li>
+</ol>
+<h3 id="old-q-a-legacy">Old Q&amp;A (legacy) (92)</h3>
+<ol start="355">
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-concurrent-rendering-legacy" target="_blank" rel="noreferrer">What is Concurrent Rendering? (Legacy)</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-should-we-not-update-the-state-directly" target="_blank" rel="noreferrer">Why should we not update the state directly?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-purpose-of-callback-function-as-an-argument-of-setstate" target="_blank" rel="noreferrer">What is the purpose of callback function as an argument of setState()?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-bind-methods-or-event-handlers-in-jsx-callbacks" target="_blank" rel="noreferrer">How to bind methods or event handlers in JSX callbacks?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-pass-a-parameter-to-an-event-handler-or-callback" target="_blank" rel="noreferrer">How to pass a parameter to an event handler or callback?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-is-the-use-of-refs" target="_blank" rel="noreferrer">What is the use of refs?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#how-to-create-refs" target="_blank" rel="noreferrer">How to create refs?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-forward-refs" target="_blank" rel="noreferrer">What are forward refs?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#which-is-preferred-option-with-in-callback-refs-and-finddomnode" target="_blank" rel="noreferrer">Which is preferred option with in callback refs and findDOMNode()?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#why-are-string-refs-legacy" target="_blank" rel="noreferrer">Why are String Refs legacy?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-different-phases-of-component-lifecycle" target="_blank" rel="noreferrer">What are the different phases of component lifecycle?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions#what-are-the-lifecycle-methods-of-react" target="_blank" rel="noreferrer">What are the lifecycle methods of React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to create props proxy for HOC component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is context?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the purpose of using super constructor with props argument?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to set state with a dynamic key name?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What would be the common mistake of function being called every time the component renders?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are error boundaries in React v16?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How are error boundaries handled in React v15?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the purpose of render method of react-dom?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What will happen if you use setState() in constructor?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Is it good to use setState() in componentWillMount() method?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What will happen if you use props in initial state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How you use decorators in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is CRA and its benefits?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the lifecycle methods order in mounting?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are the lifecycle methods going to be deprecated in React v16?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the purpose of getDerivedStateFromProps() lifecycle method?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the purpose of getSnapshotBeforeUpdate() lifecycle method?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the recommended way for naming components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the recommended ordering of methods in component class?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Why we need to pass a function to setState()?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Why is isMounted() an anti-pattern and what is the proper solution?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the difference between constructor and getInitialState?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Can you force a component to re-render without calling setState?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the difference between super() and super(props) in React using ES6 classes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the difference between setState() and replaceState() methods?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to listen to state changes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the recommended approach of removing an array element in React state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Is it possible to use React without rendering HTML?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are the possible ways of updating objects in state?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are the approaches to include polyfills in your create-react-app?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to use https instead of http in create-react-app?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to avoid using relative path imports in create-react-app?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to update a component every second?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Why is a component constructor called only once?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to define constants in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to programmatically trigger click event in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to make AJAX call and in which component lifecycle methods should I make an AJAX call?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are render props?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to dispatch an action on load?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to use connect() from React Redux?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Whats the purpose of at symbol in the Redux connect decorator?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to use TypeScript in create-react-app application?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Does the statics object work with ES6 classes in React?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Why are inline ref callbacks or functions not recommended?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are HOC factory implementations?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to use class field declarations syntax in React classes?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Why do you not need error boundaries for event handlers?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the difference between try catch block and error boundaries?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the required method to be defined for a class component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are the possible return types of render method?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the main purpose of constructor?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Is it mandatory to define constructor for React component?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Why should not call setState in componentWillUnmount?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the purpose of getDerivedStateFromError?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the methods order when component re-rendered?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are the methods invoked during error handling?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the purpose of unmountComponentAtNode method?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are the limitations with HOCs?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to debug forwardRefs in DevTools?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Is it good to use arrow functions in render methods?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How do you say that state updates are merged?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How do you pass arguments to an event handler?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to prevent component from rendering?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Give an example on How to use context?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How do you use contextType?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is a consumer?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How do you solve performance corner cases while using context?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the purpose of forward ref in HOCs?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Is ref argument available for all functions or class components?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Why do you need additional care for component libraries while using forward refs?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How to create react class components without ES6?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Is it possible to use react without JSX?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How do you create HOC using render props?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is react scripts?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are the features of create react app?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is the purpose of renderToNodeStream method?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">How do you get redux scaffolding using create-react-app?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What is state mutation and how to prevent it?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">What are React Mixins?</a></li>
+<li><a href="https://github.com/sudheerj/reactjs-interview-questions" target="_blank" rel="noreferrer">Can I use javascript urls in react16.9?</a></li>
+</ol><h2>How I'd use this</h2>
+<ul>
+<li>Answer each question out loud before opening the answer. If you can't explain it in two sentences, you don't know it yet.</li>
+<li>Do one section a day. Hooks and Modern React will take the longest and matter the most.</li>
+<li>Skip Old Q&amp;A unless the company runs an older codebase with class components.</li>
+<li>Build the project above and send me the live link.</li>
+</ul><p>
+        Need more project ideas? Pick one from
+<a href="/learn/740-build-your-own-x-tutorials/">740 free build-your-own-x tutorials</a>,
+        or find companies that interview on real work in
+<a href="/learn/760-companies-that-hire-without-leetcode/">760 companies that hire without LeetCode</a>.
+</p><p>
+        Follow
+<a href="https://www.instagram.com/avi_vashishta29/" target="_blank" rel="noreferrer">@avi_vashishta29</a>
+        for one practical AI dev resource a day.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>
