@@ -1150,54 +1150,109 @@ body[data-phase="leaving"] .site-header .mode-switch {
 }
 
 /* Built myself: liquid-glass carousel. */
-.built-carousel {
-  height: 680px;
+/* Built myself: plain 3×2 grid of white cards — no carousel, no detail
+ * panel, the card itself is the whole story. Hover: blue ring around
+ * the card + blue highlight on the title. The wand badge shows on
+ * image hover only. Clicking a card does nothing — only the text
+ * links open. */
+.built-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
   margin-top: 40px;
-  border-radius: 24px;
-  overflow: hidden;
+}
+.built-card {
+  background: var(--color-surface);
   border: 1px solid var(--color-line);
-  background: var(--color-paper);
+  border-radius: 18px;
+  padding: 12px 12px 20px;
 }
-
-.built-detail {
-  max-width: 640px;
-  margin-top: 32px;
+.built-card:hover {
+  border-color: var(--world-build);
+  box-shadow: 0 0 0 1px var(--world-build);
 }
-
-.built-role {
+.built-card-media {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.built-card-media img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+.built-card-wand {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgb(90 110 140 / 0.55);
+  color: #fff;
+  font-size: 16px;
+  line-height: 32px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.built-card-media:hover .built-card-wand { opacity: 1; }
+.built-card-wand-tip {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.built-card-wand:hover .built-card-wand-tip { opacity: 1; }
+.built-card-meta {
+  margin: 16px 4px 8px;
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-ink-soft);
 }
-
-.built-detail h3 {
+.built-card h3 {
+  margin: 0 4px 10px;
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: 28px;
   line-height: 1.1;
-  margin-top: 10px;
 }
-
-.built-detail p {
+.built-card-title {
+  padding: 2px 6px;
+  margin: 0 -6px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.built-card:hover .built-card-title {
+  background: var(--world-build);
+  color: #fff;
+}
+.built-card-desc {
+  margin: 0 4px 16px;
   font-size: 15px;
   line-height: 1.55;
   color: var(--color-ink-soft);
 }
-
-.built-detail .ship-tags {
-  margin: 0;
-}
-
-.built-detail a {
-  font-size: 14px;
-  color: var(--color-ink);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.built-detail a:hover {
-  color: var(--world-build);
+.built-card .ship-tags { margin: 0 4px 16px; }
+.built-card .card-links { margin: 0 4px; }
+.built-card .ship-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
 }
 
 /* Experiments: reels in a sky panel, rows in a shallow wave/arc. */
@@ -1367,9 +1422,9 @@ body[data-phase="leaving"] .site-header .mode-switch {
     top: calc(76px + var(--i, 0) * 16px);
   }
 
-  .built-carousel {
-    height: 480px;
-    border-radius: 20px;
+  .built-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .experiments-panel {
@@ -1905,17 +1960,6 @@ body[data-phase="leaving"] .site-header .mode-switch {
 }
 .brand-cta-below a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; }
 
-/* Reveal on scroll. */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-reveal].is-in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  [data-reveal] { opacity: 1; transform: none; transition: none; }
-}
-
 @media (max-width: 900px) {
   .brand-hero { grid-template-columns: 1fr; min-height: 0; }
   .brand-split { grid-template-columns: 1fr; gap: 32px; }
@@ -1932,4 +1976,5 @@ body[data-phase="leaving"] .site-header .mode-switch {
   .brand-reach-banner { padding: 32px 12px 28px; gap: 8px; }
   .brand-reach-card { width: 104px; }
   .brand-reach-line { font-size: 9px; letter-spacing: 0.04em; margin-top: 8px; }
+  .built-grid { grid-template-columns: 1fr; }
 }
