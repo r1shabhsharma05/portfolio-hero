@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ChatModal from "../components/ChatModal";
 import CursorLabel from "../components/CursorLabel";
 import {
@@ -6,7 +6,7 @@ import {
   shouldShowWorldTransition,
   WORLD_SCENES,
 } from "../components/WorldTransition";
-import { NAV_WORLDS, PROFILE } from "../data/site";
+import { NAV_WORLDS, PROFILE, type Reel } from "../data/site";
 import {
   BRAND_AUDIENCE,
   BRAND_CTA_EMAIL,
@@ -18,38 +18,65 @@ import {
   BRAND_RATES,
   BRAND_STEPS,
   BRAND_TOP_REELS,
-  BRAND_TOP_THREE,
   BRAND_WORK,
 } from "../data/brand";
+import { AiIcon, CHATGPT_PATH, CLAUDE_PATH } from "./Build";
 
 const reducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /** Counts a value up from 0 once `start` flips true. */
-function CountUp({ value, start }: { value: string; start: boolean }) {
-  const target = Number(value.replace(/,/g, ""));
+function CountUp({
+  value,
+  start,
+  decimals = 0,
+  suffix = "",
+}: {
+  value: number;
+  start: boolean;
+  decimals?: number;
+  suffix?: string;
+}) {
   const [n, setN] = useState(0);
   useEffect(() => {
     if (!start) return;
     if (reducedMotion()) {
-      setN(target);
+      setN(value);
       return;
     }
     let raf = 0;
     const t0 = performance.now();
     const tick = (t: number) => {
       const p = Math.min(1, (t - t0) / 2000);
-      setN(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      setN(value * (1 - Math.pow(1 - p, 3)));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [start, target]);
-  return <>{n.toLocaleString("en-IN")}</>;
+  }, [start, value]);
+  return (
+    <>
+      {n.toLocaleString("en-IN", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })}
+      {suffix}
+    </>
+  );
 }
 
-function BrandStat({ value, label }: { value: string; label: string }) {
+function BrandStat({
+  value,
+  label,
+  decimals = 0,
+  suffix = "",
+}: {
+  value: number;
+  label: string;
+  decimals?: number;
+  suffix?: string;
+}) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [start, setStart] = useState(false);
   useEffect(() => {
@@ -74,77 +101,191 @@ function BrandStat({ value, label }: { value: string; label: string }) {
   return (
     <div className="brand-stat" ref={ref}>
       <span className="brand-stat-num">
-        <CountUp value={value} start={start} />
+        <CountUp value={value} start={start} decimals={decimals} suffix={suffix} />
       </span>
       <span className="brand-stat-label">{label}</span>
     </div>
   );
 }
 
-/** Fan of the best Reels — one per card, front card in red. */
+const FAN_SECONDS = 10;
+
+/** Fan of the best Reels — the front card plays its preview video, muted,
+ *  and the fan advances every 10s on a timer (not on video end). Hovering
+ *  the front card pauses the video and the timer; hovering a side card
+ *  offers PICK, and clicking it brings that Reel to the front. */
 function FanCarousel() {
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
   const total = BRAND_TOP_REELS.length;
   const reel = BRAND_TOP_REELS[index];
-  const prev = () => setIndex((i) => (i - 1 + total) % total);
-  const next = () => setIndex((i) => (i + 1) % total);
+  const timerRef = useRef<number | null>(null);
+  const deadlineRef = useRef(0);
+  const remainingRef = useRef(FAN_SECONDS * 1000);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const go = useCallback(
+    (i: number) => {
+      remainingRef.current = FAN_SECONDS * 1000;
+      deadlineRef.current = Date.now() + FAN_SECONDS * 1000;
+      setIndex(((i % total) + total) % total);
+    },
+    [total]
+  );
+  const prev = useCallback(() => go(index - 1), [go, index]);
+  const next = useCallback(() => go(index + 1), [go, index]);
+
+  useEffect(() => {
+    if (reducedMotion()) return;
+    if (paused) {
+      if (timerRef.current) window.clearTimeout(timerRef.current);
+      remainingRef.current = Math.max(1500, deadlineRef.current - Date.now());
+      return;
+    }
+    const delay = remainingRef.current;
+    deadlineRef.current = Date.now() + delay;
+    timerRef.current = window.setTimeout(() => {
+      remainingRef.current = FAN_SECONDS * 1000;
+      setIndex((i) => (i + 1) % total);
+    }, delay);
+    return () => {
+      if (timerRef.current) window.clearTimeout(timerRef.current);
+    };
+  }, [index, paused, total]);
+
+  // A fresh front video must not play while the fan is hover-paused.
+  useEffect(() => {
+    if (paused) videoRef.current?.pause();
+  }, [index, paused]);
+
+  const pauseFront = () => {
+    videoRef.current?.pause();
+    setPaused(true);
+  };
+  const resumeFront = () => {
+    videoRef.current?.play().catch(() => {});
+    setPaused(false);
+  };
+
   return (
     <div className="brand-hero-carousel" data-reveal>
       <div className="brand-fan" role="group" aria-label="Best Reels">
         {BRAND_TOP_REELS.map((r, i) => {
           const offset = ((i - index + Math.floor(total / 2)) % total) - Math.floor(total / 2);
           const abs = Math.abs(offset);
-          return (
+          const style = {
+            transform: `translateX(${offset * 62}px) rotate(${offset * 9}deg) translateY(${abs * 10}px) scale(${1 - abs * 0.06})`,
+            zIndex: 10 - abs,
+          } as React.CSSProperties;
+          const media =
+            offset === 0 && r.preview && !reducedMotion() ? (
+              <video
+                ref={videoRef}
+                src={r.preview}
+                muted
+                loop
+                playsInline
+                autoPlay
+                preload="auto"
+              />
+            ) : (
+              <img src={r.thumb} alt="" loading="lazy" />
+            );
+          return offset === 0 ? (
             <a
               key={r.id}
-              className={`brand-fan-card${offset === 0 ? " is-front" : ""}`}
+              className="brand-fan-card is-front"
               href={r.url}
               target="_blank"
               rel="noreferrer"
+              data-cursor="PLAY"
               aria-label={`${r.title} — ${r.views ?? ""} views`}
-              style={{
-                transform: `translateX(${offset * 62}px) rotate(${offset * 9}deg) translateY(${abs * 10}px) scale(${1 - abs * 0.06})`,
-                zIndex: 10 - abs,
-              }}
+              style={style}
+              onMouseEnter={pauseFront}
+              onMouseLeave={resumeFront}
             >
-              <img src={r.thumb} alt="" loading="lazy" />
-              <span className="brand-fan-play">Play</span>
+              {media}
             </a>
+          ) : (
+            <button
+              key={r.id}
+              type="button"
+              className="brand-fan-card"
+              data-cursor="PICK"
+              aria-label={`Bring ${r.title} to the front`}
+              style={style}
+              onClick={() => go(i)}
+            >
+              {media}
+            </button>
           );
         })}
         {BRAND_HERO.stickers.map((s, i) => (
-          <span key={s.k} className="brand-sticker" style={{ "--i": i } as React.CSSProperties}>
-            {s.k} {s.v}
+          <span
+            key={s.k}
+            className={`brand-sticker st-${i}`}
+            aria-hidden="true"
+          >
+            <span className="brand-sticker-k">{s.k}</span>
+            <span className="brand-sticker-v">{s.v}</span>
           </span>
         ))}
+        <span className="brand-sticker st-this" aria-hidden="true">
+          <span className="brand-sticker-k">This Reel · {reel.title}</span>
+          <span className="brand-sticker-v is-red">{reel.views}</span>
+        </span>
       </div>
-      <div className="brand-fan-meta">
-        <p>
-          <b>This Reel · {reel.title}</b>
-        </p>
-        <p className="brand-fan-pills">
-          <span>{reel.views} views</span>
-          <a href={reel.url} target="_blank" rel="noreferrer">
-            Instagram ↗
-          </a>
-        </p>
-        <p className="brand-fan-nav">
-          <button type="button" onClick={prev} aria-label="Previous Reel">
-            ←
-          </button>
-          <span>
-            {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-          </span>
-          <button type="button" onClick={next} aria-label="Next Reel">
-            →
-          </button>
-        </p>
-      </div>
+      <p className="brand-fan-nav">
+        <button type="button" className="is-prev" onClick={prev} aria-label="Previous Reel">
+          ←
+        </button>
+        <span>
+          {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+        </span>
+        <button type="button" className="is-next" onClick={next} aria-label="Next Reel">
+          →
+        </button>
+      </p>
+      <p className="brand-fan-caption">{BRAND_HERO.caption}</p>
+    </div>
+  );
+}
+
+/** One Reel's fan inside its case-study article — the video loops in place,
+ *  the fan itself is manual (one Reel per article, no arrows or counter). */
+function ArticleFan({ reel }: { reel: Reel }) {
+  return (
+    <div className="brand-article-fan">
+      <a
+        href={reel.url}
+        target="_blank"
+        rel="noreferrer"
+        className="brand-article-fan-card is-front"
+        data-cursor="PLAY"
+        aria-label={`${reel.title} — ${reel.views} views`}
+      >
+        {reel.preview && !reducedMotion() ? (
+          <video src={reel.preview} muted loop playsInline autoPlay preload="metadata" />
+        ) : (
+          <img src={reel.thumb} alt="" loading="lazy" />
+        )}
+      </a>
+      <p className="brand-article-fan-caption">
+        <b>{reel.title}</b>
+      </p>
+      <p className="brand-article-fan-pills">
+        <span>{reel.views} views</span>
+        <a href={reel.url} target="_blank" rel="noreferrer">
+          Instagram ↗
+        </a>
+      </p>
     </div>
   );
 }
 
 const MONTHS = ["this month", "next month", "we're flexible"] as const;
+const PRODUCT_EXAMPLE = "an AI coding tool";
+const AUDIENCE_EXAMPLE = "developers in India";
 
 export default function Brand() {
   const [chatOpen, setChatOpen] = useState(false);
@@ -152,10 +293,11 @@ export default function Brand() {
   // World transition (Avi's mechanism): arriving from the homepage, the
   // full-screen seascape scene is already covering; it morphs into the hero.
   const [showTransition] = useState(() => shouldShowWorldTransition());
-  const [product, setProduct] = useState("");
-  const [audience, setAudience] = useState("");
+  const [product, setProduct] = useState(PRODUCT_EXAMPLE);
+  const [audience, setAudience] = useState(AUDIENCE_EXAMPLE);
   const [month, setMonth] = useState<(typeof MONTHS)[number]>("this month");
-  const [copied, setCopied] = useState("");
+  const panelsRef = useRef<HTMLDivElement | null>(null);
+  const [numbersIn, setNumbersIn] = useState(false);
   useEffect(() => {
     if (!showTransition) return;
     const cleanup = revealWorldTransition({
@@ -226,24 +368,36 @@ export default function Brand() {
     return () => io.disconnect();
   }, []);
 
-  const brief = `We're launching ${product || "___"} for ${audience || "___"}, and want it live ${month}.`;
+  // Numbers count up once the panels scroll into view.
+  useEffect(() => {
+    const el = panelsRef.current;
+    if (!el) return;
+    if (reducedMotion()) {
+      setNumbersIn(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNumbersIn(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const brief = `We're launching ${product} for ${audience}, and want it live ${month}.`;
   const sendBrief = () => {
     const subject = encodeURIComponent(`Brand campaign: ${product || "new launch"}`);
     const body = encodeURIComponent(`${brief}\n\n— via rishabhsharma.in/brands`);
     window.location.href = `mailto:${BRAND_CTA_EMAIL}?subject=${subject}&body=${body}`;
   };
-  const askAi = async (where: "claude" | "chatgpt") => {
-    try {
-      await navigator.clipboard.writeText(
-        `I'm planning a brand campaign with Rishabh Sharma (@cod.ehx). Brief: ${brief} His media kit is at https://portfolio-hero-psi-lemon.vercel.app/brands/ — what should I ask him, and is this a good fit?`
-      );
-      setCopied(where);
-      window.setTimeout(() => setCopied(""), 2500);
-    } catch {
-      /* clipboard unavailable — the site still opens */
-    }
-    window.open(where === "claude" ? "https://claude.ai/new" : "https://chat.openai.com/", "_blank");
-  };
+  const aiPrompt = encodeURIComponent(
+    `Read https://portfolio-hero-psi-lemon.vercel.app/llms.txt and https://portfolio-hero-psi-lemon.vercel.app/brands. ${brief} Would Rishabh Sharma be a good fit to make a Reel about it, and what kind of build would work? Then draft a short message I can email him at ${BRAND_CTA_EMAIL}.`
+  );
 
   return (
     <div className="brand-page">
@@ -327,35 +481,47 @@ export default function Brand() {
           <FanCarousel />
         </section>
 
-        {/* selected work — his own Reels, with his real numbers */}
+        {/* case studies — one article per top Reel, his own numbers */}
         <section className="section" id="selected-work" aria-label="Selected work" data-reveal>
-          <p className="section-label">Selected work</p>
-          <h2 className="section-title">What I made, what happened.</h2>
+          <h2 className="section-title">What they wanted, what I made, what happened.</h2>
           <p className="section-body">
             Every Reel below is something I built and filmed myself — no client briefs yet, no
-            staged demos. Click a card to watch it on Instagram.
+            staged demos. Each one dealt as a hand of cards, with its numbers from @cod.ehx.
           </p>
           <div className="brand-articles">
-            {BRAND_WORK.map(({ reel, made }) => (
-              <article key={reel.id} className="brand-article">
-                <a href={reel.url} target="_blank" rel="noreferrer" className="brand-article-media">
-                  <img src={reel.thumb} alt="" loading="lazy" />
-                  <span className="brand-fan-play">Play</span>
-                </a>
-                <div className="brand-article-body">
-                  <p className="brand-article-kicker">
-                    <b>{reel.title}</b> · @cod.ehx
-                  </p>
-                  <p className="brand-article-label">I made</p>
-                  <p className="brand-article-serif">{made}</p>
-                  <p className="brand-article-label">What happened</p>
-                  <p className="brand-article-big">
-                    <BrandStat value={reel.viewsRaw?.toLocaleString("en-IN") ?? "0"} label="views" />
-                  </p>
-                  <a href={reel.url} target="_blank" rel="noreferrer">
-                    Watch on Instagram ↗
-                  </a>
+            {BRAND_WORK.map(({ reel, wanted, made, pills }) => (
+              <article key={reel.id} className="brand-article" id={reel.id}>
+                <div className="brand-article-top">
+                  <img src={reel.thumb} alt="" loading="lazy" className="brand-article-logo" />
+                  <h3 className="brand-article-title">
+                    <span>{reel.title}</span>
+                  </h3>
                 </div>
+                <div className="brand-article-cols">
+                  <div>
+                    <p className="brand-article-label">They wanted</p>
+                    <p className="brand-article-serif">{wanted}</p>
+                  </div>
+                  <div>
+                    <p className="brand-article-label">I made</p>
+                    <p className="brand-article-serif">{made}</p>
+                    <p className="brand-article-pills">
+                      {pills.map((p) => (
+                        <span key={p} className="brand-pill">
+                          {p}
+                        </span>
+                      ))}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="brand-article-label">What happened</p>
+                    <div className="brand-article-big">
+                      <BrandStat value={reel.viewsRaw ?? 0} label="views" />
+                    </div>
+                    <p className="brand-article-sub">Views · 1 Reel</p>
+                  </div>
+                </div>
+                <ArticleFan reel={reel} />
               </article>
             ))}
           </div>
@@ -363,12 +529,47 @@ export default function Brand() {
 
         {/* numbers */}
         <section className="section brand-numbers" id="numbers" aria-label="The numbers" data-reveal>
-          <p className="section-label">The numbers</p>
-          <h2 className="section-title">Running totals.</h2>
-          <p className="section-body">{BRAND_NUMBERS.intro}</p>
-          <div className="brand-stats">
-            {BRAND_NUMBERS.stats.map((s) => (
-              <BrandStat key={s.label} value={s.value} label={s.label} />
+          <div className="brand-numbers-head">
+            <h2 className="section-title">The numbers</h2>
+            <p className="brand-numbers-note">{BRAND_NUMBERS.note}</p>
+          </div>
+          <div className="brand-panels" ref={panelsRef}>
+            <div className="brand-panel brand-panel-dark">
+              <p className="brand-panel-label">{BRAND_NUMBERS.left.label}</p>
+              <ul className="brand-panel-rows">
+                {BRAND_NUMBERS.left.rows.map((r) => (
+                  <li key={r.label}>
+                    <span>{r.label}</span>
+                    <b className={r.highlight ? "is-highlight" : undefined}>
+                      <CountUp value={r.value} start={numbersIn} />
+                    </b>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="brand-panel brand-panel-light">
+              <p className="brand-panel-label">{BRAND_NUMBERS.right.label}</p>
+              <p className="brand-panel-sub">{BRAND_NUMBERS.right.sub}</p>
+              <ul className="brand-panel-rows">
+                {BRAND_NUMBERS.right.rows.map((r) => (
+                  <li key={r.label}>
+                    <span>{r.label}</span>
+                    <b>
+                      <CountUp value={r.value} start={numbersIn} />
+                    </b>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="brand-derived">
+            {BRAND_NUMBERS.derived.map((d) => (
+              <div key={d.label} className="brand-derived-cell">
+                <b>
+                  <CountUp value={d.value} start={numbersIn} decimals={d.decimals} suffix={d.suffix} />
+                </b>
+                <span>{d.label}</span>
+              </div>
             ))}
           </div>
         </section>
@@ -376,8 +577,7 @@ export default function Brand() {
         {/* who watches */}
         <section className="section" id="audience" aria-label="Who watches" data-reveal>
           <p className="section-label">Who watches</p>
-          <h2 className="section-title">Who watches.</h2>
-          <p className="section-body">{BRAND_AUDIENCE.intro}</p>
+          <h2 className="section-title">{BRAND_AUDIENCE.intro}</h2>
           <div className="brand-pills">
             {BRAND_AUDIENCE.pills.map((p) => (
               <span key={p} className="brand-pill">
@@ -390,25 +590,30 @@ export default function Brand() {
         {/* reach */}
         <section className="section" aria-label="For a sense of reach" data-reveal>
           <div className="brand-reach">
-            <p className="section-label">For a sense of reach</p>
-            <h2 className="section-title">My three most watched Reels of the last 6 months. @cod.ehx</h2>
+            <div className="brand-reach-head">
+              <h2 className="section-title">For a sense of reach</h2>
+              <p className="brand-reach-note">My three most watched Reels. @cod.ehx</p>
+            </div>
             <div className="brand-fan brand-fan-static">
-              {BRAND_TOP_THREE.map((r, i) => (
+              {BRAND_WORK.slice(0, 3).map(({ reel, made }, i) => (
                 <a
-                  key={r.id}
-                  className="brand-fan-card"
-                  href={r.url}
+                  key={reel.id}
+                  className="brand-reach-card"
+                  href={reel.url}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`${r.title} — ${r.views} views`}
+                  aria-label={`${reel.title} — ${reel.views} views`}
                   style={{
-                    transform: `translateX(${(i - 1) * 62}px) rotate(${(i - 1) * 9}deg) translateY(${Math.abs(i - 1) * 10}px)`,
+                    transform: `translateX(${(i - 1) * 62}px) rotate(${(i - 1) * 9}deg) translateY(${Math.abs(i - 1) * 10 + (i === 1 ? -10 : 0)}px)`,
                     zIndex: 10 - Math.abs(i - 1),
                   }}
                 >
-                  <img src={r.thumb} alt="" loading="lazy" />
-                  <span className="brand-fan-play">▶</span>
-                  <span className="brand-fan-views">{r.views} views</span>
+                  <img src={reel.thumb} alt="" loading="lazy" />
+                  <span className="brand-reach-card-text">
+                    <span className="brand-reach-card-title">▶ {reel.title}</span>
+                    <span className="brand-reach-card-views">{reel.views}</span>
+                    <span className="brand-reach-card-sub">{made}</span>
+                  </span>
                 </a>
               ))}
             </div>
@@ -419,26 +624,25 @@ export default function Brand() {
         <section className="section" id="formats" aria-label="Formats and how it works" data-reveal>
           <div className="brand-split">
             <div>
-              <p className="section-label">Formats</p>
-              <h2 className="section-title">What a campaign looks like.</h2>
-              <ul className="brand-rows">
+              <h2 className="section-title">Formats</h2>
+              <ul className="brand-rows brand-rows-formats">
                 {BRAND_FORMATS.map((f) => (
                   <li key={f.title}>
-                    <h3>{f.title}</h3>
+                    <h3>
+                      <span>{f.title}</span>
+                    </h3>
                     <p>{f.body}</p>
                   </li>
                 ))}
               </ul>
             </div>
             <div>
-              <p className="section-label">How it works</p>
-              <h2 className="section-title">Four steps, no surprises.</h2>
-              <ol className="brand-rows">
+              <h2 className="section-title">How it works</h2>
+              <ol className="brand-rows brand-rows-steps">
                 {BRAND_STEPS.map((s) => (
                   <li key={s.n}>
-                    <h3>
-                      {s.n} · {s.title}
-                    </h3>
+                    <span className="brand-step-n">{s.n}</span>
+                    <h3>{s.title}</h3>
                     <p>{s.body}</p>
                   </li>
                 ))}
@@ -451,25 +655,29 @@ export default function Brand() {
         <section className="section" id="included" aria-label="Included and rates" data-reveal>
           <div className="brand-split">
             <div>
-              <p className="section-label">Included as standard</p>
-              <h2 className="section-title">Every campaign includes.</h2>
+              <h2 className="section-title">Included as standard</h2>
               <ul className="brand-checks">
                 {BRAND_INCLUDED.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item}>
+                    <span>{item}</span>
+                    <span className="brand-tag brand-tag-included">Included</span>
+                  </li>
                 ))}
                 {BRAND_NEGOTIABLE.map((item) => (
                   <li key={item}>
-                    {item} <span className="brand-tag">Negotiable</span>
+                    <span>{item}</span>
+                    <span className="brand-tag brand-tag-negotiable">Negotiable</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div>
-              <p className="section-label">Rates</p>
-              <h2 className="section-title">Rates, on request.</h2>
+            <div className="brand-rates-card">
+              <h2 className="section-title">Rates</h2>
               <p className="section-body">{BRAND_RATES}</p>
               <p>
-                <a href={BRAND_HERO.ratesHref}>Ask for rates ↗</a>
+                <a className="brand-rates-ask" href={BRAND_HERO.ratesHref}>
+                  Ask for rates ↗
+                </a>
               </p>
             </div>
           </div>
@@ -478,53 +686,82 @@ export default function Brand() {
         {/* campaign CTA */}
         <section className="section" id="campaign" aria-label="Start a campaign" data-reveal>
           <div className="brand-cta">
-            <p className="section-label">Start a campaign</p>
-            <h2 className="section-title">Let&rsquo;s make something people watch twice.</h2>
-            <p className="brand-cta-sentence">
-              We&rsquo;re launching{" "}
-              <input
-                type="text"
-                value={product}
-                onChange={(e) => setProduct(e.target.value)}
-                placeholder="an AI coding tool"
-                aria-label="What are you launching?"
-              />{" "}
-              for{" "}
-              <input
-                type="text"
-                value={audience}
-                onChange={(e) => setAudience(e.target.value)}
-                placeholder="developers in India"
-                aria-label="Who is it for?"
-              />
-              , and want it live{" "}
-              {MONTHS.map((m) => (
-                <button
-                  key={m}
-                  type="button"
-                  className={`brand-month${month === m ? " is-selected" : ""}`}
-                  aria-pressed={month === m}
-                  onClick={() => setMonth(m)}
-                >
-                  {m}
-                </button>
-              ))}
-              .
-            </p>
-            <p className="brand-cta-note">
-              Goes to {BRAND_CTA_EMAIL}. Rishabh replies himself.
-            </p>
-            <div className="brand-cta-actions">
-              <button type="button" onClick={() => askAi("claude")}>
-                {copied === "claude" ? "Brief copied ✓" : "Ask Claude about this brief"}
-              </button>
-              <button type="button" onClick={() => askAi("chatgpt")}>
-                {copied === "chatgpt" ? "Brief copied ✓" : "Ask ChatGPT about this brief"}
-              </button>
-              <button type="button" className="brand-send" onClick={sendBrief}>
-                Send to Rishabh ↗
-              </button>
+            <div className="brand-cta-card">
+              <h2 className="section-label">Start a campaign</h2>
+              <p className="brand-cta-sentence">
+                We&rsquo;re launching{" "}
+                <input
+                  type="text"
+                  value={product}
+                  onChange={(e) => setProduct(e.target.value)}
+                  aria-label="What are you launching?"
+                  style={{ "--chars": Math.max(product.length, 1) + 1 } as React.CSSProperties}
+                />{" "}
+                for{" "}
+                <input
+                  type="text"
+                  value={audience}
+                  onChange={(e) => setAudience(e.target.value)}
+                  aria-label="Who is it for?"
+                  style={{ "--chars": Math.max(audience.length, 1) + 1 } as React.CSSProperties}
+                />
+                , and want it live{" "}
+                <span className="brand-months" role="radiogroup" aria-label="When">
+                  {MONTHS.map((m, i) => (
+                    <span key={m}>
+                      {i > 0 && (
+                        <span className="brand-slash" aria-hidden="true">
+                          {" / "}
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={month === m}
+                        className={`brand-month${month === m ? " is-selected" : ""}`}
+                        onClick={() => setMonth(m)}
+                      >
+                        {m}
+                      </button>
+                    </span>
+                  ))}
+                </span>
+                .
+              </p>
+              <div className="brand-cta-foot">
+                <p className="brand-cta-note">
+                  Goes to {BRAND_CTA_EMAIL}. Rishabh replies himself.
+                </p>
+                <div className="brand-cta-actions">
+                  <a
+                    className="brand-ai"
+                    href={`https://claude.ai/new?q=${aiPrompt}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Ask Claude about this brief"
+                  >
+                    <AiIcon path={CLAUDE_PATH} />
+                  </a>
+                  <a
+                    className="brand-ai"
+                    href={`https://chatgpt.com/?q=${aiPrompt}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Ask ChatGPT about this brief"
+                  >
+                    <AiIcon path={CHATGPT_PATH} />
+                  </a>
+                  <button type="button" className="brand-send" onClick={sendBrief}>
+                    Send to Rishabh ↗
+                  </button>
+                </div>
+              </div>
             </div>
+            <p className="brand-cta-below">
+              Prefer email? <a href={`mailto:${BRAND_CTA_EMAIL}`}>{BRAND_CTA_EMAIL}</a> · Based in
+              India, working with brands anywhere · All brand content is on{" "}
+              <a href="/brands/">/brands</a>
+            </p>
           </div>
         </section>
       </main>
@@ -532,15 +769,14 @@ export default function Brand() {
       <footer className="site-footer build-footer">
         <span>© 2026 Rishabh Sharma</span>
         <nav aria-label="Footer">
-          <a href="https://github.com/r1shabhsharma05">GitHub</a>
-          <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">LinkedIn</a>
           <a href="https://www.instagram.com/cod.ehx">Instagram</a>
           <a href="https://www.youtube.com/@UntoldHx">YouTube</a>
+          <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">LinkedIn</a>
+          <a href="https://github.com/r1shabhsharma05">GitHub</a>
           <a href={`mailto:${PROFILE.email}`}>Email</a>
-          <a href="/about">About</a>
-          <a href="/contact">Contact</a>
-          <a href="/developers">Developers</a>
+          <a href="/blog/feed.xml">RSS</a>
           <a href="/privacy">Privacy</a>
+          <a href="/developers">Developers</a>
         </nav>
       </footer>
       {chatOpen && <ChatModal onClose={() => setChatOpen(false)} />}
