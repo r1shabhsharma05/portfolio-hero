@@ -110,6 +110,32 @@ function BrandStat({
 
 const FAN_SECONDS = 10;
 
+/** True once the element has scrolled into view — once, never re-runs. */
+function useInViewOnce<T extends HTMLElement>(threshold = 0.4) {
+  const ref = useRef<T | null>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (reducedMotion()) {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+  return [ref, inView] as const;
+}
+
 /** Fan of the best Reels — the front card plays its preview video, muted,
  *  and the fan advances every 10s on a timer (not on video end). Hovering
  *  the front card pauses the video and the timer; hovering a side card
@@ -168,7 +194,7 @@ function FanCarousel() {
   };
 
   return (
-    <div className="brand-hero-carousel" data-reveal>
+    <div className="brand-hero-carousel">
       <div className="brand-fan" role="group" aria-label="Best Reels">
         {BRAND_TOP_REELS.map((r, i) => {
           const offset = ((i - index + Math.floor(total / 2)) % total) - Math.floor(total / 2);
@@ -335,8 +361,10 @@ export default function Brand() {
   const [product, setProduct] = useState(PRODUCT_EXAMPLE);
   const [audience, setAudience] = useState(AUDIENCE_EXAMPLE);
   const [month, setMonth] = useState<(typeof MONTHS)[number]>("this month");
-  const panelsRef = useRef<HTMLDivElement | null>(null);
-  const [numbersIn, setNumbersIn] = useState(false);
+  // Numbers count up per block, each when that block itself scrolls in.
+  const [leftRef, leftIn] = useInViewOnce<HTMLDivElement>();
+  const [rightRef, rightIn] = useInViewOnce<HTMLDivElement>();
+  const [derivedRef, derivedIn] = useInViewOnce<HTMLDivElement>();
   useEffect(() => {
     if (!showTransition) return;
     const cleanup = revealWorldTransition({
@@ -383,53 +411,6 @@ export default function Brand() {
       window.removeEventListener("resize", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, []);
-
-  // Reveal on scroll: sections fade/slide in as they enter the viewport.
-  useEffect(() => {
-    const els = [...document.querySelectorAll<HTMLElement>("[data-reveal]")];
-    if (reducedMotion()) {
-      els.forEach((el) => el.classList.add("is-in"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("is-in");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      // 0.05, not 0.15: #selected-work is ~5,000px tall, so 15% of it
-      // (750px) can never be visible at once on a short viewport
-      // (phone / small laptop window) and the section would stay
-      // invisible forever.
-      { threshold: 0.05 }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
-  // Numbers count up once the panels scroll into view.
-  useEffect(() => {
-    const el = panelsRef.current;
-    if (!el) return;
-    if (reducedMotion()) {
-      setNumbersIn(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setNumbersIn(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
   }, []);
 
   const brief = `We're launching ${product} for ${audience}, and want it live ${month}.`;
@@ -525,7 +506,7 @@ export default function Brand() {
         </section>
 
         {/* case studies — one article per top Reel, his own numbers */}
-        <section className="section" id="selected-work" aria-label="Selected work" data-reveal>
+        <section className="section" id="selected-work" aria-label="Selected work">
           <h2 className="section-title">What they wanted, what I made, what happened.</h2>
           <p className="section-body">
             Every Reel below is something I built and filmed myself — no client briefs yet, no
@@ -571,26 +552,26 @@ export default function Brand() {
         </section>
 
         {/* numbers */}
-        <section className="section brand-numbers" id="numbers" aria-label="The numbers" data-reveal>
+        <section className="section brand-numbers" id="numbers" aria-label="The numbers">
           <div className="brand-numbers-head">
             <h2 className="section-title">The numbers</h2>
             <p className="brand-numbers-note">{BRAND_NUMBERS.note}</p>
           </div>
-          <div className="brand-panels" ref={panelsRef}>
-            <div className="brand-panel brand-panel-dark">
+          <div className="brand-panels">
+            <div className="brand-panel brand-panel-dark" ref={leftRef}>
               <p className="brand-panel-label">{BRAND_NUMBERS.left.label}</p>
               <ul className="brand-panel-rows">
                 {BRAND_NUMBERS.left.rows.map((r) => (
                   <li key={r.label}>
                     <span>{r.label}</span>
                     <b className={r.highlight ? "is-highlight" : undefined}>
-                      <CountUp value={r.value} start={numbersIn} />
+                      <CountUp value={r.value} start={leftIn} />
                     </b>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="brand-panel brand-panel-light">
+            <div className="brand-panel brand-panel-light" ref={rightRef}>
               <p className="brand-panel-label">{BRAND_NUMBERS.right.label}</p>
               <p className="brand-panel-sub">{BRAND_NUMBERS.right.sub}</p>
               <ul className="brand-panel-rows">
@@ -598,18 +579,18 @@ export default function Brand() {
                   <li key={r.label}>
                     <span>{r.label}</span>
                     <b>
-                      <CountUp value={r.value} start={numbersIn} />
+                      <CountUp value={r.value} start={rightIn} />
                     </b>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-          <div className="brand-derived">
+          <div className="brand-derived" ref={derivedRef}>
             {BRAND_NUMBERS.derived.map((d) => (
               <div key={d.label} className="brand-derived-cell">
                 <b>
-                  <CountUp value={d.value} start={numbersIn} decimals={d.decimals} suffix={d.suffix} />
+                  <CountUp value={d.value} start={derivedIn} decimals={d.decimals} suffix={d.suffix} />
                 </b>
                 <span>{d.label}</span>
               </div>
@@ -618,7 +599,7 @@ export default function Brand() {
         </section>
 
         {/* who watches */}
-        <section className="section" id="audience" aria-label="Who watches" data-reveal>
+        <section className="section" id="audience" aria-label="Who watches">
           <p className="section-label">Who watches</p>
           <h2 className="section-title">{BRAND_AUDIENCE.intro}</h2>
           <div className="brand-pills">
@@ -633,7 +614,7 @@ export default function Brand() {
         {/* reach — heading above the banner, three straight poster cards
           * on the seascape. Likes/shares pills are NOT rendered: no verified
           * likes/shares figures exist for these Reels (views only). */}
-        <section className="section" aria-label="For a sense of reach" data-reveal>
+        <section className="section" aria-label="For a sense of reach">
           <div className="brand-reach-head">
             <h2 className="section-title">For a sense of reach</h2>
             <p className="brand-reach-note">
@@ -650,7 +631,7 @@ export default function Brand() {
         </section>
 
         {/* formats + how it works */}
-        <section className="section" id="formats" aria-label="Formats and how it works" data-reveal>
+        <section className="section" id="formats" aria-label="Formats and how it works">
           <div className="brand-split">
             <div>
               <h2 className="section-title">Formats</h2>
@@ -681,7 +662,7 @@ export default function Brand() {
         </section>
 
         {/* included + rates */}
-        <section className="section" id="included" aria-label="Included and rates" data-reveal>
+        <section className="section" id="included" aria-label="Included and rates">
           <div className="brand-split">
             <div>
               <h2 className="section-title">Included as standard</h2>
@@ -713,7 +694,7 @@ export default function Brand() {
         </section>
 
         {/* campaign CTA */}
-        <section className="section" id="campaign" aria-label="Start a campaign" data-reveal>
+        <section className="section" id="campaign" aria-label="Start a campaign">
           <div className="brand-cta">
             <div className="brand-cta-card">
               <h2 className="section-label">Start a campaign</h2>
