@@ -1721,42 +1721,44 @@ body[data-phase="leaving"] .site-header .mode-switch {
   background: var(--color-surface);
 }
 
-/* Reach panel — seascape, three fanned cards, middle card front/highest. */
-.brand-reach {
+/* Reach — heading above the banner (black on paper); seascape banner with
+ * three straight poster cards, title line below each poster. Hover: red
+ * border on the poster only + clip plays (see ReachCard); no lift/scale. */
+.brand-reach-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 32px; }
+.brand-reach-head .section-title { margin: 0; }
+.brand-reach-note { color: var(--color-ink-soft); font-family: var(--font-mono); font-size: 12px; line-height: 1.6; margin: 0; text-align: right; }
+.brand-reach-banner {
   background: var(--color-paper-deep) url("/brand-seascape.jpg") 50% 30% / cover;
-  border-radius: 28px;
-  padding: 40px clamp(24px, 4vw, 56px);
-  color: #fff;
+  border-radius: 22px;
+  padding: 64px clamp(16px, 4vw, 56px) 60px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
 }
-.brand-reach-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
-.brand-reach-head .section-title { color: #fff; margin: 0; }
-.brand-reach-note { color: rgb(255 255 255 / 0.85); font-size: 14px; margin: 0; text-align: right; }
-.brand-fan-static { height: 500px; margin-top: 32px; }
-.brand-reach-card {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 200px;
-  margin-left: -100px;
-  border-radius: 18px;
-  overflow: hidden;
-  background: #fff;
-  color: var(--color-ink);
-  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.5);
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+.brand-reach-card { display: block; width: 180px; flex: none; color: #111; text-decoration: none; }
+.brand-reach-poster {
   display: block;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
 }
-.brand-reach-card:hover { outline: 2px solid #ef3b2d; outline-offset: 2px; }
-.brand-reach-card img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; display: block; }
-.brand-reach-card-text { display: flex; flex-direction: column; gap: 4px; padding: 14px; }
-.brand-reach-card-title {
+.brand-reach-card:hover .brand-reach-poster { border-color: #ef3b2d; }
+.brand-reach-poster img, .brand-reach-poster video { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; }
+.brand-reach-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 10px;
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: #111;
 }
-.brand-reach-card-views { font-family: var(--font-serif); font-size: 30px; line-height: 1; }
-.brand-reach-card-sub { font-family: var(--font-serif); font-size: 15px; line-height: 1.35; color: var(--color-ink-soft); }
+.brand-reach-line-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.brand-reach-line-views { flex: none; }
 
 /* Formats + how it works, included + rates: two-column hairline rows. */
 .brand-split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
@@ -1927,6 +1929,7 @@ body[data-phase="leaving"] .site-header .mode-switch {
 }
 @media (max-width: 700px) {
   .brand-fan-card { width: 160px; margin-left: -80px; }
-  .brand-reach-card { width: 160px; margin-left: -80px; }
-  .brand-fan-static { height: 430px; }
+  .brand-reach-banner { padding: 32px 12px 28px; gap: 8px; }
+  .brand-reach-card { width: 104px; }
+  .brand-reach-line { font-size: 9px; letter-spacing: 0.04em; margin-top: 8px; }
 }
