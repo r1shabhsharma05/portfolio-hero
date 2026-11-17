@@ -7,7 +7,7 @@ Instructions for AI coding agents working in this repository.
 The source of https://portfolio-hero-psi-lemon.vercel.app — Rishabh Sharma's personal portfolio,
 a React 19 + TypeScript single-page app with Vite, deployed on Vercel. The
 homepage recreates a live-site design: sky hero with a reel wall, a
-one-sentence pitch, a reels grid, three worlds (Build / Open Source / Learn),
+one-sentence pitch, a reels grid, three worlds (Build / Brand / Learn),
 projects, and a developer portal for AI agents (llms.txt, openapi.json,
 markdown negotiation, RSS).
 
@@ -15,7 +15,7 @@ markdown negotiation, RSS).
 
 | Path | What lives there |
 | --- | --- |
-| `src/` | The React app. `src/pages/Home.tsx` is the homepage; `src/pages/Build.tsx` is the /projects page (second Vite entry) — **there is no client-side router**. |
+| `src/` | The React app. `src/pages/Home.tsx` is the homepage; `src/pages/Build.tsx` is the /projects page; `src/pages/Brand.tsx` is the /brands media-kit page (third Vite entry) — **there is no client-side router**. |
 | `src/data/site.ts` | Single source for homepage content: reels, stats, projects, worlds. |
 | `src/components/ChatModal.tsx` | "Talk to my AI" chat UI (SSE to `/api/chat`). |
 | `src/styles/index.scss` | All styles. Design tokens measured from the live site. |
@@ -69,8 +69,8 @@ crawlers and no-JS clients only. Do not make it visible to normal visitors.
 content, markdown negotiation, `Vary` headers, trust-anchor pages, JSON-LD
 completeness and robots policy.
 
-**Facts only.** Every number on the site is verified: LeetCode 213 solved,
-1,387 GitHub contributions in 2026, 23 merged / 8 open OSS PRs, reel view
+**Facts only.** Every number on the site is verified: LeetCode 218 solved (92 Easy, 100 Medium, 26 Hard; 16 Nov 2026),
+1,739 GitHub contributions in 2026 (16 Nov 2026), 23 merged / 8 open OSS PRs, reel view
 counts (total 7,121; the 2 newest counts are Rishabh's own figures, IG connector down 2026-11-13). Never invent employment,
 internships, credentials or follower counts.
 
