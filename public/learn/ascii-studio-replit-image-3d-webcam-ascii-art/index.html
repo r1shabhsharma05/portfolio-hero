@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ASCII Studio: Images, 3D Models and a Live Webcam Turned Into Editable ASCII | Rishabh Sharma</title>
+<meta name="description" content="A browser studio that converts images, GLB/OBJ models and a live camera feed into ASCII you can edit in real time. Why every source has to collapse into one con" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/ascii-studio-replit-image-3d-webcam-ascii-art/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>ASCII Studio: Images, 3D Models and a Live Webcam Turned Into Editable ASCII</h1>
+<p class="lede">A browser studio that converts images, GLB/OBJ models and a live camera feed into ASCII you can edit in real time. Why every source has to collapse into one converter, why density is a cell size and not a character count, why monospace cells are not square, how the three exports are three different problems, and the full Replit Agent brief.</p>
+<p class="meta">22 September 2026</p>
+<h2>Overview</h2>
+<p>
+<a href="https://ascii-studio.replit.app/" target="_blank" rel="noreferrer">ASCII Studio</a> is a
+        single-page browser tool that takes a picture, a 3D model or whatever
+        your webcam is pointed at and redraws it as text. Not as a one-shot
+        filter — as a live render you keep editing. Drag the density slider and
+        the grid gets finer under your hand. Swap the character ramp from the
+        detailed set to <code>01</code> and the same torus knot turns into a
+        binary readout. Point it at your face and it does the same thing at
+        thirty frames a second.
+</p>
+<p>
+        It was built in an afternoon on
+<a href="https://replit.com/" target="_blank" rel="noreferrer">Replit</a>, which is the whole reason it
+        is worth writing about. A tool like this looks like a weekend of fiddly
+        canvas work, and most of it is. The part that decides whether you ship
+        it or abandon it is a single architectural call you make in the first
+        ten minutes, and if you get that call wrong no amount of agent time
+        rescues it.
+</p><div class="highlight">
+<p>
+<strong>What it does:</strong> three sources (upload a PNG/JPEG/WebP,
+          import a GLB/OBJ, or start the camera), nine built-in 3D shapes with
+          auto-rotation and drag-to-rotate, five character-ramp presets plus a
+          free-text ramp of your own, live density / brightness / contrast /
+          invert, monochrome or source-colour output, foreground and background
+          colour pickers, three one-click looks, and three exports — TXT, PNG
+          and WebM.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> React + TypeScript on Vite, Three.js for the
+          model viewer, <code>getUserMedia</code> for the camera,
+<code>MediaRecorder</code> for the video export. No backend. Nothing
+          leaves the tab.
+</p>
+</div><h2>The one decision that matters: every source collapses to pixels</h2>
+<p>
+        There are three sources. The tempting shape is three renderers — one
+        that walks an uploaded image, one that reads the WebGL canvas, one that
+        samples video frames. It feels natural because the three sources really
+        are different: one is static, one is a scene graph, one is a stream.
+</p>
+<p>
+        It is also the version you throw away. The moment there are three
+        renderers, there are three places where the density slider is
+        interpreted, three ramp lookups, three subtly different ideas of what
+        "contrast" means, and your invert toggle works on images and does
+        nothing to the webcam. Every feature you add after that costs three
+        times as much, and the bug reports are all "it looks different on the
+        camera".
+</p>
+<p>
+        So the brief names one function and forbids the alternative by name:
+</p><div class="code">function toAscii(
+  frame: ImageData,   // already sampled down to the grid
+  cols: number,
+  rows: number,
+  opts: RenderOpts,   // ramp, brightness, contrast, invert, colour mode
+): AsciiGrid</div><p>
+        Everything upstream of that is a <em>source adapter</em> whose only job
+        is to produce an <code>ImageData</code> at grid resolution. An uploaded
+        image draws itself into an offscreen canvas. A model renders into an
+        offscreen WebGL target and gets read back. The webcam draws its current
+        video frame into the same offscreen canvas every animation frame. Three
+        adapters, about fifteen lines each, and one converter that never learns
+        where the pixels came from.
+</p>
+<p>
+        That is what makes "start the camera and every control you were already
+        using keeps working" free instead of a feature.
+</p><h2>Density is a cell size, not a character count</h2>
+<p>
+        The slider says <code>12px</code>, and that is deliberate. The obvious
+        alternative is to let the user pick a column count — "render at 120
+        characters wide" — and it breaks the first time someone resizes the
+        window, because the characters either stretch or the image stops
+        filling the frame.
+</p>
+<p>
+        Cell size in pixels is the stable unit. The grid falls out of it:
+</p><div class="code">const cols = Math.floor(viewport.width / cellW);
+const rows = Math.floor(viewport.height / cellH);</div><p>
+        Resize the window and you get more characters at the same weight, which
+        is what everyone expects and nobody can articulate. It also means the
+        number in the corner of the viewport (<code>12px · MONO</code>) is a
+        real, physical description of the output rather than an abstraction.
+</p><h3>And the cell is not square</h3>
+<p>
+        This is the bug everyone writes at least once. A monospace character
+        cell is roughly twice as tall as it is wide — the exact ratio depends
+        on the font, but it is in the region of 0.5 to 0.6. If you sample the
+        source on a square grid and then print the result into non-square
+        cells, everything comes out stretched vertically by a factor of two.
+        Faces get long. Circles become eggs. It looks <em>almost</em> right,
+        which is why it survives so long.
+</p>
+<p>
+        The fix is to measure the real cell rather than guess it — render one
+        character, take its advance width, take the line height, and derive the
+        sampling box from the ratio:
+</p><div class="code">const aspect = cellH / cellW;              // ~2.0 for most mono fonts
+const sampleH = sampleW * aspect;          // sample a tall box per cell</div><p>
+        Write it down in the brief with the number in it. An agent left to its
+        own devices will sample square, because square is what every ASCII
+        tutorial does.
+</p><h2>Luminance to a character, in the right order</h2>
+<p>
+        Per cell: average the pixels, convert to perceptual luminance, apply
+        the adjustments, then index the ramp. The order of those four steps is
+        the whole thing.
+</p><div class="code">// 1. perceptual, not (r+g+b)/3 — greens read far brighter than blues
+let l = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;<p>// 2. contrast pivots around mid-grey, or it doubles as a brightness control
+l = (l - 0.5) * contrast + 0.5;
+l = l * brightness;</p>
+<p>// 3. invert before quantising, never after
+if (invert) l = 1 - l;</p>
+<p>// 4. now, and only now, quantise
+const i = Math.round(clamp01(l) * (ramp.length - 1));
+const ch = ramp[i];</div></p>
+<p>
+        Two things go wrong here and both are quiet. If contrast is applied as
+        a plain multiply instead of pivoting around 0.5, it behaves as a second
+        brightness slider and the two controls fight each other. And if invert
+        is applied to the ramp index rather than the luminance, it stops being
+        an inversion the moment the ramp has an uneven number of steps.
+</p><h3>The ramp is the art direction</h3>
+<p>
+        The default ramp is ordered dark to light by ink coverage, not by ASCII
+        value:
+</p><div class="code">. `-_':,;^=+/"|\&lt;&gt;()iv%xclrs{*}I?!|</div><p>
+        A period covers almost nothing. An <code>I</code> covers a lot. The
+        order is a judgement about how much of the cell each glyph fills in
+<em>this</em> font, which is why a ramp copied from a 1990s
+<code>aalib</code> table looks muddy in a modern grotesk mono. Ship a
+        good default, then let people type their own — the free-text ramp field
+        is three lines of code and it is the single most-played-with control in
+        the app.
+</p>
+<p>The five presets are five different tools, not five skins:</p>
+<ul>
+<li>
+<strong>Standard Detailed</strong> — the long ramp. Photographs, faces,
+          anything with gradients.
+</li>
+<li>
+<strong>Simple</strong> — a short ramp. Reads better at low density
+          and on a phone.
+</li>
+<li>
+<strong>Binary</strong> — <code>01</code>. Two steps, so it is
+          effectively a dither, and it is the only preset that makes a 3D model
+          look like a readout instead of a drawing.
+</li>
+<li>
+<strong>Blocks</strong> — the Unicode shade blocks. Nearly continuous
+          tone, barely reads as text at all.
+</li>
+<li>
+<strong>Matrix</strong> — katakana and digits. Pure costume, and
+          pure fun, and worth including for exactly that reason.
+</li>
+</ul><h2>The 3D side: nine shapes before any file import</h2>
+<p>
+        The app opens on a rotating torus knot, and that is a product decision
+        rather than a default. A studio that opens on an empty canvas with an
+        upload button asks the visitor to do work before they know whether the
+        thing is any good. A studio that opens already running lets them grab
+        the density slider in the first two seconds.
+</p>
+<p>
+        So there are nine parametric shapes built in — knot, sphere, cube, ring,
+        orbital rings, double helix, diamond, wave surface, icosahedron — all
+        generated in code, none of them an asset to load. They cost nothing to
+        ship and they cover the interesting cases: something with a self-
+        occluding silhouette (the knot), something with flat shaded faces (the
+        cube), something with fine repeated structure that tests the density
+        slider (the helix, the rings).
+</p>
+<p>
+        Imported GLB and OBJ files go through the same viewer. Auto-rotate,
+        rotation speed, drag to rotate, scroll to zoom. The one thing worth
+        specifying carefully is the readback: render the scene into an offscreen
+        render target already sized to the grid, then
+<code>readPixels</code> that. Rendering at full resolution and sampling
+        down afterwards works, and it burns a pile of GPU and memory for an
+        image you are about to reduce to a few thousand characters.
+</p>
+<p>
+        The built-in shapes also have a software-rendered fallback, so a browser
+        without WebGL still gets a rotating object. Imported models need WebGL
+        and say so plainly instead of failing into a blank frame.
+</p><h2>The webcam is an image source with a clock</h2>
+<p>
+        Once the converter is source-agnostic, live camera input is almost
+        nothing: get a stream, draw the video element into the offscreen canvas
+        each frame, convert, paint. The work is not in the pixels. It is in the
+        permission and shutdown behaviour, and this is where most hobby tools
+        quietly lose people's trust.
+</p>
+<ul>
+<li>
+<strong>Never request audio.</strong>
+<code>getUserMedia({ video: true, audio: false })</code>. Asking for a
+          microphone you do not use lights the recording indicator and turns a
+          fun toy into something the user closes the tab on.
+</li>
+<li>
+<strong>Gate it behind a button.</strong> The Cam tab shows a
+<strong>Start Camera</strong> button and one line of copy. No
+<code>getUserMedia</code> call fires on page load, on tab switch, or
+          on any path the user did not explicitly take.
+</li>
+<li>
+<strong>Stop the tracks on every exit path.</strong> Not just the Stop
+          button — also on switching source, on unmount, and on
+<code>pagehide</code>. Call <code>track.stop()</code> on every track
+          in the stream and drop the reference. A camera light that stays on
+          after the user has moved to the Image tab is the single worst bug this
+          app can have, and it is invisible in testing because the developer
+          knows what they just clicked.
+</li>
+<li>
+<strong>Handle the denial properly.</strong>
+<code>NotAllowedError</code> is not the same as
+<code>NotFoundError</code>. And in an embedded preview iframe the
+          permission prompt may not appear at all, which is why there is an
+<em>Open in New Tab</em> escape hatch next to the retry guidance —
+          a Replit-specific problem worth naming in the brief, because the agent
+          will otherwise test in the preview pane, see the failure, and start
+          rewriting working camera code.
+</li>
+<li>
+<strong>Mirror it.</strong> Unmirrored self-view feels wrong to
+          everyone and nobody can say why.
+</li>
+</ul><h2>Three exports, three different problems</h2>
+<p>
+        These look like one feature on the toolbar. They are not.
+</p>
+<h3>TXT is the real output</h3>
+<p>
+        Join the grid with newlines, wrap in a Blob, download. It is the
+        cheapest of the three and the one people actually use, because it is the
+        only export that survives being pasted into a README, a commit message
+        or a terminal.
+</p>
+<h3>PNG has to draw, not screenshot</h3>
+<p>
+        If the on-screen output is DOM text, there is no way to turn it into an
+        image directly — no <code>html2canvas</code> shortcut that gets the
+        metrics right. The export path has to render the same grid into a
+<code>&lt;canvas&gt;</code> with <code>fillText</code>, at an export
+        scale independent of the viewport, using the same font, the same cell
+        metrics and the same foreground and background colours. Which means the
+        cell geometry has to live in one module that both the screen renderer
+        and the export renderer call. Two implementations of the grid, and the
+        PNG is subtly off from the preview forever.
+</p>
+<h3>WebM is a stream, and it is conditional</h3>
+<p>
+<code>canvas.captureStream(fps)</code> into a
+<code>MediaRecorder</code>, collect the chunks, Blob, download. The
+        thing to specify is the degradation: check
+<code>MediaRecorder.isTypeSupported</code> against a list of candidate
+        mime types, pick the first that passes, and if none do, disable the
+        button with a tooltip explaining why rather than letting it throw. Codec
+        support genuinely differs across browsers and this is the one export
+        that cannot be made universal.
+</p>
+<p>
+        All three are greyed out until there is a frame to export. Obvious in
+        hindsight, and an agent will happily ship three live buttons that
+        download an empty file.
+</p><h2>Quick Looks are presets you are allowed to break</h2>
+<p>
+        Terminal, Ember, Inverted. Each is one click, and each one just writes
+        values into the same controls you were already using — ramp, colours,
+        invert, density. Nothing locks. You click Ember because it gets you
+        close, then you drag the contrast because it was not quite there.
+</p>
+<p>
+        A preset that takes over the UI is a filter. A preset that seeds the UI
+        is a starting point. The difference is a few lines of state management
+        and it is most of what separates a toy from something people come back
+        to.
+</p><h2>On the light mode</h2>
+<p>
+        This went dark studio first, then orange-on-black, and ended up light:
+        warm white <code>#FDFBF9</code> background, <code>#CC4400</code> ink.
+        Every instinct says ASCII belongs on black. A terminal is black. The
+        reference images are all black.
+</p>
+<p>
+        The light version is better, and the reason is specific rather than
+        aesthetic. On black, the ASCII art and the UI chrome are competing
+        glowing objects and the art loses. On warm white, the sidebar recedes
+        into paper and the orange character grid is the only saturated thing on
+        the screen. It reads as a print of the art rather than a screenshot of
+        an app.
+</p>
+<p>
+        The one requirement is that the ink stay dark and saturated. Orange at
+<code>#CC4400</code> on <code>#FDFBF9</code> holds at 12px monospace.
+        Anything lighter and the fine ramp characters — the periods, the
+        backticks, the commas — dissolve into the background and the low end of
+        the tonal range disappears.
+</p><h2>The prompt</h2>
+<p>
+        Paste it whole. The section numbering matters more than it looks — the
+        agent builds in that order, and the order is chosen so that the first
+        thing that works is the thing everything else depends on.
+</p><div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt" id="ascii-prompt">Build a single-page browser studio called ASCII STUDIO that converts images, 3D models and a live webcam feed into editable ASCII art. React 18 + TypeScript on Vite. Everything runs client-side: no backend, no uploads, no network calls with user content in them.<h2>0. The rule that governs the whole codebase</h2>
+<p>There is exactly ONE ASCII conversion function:</p>
+<pre><code class="language-ts">function toAscii(frame: ImageData, cols: number, rows: number, opts: RenderOpts): AsciiGrid
+</code></pre>
+<p>Every source is normalised into an <code>ImageData</code> at grid resolution and passed to it. Image, 3D model and webcam are SOURCE ADAPTERS whose only job is to fill an offscreen canvas. If you are about to write <code>asciiFromVideo</code> alongside <code>asciiFromImage</code>, stop — that is the bug. The converter must never know where its pixels came from.</p>
+<p>Likewise, cell geometry (font metrics, cell width, cell height, cols, rows) lives in ONE module that both the screen renderer and the PNG exporter import. Never compute the grid twice.</p>
+<h2>1. Layout</h2>
+<p>Left sidebar, fixed ~300px, scrollable, with a pinned &quot;Reset Defaults&quot; button at the bottom. Right pane is the viewport: a label reading <code>VIEWPORT</code> with a live <code>{density}px · MONO</code> subtitle, the ASCII output centred in a rounded card, and a floating export bar at the bottom with TXT / PNG / WebM.</p>
+<p>Sidebar sections in this order: SOURCE, (source-specific controls), QUICK LOOKS, CHARACTERS, RENDER PARAMS, COLOR.</p>
+<p>Below 820px the sidebar becomes a collapsible drawer above the viewport. The viewport is never smaller than the sidebar on mobile.</p>
+<h2>2. Sources</h2>
+<p>Three segmented tabs: <strong>3D</strong>, <strong>Image</strong>, <strong>Cam</strong>, plus an &quot;Upload&quot; affordance in the SOURCE header.</p>
+<ul>
+<li><strong>Image</strong> — accept PNG, JPEG, WebP via file picker and drag-and-drop onto the viewport. Read with <code>createImageBitmap</code>, draw into the offscreen canvas with <code>object-fit: contain</code> semantics.</li>
+<li><strong>3D</strong> — see section 3.</li>
+<li><strong>Cam</strong> — see section 5.</li>
+</ul>
+<p>Switching source must tear down the previous one completely (stop rAF loops, stop camera tracks, dispose Three.js geometries and materials).</p>
+<h2>3. The 3D viewer</h2>
+<p>Three.js. Nine built-in parametric shapes, generated in code, zero assets:</p>
+<p>knot (TorusKnotGeometry, the default) · sphere · cube · ring (torus) · orbit (three nested rings on different axes) · helix (two offset parametric curves with spheres along them) · diamond (octahedron) · wave (a plane with a sin/cos displacement animated over time) · ico (icosahedron)</p>
+<p>Controls: Auto Rotate toggle (on by default), Speed slider 0.1x–3x, drag to rotate, scroll to zoom. Lighting should be simple and high-contrast — one key light, one rim — because flat, evenly-lit geometry converts to a featureless block of one character.</p>
+<p>Also accept imported <strong>GLB</strong> and <strong>OBJ</strong> files. Centre and scale imported models to fit the frame automatically; do not trust their units.</p>
+<p><strong>Readback:</strong> render the scene into an offscreen <code>WebGLRenderTarget</code> already sized to <code>cols x rows</code>, then <code>readRenderTargetPixels</code> into a Uint8Array and hand it to <code>toAscii</code>. Do NOT render at full viewport resolution and downsample afterwards.</p>
+<p><strong>Fallback:</strong> if WebGL is unavailable, the nine built-in shapes fall back to a software rasteriser (project vertices, depth-sort, fill) so the app still runs. Imported models require WebGL — say so in the UI with a clear message rather than showing an empty frame.</p>
+<h2>4. The converter</h2>
+<p>Per cell, in this exact order:</p>
+<pre><code class="language-ts">let l = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;  // perceptual luminance
+l = (l - 0.5) * contrast + 0.5;                        // contrast pivots at mid-grey
+l = l * brightness;
+if (invert) l = 1 - l;                                 // invert luminance, NOT the index
+const ch = ramp[Math.round(clamp01(l) * (ramp.length - 1))];
+</code></pre>
+<p><strong>Cell aspect ratio.</strong> Measure the real monospace cell at boot (<code>measureText</code> for advance width, line-height for height) and sample a box of that aspect from the source. Monospace cells are roughly 2:1 tall — sampling on a square grid produces output stretched vertically by 2x. This is not optional.</p>
+<p><strong>Density</strong> is a cell size in pixels (range 4–24, default 12), NOT a column count. <code>cols = floor(width / cellW)</code>, <code>rows = floor(height / cellH)</code>. On window resize the character count changes; the character size does not.</p>
+<p><strong>Colour modes:</strong> Monochrome (every glyph the foreground colour) or Source Color (each glyph takes the average colour of its cell). Foreground and background are colour pickers. Defaults: foreground <code>#CC4400</code>, background <code>#FDFBF9</code>.</p>
+<h2>5. The webcam — get this exactly right</h2>
+<ul>
+<li><code>navigator.mediaDevices.getUserMedia({ video: { facingMode: &#39;user&#39; }, audio: false })</code>. <strong>Never request audio.</strong></li>
+<li>The Cam tab renders a placeholder card with one line of copy and a <strong>START CAMERA</strong> button. No <code>getUserMedia</code> call happens on mount, on tab switch, or on any path the user did not explicitly click.</li>
+<li>While live: show a status indicator and a <strong>STOP CAMERA</strong> control.</li>
+<li>Mirror the feed horizontally.</li>
+<li>Draw the <code>&amp;lt;video&amp;gt;</code> into the offscreen canvas inside the existing rAF loop. Do not add a second loop.</li>
+<li><strong>Teardown:</strong> call <code>track.stop()</code> on every track and null the stream reference on (a) Stop Camera, (b) source change, (c) component unmount, (d) <code>pagehide</code>. Verify the OS camera indicator goes out in all four cases.</li>
+<li><strong>Errors:</strong> distinguish <code>NotAllowedError</code>, <code>NotFoundError</code> and <code>NotReadableError</code> with different copy. Because permission prompts can be suppressed inside an embedded preview iframe, include an <strong>Open in New Tab</strong> button alongside a Retry button in the error state.</li>
+</ul>
+<h2>6. Characters</h2>
+<p>A <strong>Preset</strong> select with five options, and a free-text <strong>Character Ramp (Dark → Light)</strong> input that is always editable and always reflects the active preset:</p>
+<ul>
+<li>Standard Detailed: <code>. \</code>-_&#39;:,;^=+/&quot;|&amp;lt;&gt;()iv%xclrs{*}I?!|`</li>
+<li>Simple: <code>.:-=+*#%@</code></li>
+<li>Binary: <code>01</code></li>
+<li>Blocks: <code> ░▒▓█</code></li>
+<li>Matrix: <code>ｱｲｳｴｵｶｷ0123456789</code></li>
+</ul>
+<p>Typing in the ramp field re-renders live and switches the preset label to &quot;Custom&quot;.</p>
+<h2>7. Quick Looks</h2>
+<p>Three one-click looks shown as small live thumbnails: <strong>Terminal</strong> (green on black, simple ramp), <strong>Ember</strong> (orange on black, detailed ramp, raised contrast), <strong>Inverted</strong> (dark glyphs on light, invert on).</p>
+<p>A Quick Look WRITES ITS VALUES INTO THE NORMAL CONTROLS and then gets out of the way. It does not lock anything, and every slider stays free afterwards. There is no &quot;active look&quot; mode.</p>
+<h2>8. Exports</h2>
+<ul>
+<li><strong>TXT</strong> — join the grid rows with <code>\n</code>, Blob, download as <code>ascii-studio.txt</code>.</li>
+<li><strong>PNG</strong> — render the grid into a fresh canvas with <code>fillText</code> at 2x export scale, using the shared cell-geometry module, the current font, and the current foreground/background. Do not screenshot the DOM.</li>
+<li><strong>WebM</strong> — <code>canvas.captureStream(30)</code> into <code>MediaRecorder</code>. Probe <code>MediaRecorder.isTypeSupported</code> over <code>[&#39;video/webm;codecs=vp9&#39;, &#39;video/webm;codecs=vp8&#39;, &#39;video/webm&#39;]</code> and use the first supported type. If none are supported, render the button disabled with a tooltip explaining that the browser cannot record. Recording must work for the webcam source too. Show elapsed time while recording.</li>
+</ul>
+<p>All three buttons are disabled until a frame has been rendered.</p>
+<h2>9. Appearance</h2>
+<p>Light mode. Background <code>#FDFBF9</code>, ink <code>#CC4400</code>, sidebar and cards in warm greys. Uppercase letter-spaced mono labels for section headings, sentence-case for control labels. The ASCII output is the only saturated element on the page — keep the chrome quiet.</p>
+<h2>10. Performance and privacy</h2>
+<ul>
+<li>One <code>requestAnimationFrame</code> loop for the whole app. Nothing renders when the source is static and no control is moving.</li>
+<li>Reuse a single offscreen canvas and a single <code>ImageData</code> buffer; do not allocate per frame.</li>
+<li>Debounce the ramp text input; do not debounce the sliders.</li>
+<li>Images, models and camera frames are processed entirely in the browser and never uploaded. State this in the UI.</li>
+</ul>
+<h2>Build order</h2>
+<p>Build and show me section 4 (the converter) first, wired only to a static test image, before you write any 3D or camera code. I want to see a correct, non-stretched ASCII render of one photograph before anything else exists.</div></p>
+</div><h2>Where it goes wrong</h2>
+<ul>
+<li>
+<strong>Everything looks vertically stretched.</strong> The cell
+          aspect ratio was ignored and the source is being sampled on a square
+          grid. This is the first bug and it is worth failing the build on.
+</li>
+<li>
+<strong>The camera works, the image upload does not, or vice
+          versa.</strong> Two converters got written. Delete one and route both
+          adapters into the survivor.
+</li>
+<li>
+<strong>The PNG does not match the preview.</strong> The exporter
+          computed its own grid instead of importing the shared cell-geometry
+          module.
+</li>
+<li>
+<strong>Brightness and contrast fight each other.</strong> Contrast is
+          a plain multiply rather than pivoting around 0.5.
+</li>
+<li>
+<strong>The 3D object renders as a solid block of one
+          character.</strong> The scene is lit flat. ASCII has maybe twenty
+          tonal steps to work with; it needs a key and a rim light to find them.
+</li>
+<li>
+<strong>The camera indicator stays on.</strong> Tracks are stopped on
+          the Stop button only. All four exit paths need it.
+</li>
+<li>
+<strong>The camera never prompts at all.</strong> You are testing in
+          an embedded preview pane. Open the deployment in a real tab before you
+          touch the code.
+</li>
+<li>
+<strong>Frame rate collapses at low density.</strong> A new canvas,
+<code>ImageData</code> or string array is being allocated every frame.
+          At 4px cells that is a lot of garbage per second.
+</li>
+<li>
+<strong>WebM export throws on Safari.</strong>
+<code>isTypeSupported</code> was never probed and a vp9 mime type was
+          hardcoded.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          Collapse every source to <code>ImageData</code> and write one
+          converter. Name the forbidden alternative in the brief, because the
+          obvious decomposition is the wrong one.
+</li>
+<li>
+          Density is a cell size. Column counts break on resize.
+</li>
+<li>
+          Measure the monospace cell. It is about twice as tall as it is wide,
+          and assuming otherwise stretches everything by 2x in a way that looks
+          almost correct.
+</li>
+<li>
+          Luminance, then contrast around mid-grey, then brightness, then
+          invert, then quantise. Any other order produces controls that
+          interfere with each other.
+</li>
+<li>
+          Order the ramp by ink coverage in your actual font, then let people
+          replace it. The custom ramp field earns more play than any slider.
+</li>
+<li>
+          Read the 3D scene back at grid resolution, not at viewport
+          resolution.
+</li>
+<li>
+          The camera is ten lines of pixels and a page of permission and
+          teardown behaviour. Specify the teardown on all four exit paths, and
+          never ask for audio.
+</li>
+<li>
+          Share cell geometry between the screen and the PNG exporter, and
+          probe codec support before offering the video one.
+</li>
+<li>
+          Ship something already running on first paint. Nine generated shapes
+          cost nothing and remove the empty-canvas problem entirely.
+</li>
+<li>
+          Ask for the converter first, against one static image. It is the only
+          checkpoint in this build you can fail on sight.
+</li>
+</ul><p>
+        If you want more in this shape, there is
+<a href="/learn/3d-ascii-wordmark-svg-github-readme/"
+          >a 3D ASCII wordmark that animates inside a GitHub README</a>,
+<a href="/learn/liquid-metal-webcam-python-opencv/"
+          >a liquid-metal webcam filter in Python and OpenCV</a>, and
+<a href="/learn/prompt-fake-old-hardware-crt-device-replit/"
+          >a Replit prompt for faking old CRT hardware in the browser</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agent Crews: 48 Cursors, a Queue and a Crew for Every Block | Rishabh Sharma</title>
+<meta name="description" content="My page that builds itself, scaled up: 48 named agent cursors wait in a queue, every block gets a crew, the headline is carried in letter by letter and a review" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/agent-crews-48-cursors-build-a-page/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Agent Crews: 48 Cursors, a Queue and a Crew for Every Block</h1>
+<p class="lede">My page that builds itself, scaled up: 48 named agent cursors wait in a queue, every block gets a crew, the headline is carried in letter by letter and a reviewer sends work back. Code and prompt inside.</p>
+<p class="meta">7 November 2026</p>
+<p><a href="/learn/agents-at-work-a-page-that-builds-itself/">Agents at work</a> was a page that twelve named cursors build in front of you. People liked it, and the most common reply was &quot;more cursors&quot;. So I made the sequel: forty-eight of them, and instead of one cursor per block, every block gets a crew. <a href="https://www.avivashishta.com/lab/agent-crews" target="_blank" rel="noreferrer">It is live at avivashishta.com/lab/agent-crews</a>.</p>
+<div class="highlight"><p><strong>The short version:</strong> idle cursors wait in a queue along the bottom of your screen. Each block takes a crew from the front of it: a <em>marker</em> drags the marquee and locks the block, a <em>maker</em> types, counts or carries the content in, a <em>painter</em> fills the cards in pixels, and a <em>reviewer</em> can flag a finished block in red until the maker fixes it. The headline arrives as a pile of letter tiles that eleven cursors carry to their slots at once. Everything is still real HTML, so the page is complete without JavaScript.</p></div><h2>Step 1: six directions on a design canvas</h2>
+<p>Before writing code I asked Claude for designs, two or three ways to make the swarm cooler with more cursors doing something, plus a few ideas for using the same agents on other kinds of screens. It came back with six frames on one design canvas, each a still from the middle of a build:</p>
+<ol>
+<li><strong>Crews.</strong> Every block gets a team with a job each. This page.</li>
+<li><strong>Spawn tree.</strong> Claude splits into four leads, they split into sixteen, then sixty-four, and the smallest ones land on blocks.</li>
+<li><strong>Flock.</strong> Two hundred tiny cursors spell the name, then stream off to build.</li>
+<li><strong>Terminal.</strong> My stats as a stock ticker, with analyst cursors annotating the chart.</li>
+<li><strong>Sheet.</strong> A spreadsheet portfolio the agents fill in. That became <a href="/learn/agent-sheet-a-portfolio-spreadsheet-agents-fill-in/">the agent sheet</a>.</li>
+<li><strong>Ship board.</strong> The Lab as a kanban, cards dragged from Building to Shipped.</li>
+</ol>
+<p>I picked Crews because it answers &quot;more cursors&quot; without turning into noise: forty-eight cursors are fine to watch when each one is visibly doing a job.</p>
+<h2>Step 2: the queue</h2>
+<p>Twelve cursors flocking around the work looks lively. Forty-eight flocking looks like a swarm of flies. So idle cursors don&#39;t flock any more. They wait in a queue, a rank along the bottom of the screen, tags hidden and slightly faded, and close up the gaps as cursors leave.</p>
+<pre><code class="language-ts">const slot = (k: number) =&gt; {
+  const perRow = Math.max(6, Math.floor((innerWidth - 420) / 26));
+  return { x: 20 + (k % perRow) * 26, y: scrollY + innerHeight - 40 - Math.floor(k / perRow) * 28 };
+};
+// In the rAF loop, an idle cursor eases toward its place in the queue.
+const s = slot(free.indexOf(a));
+a.x += (s.x - a.x) * .09; a.y += (s.y - a.y) * .09;
+</code></pre>
+<p>The queue is an array. Taking a crew splices from the front, and a cursor that finishes goes back on the end. Because the slot is just its index, the whole rank shuffles along on its own every time someone leaves or comes back. The log in the corner shows three numbers: working, in the queue, and crews.</p>
+<h2>Step 3: a crew per block</h2>
+<p>In the first version a section shared its blocks round robin between a few cursors. Now every block in a section starts at once and asks the queue for a crew. If not enough cursors are free, it waits.</p>
+<pre><code class="language-ts">async function take(id: number, n: number, prefer?: string[]) {
+  while (alive(id) &amp;&amp; free.length &lt; n) await sleep(60);
+  const out: Agent[] = [];
+  for (const name of prefer ?? []) { /* reviewers ask for QA, Proof, Lint or Test first */ }
+  while (out.length &lt; n) { const a = free[0]; pull(a); out.push(a); }
+  return out;
+}
+</code></pre>
+<p>A crew is two cursors, or three on a card that gets painted:</p>
+<ul>
+<li>The <strong>marker</strong> flies to the top left corner and drags the dashed marquee with its live size label, the same as before. When it lets go, a small badge appears above the block: <code>locked by Grid</code>. Then it steps aside and goes back to the queue straight away, so the queue keeps moving.</li>
+<li>The <strong>maker</strong> waits at the block&#39;s top right corner while the marker drags, then moves in and makes the thing: types the headline, counts up the number or carries the content in.</li>
+<li>The <strong>painter</strong> waits below the card and then sweeps across it in three passes while the pixels fill from the bottom up, so the colour looks like it comes from the cursor.</li>
+</ul>
+<h2>Step 4: carrying the headline in</h2>
+<p>This is the moment I wanted from the first page. The headline is rendered as one span per letter, with each word kept in a <code>nowrap</code> span so it still wraps like normal text:</p>
+<pre><code class="language-tsx">text.split(&quot; &quot;).map((w) =&gt; (
+  &lt;span className={styles.word}&gt;{[...w].map((ch) =&gt; &lt;span data-l&gt;{ch}&lt;/span&gt;)}&lt;/span&gt;
+))
+</code></pre>
+<p>With JavaScript and motion, each letter is invisible until it has been carried in. When the headline&#39;s crew gets to it, a pile of tiles appears on the right of the screen: each tile is the letter on a white card, in the headline&#39;s own font and size (read from <code>getComputedStyle</code>), shrunk and tilted at random. Eleven more cursors are taken from the queue. Each one walks to a tile, picks it up (it straightens and grows to full size), and carries it to the slot of its letter. The tile is moved with the cursor by the same callback the marquee uses:</p>
+<pre><code class="language-ts">await moveTo(a, r.x + gx, r.y + gy, undefined, (x, y) =&gt; {
+  tile.style.translate = `${x - gx}px ${y - gy}px`;
+});
+letter.dataset.on = &quot;&quot;; tile.remove();
+</code></pre>
+<p>The grip point <code>gx, gy</code> is near the letter&#39;s bottom right, so the cursor looks like it&#39;s holding the tile by its corner. Using the <code>translate</code> property, not <code>transform</code>, means the tile&#39;s own <code>rotate</code> and <code>scale</code> can animate with a CSS transition at the same time. When it lands, the real letter appears in blue for a moment and settles to ink.</p>
+<h2>Step 5: a card carried in from off screen</h2>
+<p>One card, Make, isn&#39;t built where it is. Its content is moved off the right edge of the screen, and the marker and the maker carry it in between them, one cursor on each corner, the card tilted a few degrees and straightening as it arrives. The shadow under it is a &quot;lifted&quot; one while it&#39;s in transit.</p>
+<h2>Step 6: the reviewer</h2>
+<p>A block with a <code>data-qa</code> note gets a review after it&#39;s done. A cursor from the reviewer group (QA, Proof, Lint, Test) comes over, the block gets a red outline, and a note appears: <em>&quot;Corner radius is 16 here, 20 everywhere else. Sent back.&quot;</em> The maker comes back to it, and after a beat the note changes to <em>Fixed. Approved.</em> and the outline turns blue and fades. It&#39;s staged, of course, but it&#39;s the part that makes it read as a team and not a screensaver: someone checks the work.</p>
+<h2>The small things</h2>
+<ul>
+<li>The counters in the header (agents, crews at work, actions) are live. An action is any visible step: a marquee, a lock, a letter landing, a paint pass.</li>
+<li>Everything that worked on agents at work still does: the camera follows the work, a deliberate scroll hands over to you, <code>?play</code> never hands over (<a href="https://www.avivashishta.com/lab/agent-crews?play" target="_blank" rel="noreferrer">/lab/agent-crews?play</a>), Skip and Rebuild.</li>
+<li>On phones there are eighteen cursors, five carriers for the headline, and the queue sits above the log.</li>
+<li>With reduced motion or without JavaScript nothing is hidden and no cursor appears.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a page that 48 named agent cursors build live, in React with CSS modules. Every block is real server-rendered HTML marked data-block with one child .fill, going through empty, mark (a dashed blue marquee dragged corner to corner with a live "W x H" label), rough (a solid outline with corner handles, a grey skeleton and a tooltip with its line of JSX) and done. Hide unbuilt blocks only under @media (scripting: enabled) and (prefers-reduced-motion: no-preference).</p>
+<p>Idle cursors wait in a queue: a rank along the bottom of the viewport, tags hidden, each easing to the slot of its index in a free array, so the rank closes up when cursors leave. Every block in a section starts at once and takes a crew from the front of the queue (waiting if too few are free): a marker drags the marquee, shows a "locked by NAME" badge, then returns to the queue; a maker types the text, counts up numbers or carries the content in; a painter sweeps three passes over cards while a pixel grid fills from the bottom. Blocks with a data-qa note get a reviewer who outlines them in red with the note, the maker returns, and the note changes to "Fixed. Approved."</p>
+<p>Render the headline as one span per letter inside nowrap word spans. To build it, spawn letter tiles (the letter on a white card in the headline's computed font, scaled to 0.6 and randomly rotated) on the right of the screen, take up to eleven extra carriers from the queue, and have each carry tiles to their letters' positions, moving the tile with the cursor via the CSS translate property while rotate and scale transition to 0 and 1. Carry one card in from off screen with two cursors on its corners. Keep one requestAnimationFrame loop, live counters for crews and actions, a log with working and queued counts, Skip, Rebuild and ?play.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt I Used to Build Hook Lab in Emergent (20 Scored Instagram Hooks, Biased Toward What Already Works) | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable Emergent prompt for a full-stack hook-writing app — 20 tagged and scored hooks per topic, a two-second red flag computed in code, caption gener" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-hook-lab-instagram-hook-generator-emergent/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt I Used to Build Hook Lab in Emergent (20 Scored Instagram Hooks, Biased Toward What Already Works)</h1>
+<p class="lede">A copy-pasteable Emergent prompt for a full-stack hook-writing app — 20 tagged and scored hooks per topic, a two-second red flag computed in code, caption generation with per-section regeneration, and a feedback loop that learns which hook formats actually perform on your account.</p>
+<p class="meta">12 August 2026</p>
+<h2>Overview</h2>
+<p>
+        I make reels about coding. The reel itself is rarely the problem — the
+        first line is. You get roughly two seconds before the thumb moves, and
+        writing twenty candidate first lines by hand at 1am is exactly the sort
+        of work that should be a tool.
+</p>
+<p>
+        So: type one line about what the reel is about, pick a format and a tone,
+        get twenty hooks back — each tagged with the hook <em>format</em> it is
+        using, scored out of 100 with a reason, and flagged red if it is too long
+        to survive the first two seconds. Star the good ones into a private
+        library. Paste in your past reels and their view counts, and the app
+        works out which formats actually perform on <em>your</em> account and
+        biases future generations toward them. Pick a hook, and it writes the
+        full caption. Log the views the published hook got, and the scoring gets
+        better.
+</p>
+<p>
+        It is a full-stack app — email login, a database per user, real AI calls —
+        so this one went into
+<a href="https://app.emergent.sh/" target="_blank" rel="noreferrer">Emergent</a> rather than a single
+        HTML file. The prompt below is the whole build, pasted at once.
+</p><div class="highlight">
+<p>
+<strong>What it produces:</strong> a dark, developer-tool-looking web
+          app with five sections — Generate, Library, My Winners, Caption, and
+          Tracker — plus a dashboard strip. Twenty tagged and scored hooks per
+          run, sortable and one-click copyable, a format-performance chart built
+          from your own view counts, and a caption builder with per-section
+          regeneration and a live character counter.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> whatever Emergent picks — React front end,
+          Python API, Mongo, email auth, one LLM key. The prompt deliberately
+          does not fight the platform on stack; it fights it on the four things
+          it would otherwise get wrong.
+</p>
+</div><h2>The prompt</h2>
+<p>Paste the whole thing at once.</p><div class="prompt">Build a full-stack web app called "Hook Lab" — a tool for writing and testing viral hooks and captions for short-form video about coding and tech. Email login, private per-user data, AI-generated hooks, and a feedback loop that learns which hook formats perform on my account. Dark developer-tool UI. Must work properly on a phone — I use it while filming.<p>AUTH AND DATA OWNERSHIP</p>
+<ul>
+<li>Email login (magic link or email + password, your call). Nothing is public.</li>
+<li>EVERY database read and write is scoped to the logged-in user id, server-side. Never trust a user id sent from the client. My library, winners, and tracker data must be invisible to any other account.</li>
+</ul>
+<p>FIXED HOOK FORMAT TAXONOMY
+This list is a closed enum used everywhere in the app — generation, past-reel classification, the chart, the dashboard. Store it in one place and reference it; do not let the model invent new labels:
+contrarian_take, curiosity_gap, number_list, common_mistake, before_after, pov, direct_question, callout, story_open, stat_shock
+Display names are title-case (&quot;Contrarian Take&quot;). If the model ever returns a tag outside the enum, coerce it to the nearest one server-side rather than storing it.</p>
+<ol>
+<li>GENERATE</li>
+</ol>
+<ul>
+<li>Input: one-line topic (textarea, ~200 chars), a FORMAT select (Reel / Carousel / YouTube Short), and a TONE select (Blunt / Funny / Educational / Hype / Deadpan).</li>
+<li>One button: GENERATE 20 HOOKS.</li>
+<li>One single LLM call returns all 20 hooks as strict JSON — not 20 calls. Validate the JSON against a schema server-side and retry once on a parse failure. Show a skeleton grid of 20 shimmering rows while it runs.</li>
+<li>Each hook object: { text, format (from the enum), score (0-100 integer), score_reason (one line, max ~90 chars), }</li>
+<li>DIVERSITY CONSTRAINT, enforced in the prompt AND checked in code: the 20 hooks must cover at least 6 distinct formats, and no single format may appear more than 4 times. If the response violates this, re-ask once for replacements of the over-represented ones.</li>
+<li>Hooks must be first lines only — spoken openers, no hashtags, no emoji, no &quot;In this video&quot;.</li>
+</ul>
+<ol start="2">
+<li>THE TWO-SECOND RULE (computed in code, never by the model)
+For every hook, the server computes:</li>
+</ol>
+<ul>
+<li>word_count = whitespace-split length</li>
+<li>spoken_seconds = round(word_count / 2.5, 1)   // ~150 spoken words per minute</li>
+<li>too_long = word_count &gt; 8 OR spoken_seconds &gt; 2.0
+Do NOT ask the LLM for word counts or durations — it will confidently get them wrong. Compute both from the returned text.
+In the UI, a too_long hook renders with a red left border, red duration pill, and a small &quot;WON&#39;T SURVIVE 2s&quot; label. Everything else gets a green duration pill. Show the word count next to the seconds (&quot;7 words · 2.8s&quot;).</li>
+</ul>
+<ol start="3">
+<li>HOOK CARD AND LIST BEHAVIOUR
+Each hook is a card: the hook text large and readable, a format chip, a score badge, the score reason in muted small text, the duration pill, a copy button, and a star button.</li>
+</ol>
+<ul>
+<li>Copy uses navigator.clipboard.writeText with a document.execCommand fallback, and flips the icon to a tick for ~1.2s. Copy must work on iOS Safari — it fires directly from the tap handler, not after an await.</li>
+<li>Sort control: Score (high→low, default), Shortest first, Format. Sorting is client-side and instant — no refetch.</li>
+<li>Star saves the hook to my Library with its topic, format, score, and generation date. Starring is optimistic in the UI and reconciled with the server response.</li>
+<li>Filter chips at the top: ALL / FLAGGED / CLEAN.</li>
+</ul>
+<ol start="4">
+<li><p>LIBRARY
+Saved hooks, newest first, with search across hook text, a format filter, and an unstar action. Grouped by the topic they were generated for. Each row keeps its copy button. Empty state explains what starring does.</p>
+</li>
+<li><p>MY WINNERS (this is the important one)
+A section where I paste my past reels — one per line, &quot;first line of the reel | view count&quot; — into a single textarea, with a small example above it. Parse leniently: accept commas, tabs, or pipes as separators, strip &quot;k&quot;/&quot;K&quot; and &quot;m&quot;/&quot;M&quot; suffixes into real numbers, and show a per-line preview table of what was parsed before I confirm. Reject nothing silently — list unparseable lines back to me.
+On confirm:</p>
+</li>
+</ol>
+<ul>
+<li>One LLM call classifies every pasted first line into the enum. Batch them, do not call per line.</li>
+<li>Aggregate per format: number of reels, MEDIAN views (not mean — one 400k outlier must not crown a format I used twice), and median views as a multiple of my overall median (&quot;1.8x baseline&quot;).</li>
+<li>Require a minimum of 3 reels in a format before that format is allowed to influence anything. Formats below the threshold appear in the chart greyed out and labelled &quot;not enough data&quot;.</li>
+<li>Show a horizontal bar chart of median views by format, sorted descending, bars coloured by whether they are above or below my baseline. Do not pull in a heavy charting library for this — CSS-width bars are fine and stay readable on a phone.</li>
+<li>Above the chart, one plain-English sentence: &quot;Your contrarian takes do 1.8x your baseline. Your POV hooks do 0.4x.&quot;</li>
+</ul>
+<ol start="6">
+<li><p>BIASING FUTURE GENERATION
+Store a per-user format_weights map derived from Winners plus the Tracker (below). On generation, inject the top 3 qualifying formats into the LLM prompt as a soft instruction — &quot;weight the distribution toward these formats, they measurably outperform for this creator&quot; — while STILL respecting the diversity constraint in section 1. It biases the mix; it must never collapse to one format.
+COLD START: if I have fewer than 3 qualifying formats, use neutral weights and show a small banner on the Generate tab — &quot;Add past reels in My Winners to personalise scoring.&quot; Never silently pretend one data point is a signal.
+On the Generate tab, a hook whose format is one of my winners gets a small ★ WINNER FORMAT chip.</p>
+</li>
+<li><p>CAPTION GENERATOR
+Selecting a hook (from Generate or Library) opens a caption builder. One LLM call returns four separately-stored fields:</p>
+</li>
+</ol>
+<ul>
+<li>hook_line (the hook, lightly adapted for text)</li>
+<li>body (2-4 short lines of actual value, no fluff)</li>
+<li>cta (one line — follow / save / comment a keyword)</li>
+<li>hashtags (8-12, mixed reach: a few large, a few niche coding tags)
+Each of the four sections is its own stored field with its own REGENERATE button that re-asks for THAT FIELD ONLY, passing the other three as context so the tone stays consistent. Never round-trip the whole caption to change the CTA.
+Each section is editable inline, and edits persist. A live character counter shows the assembled caption length against Instagram&#39;s 2,200 limit, turning amber at 1,900 and red past 2,200. One COPY CAPTION button copies the assembled text with the sections separated by blank lines.</li>
+</ul>
+<ol start="8">
+<li>TRACKER
+A table of published hooks: hook text, format, predicted score, date published, and an editable ACTUAL VIEWS field. Adding an actual-views number:</li>
+</ol>
+<ul>
+<li>recomputes my median views and the format weights,</li>
+<li>stores the delta between predicted score and realised performance percentile,</li>
+<li>and feeds a short &quot;calibration note&quot; into future generation prompts (e.g. &quot;this creator&#39;s curiosity-gap hooks underperform their scores — score them more harshly&quot;).
+Show, per format, a small &quot;predicted vs actual&quot; indicator: over-scored, under-scored, or calibrated.</li>
+</ul>
+<ol start="9">
+<li>DASHBOARD
+A strip of stat tiles at the top of the app: TOTAL HOOKS GENERATED, HOOKS SAVED, BEST-PERFORMING FORMAT (from Winners + Tracker), AVERAGE SCORE, and MEDIAN VIEWS. Each tile is a big number with a small uppercase label. Every stat is computed from my data only.</li>
+</ol>
+<p>DESIGN</p>
+<ul>
+<li>Dark developer-tool aesthetic: near-black background (#0b0d10-ish), one elevated surface tone for cards (#14181d), hairline borders (#232a31), a single accent (electric lime or cyan) used only for actions and positive states, red reserved exclusively for the two-second flag.</li>
+<li>Mono type (JetBrains Mono / IBM Plex Mono) for labels, chips, counters, and scores; a clean sans for hook text and captions. Uppercase letterspaced micro-labels.</li>
+<li>No gradients, no glow, no rounded-pill everything. Sharp 6-8px radii. It should look like a terminal tool, not a marketing site.</li>
+<li>Loading states are skeletons, not spinners. Errors are inline and specific, never a toast that disappears before I read it.</li>
+</ul>
+<p>MOBILE (not an afterthought — this is the primary device)</p>
+<ul>
+<li>Single-column, thumb-reachable. The GENERATE button is sticky at the bottom of the viewport on the Generate tab.</li>
+<li>Hook cards stack full-width; copy and star are large tap targets (min 44px), placed on the right where a thumb lands.</li>
+<li>Bottom tab bar for the five sections, not a hamburger.</li>
+<li>Text inputs use font-size 16px so iOS does not zoom on focus.</li>
+<li>The winners chart scrolls vertically, never horizontally.</li>
+<li>Test that nothing overflows at 375px wide.</div></li>
+</ul>
+<h2>Why the prompt is written this way</h2>
+<p>
+        The version of this prompt I actually started with was a paragraph long
+        and the app it produced looked right and was quietly useless. Seven
+        clauses turned it into a tool I use.
+</p><h3>Never let the model count</h3>
+<p>
+        This is the single most important line in the prompt:
+<em>compute word_count and spoken_seconds in code, never ask the
+        LLM</em>.
+</p>
+<p>
+        The whole premise of the app is the two-second flag. Ask the model to
+        return an estimated duration and it will happily tell you a nine-word
+        hook is 1.8 seconds, because token-level arithmetic is exactly what
+        language models are worst at and it has no incentive to fail loudly. You
+        end up with a red-flag system that is wrong maybe one time in six —
+        which is worse than no flag at all, because you stop checking.
+</p>
+<p>
+        The rule is trivial the moment you move it: split on whitespace, divide
+        by 2.5 words per second, compare against the thresholds. Deterministic,
+        instant, free, and identical every time you regenerate. Anything in an AI
+        app that <em>can</em> be a pure function of the model's output should be
+        one.
+</p><h3>A closed enum, or the analysis can never aggregate</h3>
+<p>
+        Ten format names, fixed, referenced everywhere. Without that, the model
+        tags hooks with whatever phrasing feels apt in the moment — "contrarian
+        take", "hot take", "controversial opinion", "contrarian angle" — and
+        every one of those is a separate row in your database.
+</p>
+<p>
+        For a generator that would be a cosmetic annoyance. Here it breaks the
+        feature the app exists for. My Winners groups past reels by format and
+        computes a median per group; if your taxonomy has drifted into forty
+        near-synonyms, every group has one member, no group clears the
+        three-reel threshold, and the chart is a wall of "not enough data"
+        forever. The enum is what makes the loop closeable.
+</p>
+<p>
+        Note also the coercion clause — <em>if the model returns a tag outside
+        the enum, coerce it server-side</em>. Not "reject", not "throw". A single
+        stray label should not fail a whole generation.
+</p><h3>Median, not average</h3>
+<p>
+<em>MEDIAN views (not mean — one 400k outlier must not crown a format I
+        used twice).</em>
+</p>
+<p>
+        View counts are about the most skewed data you will ever average. One
+        reel that broke containment is worth thirty normal ones, and if you take
+        the mean, the format that reel happened to use becomes your "best
+        performing format" permanently — and then the app biases every future
+        generation toward it. You have built a machine that mistakes a single
+        lucky post for a strategy.
+</p>
+<p>
+        The three-reel minimum is the other half of the same defence. Together
+        they mean the app only tells you something is working when it has
+        actually worked more than once.
+</p><h3>Say what happens before there is data</h3>
+<p>
+<em>COLD START: if fewer than 3 qualifying formats, use neutral weights
+        and show a banner.</em>
+</p>
+<p>
+        Personalisation features are always specified for the steady state and
+        the first-run behaviour is left to chance. What you get is an app that,
+        on day one with zero past reels, either crashes on an empty aggregate or
+        — much worse — computes weights from nothing and presents them as
+        insight. A user's first session is the one where they decide whether the
+        thing is credible.
+</p>
+<p>
+        The banner is also the app's only honest way to ask for the data it
+        needs. It tells you the feature exists, that it is off, and exactly what
+        turns it on.
+</p><h3>Four caption fields, not one caption string</h3>
+<p>
+        "I can regenerate any section on its own" is a UI request that is really
+        a data model request. If the caption is stored as one blob of text, then
+        regenerating the CTA means sending the blob back, asking for a new
+        version, and getting back a whole caption where the body has subtly
+        changed too — so your edits are gone and you cannot tell which parts
+        moved.
+</p>
+<p>
+        Naming the four fields — <code>hook_line</code>, <code>body</code>,
+<code>cta</code>, <code>hashtags</code> — makes each one independently
+        addressable and independently editable. The clause that
+<em>the other three are passed as context</em> is what keeps the
+        regenerated section in the same voice as the ones you kept. Without it
+        each regeneration drifts and the caption slowly stops sounding like one
+        person wrote it.
+</p><h3>One call for twenty hooks, with the diversity rule enforced twice</h3>
+<p>
+        Twenty separate calls is twenty times the cost and latency, and — because
+        each call is blind to the others — you get near-duplicates. One call
+        returning a JSON array is fast and cheap, but has the opposite failure:
+        the model finds one angle it likes and gives you five rewrites of it.
+</p>
+<p>
+        Hence the constraint stated in the LLM prompt <strong>and</strong>
+        checked in code: at least six distinct formats, no format more than four
+        times. The in-prompt version gets it right most of the time; the code
+        check is what makes it true. That double-enforcement pattern —
+        instruction plus validation plus one targeted retry — is the general
+        shape for anything you need an LLM to actually guarantee.
+</p><h3>Scope every query server-side</h3>
+<p>
+<em>Every read and write is scoped to the logged-in user id, server-side.
+        Never trust a user id sent from the client.</em>
+</p>
+<p>
+        "Give me email login so my library is private" describes a login screen.
+        It does not, on its own, produce isolation. The default generated shape
+        is a REST endpoint that takes a user id as a query parameter and returns
+        that user's hooks — which is a login screen in front of a shared
+        database, and changing one number in a URL reads someone else's library.
+        Say where the trust boundary is, or you get authentication without
+        authorisation.
+</p><h2>The mobile clauses are the ones I would not drop</h2>
+<p>
+        I use this standing in front of a tripod with a phone in one hand, so the
+        mobile section is not a responsive-design afterthought. Four small
+        clauses do almost all of the work:
+</p>
+<ul>
+<li>
+<strong>Copy fires directly from the tap handler.</strong> iOS Safari
+          only allows clipboard writes inside a real user gesture. Put an
+<code>await</code> before <code>writeText</code> and the gesture
+          context is gone — the button animates, nothing lands on the clipboard,
+          and it works perfectly on your desktop while you debug it.
+</li>
+<li>
+<strong>16px inputs.</strong> Anything smaller and iOS zooms the whole
+          page on focus, then leaves you scrolled sideways. One CSS value
+          separates "types a topic in" from "fights the viewport".
+</li>
+<li>
+<strong>Sticky generate button, bottom tabs.</strong> The two controls
+          I touch most, in the place my thumb already is. A hamburger menu on a
+          five-section app is two taps for every navigation.
+</li>
+<li>
+<strong>44px tap targets on copy and star, right-aligned.</strong>
+          These are the actions the whole app exists to serve. A 24px icon in a
+          card corner is a miss two times in five while holding a phone
+          one-handed.
+</li>
+</ul><h2>Knobs to turn first</h2>
+<ul>
+<li>
+<strong>Words per second (2.5).</strong> The number the red flag hangs
+          on. 2.5 wps is a fast, punchy delivery — roughly 150 wpm. If you speak
+          more deliberately, drop it to 2.2 and watch the flags multiply. Tune
+          this against your own footage once, then leave it alone.
+</li>
+<li>
+<strong>The 8-word ceiling.</strong> Deliberately harsher than the
+          two-second rule alone. Eight words is a first line you can read off a
+          screen before you have decided to; ten is a sentence. Both thresholds
+          together is stricter than either — that is the intent.
+</li>
+<li>
+<strong>Minimum reels per format (3).</strong> The honesty dial. Raise
+          it to 5 and the chart stays empty longer but never lies; lower it to 2
+          and you get personalisation that is mostly noise.
+</li>
+<li>
+<strong>Diversity floor (6 formats, max 4 each).</strong> Loosen it and
+          the twenty hooks converge on whatever the model finds easiest. Tighten
+          it much further and you get formats forced onto topics they do not fit
+          — a before/after hook for a topic with no before.
+</li>
+<li>
+<strong>Score distribution.</strong> If every hook comes back 82-89,
+          the score is decoration. Ask explicitly for spread and for the reason
+          to justify the number, and be willing to say "at most five hooks may
+          score above 85".
+</li>
+</ul><h2>If it comes out wrong</h2>
+<ul>
+<li>
+<strong>Every hook scores in the high 80s.</strong> The model has no
+          rubric and defaults to flattery. Give it anchors — what a 40 looks
+          like, what a 95 looks like — and cap how many can clear 85.
+</li>
+<li>
+<strong>Durations are obviously wrong.</strong> The word count and
+          seconds are coming from the model instead of being computed from the
+          returned text. This is the default failure and the reason that clause
+          is worded so bluntly.
+</li>
+<li>
+<strong>The winners chart says "not enough data" with 30 reels
+          pasted in.</strong> Format tags are drifting outside the enum, so the
+          groups are fragmenting. Check what is actually stored in the format
+          column.
+</li>
+<li>
+<strong>One format has taken over the whole generation.</strong> The
+          bias weights are being applied as a hard filter rather than a soft
+          preference, and the diversity check is not running after the bias is
+          injected. It has to run on the final set.
+</li>
+<li>
+<strong>Copy works on desktop, silently fails on the phone.</strong>
+          There is an <code>await</code> between the tap and
+<code>writeText</code>, or the page is being served over plain HTTP.
+</li>
+<li>
+<strong>Regenerating the CTA changed the body too.</strong> The caption
+          is stored as one string. Four fields, four endpoints.
+</li>
+<li>
+<strong>Pasting past reels drops half of them.</strong> The parser
+          expects exactly one separator. Accept pipes, commas and tabs, handle
+          "12k", and show the parse preview so failures are visible instead of
+          silent.
+</li>
+<li>
+<strong>A second account can see your library.</strong> A user id is
+          being read from the request instead of the session. Fix this before
+          you put anything real in it.
+</li>
+<li>
+<strong>Generation takes 40 seconds and looks frozen.</strong> Twenty
+          individual calls, or one call with no skeleton state. Batch it, and
+          render the twenty placeholder rows immediately.
+</li>
+<li>
+<strong>Hooks come back with hashtags and emoji in them.</strong> The
+          model is writing captions, not first lines. "Spoken openers only, no
+          hashtags, no emoji" needs to be in the generation prompt, not just in
+          your head.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          Anything that can be a pure function of the model's output should be
+          computed in code. Word counts and durations are not AI work.
+</li>
+<li>
+          Fix the taxonomy as a closed enum up front, or nothing downstream can
+          ever aggregate.
+</li>
+<li>
+          Median, not mean, for anything as skewed as view counts — plus a
+          minimum sample size before you let it influence behaviour.
+</li>
+<li>
+          Specify the cold-start state. It is the first thing a user sees and the
+          last thing anyone writes down.
+</li>
+<li>
+          "Regenerate one section" is a data model decision. Name the fields.
+</li>
+<li>
+          For anything you need the LLM to guarantee: instruct it, validate it in
+          code, retry once. Instruction alone is a preference.
+</li>
+<li>
+          "Add email login" is not "make it private". Say that queries are scoped
+          server-side.
+</li>
+<li>
+          If the primary device is a phone, write the mobile clauses as
+          requirements — sticky primary action, bottom tabs, 44px targets, 16px
+          inputs — not as "make it responsive".
+</li>
+</ul><p>
+        If you want more prompts in this shape, there is
+<a href="/learn/prompt-pin-board-sticky-notes-single-file/"
+          >a single-file sticky-notes app</a>,
+<a href="/learn/prompt-threejs-ice-wall-punch-shatter-hero-reveal/"
+          >a punch-through ice wall in Three.js</a>, and
+<a href="/learn/plate-os-case-study/"
+          >a case study of a full multi-tenant SaaS built on Emergent</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

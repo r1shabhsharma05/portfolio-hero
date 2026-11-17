@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I Put My WHOOP Data on My Portfolio: the WHOOP API, Explained by Building a Live Dashboard | Rishabh Sharma</title>
+<meta name="description" content="How I built /fitness from the WHOOP API: OAuth with rotating refresh tokens, the data model, webhooks, rate limits, the heartbeat intro, and the full prompt." />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/live-whoop-fitness-dashboard-nextjs/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>I Put My WHOOP Data on My Portfolio: the WHOOP API, Explained by Building a Live Dashboard</h1>
+<p class="lede">How I built /fitness from the WHOOP API: OAuth with rotating refresh tokens, the data model, webhooks, rate limits, the heartbeat intro, and the full prompt.</p>
+<p class="meta">23 October 2026</p>
+<p>My portfolio has a new page: <a href="https://www.avivashishta.com/fitness" target="_blank" rel="noreferrer">avivashishta.com/fitness</a>. It shows my recovery, last night&#39;s sleep, today&#39;s strain, thirty days of trends and my last eight workouts, straight from the WHOOP strap on my wrist. It refreshes every hour, and I can&#39;t edit the numbers. If I sleep five hours, the page says five hours.</p>
+<p>It opens with a heartbeat. A line snaps across the screen, my recovery slams in on the beat, and then both fly into place while the page builds itself around them. The red line keeps moving at my real resting heart rate: at 53 bpm it beats once every 1.13 seconds, because the animation duration is literally <code>60 / restingHeartRate</code>.</p>
+<p>This post is two things: a plain explanation of the WHOOP developer API (what you get, how auth works, where it bites), and how I used it to build the page.</p>
+<div class="highlight"><p><strong>The short version:</strong> WHOOP has a free developer API with OAuth 2.0. One server-side function fetches 30 days of recovery, cycles, sleep and workouts (about 10 requests), the page rebuilds at most once an hour, and the only thing I store is the token pair. The hard part isn't the charts. It's that WHOOP refresh tokens rotate, so a serverless app has to keep them somewhere and never refresh twice at once.</p></div><h2>The WHOOP API in five minutes</h2>
+<h3>Getting access</h3>
+<ol>
+<li>Sign in at <a href="https://developer.whoop.com" target="_blank" rel="noreferrer">developer.whoop.com</a> with your WHOOP account and open the Developer Dashboard.</li>
+<li>Create a <strong>team</strong> (you&#39;re asked before your first app), then an <strong>app</strong>. You can have up to five.</li>
+<li>Pick your <strong>scopes</strong> (at least one) and add a <strong>redirect URI</strong>. The redirect in your OAuth request has to match it exactly.</li>
+<li>You get a <strong>Client ID</strong> and a <strong>Client Secret</strong>. The secret also signs webhooks, so it never leaves the server.</li>
+</ol>
+<p>It&#39;s free, and you can start pulling your own data the same day.</p>
+<h3>The scopes I use</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>What it unlocks</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>read:recovery</code></td>
+<td>Recovery score, HRV, resting heart rate, SpO2, skin temperature</td>
+</tr>
+<tr>
+<td><code>read:cycles</code></td>
+<td>Day strain, calories (as kilojoules), average and max heart rate</td>
+</tr>
+<tr>
+<td><code>read:sleep</code></td>
+<td>Stage totals, sleep need, performance, efficiency, consistency, respiratory rate</td>
+</tr>
+<tr>
+<td><code>read:workout</code></td>
+<td>Sport, strain, heart rate, distance, minutes in each heart rate zone</td>
+</tr>
+<tr>
+<td><code>read:body_measurement</code></td>
+<td>Height, weight, max heart rate</td>
+</tr>
+<tr>
+<td><code>offline</code></td>
+<td>A <strong>refresh token</strong>. Without it your access dies with the first token</td>
+</tr>
+</tbody></table>
+<p>Ask only for what you use. People see this list on the consent screen.</p>
+<h3>The data model</h3>
+<p>Everything lives under <code>https://api.prod.whoop.com/developer/v2</code>. Four collections and one single record:</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>One record is</th>
+<th>Joined by</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/cycle</code></td>
+<td>A WHOOP &quot;day&quot;: it starts when you fall asleep and ends when you next fall asleep</td>
+<td><code>id</code></td>
+</tr>
+<tr>
+<td><code>/recovery</code></td>
+<td>The morning score for a cycle</td>
+<td><code>cycle_id</code>, <code>sleep_id</code></td>
+</tr>
+<tr>
+<td><code>/activity/sleep</code></td>
+<td>One sleep (or nap), with stages</td>
+<td><code>id</code> (a UUID in v2)</td>
+</tr>
+<tr>
+<td><code>/activity/workout</code></td>
+<td>One activity, with zone durations</td>
+<td><code>id</code> (a UUID in v2)</td>
+</tr>
+<tr>
+<td><code>/user/measurement/body</code></td>
+<td>Your body measurements</td>
+<td>none</td>
+</tr>
+</tbody></table>
+<p>Five things that will save you an hour each:</p>
+<ul>
+<li><strong>A WHOOP day isn&#39;t a calendar day.</strong> Cycles run sleep to sleep, so &quot;one row per day&quot; means keying off the cycle&#39;s start time.</li>
+<li><strong>Every record carries a <code>timezone_offset</code></strong> like <code>+05:30</code>. Times are UTC; shift them yourself to get the wall clock you lived.</li>
+<li><strong>Scores arrive late.</strong> Each record has a <code>score_state</code>, and the <code>score</code> object is missing until it&#39;s <code>SCORED</code>. Check it before you read a number.</li>
+<li><strong>Units are raw.</strong> Durations are in milliseconds (<code>total_rem_sleep_time_milli</code>), energy is in kilojoules (divide by 4.184 for kcal), HRV is <code>hrv_rmssd_milli</code>.</li>
+<li><strong>Naps are sleeps.</strong> Sleep records have <code>nap: true|false</code>. Filter them out or your &quot;last night&quot; will be a 20-minute afternoon nap.</li>
+</ul>
+<h3>Pagination and rate limits</h3>
+<p>Collections return at most <strong>25 records a page</strong>. Pass <code>limit=25</code> and a <code>start</code> date, and follow the <code>next_token</code> in each response by sending it back as <code>nextToken</code>. Thirty days of everything is about ten requests.</p>
+<p>The default limits are <strong>100 requests a minute and 10,000 a day</strong>. Every response tells you where you stand in <code>X-RateLimit-Limit</code>, <code>X-RateLimit-Remaining</code> and <code>X-RateLimit-Reset</code>, and going over gets you a <code>429</code>. With an hourly page you&#39;ll never get close.</p>
+<h3>Webhooks</h3>
+<p>WHOOP can call a URL when something changes: <code>sleep.updated</code>, <code>recovery.updated</code>, <code>workout.updated</code> and their <code>.deleted</code> twins. New records arrive as updates. The body only names the record (<code>user_id</code>, <code>id</code>, <code>type</code>, <code>trace_id</code>), so you fetch the data yourself. Answer with a 2XX quickly: a failed delivery is retried five times over about an hour.</p>
+<h3>The terms, in plain words</h3>
+<p>You can&#39;t store copies of the data, feed it to AI models, use it in ads, or use the WHOOP logo. So my page caches each fetch for an hour and stores nothing. It&#39;s kept out of my site&#39;s AI chat, <code>llms.txt</code> and the Markdown versions that agents read, and it says plainly that it isn&#39;t medical advice.</p>
+<h2>Is it a good idea?</h2>
+<p>I went back and forth on this, so here&#39;s what I weighed.</p>
+<p><strong>Why do it.</strong> Every portfolio says &quot;I&#39;m consistent&quot;. This one proves it with data I don&#39;t control. It&#39;s also a real integration (OAuth, rate limits, token rotation, caching, webhooks, data viz) that a recruiter or founder can click and see working, which beats a bullet point that says &quot;worked with third-party APIs&quot;.</p>
+<p><strong>What I&#39;m careful about.</strong></p>
+<ul>
+<li><strong>It&#39;s health data.</strong> I&#39;m only publishing my own, and I chose to. Nobody else can connect a strap: the connect link only works with a secret key that lives in my env vars.</li>
+<li><strong>Routine leaks.</strong> Bed and wake times say when I&#39;m home. The page shows last night once it&#39;s over and nothing in real time, which I&#39;m fine with. If you build your own, you can drop the times.</li>
+<li><strong>Bad weeks are public.</strong> That&#39;s the point. A month of red recovery is honest content too.</li>
+</ul>
+<h2>How it fits together</h2>
+<pre><code>WHOOP  ──OAuth──▶  /api/whoop/callback  ──▶  Redis: { access, refresh, expiresAt }
+                                               │
+/fitness (ISR, revalidate 3600)  ──▶  fetchWhoop(30 days)  ──▶  shapeFitness()  ──▶  page
+                                               ▲
+WHOOP  ──webhook──▶  /api/whoop/webhook  ──────┘  (throws the cached page away)
+</code></pre>
+<ol>
+<li><strong>A one-time connect.</strong> <code>/api/whoop/connect?key=…</code> sends me to WHOOP&#39;s consent screen with my scopes plus <code>offline</code>, and an eight-character <code>state</code> (WHOOP wants exactly eight) in an HttpOnly cookie. The callback checks the state, swaps the code for tokens and saves them.</li>
+<li><strong>One fetch function.</strong> It reads the last 30 days from the four collections in parallel, following <code>next_token</code>.</li>
+<li><strong>An hourly page.</strong> <code>export const revalidate = 3600</code> means a thousand visitors or one, WHOOP sees about 10 requests an hour.</li>
+</ol>
+<h2>Concept 1: refresh tokens that rotate</h2>
+<p>This is the gotcha. Every time you refresh a WHOOP access token you get a <strong>new</strong> refresh token, and the old one stops working. On a normal server that&#39;s fine. On serverless, two functions can wake up at once, both see an expired token, both refresh, and the second one burns a token that&#39;s already dead. Now you&#39;re logged out and have to reconnect by hand.</p>
+<p>So the tokens live in Redis (Upstash, from the Vercel marketplace), and refreshing takes a lock:</p>
+<pre><code class="language-ts">async function accessToken() {
+  const saved = await readTokens();
+  if (!saved) return null;
+  if (saved.expiresAt &gt; Date.now() + 60_000) return saved.access;
+
+  // SET NX: only one caller gets the lock.
+  if ((await kv(&quot;SET&quot;, &quot;whoop:refresh-lock&quot;, &quot;1&quot;, &quot;NX&quot;, &quot;EX&quot;, &quot;20&quot;)) !== &quot;OK&quot;) {
+    await new Promise((r) =&gt; setTimeout(r, 2000)); // someone else is refreshing
+    const after = await readTokens();
+    return after &amp;&amp; after.expiresAt &gt; Date.now() ? after.access : null;
+  }
+  try {
+    // grant() saves the new pair before returning it
+    return (await grant({ grant_type: &quot;refresh_token&quot;, refresh_token: saved.refresh, scope: &quot;offline&quot; })).access;
+  } finally {
+    await kv(&quot;DEL&quot;, &quot;whoop:refresh-lock&quot;);
+  }
+}
+</code></pre>
+<p>Redis holds two tokens and an expiry time. No health data. If a refresh is refused because I revoked access in the WHOOP app, the tokens get deleted too.</p>
+<h2>Concept 2: cache the page, never the tokens</h2>
+<p>In Next.js, a <code>fetch</code> in a server component can be cached along with the page. That&#39;s what you want for WHOOP data and exactly what you don&#39;t want for the token read: a token cached for an hour has already been rotated away. So every fetch in the WHOOP module is <code>no-store</code>, and the whole loader is wrapped once in <code>unstable_cache</code> with a one-hour lifetime:</p>
+<pre><code class="language-ts">export const revalidate = 3600;
+
+const load = unstable_cache(async () =&gt; {
+  const data = await fetchWhoop(30);
+  return data ? shapeFitness(data) : null;
+}, [&quot;whoop-fitness&quot;], { revalidate: 3600, tags: [&quot;whoop&quot;] });
+</code></pre>
+<p>The cached thing is the finished dashboard. If WHOOP is down during a rebuild, the loader throws, Next keeps serving the last good page, and nobody sees an error.</p>
+<h2>Concept 3: turn cycles into days</h2>
+<p>To build one row per day, I key everything off the cycle&#39;s start, shifted to my local clock with the record&#39;s own <code>timezone_offset</code>:</p>
+<pre><code class="language-ts">function local(iso: string, offset: string) {          // offset like &quot;+05:30&quot;
+  const [, sign, hh, mm] = offset.match(/([+-])(\d\d):?(\d\d)/)!;
+  return new Date(Date.parse(iso) + (sign === &quot;-&quot; ? -1 : 1) * (+hh * 60 + +mm) * 60_000);
+}
+</code></pre>
+<p>The recovery joins the cycle by <code>cycle_id</code>, the sleep joins the recovery by <code>sleep_id</code>, and the result lands on 30 fixed calendar slots. A day without a scored recovery shows up as a gap instead of the chart quietly closing ranks.</p>
+<h2>Concept 4: compare me to me</h2>
+<p>A raw HRV of 85 means nothing on its own: everyone&#39;s normal is different. So the trend section draws HRV and resting heart rate over a shaded band, my own 30-day average plus or minus one standard deviation. The line turns blue where it&#39;s better than my normal and red where it&#39;s worse, and for resting heart rate that flips, because lower is better. Each metric gets its own panel and its own scale: two units on one chart with two y-axes always lies to someone.</p>
+<p>The rest of the page follows the same rule, one idea per section, and always drawn from the real numbers:</p>
+<ul>
+<li><strong>Last night:</strong> every minute in bed is a dot, grouped by stage (awake, light, deep, REM).</li>
+<li><strong>Thirty days in a circle:</strong> one spoke per day, length is recovery, colour is its zone (blue 67 to 100, yellow 34 to 66, red 0 to 33).</li>
+<li><strong>Strain, poured:</strong> a glass that fills to today&#39;s strain out of 21 as you scroll to it.</li>
+<li><strong>Training:</strong> the last eight workouts as a mixing desk, minutes in heart rate zones 1 to 5 on one shared scale.</li>
+</ul>
+<p>Every chart answers to the pointer, a tap or the arrow keys, and each has a plain table under it for screen readers.</p>
+<h2>Concept 5: a webhook so it updates when I wake up</h2>
+<p>The hourly rebuild means the page could be up to an hour behind. The webhook fixes that: when a sleep, recovery or workout is scored, it throws away the cached dashboard, and the next visit fetches fresh numbers.</p>
+<p>Anyone can POST to a public URL, so it checks WHOOP&#39;s signature first. WHOOP signs the timestamp header plus the raw body with your client secret:</p>
+<pre><code class="language-ts">const expected = createHmac(&quot;sha256&quot;, process.env.WHOOP_CLIENT_SECRET!)
+  .update(timestamp + rawBody)
+  .digest();
+const given = Buffer.from(req.headers.get(&quot;x-whoop-signature&quot;)!, &quot;base64&quot;);
+if (given.length !== expected.length || !timingSafeEqual(given, expected)) return unauthorized();
+
+revalidateTag(&quot;whoop&quot;, { expire: 0 });
+revalidatePath(&quot;/fitness&quot;);
+</code></pre>
+<p>Read the body with <code>req.text()</code>, not <code>req.json()</code>: the signature covers the exact bytes WHOOP sent. I also reject timestamps older than ten minutes, so a captured request can&#39;t be replayed. Now the page usually updates a few minutes after I wake up.</p>
+<h2>Concept 6: the page loads with a heartbeat</h2>
+<p>The data is already in the HTML when the page arrives, so the intro isn&#39;t a loading screen. It&#39;s about a second of staging, once a session:</p>
+<ol>
+<li>The hero&#39;s own pulse line is lifted above a paper cover, scaled to the full width of the screen, and drawn on.</li>
+<li>On the beat, the recovery number slams in top left, huge, from blurred to sharp.</li>
+<li>Both glide home, and the rest of the hero cascades in: the zone label wipes in, each card draws its outline, fills, and draws its week with a dot riding the line.</li>
+</ol>
+<p>The trick that makes it land cleanly: the giant number and the giant line aren&#39;t copies. They&#39;re the real hero elements, moved with a transform and then let go, so they end exactly where they live:</p>
+<pre><code class="language-ts">// Before the first paint: park the hero&#39;s own number big, top left.
+number.style.transformOrigin = `${left - p.left}px ${top - p.top}px`;
+number.style.transform = `translate(0px, ${t - top}px) scale(${s})`;
+
+// Later: glide home, then hand back to the page&#39;s own styles in one frame.
+number.animate([{ transform: pose }, { transform: &quot;none&quot; }], { duration: 750, easing: &quot;cubic-bezier(.7,0,.2,1)&quot;, fill: &quot;forwards&quot; });
+</code></pre>
+<p>Scrolling, a key, a tap or the skip button sends everything home straight away, and with reduced motion there&#39;s no intro at all. Further down, each section&#39;s colour wipes in from its own origin as you scroll (night falls from the top, the strain red pours up from the bottom), the wheel grows a day at a time, and the strain glass fills as you reach it.</p>
+<h2>The prompt</h2>
+<p>Paste this into Claude Code, Cursor or Replit to build your own. Bring your own WHOOP developer app (free at developer.whoop.com) and an Upstash Redis.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a public "live fitness" page for my personal site from my own WHOOP data. Next.js App Router, TypeScript, no chart library (hand-written SVG), no database except Upstash Redis over its REST API for OAuth tokens only.</p>
+<p>OAUTH: a GET route /api/whoop/connect that only works when ?key= matches a WHOOP_CONNECT_KEY env var. It redirects to https://api.prod.whoop.com/oauth/oauth2/auth with response_type=code, my client id, redirect_uri = origin + /api/whoop/callback, scope "offline read:recovery read:cycles read:sleep read:workout read:body_measurement", and an 8 character random state saved in an HttpOnly cookie. The callback checks the state, POSTs the code (form-encoded) to https://api.prod.whoop.com/oauth/oauth2/token, saves {access, refresh, expiresAt} to Redis, revalidates the page and redirects to it.</p>
+<p>TOKENS ROTATE: every refresh returns a new refresh token and kills the old one. Before each API call, if the access token has under a minute left, take a Redis lock (SET key 1 NX EX 20), refresh, save the new pair, release the lock. If the lock is taken, wait 2 seconds and re-read the tokens instead of refreshing again. If a refresh is refused with 400 or 401, delete the tokens. Every fetch in this module uses cache: "no-store".</p>
+<p>DATA: fetch the last 30 days from /developer/v2/recovery, /developer/v2/cycle, /developer/v2/activity/sleep and /developer/v2/activity/workout with limit=25 and start=ISO date, following next_token (sent back as nextToken). Skip any record whose score_state isn't SCORED and drop naps. Map each cycle to a local calendar day with its timezone_offset, attach the recovery (by cycle_id) and the sleep (by the recovery's sleep_id), then fill 30 fixed day slots, leaving missing days empty. Convert milliseconds to minutes or hours and kilojoules to kcal (divide by 4.184).</p>
+<p>CACHING: wrap the whole fetch-and-shape in unstable_cache with revalidate 3600 and tag "whoop", and set export const revalidate = 3600 on the page. Never store WHOOP data anywhere else. If the fetch throws at runtime, rethrow so the last good page stays up. In development with no tokens, render a deterministic sample month clearly marked as sample data.</p>
+<p>PAGE: a full-screen hero with today's recovery as a huge serif number, its zone (67+ high, 34 to 66 medium, under 34 low) as a small coloured square with a label, a heartbeat line whose red trace sweeps at 60 / resting heart rate seconds per beat, and four cards (HRV, resting HR, hours asleep, strain) each with a 7-day sparkline. Then last night: one dot per minute in bed, grouped by stage. Then a radial wheel, one spoke per day, length = recovery, colour = zone. Then a glass that fills to today's strain out of 21. Then HRV and resting HR over 30 days, each over its own band of average ± one standard deviation, the line blue where better than normal and red where worse, sharing one crosshair driven by pointer and arrow keys. Then the last 8 workouts as bars of minutes in zones 1 to 5 on one shared scale. Then 30-day averages. Every chart gets a table view in a details element.</p>
+<p>INTRO: once per session, before first paint, cover the page in paper. Lift the hero's own pulse line and number above the cover with transforms (never copies): draw the line full-width in under half a second, then slam the number in top left, huge, on the beat. After one beat, animate both back to transform: none, fade the cover, and cascade the rest of the hero in with short staggers. Any scroll, key or tap skips to the hand-over. Skip it entirely with prefers-reduced-motion or when the page opens scrolled.</p>
+<p>WEBHOOK: a POST route /api/whoop/webhook. Read the raw body with req.text(). Verify the X-WHOOP-Signature header: base64 of HMAC-SHA256 over the X-WHOOP-Signature-Timestamp header value followed by the raw body, keyed with my client secret, compared with timingSafeEqual. Reject timestamps older than ten minutes. On any sleep., recovery. or workout. event, invalidate the cached dashboard and revalidate the page, then return 204.</p>
+<p>RULES: no dual-axis charts. Respect prefers-reduced-motion. Footnote: "Data from the WHOOP API, read hourly and never stored. Not medical advice." Don't use the WHOOP logo.</p>
+<p>Show me the token module first, then the data shaping, then the page.</p>
+</div>
+</div><h2>What I&#39;d add next</h2>
+<ul>
+<li><strong>Streaks.</strong> Days in a row with 7+ hours of sleep is a fun number to put on the page, and a dangerous one to lose in public.</li>
+<li><strong>A photo of the actual strap</strong> in the intro, from my own camera.</li>
+</ul>
+<p>If you build one, send it to me on <a href="https://www.instagram.com/avi_vashishta29/" target="_blank" rel="noreferrer">Instagram</a>. And if you want to see whether I actually slept last night, <a href="https://www.avivashishta.com/fitness" target="_blank" rel="noreferrer">it&#39;s all on the page</a>.</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

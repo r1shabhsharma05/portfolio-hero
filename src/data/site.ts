@@ -113,7 +113,7 @@ export const WORLDS = [
 export const NAV_WORLDS = [
   { id: "build", label: "Build", color: "#2F55FF", text: "#ffffff", href: "/projects/" },
   { id: "brand", label: "Brand", color: "#EF3B2D", text: "#ffffff", href: "/brands/" },
-  { id: "learn", label: "Learn", color: "#FFC81A", text: "#111111", href: "/blog/" },
+  { id: "learn", label: "Learn", color: "#FFC81A", text: "#111111", href: "/learn/" },
 ] as const;
 
 export const LEARN_POSTS = [

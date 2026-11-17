@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Throw It On: A Streetwear Store Where the Clothes Snap Onto the Model | Rishabh Sharma</title>
+<meta name="description" content="How I built a store where the clothes float round the model and snap onto her when you fling them. One Codex model, one Codex edit per piece, and a prep script " />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/throw-it-on-a-magnet-wardrobe/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Throw It On: A Streetwear Store Where the Clothes Snap Onto the Model</h1>
+<p class="lede">How I built a store where the clothes float round the model and snap onto her when you fling them. One Codex model, one Codex edit per piece, and a prep script that turns each edit into a layer so any top goes with any bottom.</p>
+<p class="meta">13 November 2026</p>
+<p>Putting an outfit together in a shop means pulling things off rails and holding them up against yourself. Online it means three tabs. I wanted the rail: the clothes hang in the air round the model, and you throw them at her. <a href="https://www.avivashishta.com/lab/outfit" target="_blank" rel="noreferrer">Get dressed at avivashishta.com/lab/outfit</a>.</p>
+<p>Drag a piece onto her, or just fling it in her direction, and it arcs onto the spot where it goes and the new layer spreads over her from there. Throw a second top and the first pops off. Click a piece on her to take it off, or shake the lot off.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex makes one photo of the model in a plain tee and shorts, then one edit per piece with only that piece on her, plus a product shot of each piece. A prep script keeps only the part of each edit that changed, as a transparent layer. Stacking those layers (bottoms, then tops, then shoes, then hats) on the first photo dresses her in any combination, though Codex only ever drew one piece at a time.</p></div><h2>Step 1: the model, then one piece at a time (Codex)</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A full-length fashion e-commerce photo of a young woman model with dark wavy shoulder-length hair standing facing the camera, relaxed confident pose, arms slightly away from her body, feet apart. She wears a plain fitted heather grey t-shirt, black bike shorts and white crew socks, no shoes, bare head. The whole body visible head to toe with margin, centered. Pale warm grey seamless studio background (#E9E8E4), crisp even studio light, photoreal. No text, no logos, no jewellery. Portrait 2:3, 1024x1536.</p>
+</div>
+</div><p>Eight pieces, two for each slot, each an edit of that photo that says exactly what it replaces:</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>The attached image is a full-length photo of a model. Dress her in wide khaki cargo trousers that reach the floor, over her socks, worn naturally and realistically, replacing only the black bike shorts. Keep EVERYTHING else exactly identical: the same woman, face, hair, pose, arms, the rest of her outfit, the framing, scale and position, the light and the pale grey background. Photoreal. No text, no logos. Portrait 2:3, 1024x1536.</p>
+</div>
+</div><h2>Step 2: an edit becomes a layer</h2>
+<p>Eight pieces in four slots would need 81 photos to cover every outfit. Instead, the prep script compares each edit with the first photo and keeps only what changed: the trousers, and nothing else. Both photos are cut out with macOS Vision first, so a hoodie wider than the tee still counts. Three passes turn &quot;what changed&quot; into a clean layer:</p>
+<pre><code class="language-js">m[i] = d &gt; 70 ? 255 : 0;                    // 1. pixels that changed
+// 2. only the big blobs: the largest, and any a quarter its size (two shoes are two blobs)
+// 3. each row filled from its leftmost to its rightmost change
+px[i * 4 + 3] = Math.min(px[i * 4 + 3], edge[i]); // the edit, cut to that shape
+</code></pre>
+<p>The second pass is there because a stray strand of hair that Codex redrew would otherwise count. The third is there because khaki cargo pockets over a bare leg are close enough in colour to not count as changed, which left holes in the trousers; filling each row closes them, and the gaps it bridges (between the legs, between an arm and the body) are background in the edit&#39;s own cut-out, so its alpha takes them back out.</p>
+<p>The middle of that shape is where the piece goes on her, and where a thrown piece flies to.</p>
+<pre><code class="language-bash">bun scripts/prepare-outfit.mjs ./raw
+</code></pre>
+<p>On the page she is the first photo with up to four layers on top, in an order that matches how clothes go on: bottoms, then tops (so a hoodie hangs over the waistband), then shoes over the hems, then hats.</p>
+<h2>Step 3: things on springs</h2>
+<p>Every loose piece is a little spring toward its spot beside her, with a slow bob so the rail breathes. Dragging takes it off its spring and remembers how fast you were moving; letting go over her, or moving fast toward her when you let go, puts it on:</p>
+<pre><code class="language-ts">const tx = ev.clientX + s.vx * 0.25, ty = ev.clientY + s.vy * 0.25; // where it was headed
+const thrown = inside(tx, ty) &amp;&amp; Math.hypot(s.vx, s.vy) &gt; 600;
+</code></pre>
+<p>Putting a piece on flies it in an arc to its spot on her, shrinking as it goes, and the layer then spreads out from that spot with a growing <code>clip-path</code> circle. Taking one off kicks it back out to its spring from where it was on her.</p>
+<h2>The small things</h2>
+<ul>
+<li><strong>The fit</strong> on the right lists what she has on by slot, with a running total and &quot;Add the fit&quot;.</li>
+<li><strong>Shake it off</strong> sends every piece flying back to the rail.</li>
+<li><strong>A click</strong> on a loose piece puts it straight on, and the keyboard works too.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a drag-to-dress store page (React, no libraries). Assets: a cut-out photo of a model in basics, and per piece a full-frame transparent layer of just that piece on her (made offline by keeping only the pixels that differ between an edit with the piece on and the original), the point on her where it sits, its slot (top, bottom, shoes, head) and a cut-out product shot. Show the model bottom-centre with the worn layers stacked in the order bottom, top, shoes, head.</p>
+<p>Float the product shots round her, each a damped spring toward its spot with a gentle bob. Dragging a piece moves it and tracks its velocity; on release, if it is over her or was moving fast toward her, fly it in an arc to its point on her (shrinking and fading) and add its layer with a clip-path circle that grows from that point. A piece already in that slot is kicked back out. Invisible buttons at each worn piece's point take it off. Show the outfit by slot with a total, Add the fit and Shake it off.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

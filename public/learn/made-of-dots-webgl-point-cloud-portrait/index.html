@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I Turned Myself Into 66,000 Dots: a WebGL Point Cloud Portrait With a Real Loader | Rishabh Sharma</title>
+<meta name="description" content="How I built a point cloud bust of myself in Three.js: one photo, Codex for a clay version of me, Higgsfield to turn it into 3D, dots baked into one binary file," />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/made-of-dots-webgl-point-cloud-portrait/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>I Turned Myself Into 66,000 Dots: a WebGL Point Cloud Portrait With a Real Loader</h1>
+<p class="lede">How I built a point cloud bust of myself in Three.js: one photo, Codex for a clay version of me, Higgsfield to turn it into 3D, dots baked into one binary file, a loader that is the real download, and a cursor that is a light. Prompts and code inside.</p>
+<p class="meta">24 October 2026</p>
+<p>I saw <a href="https://ingrassiadaniel.it/" target="_blank" rel="noreferrer">Daniel Ingrassia&#39;s portfolio</a> and could not stop moving my mouse over it. His hero is a person built out of tiny soft dots, floating in the dark, and your cursor is a small light that moves around him. So I made my own, with my hair, my half-rim specs and my quarter-zip, and <a href="https://www.avivashishta.com/lab/made-of-dots" target="_blank" rel="noreferrer">it is live at avivashishta.com/lab/made-of-dots</a>.</p>
+<p>A ring of dots fills up while the page loads, and the number in the middle is the real download. At 100 every dot leaves the ring and flies into place, so you watch me build myself. As the last ones land, one band of light sweeps down from the top of my hair, so the whole thing shines once. After that your cursor is a light: it lights up whatever it is near, and my head turns to look at it. That is all it does. Every few seconds a blue glint runs across the specs.</p>
+<div class="highlight"><p><strong>The short version:</strong> one photo of me went to Codex, which made a clay sculpture version of me (front and side, faceless, no ears, just the hair, the specs, the jaw and the sweater). Higgsfield turned those two images into a 3D model. A Node script spreads 66,000 dots over that model, draws the specs as their own dots, and saves everything as one 680 KB file. The page streams that file for the loader, then one shader runs the entrance, the head turn and the light.</p></div><h2>Why not just scan yourself?</h2>
+<p>I tried three versions before this one, and the failures are the useful part.</p>
+<ol>
+<li><strong>Sculpting the bust from math</strong> (ellipsoids and capsules in a signed distance field). It ran, but it looked like a mannequin: too smooth, too symmetric. The reference works because the shape is a real person&#39;s.</li>
+<li><strong>Image to 3D straight from my photo.</strong> Real likeness, but now it had my nose, my ears and my exact face. In dots, detail like that reads as noise. The reference has no face at all.</li>
+<li><strong>Image to 3D from a clay version of me.</strong> This is the trick. Decide what the final shape should be in an image first, where it is cheap to change, then convert that image to 3D. The clay render has exactly what the dots need: my hairline, the specs, a square jaw, a strong neck, the collar and the zip, and nothing else.</li>
+</ol>
+<h2>Step 1: a clay version of you (Codex)</h2>
+<p>Give Codex (or any image model) one clear photo of yourself and ask for a sculpture. Run it twice: once for the front, once for a side profile.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A smooth matte light-grey clay sculpture of a head-and-shoulders bust of the man in the attached reference photo. Keep his exact hairstyle as sculpted clay: wavy, textured, swept up and forward on top, short tapered sides. He wears thin rectangular half-rim glasses, sculpted in the same clay, sitting clearly in front of the face. A sharp, strongly defined, square jawline and chin. A thick strong neck, broad shoulders and a quarter-zip sweater with a funnel collar, all in the same clay. Stylised minimal sculpture: the face below the glasses is smooth and featureless, no nose, no mouth, no lips, and no ears (the sides of the head are smooth). Plain pure white background, soft even studio light, the whole bust visible with space around it, nothing cropped. Perfectly straight-on front view, symmetrical, shoulders square to the camera.</p>
+</div>
+</div><p>For the second image, swap the last sentence for &quot;Exact 90 degree side profile view, facing left.&quot; Change the hair, the glasses and the clothes to yours.</p>
+<h2>Step 2: images to 3D (Higgsfield)</h2>
+<p>Two views give the 3D model a real side profile instead of a guess. I used Higgsfield&#39;s Multi-Image to 3D from the command line; <a href="https://studio.tripo3d.ai/home?invite_code=J0SG4G&utm_source=Instagram&utm_medium=kol&utm_campaign=kol_avi_vashishta29" target="_blank" rel="noreferrer">Tripo</a> does the same thing in the browser.</p>
+<pre><code class="language-bash">higgsfield generate create multi_image_to_3d \
+  --image ./clay-front.png --image ./clay-side.png \
+  --should_texture false --wait
+</code></pre>
+<p>No texture: the dots only need the shape. You get back a GLB.</p>
+<h2>Step 3: dots on the surface</h2>
+<p>Three.js ships a sampler that picks random points on a mesh, weighted by triangle area, so the spread is even, the way a scan looks:</p>
+<pre><code class="language-js">const sampler = new MeshSurfaceSampler(new THREE.Mesh(geo)).build();
+for (let i = 0; i &lt; 66000; i++) {
+  sampler.sample(p, n);
+  dots.push([p.x, p.y, p.z, n.x, n.y, n.z]);
+}
+</code></pre>
+<h2>Step 4: draw the specs yourself</h2>
+<p>Thin glasses frames do come through to 3D, but area-weighted sampling gives them a handful of dots, and they disappear. So I draw the frames as their own dots: a rounded rectangle per lens (a dense bar on top, a sparse wire underneath, because they are half-rims), a bridge and two arms. Frames are rigid, so they are one smooth curve across both lenses, fitted to clear the face everywhere they pass (the face comes from a height map built from the bust&#39;s own dots):</p>
+<pre><code class="language-js">const lensZ = (x) =&gt; front - wrap * Math.max(0, Math.abs(x) - .14) ** 2;
+</code></pre>
+<p>My first try placed every frame dot on the face under it, and the frame bent and broke wherever the face curved. Then I delete the scan&#39;s own frame dots, but only those within a few millimetres of mine. Skip that and you see two pairs of glasses when the head turns; make the radius too big and the lenses go empty.</p>
+<h2>Step 5: bake it, and the loader tells the truth</h2>
+<p>All of that runs once in Node and writes one file: positions as 16-bit integers, normals as 8-bit, one byte for &quot;bust or specs&quot;. 680 KB. The browser hands the arrays straight to Three.js, and because the page waits on exactly one file, the loader can show real progress:</p>
+<pre><code class="language-ts">const reader = res.body.getReader();
+for (;;) {
+  const { done, value } = await reader.read();
+  if (done) break;
+  got += value.length;
+  setProgress(got / total);
+}
+</code></pre>
+<p>The loader ring is SVG, and the WebGL dots start on that same ring (one pixel is <code>2 * dist * tan(fov / 2) / height</code> world units at the bust&#39;s depth). Each dot takes its start angle and its delay from the same random number, so the ring unwinds into a person.</p>
+<h2>Step 6: what makes it look premium</h2>
+<p>This is where my versions looked cheap next to the reference, and the fixes were all small:</p>
+<ul>
+<li><strong>Fewer, softer dots.</strong> The reference uses about 44,000 points. I went up to 140,000 tiny hard ones and it looked like sand. Soft dots with a gaussian falloff, sizes varying from small to about three times that, beat more dots every time.</li>
+<li><strong>Even grey, not dramatic lighting.</strong> Most of the brightness is constant, so the body reads as a scan. The key light, the rim and the cursor&#39;s light only add a little on top. Dark interiors make it look like a render.</li>
+<li><strong>The cursor is only a light.</strong> I tried dots that stepped aside and a click that scattered them. Both felt like a toy. The reference is calm, so the cursor lights things and the head turns toward it, and that is all.</li>
+<li><strong>One shine, not constant sparkle.</strong> The band of light on load is a single uniform: each dot measures how far it is from a diagonal line that slides down the bust, and gets brighter and a little bigger near it. It runs once and stops.</li>
+<li><strong>A room, not a void.</strong> Faint dust drifting through the whole frame and a little film grain over everything.</li>
+</ul>
+<pre><code class="language-glsl">float b = .3 + key * .14 + lit * 1.5 + rim * .12;   // mostly even grey
+b *= mix(.55, 1., smoothstep(-.3, .25, facing));    // far side a little darker
+b *= .7 + r2 * .5;                                   // no two dots alike
+// fragment: soft, like a lens, not a hard pixel
+float a = exp(-r * r * 16.);
+</code></pre>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

@@ -218,7 +218,7 @@ function SentencePreview({
 const SENTENCE_CHOICES: Choice[] = [
   { label: "founders", sup: "01", world: "#2F55FF", on: "#FFFFFF", href: "/projects/" },
   { label: "campaigns for brands", sup: "02", world: "#EF3B2D", on: "#FFFFFF", href: "/brands/" },
-  { label: "students", sup: "03", world: "#FFC81A", on: "#111111", href: "/blog/" },
+  { label: "students", sup: "03", world: "#FFC81A", on: "#111111", href: "/learn/" },
   { label: "talk to my AI", sup: "04", world: "var(--color-ink)", on: "var(--color-paper)", action: "chat" },
 ];
 
@@ -341,7 +341,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#FFC81A", "--world-on": "#111111" } as React.CSSProperties} href="/blog/" onMouseEnter={() => setNavWorld("learn")} onMouseLeave={() => setNavWorld(null)}>Learn</a>
+              <a className="world-link" style={{ "--world": "#FFC81A", "--world-on": "#111111" } as React.CSSProperties} href="/learn/" onMouseEnter={() => { setNavWorld("learn"); preloadWorldScene(WORLD_SCENES.learn.scene); }} onMouseLeave={() => setNavWorld(null)} onClick={(e) => { e.preventDefault(); openWorldTransition("/learn/", "learn"); }}>Learn</a>
             </span>
           </nav>
         </div>

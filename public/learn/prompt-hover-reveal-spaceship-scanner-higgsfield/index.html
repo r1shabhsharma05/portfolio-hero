@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt I Used to Build a Hover-Reveal Spaceship Scanner, with Higgsfield-Generated Hull Layers | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable prompt for a landing page where the cursor acts as an X-ray torch — sweeping it across a dead, powered-down starship lights that part of the hu" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-hover-reveal-spaceship-scanner-higgsfield/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt I Used to Build a Hover-Reveal Spaceship Scanner, with Higgsfield-Generated Hull Layers</h1>
+<p class="lede">A copy-pasteable prompt for a landing page where the cursor acts as an X-ray torch — sweeping it across a dead, powered-down starship lights that part of the hull up with plasma conduits and lit engine bells. Two pixel-aligned 4K layers generated with Higgsfield, a CSS mask as the reveal, and a parallax debris field of keyed cutouts.</p>
+<p class="meta">4 August 2026</p>
+<h2>Overview</h2>
+<p>
+        A 1.4-kilometre starship on pure black, and it looks dead. Cold grey
+        plating, dark engine bells, no lights anywhere. Then you move the cursor
+        over the hull and a soft circle of it <em>wakes up</em> — plasma light
+        running along every panel seam, orange-hot machinery visible through open
+        access sections, engine bells blazing cyan and magenta. Move away and it
+        goes cold again.
+</p>
+<p>
+        The trick is that there is no 3D model and no shader doing lighting. There
+        are two flat images of the same ship — one dormant, one fully powered —
+        stacked exactly on top of each other, and the cursor punches a hole in the
+        top one. That is the entire effect. It only works if the two images line
+        up to the pixel, which is the part everybody gets wrong.
+</p>
+<p>
+        Below is the whole prompt, plus why each clause is in it. Images generated
+        with <a href="https://higgsfield.ai" target="_blank" rel="noreferrer" rel="nofollow">Higgsfield</a>
+        (<code>gpt_image_2</code>), keyed and composited locally with numpy.
+</p><div class="highlight">
+<p>
+<strong>What it produces:</strong> a full-viewport hull that bleeds past
+          the frame, a cursor torch that reveals the energised layer beneath, five
+          subsystem nodes that light only their own region and open a HUD readout,
+          and a parallax field of transparent asteroid and debris cutouts drifting
+          at different depths. Idle for a couple of seconds and the torch drifts
+          across the hull on its own so the effect stays discoverable.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> one HTML file, one CSS file, one JS file — no
+          framework, no build step. Plus 11 generated images and a numpy/PIL pass
+          to key them. Page payload lands around 4MB.
+</p>
+</div><h2>The one idea that makes it work</h2>
+<p>
+        Generate the dormant ship first. Then feed <em>that image back in</em> as a
+        reference and ask only for the power state to change, with the camera,
+        framing, scale and silhouette explicitly locked. You are not generating two
+        ships. You are generating one ship twice, and the second pass is forbidden
+        from moving it.
+</p>
+<p>
+        Ask for two ships independently and you get two different ships — the
+        camera drifts, the hull redesigns itself, and a circular reveal shows a
+        completely different vessel inside the circle. Nothing in CSS fixes that.
+</p><h2>The prompt</h2>
+<p>
+        Paste this into Claude Code (or any agent with Higgsfield access) in an
+        empty folder. It carries the exact generation prompts, the local keying
+        maths, and the traps.
+</p><div class="prompt">Build me an interactive sci-fi landing page with a hover-reveal hull scanner and a
+parallax debris field. Generate every image with Higgsfield, then key and composite
+them locally. Work in a new `site/` folder.<p>SUBJECT: a huge deep-field survey starship called HELIOS.
+(Swap this for anything with visible internals — a mech, a supercar, a turbine, a
+sneaker. The whole technique survives the swap.)</p>
+<h2>The effect I want</h2>
+<p>A giant ship on pure black. It looks dead and powered-down. Wherever my cursor goes,
+a soft circular &quot;scan&quot; reveals that part of the hull FULLY ENERGISED — glowing plasma
+seams, lit engine bells, orange internals — while everything outside the cursor stays
+cold. Hovering a subsystem node lights only that region and shows a small HUD readout.
+Separately, transparent cutout asteroids and debris float at different depths and
+parallax with my cursor for an immersive effect.</p>
+<h2>Step 1 — Higgsfield</h2>
+<p>Use the Higgsfield MCP tools if you have them; otherwise use the <code>higgsfield</code> CLI
+(<code>higgsfield-generate</code> skill). Check <code>higgsfield account status</code> first and ask me to run
+<code>higgsfield auth login</code> if the session is expired. Use model <code>gpt_image_2</code> throughout.
+Pass <code>--wait</code> so each job blocks and prints its result URL. ~11 images total.</p>
+<h2>Step 2 — The hero, in TWO PIXEL-ALIGNED LAYERS (this is the whole trick)</h2>
+<p>Generate the DORMANT ship first, 16:9, resolution 4k, quality high:</p>
+<p>  &quot;Ultra-detailed hard science fiction heavy exploration starship, three-quarter front
+  view from slightly above, perfectly centered, entire ship visible with generous empty
+  margin on all sides. DORMANT POWERED-DOWN STATE: cold matte gunmetal and bone-white
+  ceramic hull plating, dense industrial greebling, visible panel seams and rivets,
+  armored plating, sensor masts, four large engine nozzles that are completely dark and
+  cold, all windows dark, absolutely no lights, no glow, no emissive surfaces anywhere.
+  Lighting: single hard cold rim light from upper left, deep black shadows, no fill
+  light. Background: pure flat solid black void, absolutely no stars, no nebula, no
+  planets, no fog, no gradient. Photorealistic CGI render, cinematic, razor sharp micro
+  detail, industrial hard-surface design. No text, no logos, no watermark, no user
+  interface elements.&quot;</p>
+<p>Now generate the ENERGISED layer by feeding that image BACK IN as a reference
+(<code>--image path/to/dormant.png</code>), same aspect ratio and resolution. Lock the geometry
+explicitly — this is what makes a partial reveal read as one object:</p>
+<p>  &quot;Take the reference starship image and change ONLY its power state. CRITICAL: keep the
+  exact same camera angle, exact same framing, exact same position in frame, exact same
+  scale, exact same silhouette and exact same hull geometry, pixel for pixel identical
+  composition. Do not move, rotate, rescale, re-pose or redesign the ship. Keep the pure
+  flat black background with no stars. The change: the ship is now FULLY ENERGIZED AND
+  POWERED UP. Every panel seam and recessed channel across the hull now glows with hot
+  cyan-white plasma light. Internal reactor conduits and orange-hot machinery are visible
+  glowing through open hull access sections along the spine. All four engine nozzles blaze
+  with intense cyan and magenta plasma light. Every window and cockpit strip is lit warm
+  amber from inside. Thin holographic amber schematic lines trace along the hull surface.
+  Keep all glow tight and contained within the hull footprint, no long exhaust plumes
+  extending beyond the ship, no lens flares. The hull plating itself stays the same colour
+  and material where it is not emissive.&quot;</p>
+<p>VERIFY ALIGNMENT before building anything: threshold both images and compare silhouette
+bounding boxes. They should agree within a handful of pixels across ~3800px. Also save a
+red/cyan channel overlay (dormant in red, energised in cyan) and LOOK at it — hull edges,
+masts and domes must not ghost or double. Do not trust IoU alone; the dormant hull is much
+darker, so IoU reads low even on a perfect match. If the silhouettes genuinely differ,
+regenerate the second layer, don&#39;t try to fix it in CSS.</p>
+<h2>Step 3 — Debris objects on a chroma screen</h2>
+<p>Generate 9 objects, 1:1, quality high (4k for the three big ones, 2k for the rest):
+a jagged asteroid with glowing cyan mineral veins; a cratered grey asteroid, no glow; a
+shattered rock cluster with molten amber cracks; a black obsidian monolith with glowing
+amber glyphs; a cyan crystal shard cluster; a broken satellite module with a torn solar
+array; a small white scout drone with one glowing cyan eye; a gyroscopic artifact of three
+nested metal rings around an amber core; a caged plasma reactor sphere.</p>
+<p>End EVERY object prompt with this, so I get a clean key rather than guesswork:</p>
+<p>  &quot;Isolated on a completely uniform flat chroma key green background (pure #00B140),
+  perfectly even, no gradient, no vignette, no shadow cast on the background, no ground
+  plane, no horizon. Object floats freely in frame, fully inside the frame with clear
+  margin on all sides. Photorealistic CGI render, dramatic hard rim lighting, razor sharp
+  detail. No text, no watermark, no UI.&quot;</p>
+<p>Generate these in parallel (~5 at a time). Keep the untouched 4K originals in
+<code>assets/raw/</code>; write web assets to <code>assets/out/</code>.</p>
+<h2>Step 4 — Process locally with numpy/PIL (not a background-removal model)</h2>
+<p>HERO ALPHA: the background is pure black, so derive alpha from luminance. Build ONE mask
+from the UNION (per-pixel max) of both layers&#39; luminance, then apply that SAME mask to
+both. Deriving alpha per layer gives two slightly different silhouettes and the reveal edge
+will show it. Close gaps and fill enclosed holes so stars can&#39;t shine through dark hull
+panels. Feather the edge ~1.5px. Export both as WebP ~2600px wide (an 8MB PNG becomes
+~0.5MB).</p>
+<p>OBJECT ALPHA: chroma key in numpy. Compute greenness <code>g = G - max(R, B)</code>; alpha is a
+smoothstep over g (roughly 18→58). Despill by clamping G toward <code>max(R,B)</code> wherever g &gt; 0.
+Then trim to the alpha bounding box and export WebP.</p>
+<p>CRITICAL: if you fill holes to rescue translucent interiors, SKIP any enclosed pixel that
+is still strongly green (g &gt; ~40). Otherwise you fill genuine see-through gaps — the
+artifact&#39;s ring interiors and the reactor cage — with solid green. Verify by compositing
+every cutout onto a harsh magenta checkerboard and looking at it.</p>
+<h2>Step 5 — Build the page (plain HTML/CSS/JS, no build step, no framework)</h2>
+<p>Pure black <code>#000</code>. Cyan <code>#4fe3ff</code> + amber <code>#ffb14d</code> accents. Chakra Petch + IBM Plex Mono.
+No nav, no header. Minimal text — one word of branding.</p>
+<p>HERO: full viewport. Both hero layers absolutely stacked in ONE box that shares the images&#39;
+exact aspect ratio (so every layer stays registered). Energised layer underneath, dormant on
+top. Ship sized <code>min(120vw, 1820px, 168vh)</code> — cap by viewport height too, or it crops
+off-screen — anchored to the bottom edge and bleeding ~4% past it. The wordmark sits BEHIND
+the hull so the masts cross the letters.</p>
+<p>Three reveal mechanisms:</p>
+<ol>
+<li>CURSOR TORCH — animate a <code>radial-gradient</code> <code>mask-image</code> on the dormant layer via CSS
+custom properties (<code>--mx</code>, <code>--my</code>, <code>--r</code>), lerped in one shared rAF loop. Radius ~16% of
+ship width. Add a faint scanline &quot;lens&quot; ring at the cursor with <code>mix-blend-mode: screen</code>.</li>
+<li>SUBSYSTEM NODES — 5 small pinging ring buttons on real hull features. Each fades in a
+copy of the energised layer masked to a SOFT elliptical <code>radial-gradient</code> (not
+<code>clip-path</code> — a hard arc across the hull looks like a bug). Hover shows a mono label
+chip; click locks it. A HUD readout panel fades in with code, name and three stats, and
+is fully hidden when nothing is selected.</li>
+<li>IDLE AUTOPILOT — after 2.4s of no pointer, drift the torch across the hull on a
+lissajous path so the effect demos itself.</li>
+</ol>
+<p>PARALLAX FIELD: place the 9 cutouts as ~13 fixed-position instances across depth bands.
+Per frame, one <code>translate3d</code> each combining cursor offset × depth, an idle sine drift, slow
+rotation and scroll offset. Blur the near-field ones for depth of field. Add a canvas
+starfield with its own parallax, plus grain, scanlines and a vignette. One rAF loop drives
+everything. Disable all motion under <code>prefers-reduced-motion</code>.</p>
+<p>Below the fold, keep it visual and text-light: compact subsystem chips (code + name only),
+a grid of the cutouts as specimen cards, four animated telemetry counters, a CTA, a footer.</p>
+<h2>Step 6 — Verify in a real browser, don&#39;t assume</h2>
+<p>Add dev-only query params <code>?scan=x,y</code> (pins the torch at those hull percentages) and
+<code>?zone=CODE</code> (forces one subsystem open), then screenshot with headless Chrome:</p>
+<p>  &quot;/Applications/Google Chrome.app/Contents/MacOS/Google Chrome&quot; --headless=new <br>    --disable-gpu --hide-scrollbars --virtual-time-budget=5000 --window-size=1600,1000 <br>    --screenshot=shot.png &quot;file://$PWD/site/index.html?scan=58,42&quot;</p>
+<p>LOOK at the screenshots and fix what you see. Check 1600x1000 and a portrait size. On
+portrait the height cap shrinks the hull to a third of the frame — centre it there and let
+it bleed off both sides instead.</p>
+<h2>Traps — please avoid these, I hit all of them</h2>
+<ul>
+<li>Do NOT name a CSS custom property <code>--cy</code> on an element if <code>--cy</code> is also your cyan design
+token. It shadows the colour inside that subtree, so <code>border: 1px solid var(--cy)</code> becomes
+invalid and the whole declaration is silently dropped. My hotspot markers were invisible
+and the DOM looked perfect. Use <code>--hx</code>/<code>--hy</code> for coordinates.</li>
+<li>Do NOT eyeball hotspot coordinates. Draw the ellipses onto the hero image with PIL, look at
+the result, and correct them. My first pass put one node in empty space.</li>
+<li>Do NOT let absolutely-positioned panel content size a panel — it contributes no height and
+spills past the border. Stack states in one CSS grid cell so the panel sizes to the tallest.</li>
+<li>Headless Chrome runs only a few rAF frames, so cursor/idle animation looks broken in
+screenshots. That&#39;s the harness, not your code — that&#39;s what <code>?scan=</code> is for. It also
+enforces a ~500px minimum viewport, so a 430px window renders 500px and <em>looks</em> clipped.</li>
+<li>If Python downloads fail with CERTIFICATE_VERIFY_FAILED, shell out to <code>curl</code> (or set
+<code>SSL_CERT_FILE=$(python3 -m certifi)</code>). Generated jobs still complete server-side — recover
+their URLs from <code>higgsfield generate list --json</code> instead of paying to regenerate.</li>
+</ul>
+<p>Finish by telling me how to open it, and write a short README explaining the two-layer
+registration trick and the union alpha mask.</div></p>
+<h2>Why each part is in there</h2><h3>&ldquo;Pixel for pixel identical composition&rdquo;</h3>
+<p>
+        The second pass is an edit, not a generation, and it needs to be told that
+        six different ways: same camera angle, same framing, same position, same
+        scale, same silhouette, same hull geometry. Redundant phrasing genuinely
+        helps here. The measured result was bounding boxes agreeing within 6px
+        across 3840px of image.
+</p><h3>Verify alignment with an overlay, not a number</h3>
+<p>
+        The obvious check is intersection-over-union on the two silhouettes. It
+        lies. The dormant hull is dark, so thresholding drops most of it and IoU
+        came back at 0.66 on a pair that was actually registered perfectly — the
+        number was measuring brightness, not position.
+</p>
+<p>
+        Compare bounding boxes instead, and render a red/cyan channel overlay
+        (dormant in red, energised in cyan) and <em>look</em> at it. If masts and
+        panel edges ghost or double, the layers moved. If they sit on top of each
+        other and the only difference is glow, you are fine.
+</p><h3>One alpha mask, built from both layers at once</h3>
+<p>
+        Both images come back on pure black backgrounds, so alpha can be derived
+        from luminance instead of shipping a black rectangle. The catch: derive it
+        per-layer and you get two subtly different silhouettes, and the reveal edge
+        will show you exactly where they disagree.
+</p>
+<p>
+        So build one mask from the per-pixel <em>maximum</em> of both layers'
+        luminance and apply that same mask to both. Fill enclosed holes too, or
+        starfield will shine through dark hull panels like the ship is made of
+        mesh.
+</p><h3>Chroma green beats asking for transparency</h3>
+<p>
+        For the debris, generating on a flat <code>#00B140</code> screen and keying
+        it yourself in numpy is better than any background-removal model. Greenness
+        is <code>G - max(R, B)</code>, which is strongly positive on the screen and
+        negative on almost every real material, so a smoothstep over it gives clean
+        soft edges. Despill by pulling G back toward <code>max(R,B)</code>. Measured
+        residual green on edge pixels came out around 2–5/255 — invisible.
+</p>
+<p>
+        One trap: if you fill holes to rescue translucent interiors, skip any
+        enclosed pixel that is still strongly green. Otherwise you fill the genuine
+        see-through gaps — the ring interiors of the gyroscope artifact, the gaps
+        between the reactor cage struts — with solid green paint. Composite every
+        cutout onto a magenta checkerboard and look before you trust it.
+</p><h3>Soft elliptical masks, not clip-path</h3>
+<p>
+        For the per-subsystem reveals, <code>clip-path: ellipse()</code> works but
+        cuts a hard arc straight across the hull, which reads as a rendering bug. A
+<code>radial-gradient</code> mask with a feathered edge lets the energised
+        patch fade into the cold plating instead. Same registration, much better
+        result.
+</p><h3>Cap the hull against viewport height, not just width</h3>
+<p>
+<code>min(120vw, 1820px, 168vh)</code> — the <code>vh</code> term is what
+        keeps a 120vw-wide ship from running off the top and bottom on a short
+        laptop screen. On portrait screens that same term inverts the problem and
+        shrinks the hull to a third of the frame, so portrait gets its own rule:
+        centre it and let it bleed off both sides.
+</p><h2>What broke</h2>
+<ul>
+<li>
+<strong>Every subsystem marker was invisible.</strong> The coordinate
+          custom property was named <code>--cy</code>, and so was the cyan design
+          token. Setting <code>--cy: 25%</code> on an element shadowed the colour
+          for that whole subtree, so <code>border: 1px solid var(--cy)</code>
+          became <code>1px solid 25%</code> — invalid, so the entire declaration
+          was silently dropped. The DOM looked perfect. Name coordinates
+<code>--hx</code>/<code>--hy</code>.
+</li>
+<li>
+<strong>A hotspot sat in empty space.</strong> Eyeballed percentages
+          from a downscaled preview. Draw the ellipses onto the actual image with
+          PIL, look at the result, correct, repeat.
+</li>
+<li>
+<strong>The HUD panel's stats spilled past its own border.</strong>
+          Absolutely-positioned content contributes no height to its parent. Stack
+          the panel states in one CSS grid cell so it sizes to the tallest.
+</li>
+<li>
+<strong>The ship loaded below the fold</strong>, hiding the entire
+          interaction on arrival. Worth screenshotting before believing the layout.
+</li>
+<li>
+<strong>The animation looked broken in every screenshot.</strong>
+          Headless Chrome runs only a handful of <code>requestAnimationFrame</code>
+          callbacks, so the torch lerp never ramps. That is the harness, not the
+          code — which is why the prompt asks for a <code>?scan=x,y</code> param
+          that pins the torch deterministically. Headless also enforces a ~500px
+          minimum viewport, so a 430px window renders at 500 and <em>looks</em>
+          clipped when nothing is wrong.
+</li>
+<li>
+<strong>Every image download failed with
+<code>CERTIFICATE_VERIFY_FAILED</code>.</strong> Python had no usable CA
+          bundle. The jobs had all completed server-side, so the fix was to
+<code>curl</code> them and recover the URLs from
+<code>higgsfield generate list --json</code> rather than pay to
+          regenerate nine 4K images.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          One ship generated twice, with the second pass forbidden from moving it.
+          Not two ships.
+</li>
+<li>
+          Check registration with a channel overlay you actually look at. IoU will
+          tell you a perfect pair is broken.
+</li>
+<li>
+          One alpha mask from the union of both layers, or the reveal edge shows
+          you where they disagree.
+</li>
+<li>
+          Key chroma green yourself. It beats a background-removal model and it is
+          faster.
+</li>
+<li>
+          Never shadow a design token with a coordinate variable of the same name.
+</li>
+<li>
+          Screenshot it. Layout and visibility bugs do not show up in the DOM.
+</li>
+</ul><p>
+        If you want more prompts in this shape, there is
+<a href="/learn/prompt-fluid-ink-reveal-wordmark-higgsfield/"
+          >a fluid ink-reveal homepage with a Higgsfield-generated wordmark
+          video</a>,
+<a href="/learn/prompt-frosted-glass-refraction-cube-webgl/"
+          >a frosted-glass refraction cube in raw WebGL</a>, and
+<a href="/learn/prompt-pin-board-sticky-notes-single-file/"
+          >a single-file sticky-notes app</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

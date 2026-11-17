@@ -701,7 +701,7 @@ export default function Build() {
             the build, the prompt or the code, explained in 60 seconds.
           </p>
           <p>
-            <a className="experiments-link" href="/blog/">
+            <a className="experiments-link" href="/learn/">
               All of them on Learn ↗
             </a>
           </p>

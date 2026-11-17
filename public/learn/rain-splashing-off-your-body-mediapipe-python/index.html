@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Making Rain Splash Off Your Body in Real Time | Rishabh Sharma</title>
+<meta name="description" content="A webcam effect where rain falls and bursts the instant it touches your silhouette. The whole thing is a rising-edge test against a segmentation mask — plus thr" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/rain-splashing-off-your-body-mediapipe-python/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Making Rain Splash Off Your Body in Real Time</h1>
+<p class="lede">A webcam effect where rain falls and bursts the instant it touches your silhouette. The whole thing is a rising-edge test against a segmentation mask — plus three bugs, including one where heavier rain produced fewer splashes.</p>
+<p class="meta">9 September 2026</p>
+<h2>Overview</h2>
+<p>
+        Rain falling down the webcam feed is a five-minute effect: give some
+        particles a downward velocity, draw a line for each, respawn them at the
+        top when they leave the frame. Nobody is impressed.
+</p>
+<p>
+        The version that <em>is</em> interesting is rain that knows you are
+        there. Drops fall past the background untouched, and the instant one
+        crosses onto your shoulder it bursts into a spray of droplets that fly
+        outward, arc back down under gravity, and leave a wet mark that runs
+        down you afterwards.
+</p>
+<p>
+        That sounds like it needs depth sensing or a physics engine. It needs
+        neither. It is one boolean array per frame and a rising-edge test.
+</p><div class="highlight">
+<p>
+<strong>What it does:</strong> a live webcam filter where rain
+          collides with your silhouette &mdash; per-hit splash bursts with their
+          own gravity, and a fading blue-tinted wetness trail that smears
+          downward so water appears to run off you between impacts.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> Python, NumPy, OpenCV, MediaPipe Image
+          Segmenter. No GPU, no physics library, no depth camera. Around 400
+          lines.
+</p>
+</div><h2>1. Your body is a boolean array</h2>
+<p>
+        MediaPipe&rsquo;s <code>ImageSegmenter</code> running the
+<code>selfie_segmenter.tflite</code> model takes a frame and returns a
+        confidence mask &mdash; a float per pixel, roughly &ldquo;how likely is
+        this a person.&rdquo; Threshold it and you have the only piece of world
+        knowledge the whole effect needs:
+</p>
+<div class="code">result = segmenter.segment_for_video(mp_image, timestamp_ms)
+conf = result.confidence_masks[0].numpy_view()
+body_bool = conf &gt; 0.5           # HxW array of True/False</div>
+<p>
+        The model is about 250 KB and runs on CPU. Note
+<code>segment_for_video</code> rather than <code>segment</code> &mdash;
+        the video mode takes a timestamp and keeps temporal state, so the mask
+        stays stable frame to frame instead of flickering at the edges.
+</p>
+<p>
+        Everything after this point is just particles asking that array
+        questions.
+</p><h2>2. Collision is a rising-edge test, and that detail is the effect</h2>
+<p>
+        Checking whether a drop is on your body is a lookup. Because the mask is
+        indexed <code>[row, column]</code> and particle positions are floats,
+        you cast and clip:
+</p>
+<div class="code">def _sample_mask(self, xs, ys, mask):
+    xi = np.clip(xs.astype(np.int32), 0, self.w - 1)
+    yi = np.clip(ys.astype(np.int32), 0, self.h - 1)
+    return mask[yi, xi]        # one lookup for every drop at once</div>
+<p>
+        Fancy-indexing with two arrays samples all several-hundred drops in a
+        single operation. There is no Python loop over particles.
+</p>
+<p>
+        But &ldquo;is this drop on the body&rdquo; is the wrong question. A drop
+        that has travelled two pixels into your arm is still on the body, and if
+        you spawn a splash whenever the answer is <em>true</em>, every drop
+        spawns splashes on every frame it spends inside you. You get a
+        permanent fog of spray, and the particle pool drains in about three
+        frames.
+</p>
+<p>
+        What you want is the <em>transition</em> &mdash; the frame where a drop
+        goes from background to body. So keep last frame&rsquo;s answer and
+        compare:
+</p>
+<div class="code">on_body_now = self._sample_mask(new_rx, new_ry, body_mask)
+just_hit = on_body_now &amp; ~self.on_body_prev</div>
+<p>
+        That single <code>&amp; ~previous</code> is the difference between fog
+        and impact. It is the same rising-edge trick you would use to debounce a
+        button, applied to a few hundred particles at once.
+</p>
+<p>
+        A hit then does two things: spawn a splash burst at that position, and
+        mark the drop for respawn at the top of the frame. Which means the same
+        boolean drives both:
+</p>
+<div class="code">off_screen = (new_ry &gt; self.h + 5) | (new_rx &lt; -5) | (new_rx &gt; self.w + 5)
+respawn = just_hit | off_screen</div>
+<p>
+        One subtlety worth writing down. When you store the history, mask out
+        the drops you just respawned:
+</p>
+<div class="code">self.on_body_prev = on_body_now &amp; ~respawn</div>
+<p>
+        Skip that <code>&amp; ~respawn</code> and a drop that hit your body
+        carries <code>on_body_prev = True</code> into its new life at the top of
+        the frame. If it happens to respawn above your head, its first frame
+        reads as &ldquo;already on the body,&rdquo; no rising edge fires, and it
+        silently passes straight through you. Roughly one drop in six goes
+        ghost.
+</p><h2>3. Fixed pools, never allocation</h2>
+<p>
+        There are no particle objects anywhere. A drop is not a class instance;
+        it is index <code>i</code> across eight parallel NumPy arrays &mdash;
+<code>rx</code>, <code>ry</code>, <code>rvx</code>, <code>rvy</code>,
+<code>rlen</code>, and so on. Drops are never created or destroyed, only
+        recycled:
+</p>
+<div class="code">n = int(respawn.sum())
+self.rx[respawn] = np.random.uniform(0, self.w, n).astype(np.float32)
+self.ry[respawn] = np.random.uniform(-60, -5, n).astype(np.float32)
+self.rvy[respawn] = np.random.uniform(650, 950, n).astype(np.float32)</div>
+<p>
+        Splashes need the same treatment but they genuinely come and go, so they
+        get an <code>salive</code> boolean and spawning means claiming free
+        slots:
+</p>
+<div class="code">free = np.where(~self.salive)[0]
+if len(free) == 0:
+    return
+slots = free[:min(total, len(free))]</div>
+<p>
+        A splash gets a random angle, a speed between 40 and 220 px/s, and a
+        deliberately upward-biased vertical velocity so droplets fly up off the
+        impact before gravity pulls them back &mdash; which is what real water
+        does when it hits a surface:
+</p>
+<div class="code">self.svy[slots] = -np.abs(np.sin(angle) * speed) - np.random.uniform(20, 80, take)</div>
+<p>
+        The <code>-np.abs(...)</code> is the whole trick. A plain
+<code>sin</code> would send half the droplets downward into your chest,
+        which reads as the drop passing through you rather than off you.
+</p><h2>4. Wetness is one float buffer, decayed and smeared</h2>
+<p>
+        Splashes alone look like sparks. Water has memory &mdash; it stays on
+        you and runs down. That is a single-channel float buffer the size of the
+        frame, which impacts add into:
+</p>
+<div class="code">np.add.at(self.wet_trail, (yi, xi), 0.9)</div>
+<p>
+<code>np.add.at</code> rather than <code>wet_trail[yi, xi] += 0.9</code>
+        matters here: plain fancy-index assignment does not accumulate when the
+        same pixel appears twice in the index arrays, so two drops landing on
+        one pixel would count as one. <code>add.at</code> is the unbuffered
+        version that adds every occurrence.
+</p>
+<p>
+        Then each frame the buffer decays, and a fraction of every row is copied
+        two rows down &mdash; a one-directional blur that reads as dripping:
+</p>
+<div class="code">self.wet_trail *= 0.90
+shifted = np.zeros_like(self.wet_trail)
+shifted[2:, :] = self.wet_trail[:-2, :] * 0.35
+self.wet_trail = np.clip(self.wet_trail * 0.85 + shifted, 0, 6)</div>
+<p>
+        Rendering it is a blue lift plus a slight darkening, so wet areas look
+        glossy rather than merely tinted:
+</p>
+<div class="code">wet_norm = np.clip(wet / 6.0, 0, 1)
+out[..., 0] += wet_norm * 55                  # BGR: push blue
+out[..., 1] += wet_norm * 15
+out *= (1.0 - wet_norm[..., None] * 0.12)     # and darken slightly</div>
+<p>
+        The darkening is doing more work than the tint. Adding brightness alone
+        makes you look painted; taking a little light away where the water sits
+        makes it look like a surface.
+</p><h2>5. Three bugs</h2><h3>The mask had a third dimension</h3>
+<p>First real run, immediate crash:</p>
+<div class="code">self.rx[respawn] = np.random.uniform(0, self.w, n).astype(np.float32)
+IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed</div>
+<p>
+        The traceback points at the respawn line, but nothing is wrong there.
+<code>respawn</code> arrives already 2D, and the cause is four
+        statements upstream: this version of MediaPipe returns the confidence
+        mask as <code>(H, W, 1)</code>, not <code>(H, W)</code>. With a trailing
+        channel axis, <code>mask[yi, xi]</code> returns shape
+<code>(n, 1)</code> instead of <code>(n,)</code> &mdash; so every
+        downstream boolean inherits the extra axis and eventually tries to index
+        a 1D array with it.
+</p>
+<p>
+        Worth internalising as a shape bug rather than an indexing bug: NumPy
+        propagated a wrong shape silently through four operations before
+        anything complained, and it complained in the wrong place. The fix is at
+        the source, guarded so it still works on versions that return 2D:
+</p>
+<div class="code">conf = result.confidence_masks[0].numpy_view()
+if conf.ndim == 3:            # some MediaPipe versions return HxWx1
+    conf = conf[:, :, 0]</div><h3>The model cache never hit</h3>
+<p>The download helper looked reasonable:</p>
+<div class="code">if model_path and os.path.isfile(model_path) and os.path.getsize(model_path) &gt; 1024:
+    return model_path
+dest = model_path or MODEL_PATH</div>
+<p>
+        The guard starts with <code>if model_path and ...</code>, but
+<code>model_path</code> is <code>None</code> unless you pass
+<code>--model</code> explicitly. So on the default path the cache check
+        short-circuits to false and the model is re-downloaded on
+<em>every single run</em> &mdash; while the code immediately below
+        demonstrates it knew the default location all along. Resolve the path
+        first, then check it:
+</p>
+<div class="code">dest = model_path or MODEL_PATH
+if os.path.isfile(dest) and os.path.getsize(dest) &gt; 1024:
+    return dest</div>
+<p>
+        A cache that silently never hits is worse than no cache, because the
+        only symptom is slowness you attribute to something else.
+</p><h3>Heavier rain produced fewer splashes</h3>
+<p>
+        This is the interesting one. Turning the density up made the effect look
+<em>worse</em> &mdash; more streaks in the air, less spray coming off
+        the body.
+</p>
+<p>
+        The splash pool was a fixed 1500 particles while the drop pool was
+        adjustable up to 2000. Each hit wants 7 droplets, and at any moment a
+        good fraction of your drops are in contact with you, so at high density
+        demand runs to several thousand. And <code>_spawn_splash</code> returns
+        early when no slots are free:
+</p>
+<div class="code">free = np.where(~self.salive)[0]
+if len(free) == 0:
+    return</div>
+<p>
+        So the pool sat permanently exhausted. Every additional raindrop
+        competed for slots that were already gone, and because the drop was
+        still marked for respawn on hit, the extra rain contributed nothing but
+        cost. The failure mode was not a crash or a slowdown &mdash; it was the
+        effect quietly getting less impressive as I turned it up.
+</p>
+<p>The fix is to make the pool a function of the rain, not a constant:</p>
+<div class="code">self.max_splashes = max_splashes or max(1500, n_drops * 12)</div>
+<p>
+        Twelve slots per drop covers the worst case with margin. And since
+        density is adjustable at runtime, <code>set_density</code> has to grow
+        the pool too &mdash; otherwise the bug simply comes back the moment you
+        press <code>+</code>.
+</p>
+<p>
+        While there: the <code>+</code>/<code>-</code> keys stepped by a flat
+        20, so getting from 160 drops to 1500 was 67 presses. Proportional steps
+        make the same range eight:
+</p>
+<div class="code">sim.set_density(int(sim.n_drops * 1.35) + 10)</div>
+<p>160 &rarr; 226 &rarr; 315 &rarr; 435 &rarr; 597 &rarr; 815 &rarr; 1110 &rarr; 1508.</p><h2>Performance</h2>
+<p>Simulation and render only, on synthetic frames with a body-shaped mask:</p>
+<table>
+<thead>
+<tr>
+<th>Drops</th>
+<th>Live splashes</th>
+<th>ms/frame</th>
+<th>fps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>160</td>
+<td>370</td>
+<td>4.9</td>
+<td>204</td>
+</tr>
+<tr>
+<td>600</td>
+<td>1249</td>
+<td>7.8</td>
+<td>128</td>
+</tr>
+<tr>
+<td>1500</td>
+<td>3481</td>
+<td>13.7</td>
+<td>73</td>
+</tr>
+<tr>
+<td>3000</td>
+<td>7011</td>
+<td>22.6</td>
+<td>44</td>
+</tr>
+</tbody>
+</table>
+<p>
+        Segmentation adds a fixed cost on top, so 600&ndash;1500 drops is the
+        band that still holds 30 fps capture comfortably. That is genuinely
+        heavy rain.
+</p>
+<p>
+        One honest note, since the project README claims everything is
+        vectorized: the simulation is, but the renderer is not. Drawing streaks
+        and droplets is a Python loop with a <code>cv2.line</code> or
+<code>cv2.circle</code> call per particle, and past about a thousand
+        drops that loop &mdash; not the physics &mdash; is the bottleneck. The
+        scaling in the table is essentially linear in particle count for exactly
+        that reason. Batching the streaks into a single
+<code>cv2.polylines</code> call is the obvious next win.
+</p><h2>What I would do next</h2>
+<ul>
+<li>
+<strong>Splash along the surface normal.</strong> Take the gradient of
+          the mask at the impact point and bias the burst away from your body
+          instead of spraying isotropically. Water hitting your shoulder should
+          go sideways, not straight up.
+</li>
+<li>
+<strong>Occlusion.</strong> Drops currently render in front of you
+          even when they are behind you. The mask already says which pixels are
+          the body &mdash; gating the streak draw against it would put rain
+          behind the subject for free.
+</li>
+<li>
+<strong>Wetness that accumulates.</strong> The trail decays uniformly.
+          Letting it saturate on the shoulders and head, where rain actually
+          lands, would build up soaked patches over time.
+</li>
+<li>
+<strong>Batch the renderer</strong> into one
+<code>polylines</code> call, and stop paying per-particle Python
+          overhead.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          A thresholded segmentation mask is a boolean array; collision
+          detection against your body is <code>mask[yi, xi]</code>.
+</li>
+<li>
+          Test the rising edge (<code>now &amp; ~previous</code>), not the
+          state, or every drop splashes on every frame it is inside you.
+</li>
+<li>
+          Mask respawned particles out of that history, or recycled drops
+          inherit a stale <code>True</code> and pass through you invisibly.
+</li>
+<li>
+          Fixed pools with an <code>alive</code> boolean; recycle indices,
+          never allocate per particle.
+</li>
+<li>
+          Bias splash velocity upward with <code>-np.abs(...)</code> so spray
+          comes off the surface rather than through it.
+</li>
+<li>
+          Use <code>np.add.at</code> for the wetness buffer &mdash; plain
+          fancy-index <code>+=</code> drops duplicate pixels.
+</li>
+<li>
+          Darkening sells wetness more than blue tint does.
+</li>
+<li>
+          A wrong array shape from a library can propagate silently and crash
+          four operations later, in code that is correct. Fix shapes at the
+          boundary.
+</li>
+<li>
+          Size a particle pool relative to what feeds it. A pool that is
+          permanently exhausted degrades quality with no error and no slowdown.
+</li>
+</ul><p>
+        The reason this effect works is that segmentation collapses a hard
+        problem &mdash; where is the person, in 3D, this frame &mdash; into an
+        array lookup. Once your world model is a boolean grid you can index,
+        particles interacting with a human body costs about as much as particles
+        interacting with nothing.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

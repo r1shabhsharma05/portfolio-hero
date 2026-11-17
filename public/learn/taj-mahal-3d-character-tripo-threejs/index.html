@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I turned myself into a 3D character and explored the Taj Mahal | Rishabh Sharma</title>
+<meta name="description" content="Avatar to rigged 3D character in Tripo, monuments from one line of text, and a playable world built with Opus 5.5. Every prompt, step and code snippet, plus fre" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/taj-mahal-3d-character-tripo-threejs/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>I turned myself into a 3D character and explored the Taj Mahal</h1>
+<p class="lede">Avatar to rigged 3D character in Tripo, monuments from one line of text, and a playable world built with Opus 5.5. Every prompt, step and code snippet, plus free Tripo credits.</p>
+<p class="meta">24 October 2026</p>
+<p>I took my illustrated avatar, turned it into a rigged, animated 3D character, and dropped myself into a playable Taj Mahal. You run through the gardens, jump around, and walk into glowing checkpoints. Each one pops an info bubble with a piece of history. Find all 6 and I dance in front of the Taj.</p>
+<p>The split:</p>
+<ul>
+<li><strong>Tripo</strong> made the 3D: me (rigged and animated), the Taj Mahal, the great gate, a royal elephant and the cenotaphs.</li>
+<li><strong>Opus 5.5</strong> made the world: the garden, the reflecting pool, the sky, the controls, the checkpoints, the camera.</li>
+</ul>
+<p>Here&#39;s the whole workflow.</p>
+<h2>0. Get Tripo (free credits)</h2>
+<p>👉 <strong><a href="https://studio.tripo3d.ai/home?invite_code=J0SG4G&utm_source=Instagram&utm_medium=kol&utm_campaign=kol_avi_vashishta29" target="_blank" rel="noreferrer">Sign up with my link</a></strong></p>
+<p>🎁 <strong>500 bonus credits + 60% off your first month</strong></p>
+<ol>
+<li>Click the link above (or the link in my bio), or</li>
+<li>Go to the official Tripo website → click your profile avatar → find the <strong>Redeem Code</strong> section → enter <strong>J0SG4G</strong></li>
+</ol>
+<p>Discount code: <strong>TRIPOCREW</strong></p>
+<p>⚠️ Complete both registration and purchase within 24 hours to get the offer.</p>
+<h2>1. Turn yourself into a 3D character</h2>
+<p>All of this happens inside Tripo Studio. No Blender.</p>
+<ol>
+<li><strong>Start from one image of you.</strong> A selfie, a drawing or your profile picture. Mine is my illustrated avatar, which was only head and shoulders.</li>
+<li><strong>Get a full body.</strong> Head to the <strong>Image</strong> tool and use the <strong>Character Completion</strong> template. It turns a head-and-shoulders picture into a full-body character standing in a T-pose. A T-pose matters because it makes rigging clean.</li>
+<li><strong>Image to 3D.</strong> Drop the full-body image in and generate. You get a textured 3D model of yourself.</li>
+<li><strong>Retopology.</strong> This cleans up the mesh so it bends nicely when animated.</li>
+<li><strong>Auto Rig.</strong> Choose the humanoid rig. Tripo adds a skeleton to your model.</li>
+<li><strong>Animate.</strong> Pick presets (idle, walk, run, jump, dance). For anything missing, use <strong>AI Animation</strong> and describe the move in text. That&#39;s how I got my slide.</li>
+<li><strong>Export as GLB</strong> with the animations included.</li>
+</ol>
+<p>A tip from doing this twice: the cleaner and more front-facing your full-body image is, the better the 3D model. Arms slightly away from the body helps the rig a lot.</p>
+<h2>2. Generate the monuments</h2>
+<p>In Tripo Studio: <strong>Model → Text to 3D</strong>, one prompt each.</p>
+<p><strong>Taj Mahal</strong></p>
+<pre><code class="language-text">the Taj Mahal mausoleum in Agra, complete monument on its square white marble plinth, large central onion dome with smaller chhatri domes, four tall white minarets at the corners, arched iwan facades with fine inlay detail, pristine white Makrana marble, highly detailed architectural model, isolated, no background
+</code></pre>
+<p><strong>The great gate</strong></p>
+<pre><code class="language-text">Darwaza-i-Rauza, the great red sandstone gateway of the Taj Mahal complex, tall central pointed arch, white marble inlay borders, row of small white chhatri domes along the top edge, octagonal corner towers topped with domed kiosks, Mughal architecture, highly detailed, isolated, no background
+</code></pre>
+<p><strong>Royal elephant</strong></p>
+<pre><code class="language-text">A Mughal royal elephant walking, decorated with an ornate red and gold embroidered cloth, golden headpiece and bells, carrying a small block of white marble on its back, stylized realistic, highly detailed, isolated, no background
+</code></pre>
+<p><strong>Cenotaphs</strong></p>
+<pre><code class="language-text">Two white marble cenotaphs side by side inside the Taj Mahal, rectangular tomb chests on stepped bases covered in colorful pietra dura flower inlay and calligraphy, the left one slightly larger, surrounded by a low carved octagonal marble lattice jali screen, highly detailed, isolated, no background
+</code></pre>
+<p>Tip: end every prompt with <strong>&quot;isolated, no background&quot;</strong> so you get just the object.</p>
+<h2>3. Shrink everything for the web</h2>
+<p>Raw models were about 75 MB each. On the web you want 1 to 2 MB:</p>
+<pre><code class="language-bash">npm i -g @gltf-transform/cli
+
+gltf-transform optimize &quot;taj mahal.glb&quot; public/models/taj/taj.glb \
+  --compress meshopt --texture-compress webp --texture-size 2048 \
+  --simplify-ratio 0.06 --simplify-error 0.002
+</code></pre>
+<p>Don&#39;t compress your character&#39;s GLB too hard. Simplifying a rigged mesh can break the skinning, so for <code>me.glb</code> just resize the textures.</p>
+<h2>4. The prompt for Opus 5.5</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a small third-person exploration game in the browser: "Explore the Taj Mahal as me".<br>Stack: Vite + three.js. Load GLBs with GLTFLoader + MeshoptDecoder and normalise each one to a target size.</p>
+<p>Models in public/models/: me/me.glb (my rigged Tripo character with idle, walk, run, jump, dance and cast_a_spell clips), taj/taj.glb, taj/gate.glb, taj/elephant.glb, taj/cenotaph.glb.</p>
+<p>World (build in code): a Mughal garden with a long reflecting pool (use three.js Reflector), sandstone walkways, rows of cypress trees, flower beds, red sandstone walls, the gate at one end and the Taj on a terrace at the other. Sky gradient that moves from dawn pink to sunset gold as the player makes progress.</p>
+<p>Controls: WASD/arrows move relative to the camera, Shift walks, Space jumps, drag to orbit the camera. On phones: a virtual joystick on the left half of the screen and a jump button.<br>Animation: idle / walk / run by speed, jump clip in the air (trim it to the airborne part), dance when the tour is complete.<br>Simple collisions: the pool, the gate, the Taj, the trees and the artifacts.</p>
+<p>6 checkpoints: glowing gold rings with a light beam and a floating number. Walking into one opens a speech-bubble card anchored above it in 3D (title, 2 sentences of history, one fun fact) and marks it done (ring turns teal, HUD shows "3 / 6 discovered"). Elephant, cenotaph and inlay checkpoints make me play the cast_a_spell clip while that model grows in with sparkles.<br>Checkpoints: the Great Gate, the Taj Mahal, the marble (1,000 elephants legend), pietra dura inlay, the cenotaphs (the one asymmetrical detail), the leaning minarets.<br>Finale at 6/6: "Tour complete" card and I dance.</p>
+<p>Add ?autoplay to walk the whole route hands-free for screen recording, and ?opus to swap every model for grey primitives (a before/after shot).</p>
+</div>
+</div><h2>5. Code snippets that make it work</h2>
+<h3>Camera-relative movement</h3>
+<p>W should always mean &quot;away from the camera&quot;, wherever the camera is:</p>
+<pre><code class="language-js">const fwx = -Math.sin(camYaw), fwz = -Math.cos(camYaw); // forward
+const rtx = Math.cos(camYaw), rtz = -Math.sin(camYaw);  // right
+const mx = fwx * forward + rtx * strafe;
+const mz = fwz * forward + rtz * strafe;
+
+if (Math.hypot(mx, mz) &gt; 0.05) {
+  const want = Math.atan2(mx, mz);           // face where you&#39;re going
+  let d = want - player.face;
+  d = Math.atan2(Math.sin(d), Math.cos(d));  // shortest turn
+  player.face += d * (1 - Math.exp(-dt * 12));
+}
+</code></pre>
+<h3>Pick the animation from speed</h3>
+<pre><code class="language-js">if (player.inAir) play(&#39;jump&#39;);
+else if (speed &gt; 3.4) play(&#39;run&#39;);
+else if (speed &gt; 0.35) play(&#39;walk&#39;);
+else if (tourComplete) play(&#39;dance&#39;);
+else play(&#39;idle&#39;);
+</code></pre>
+<p><code>play()</code> just crossfades between <code>AnimationMixer</code> actions with <code>fadeIn</code> and <code>fadeOut</code> so nothing pops.</p>
+<h3>Trim the AI jump to the airborne part</h3>
+<p>AI animations often have a long wind-up. This samples the hips&#39; height and keeps only the part where you&#39;re actually in the air:</p>
+<pre><code class="language-js">function cutJump(clip, model) {
+  const hips = model.getObjectByName(&#39;mixamorigHips&#39;);
+  const mixer = new THREE.AnimationMixer(model), a = mixer.clipAction(clip); a.play();
+  const ys = [], p = new THREE.Vector3(), N = 120;
+  for (let i = 0; i &lt;= N; i++) { mixer.setTime((i / N) * clip.duration); model.updateMatrixWorld(true); ys.push(hips.getWorldPosition(p).y); }
+  const mn = Math.min(...ys), mx = Math.max(...ys);
+  const air = ys.map((y) =&gt; y &gt; mn + (mx - mn) * 0.45);
+  const s = air.indexOf(true), e = air.lastIndexOf(true);
+  return THREE.AnimationUtils.subclip(clip, &#39;jump&#39;, Math.floor((s / N) * clip.duration * 30), Math.ceil((e / N) * clip.duration * 30), 30);
+}
+</code></pre>
+<h3>Checkpoints + info bubble anchored in 3D</h3>
+<pre><code class="language-js">for (const c of CHECKPOINTS) {
+  const inside = Math.hypot(player.x - c.x, player.z - c.z) &lt; 2.3;
+  if (inside &amp;&amp; !c.visited) {
+    c.visited = true;
+    burst(c.position);                         // sparkles
+    if (c.art) reveal(c.art);                  // the Tripo model grows in
+    play(&#39;cast&#39;);                              // &quot;summon&quot; gesture
+  }
+  if (inside) openBubble(c);
+}
+
+// every frame: put the HTML bubble above its 3D anchor
+const v = new THREE.Vector3(...bubble.anchor).project(camera);
+bubbleEl.style.transform = `translate(${(v.x * 0.5 + 0.5) * innerWidth - w / 2}px, ${(-v.y * 0.5 + 0.5) * innerHeight - h - 18}px)`;
+</code></pre>
+<h3>Reflecting pool</h3>
+<pre><code class="language-js">import { Reflector } from &#39;three/examples/jsm/objects/Reflector.js&#39;;
+const water = new Reflector(new THREE.PlaneGeometry(3.2, 88), { clipBias: 0.003, textureWidth: 1024, textureHeight: 1024, color: 0x9aa6a8 });
+water.rotation.x = -Math.PI / 2;
+scene.add(water);
+</code></pre>
+<h2>6. Code vs Tripo</h2>
+<p>I also had Opus build the Taj Mahal purely in code: an extruded chamfered hall, a lathe onion dome, cylinder minarets and pointed arches. It&#39;s clearly the Taj, but it&#39;s flat and plain. Flip to the Tripo model and you get the carved arches, the texture of the marble and the detail of the minarets. Opus builds the <em>experience</em>; Tripo builds the <em>things in it</em>.</p>
+<h2>7. Make your own</h2>
+<ol>
+<li>Turn yourself into a character in <a href="https://studio.tripo3d.ai/home?invite_code=J0SG4G&utm_source=Instagram&utm_medium=kol&utm_campaign=kol_avi_vashishta29" target="_blank" rel="noreferrer">Tripo</a> (step 1).</li>
+<li>Pick a place: your city, a monument, your campus, a fantasy world.</li>
+<li>Generate 3 to 5 landmarks with Text to 3D.</li>
+<li>Paste the prompt from step 4 into Opus 5.5 and swap in your place and your facts.</li>
+<li>Record it and tag me <a href="https://www.instagram.com/avi_vashishta29/" target="_blank" rel="noreferrer">@avi_vashishta29</a>.</li>
+</ol>
+<hr>
+<p><strong>Free Tripo credits:</strong> <a href="https://studio.tripo3d.ai/home?invite_code=J0SG4G&utm_source=Instagram&utm_medium=kol&utm_campaign=kol_avi_vashishta29" target="_blank" rel="noreferrer">my invite link</a> · code <strong>J0SG4G</strong> · discount <strong>TRIPOCREW</strong> · 500 bonus credits + 60% off your first month (register and purchase within 24 hours).</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

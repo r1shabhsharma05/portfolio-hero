@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wet Paint: A Gallery Where Each Painting Soaks In Over the Last | Rishabh Sharma</title>
+<meta name="description" content="How I made a full-screen gallery of the world's best views as oil paintings, where each new one soaks in from the top like wet paint: Codex for the paintings, o" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/wet-paint-gallery-paintings-that-soak-in/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Wet Paint: A Gallery Where Each Painting Soaks In Over the Last</h1>
+<p class="lede">How I made a full-screen gallery of the world's best views as oil paintings, where each new one soaks in from the top like wet paint: Codex for the paintings, one canvas, a noise field, a blurred wash and drips. Prompts and code inside.</p>
+<p class="meta">30 October 2026</p>
+<p>The part of <a href="/learn/blueprint-buildings-that-draw-themselves/">my blueprint page</a> people liked most was not the lines. It was the moment the drawing soaks in from the top, in blots, like ink into paper. So I took that one effect, dropped the scan line, and built a whole gallery around it: the world&#39;s best views as oil paintings, from Manhattan to Machu Picchu, each one soaking in over the last. <a href="https://www.avivashishta.com/lab/wet-paint" target="_blank" rel="noreferrer">It is live at avivashishta.com/lab/wet-paint</a>.</p>
+<p>A new painting never fades or slides in. It lands at the top as a soft, dark wash of its own colours, a few drips run ahead down the canvas, and the sharp painting dries in behind the wash. The old painting stays underneath until it is covered.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex paints each view from the same prompt with one line changed. The page is one canvas. When the painting changes, the canvas keeps a copy of what is on screen and paints the new painting over it twice, through two masks cut from the same noise field: first a blurred, darker copy (the wet wash), then the sharp painting a little behind it. A few columns of the field are pulled ahead, and those are the drips.</p></div><h2>Step 1: the paintings (Codex)</h2>
+<p>A gallery only looks like a gallery if every piece is clearly by the same hand. So every painting uses one prompt, and only the subject changes. I asked for an oil painting photographed flat, edge to edge, so there is no frame or wall to crop out, and for a calm upper third, because that is where the paint lands first.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A large contemporary oil painting on canvas, photographed flat and straight on so the painting fills the entire frame edge to edge: no frame, no wall, no border, no text, no signature. Loose, confident, expressive brushwork with thick impasto in the highlights, visible palette-knife strokes, broken colour, rich saturated pigment and luminous light, like a modern plein-air master painting. A strong simple composition with a clear focal point and generous sky or negative space in the upper third. No people in close-up, small distant figures at most. Landscape 3:2, 1536x1024.</p>
+<p>Subject: Santorini at sunset: white cube houses and blue domes stacked down the caldera cliff, windmills on the ridge, the Aegean far below turning violet, the sky molten orange and rose.</p>
+</div>
+</div><p>The views: Santorini, Manhattan at dusk, Kyoto in autumn, Torres del Paine, Paris from the Seine, the aurora over Kirkjufell, Tokyo in the rain, the balloons over Cappadocia, Machu Picchu, the Amalfi Coast and a Norwegian fjord. Ask for a time of day and a light in every subject line (sunset, first light, neon in the rain, morning cloud). Paintings with strong light make the wet wash look far better, because the colours are what you see first.</p>
+<p>With the Codex CLI, put the prompt in a file and pass it on stdin, one job at a time. A long prompt as an argument kills the job with an empty log.</p>
+<pre><code class="language-bash">codex exec --skip-git-repo-check -C ./raw - &lt; santorini.prompt
+</code></pre>
+<p>Then <code>bun scripts/prepare-wet-paint.mjs ./raw</code> makes the WebPs and writes a short hash of each into a JSON file. The page asks for <code>santorini.webp?v=&lt;hash&gt;</code>, so a repainted view never meets an old cached copy, and it only shows paintings that are in that file, so one that is still generating can&#39;t stall the carousel.</p>
+<h2>Step 2: the field, now with drips</h2>
+<p>Like the blueprint, each painting gets a field of numbers, one per pixel of a small grid, that says when that pixel&#39;s turn comes: mostly top to bottom, broken up by blotchy noise at three sizes. Paint adds one thing ink doesn&#39;t have. It runs. So a few narrow columns are pulled ahead of the rest:</p>
+<pre><code class="language-ts">// One value per column: mostly zero, with a few sharp peaks. Raising noise to the 6th power is what makes them rare.
+drips[x] = Math.pow(noise(x / 2.6, 0.5, seed), 6) * 0.9 + Math.pow(noise(x / 9, 3.5, seed), 3) * 0.25;
+
+const blot = noise(x / 34, y / 34, seed) * 0.55 + noise(x / 14, y / 14, seed) * 0.3 + noise(x / 5, y / 5, seed) * 0.15;
+field[i] = (y / h) * 0.62 + blot * 0.3 + grain * 0.04 - drips[x] * 0.16;
+</code></pre>
+<p>A column with a high drip value reaches every row sooner, so it shows up as a thin streak running down ahead of the edge. Each painting uses its own seed, so no two soak in the same way.</p>
+<h2>Step 3: the wet wash, then the dry painting</h2>
+<p>This is what makes it feel like paint instead of a dissolve. The front edge is not the painting. It is a <strong>blurred, darker copy</strong> of the painting, and the real one arrives a moment later behind it, so you watch the colours land and then the detail dry in.</p>
+<p>The blurred copy is made once per painting. Shrinking an image to a few dozen pixels and growing it back is a blur that works in every browser, and drawing it over itself with <code>multiply</code> makes it darker and richer, like pigment before it dries:</p>
+<pre><code class="language-ts">// Down in steps (one big jump shimmers), then up in two (one big jump leaves soft diamonds).
+for (const width of [384, 120, 40, 120, 480]) { /* draw src into a canvas `width` wide; src = that canvas */ }
+o.globalCompositeOperation = &quot;multiply&quot;;
+o.globalAlpha = 0.45;
+o.drawImage(out, 0, 0); // the wash, multiplied by itself
+</code></pre>
+<p>Every frame, the same field cuts two masks: one for the wash at the front, and one for the sharp painting a little behind it (<code>WASH_LEAD</code>, 0.13 of the field):</p>
+<pre><code class="language-ts">const t = progress * (1 + WASH_LEAD + FRONT + 0.16) - 0.16;  // where the front is
+through(wash, t);                // the wet wash, at the front
+through(painting, t - WASH_LEAD); // the dry painting, behind it
+</code></pre>
+<p><code>through</code> is the blueprint&#39;s trick: write the mask&#39;s alpha (pixels whose turn has come are opaque, those just behind the front fade in), stretch it to full size so it blurs softly, and draw the painting into it with <code>source-in</code>.</p>
+<h2>Step 4: one canvas, and the last frame as the base</h2>
+<p>A carousel usually has two images, one leaving and one arriving. This one has a single canvas and a copy of its last frame. When the painting changes, the page copies whatever is on screen into the base, and every frame draws the base first, then the new painting through its masks:</p>
+<pre><code class="language-ts">show = (i) =&gt; {
+  bctx.drawImage(canvas, 0, 0); // keep exactly what is on screen
+  cur = { i, start: -1 };       // the new painting starts soaking in over it
+};
+</code></pre>
+<p>That one choice handles the awkward cases for free. Click three thumbnails quickly and each painting soaks in over the half-soaked one before, with no jump. The very first painting has no base, so it soaks in over the page itself, a sheet of paper with &quot;Wet paint&quot; on it.</p>
+<h2>The small things</h2>
+<ul>
+<li><strong>Timing is an ease-out.</strong> My first version used the blueprint&#39;s ease-in-out, and after a click nothing seemed to happen for a second. Paint lands at once and slows as it spreads, so the curve does too: <code>1 - (1 - t) ** 1.9</code> over 4.2 seconds.</li>
+<li><strong>The painting keeps moving.</strong> While it is up, it zooms out slowly from 107% and shifts a little toward your cursor, so a still painting never feels like a still image.</li>
+<li><strong>The label is paper on a soft shade</strong>, a gradient at the foot of the screen, so it reads over a white Greek cliff and an Icelandic night alike.</li>
+<li><strong>The thumbnail bar is the clock.</strong> When its CSS animation ends, the gallery moves on. Hovering the thumbnails pauses it. Arrow keys and a swipe work too.</li>
+<li><strong>Reduced motion</strong> gets each painting at once, with no soak and no drift.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a full-screen image gallery (React, one 2D canvas, no libraries) where each new image soaks in over the previous one from the top, like wet paint. Draw each image like object-fit: cover, slowly zooming out from 107% and drifting slightly toward the cursor.</p>
+<p>For each image, make a field on a small grid (about 320 wide, matching the screen's aspect) that says when each pixel's turn comes: y / height * 0.62, plus value noise at three scales (about 34, 14 and 5 cells) * 0.3, plus a little random grain, minus a per-column drip value (value noise in x only, raised to the 6th power) * 0.16, so a few thin columns run ahead.</p>
+<p>When the image changes, copy the canvas into a "base" canvas. Every frame, draw the base, then draw the new image twice through masks cut from the field: first a blurred copy (shrink it to about 40px wide in steps, grow it back to 480 in two steps, then multiply it by itself at 0.45 alpha so it reads darker and wetter) at the front, then the sharp image 0.13 behind it. A mask pixel's alpha is (t - field) / 0.07, clamped; put it in a small canvas, stretch it to full size with smoothing, then draw the image into it with source-in. Advance t with an ease-out over about 4 seconds. Thumbnails with a CSS progress bar on the active one move to the next image when the bar ends; pause on hover. Respect prefers-reduced-motion.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

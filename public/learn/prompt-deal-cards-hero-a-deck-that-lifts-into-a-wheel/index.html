@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable prompt and the code concepts behind the Deal hero: Reel cards dealt face down, flipped into a fan while the loader counts, then lifted into a w" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</h1>
+<p class="lede">A copy-pasteable prompt and the code concepts behind the Deal hero: Reel cards dealt face down, flipped into a fan while the loader counts, then lifted into a wheel of playing videos rising out of the clouds.</p>
+<p class="meta">19 October 2026</p>
+<p>My homepage opens with a small tilted ring of Reels that expands into a 3D carousel. I wrote up <a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/">the prompt and the code behind that one</a>. This post is about the second hero I built to compete with it, and you can <a href="https://www.avivashishta.com/lab/deal-hero" target="_blank" rel="noreferrer">see it live at avivashishta.com/lab/deal-hero</a>. It is the same homepage, word for word, with only the hero swapped, so you can open both in two tabs and compare.</p>
+<p>The Deal hero starts like a card trick. While the counter climbs, a deck flies up from below the screen. Every card arrives face down, flips face up mid-flight and lands in a fan. When the loader hits 100, the fan does not get replaced. It lifts, tips back, opens into a wider wheel of bigger cards and starts turning, while the sky and the cloud bank arrive around it and the Reels near the top start playing.</p>
+<div class="highlight"><p><strong>The short version:</strong> the deck is a full 360 degree wheel pinned to a pivot below the screen, so only its top third is ever visible. Each card has one home angle on that wheel. The homepage's own loader already animates two numbers, <code>formation</code> and <code>expansion</code>. Map <code>formation</code> to the deal and <code>expansion</code> to the lift, and the whole sequence comes from one transform per card.</p></div><h2>The prompt</h2>
+<p>Paste this into Claude Code, Cursor or Replit. It describes the behaviour rather than my file layout, so it works in any React project.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a homepage hero where a deck of vertical video cards is dealt into a fan while the page loads, then lifts into a slowly turning wheel. React, Motion (framer-motion), plain CSS 3D transforms. No WebGL, no Three.js.</p>
+<p>THE WHEEL: 34 cards (9:16) sit on a full circle around a pivot point about 500px below the centre of the hero, each one standing on the rim with its bottom toward the pivot. Card i has a home angle of i * 360 / 34, where 0 is straight up. Because the pivot is below the screen, only the cards within about 100 degrees of the top are ever visible. Hide the rest with visibility: hidden, which means there is never a seam where cards wrap around.</p>
+<p>ONE TRANSFORM PER CARD, in this order: translate3d(0, pivotY, depth) then rotateZ(angle) then translate3d(0, -radius, 0) then rotateY(flip) then scale(s). Move to the pivot, rotate around it, push out along the rotated axis. Give each card a small negative z of its distance from the top, so the top card always overlaps its neighbours symmetrically.</p>
+<p>TWO MOTION VALUES DRIVE EVERYTHING: deal (0 to 1) and lift (0 to 1).</p>
+<p>THE DEAL (the loader): order cards by their distance from the top, so the top card is dealt first and the deal spreads outward to both sides at once. Each card gets its own slice of the deal: p = easeOutCubic((deal - order * 0.6) / 0.4). While p runs 0 to 1, the card's angle sweeps from 70 degrees to the right of its home angle down to the home angle, so every card travels left and the whole deck moves one way, its distance from the pivot from 0 to the radius (starting 140px low so it comes up from below the screen), rotateY goes from 180 to 0 so it flips face up mid-flight, and scale from 0.7 to 1. Give every card a back face (an ink panel with a serif monogram) so the flip shows something. The deal runs about 2.6 seconds, linear, while a real progress counter loads the covers and video previews.</p>
+<p>THE LIFT (the reveal): starts only when the deal is finished AND the assets are ready. Over about 1.9 seconds with a strong ease (cubic-bezier .5, 0, .15, 1), the cards grow 35 percent and the wheel grows with them: the radius goes from 580 to 1010 so the bigger cards get room instead of crowding, and the pivot drops from 500 to 814 so the top card stays clear of the frame. The whole scene also tips back 12 degrees around X, scales up 14 percent, and every card's angle gets a 28 degree turn to the left so the wheel visibly turns as it opens, in the same direction it will keep drifting. Never let the opening turn and the drift go opposite ways, or the wheel jerks backwards as it settles. After the lift the wheel keeps turning slowly on its own (7 degrees per second, scaled by lift so it ramps in).</p>
+<p>THE WORLD: as the lift starts, a painted sky fades in behind the wheel and a cloud bank rises in front of its lower half. The clouds are fully opaque, so the wheel rises out of them and never shows through them. Header and headline start about a second into the lift, while the wheel is still moving.</p>
+<p>VIDEO: each card has a cover image and a muted, looping, inline video with preload none. After the lift passes 0.6, cards within 40 degrees of the top play; everything else pauses. The video starts at opacity 0 and fades in only on its playing event, so there is never a black frame between cover and video.</p>
+<p>INTERACTION: drag, wheel and swipe move a target angle, and the visible angle eases toward it with an exponential follow (1 - exp(-dt * 9)). On release, keep the drag velocity and let it decay (velocity *= exp(-dt * 3.2)) so a flick glides. Ignore the velocity if the pointer paused for more than 80ms before release. The cursor never tilts the cards: the deck moves only on its own or under a drag. A drag must not trigger a card's link click.</p>
+<p>PERFORMANCE: one requestAnimationFrame loop for all cards. Keep a cache of the last value written for every style and skip the write when nothing changed. Decode every cover with img.decode() before the deal starts, so no card pops in mid-flight. Size the scene to the hero frame, not the window, so the lifted wheel clears the frame's top edge.</p>
+<p>ACCESSIBILITY AND ESCAPES: Escape, Tab and a visible skip button end the entrance instantly. With prefers-reduced-motion both values jump to 1 and nothing moves on its own. Every card is a real link with a text label for screen readers.</p>
+<p>Show me the pose code for one card first, then the deal, then the lift, then video and gestures.</p>
+</div>
+</div><h2>Concept 1: a fan is a wheel you only see the top of</h2>
+<p>My first version was a real fan: 14 cards spread across 150 degrees. It looked great until you dragged it, because a fan has ends. When a card scrolled off one end it had to reappear at the other, and no amount of fading hid that jump.</p>
+<p>The fix was to stop building a fan. The deck is a full wheel of 34 cards around a pivot 500px below the centre of the hero (it drops further during the lift). With that geometry, the bottom half of the wheel is always off screen or behind the clouds, so the visible top looks exactly like a fan, and it can turn forever without a seam.</p>
+<pre><code class="language-ts">const step = 360 / cards.length;
+// 0 is straight up; -180..180 either side.
+const home = wrap(i * step - spin + kick);
+const away = Math.abs(home);
+const visible = p &gt; 0 &amp;&amp; away &lt; 105;
+</code></pre>
+<h2>Concept 2: pivot, rotate, push out</h2>
+<p>Every card&#39;s position is one transform string, and the order is the whole trick:</p>
+<pre><code class="language-ts">const transform =
+  `translate3d(0, ${pivot}px, ${-away * .5}px)` + // go to the pivot, top card frontmost
+  ` rotateZ(${home + (1 - p) * 70}deg)` +          // sweep left around it into place
+  ` translate3d(0, ${-radius * p + (1 - p) * 140}px, 0)` + // out to the rim, from below
+  ` rotateY(${(1 - p) * 180}deg)` +               // flip face up as it lands
+  ` scale(${(.7 + .3 * p) * grow})`;
+</code></pre>
+<p>Read it right to left and it is how you would deal a card by hand: hold it at the deck, flip it, slide it out, rotate it into the fan. Every card starts 70 degrees to the right of its place and sweeps left into it. In my first version, the fan opened outward from the middle, so half the cards went right and half went left, and then the wheel turned left. That half second of rightward motion was the thing that made it feel unsmooth. One direction, all the way through, from the first card to the idle drift. The z offset matters more than it looks. Without it, card 0 overlaps card 33 and the fan has a visible seam at the top. With <code>-away * .5</code>, the card nearest the top always sits in front of its neighbours on both sides.</p>
+<h2>Concept 3: deal from the middle out</h2>
+<p>The ring hero deals cards around the circle in order. For a fan that reads wrong, because your eye goes to the top first. So each card&#39;s slot in the timeline comes from its distance to the top:</p>
+<pre><code class="language-ts">const order = Math.min(away, 100) / 100;          // 0 at the top, 1 at the edges
+const p = outCubic(span(deal, order * .6, order * .6 + .4));
+</code></pre>
+<p>Each card spends 40 percent of the deal moving and starts at its own point in the first 60 percent. The top card is dealt first, and the deal spreads to both sides at once, which makes it look symmetrical and deliberate.</p>
+<h2>Concept 4: the loader already tells you when to lift</h2>
+<p>I didn&#39;t write a new timeline. The homepage&#39;s loader animates two motion values: <code>formation</code> while it counts, and <code>expansion</code> when the ring opens. It also handles the counter, the skip button, Escape, reduced motion and the moment the header and headline come in. The Deal hero just reads the same two numbers:</p>
+<pre><code class="language-ts">const dealt = formation.get(), lift = expansion.get();
+// Bigger cards need a bigger wheel, and a bigger wheel needs a lower pivot to stay in frame.
+const radius = 580 + 430 * lift, pivot = 500 + 314 * lift, grow = 1 + .35 * lift;
+const kick = -28 * lift; // left, the same way the wheel drifts afterwards
+stage.style.transform =
+  `translateY(${60 - 10 * lift}px) rotateX(${12 * lift}deg) scale(${scale() * (1 + .14 * lift)})`;
+</code></pre>
+<p>The growth is part of the same motion. The deal packs small cards tightly, because a dense fan reads as a deck. The resting wheel needs the opposite: Reels big enough to watch, with a little air between them. Growing the cards, the radius and the pivot drop on the same <code>lift</code> value means the deck loosens into the carousel in one continuous move, and there&#39;s never a moment where it resizes.</p>
+<p>That is why the two heroes can share one page. Everything that makes the entrance feel finished (the real progress counter, the brand word flying into the header, the frame drawing in) belongs to the loader, and both heroes plug into it.</p>
+<h2>Concept 5: the clouds are solid, the videos fade in</h2>
+<p>Two small details made it feel like one world rather than cards over a picture.</p>
+<p>The cloud bank is fully opaque on this hero. On the ring, clouds at 92 percent read as mist. On a wheel whose lower half is always behind them, any transparency shows the cards through them, and the wheel stops looking like it rises out of the sky.</p>
+<p>Videos never pop. Each card shows its cover, and the video sits on top at opacity 0 until the browser fires <code>playing</code>:</p>
+<pre><code class="language-css">.preview { opacity: 0; transition: opacity .5s ease; }
+.preview[data-playing] { opacity: 1; }
+</code></pre>
+<p>Calling <code>play()</code> doesn&#39;t mean a frame is ready. Waiting for the event is the difference between a crossfade and a black flash.</p>
+<h2>Concept 6: smooth is mostly about what you don&#39;t do</h2>
+<p>The whole hero runs in one <code>requestAnimationFrame</code> loop that writes inline styles, with a few rules:</p>
+<ul>
+<li><strong>Write only what changed.</strong> A <code>Map</code> remembers the last value of every style per card and skips the write if it&#39;s the same. Settled and off-screen cards cost nothing.</li>
+<li><strong>Hide, don&#39;t fade, what&#39;s out of view.</strong> Cards past 105 degrees get <code>visibility: hidden</code>, so the compositor skips them entirely.</li>
+<li><strong>Decode before you deal.</strong> <code>img.decode()</code> on every cover before the clock starts means no card arrives as a blank rectangle.</li>
+<li><strong>No cursor tilt.</strong> I tried a few degrees of parallax on mouse move and took it out. The cards should move because the deck is turning, not because your hand drifted across the trackpad.</li>
+<li><strong>Follow, don&#39;t snap.</strong> The visible angle eases toward the target with <code>1 - Math.exp(-dt * 9)</code>, which stays the same at any frame rate. Flicks keep their velocity and decay smoothly, and a pause before letting go cancels the flick, so a slow, careful drag stops exactly where you left it.</li>
+<li><strong>Size to the frame.</strong> The scene scales to the hero frame&#39;s size, not the window&#39;s. On a short laptop screen the lifted wheel would otherwise poke out of the top of the frame.</li>
+</ul>
+<h2>Ring or deal?</h2>
+<p>The ring is about immersion: you end up inside a room of Reels. The deal is about presentation: a hand of cards held up for you to pick from, and it shows more covers at once at a readable size. I haven&#39;t decided which one stays. Open <a href="/">the homepage</a> and <a href="https://www.avivashishta.com/lab/deal-hero" target="_blank" rel="noreferrer">the Deal version</a> side by side and tell me which one you&#39;d keep.</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

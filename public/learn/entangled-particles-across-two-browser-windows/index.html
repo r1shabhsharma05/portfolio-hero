@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Entangled: Particles That Flow Between Two Browser Windows | Rishabh Sharma</title>
+<meta name="description" content="Open the page in two windows and their particle orbs pull on each other, joined by streams that cross the gap and follow the windows as you drag them. No server" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/entangled-particles-across-two-browser-windows/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Entangled: Particles That Flow Between Two Browser Windows</h1>
+<p class="lede">Open the page in two windows and their particle orbs pull on each other, joined by streams that cross the gap and follow the windows as you drag them. No server: BroadcastChannel, screen coordinates and Three.js. Code and prompt inside.</p>
+<p class="meta">9 November 2026</p>
+<p>A couple of years ago a video went round of two browser windows side by side, each with a glowing ball of particles, and the particles flowed from one window into the other. Drag a window and the stream bent to follow it, as if the windows were magnets. It was Bjørn Staal&#39;s multi-window piece from November 2023, and I never forgot it. So I built my own version. <a href="https://www.avivashishta.com/lab/entangled" target="_blank" rel="noreferrer">It is live at avivashishta.com/lab/entangled</a>: open it, click <strong>Open a second window</strong>, and move them around.</p>
+<div class="highlight"><p><strong>The short version:</strong> every window works in <em>screen</em> coordinates instead of page coordinates. Each one tells the others where it sits on the monitor over a <code>BroadcastChannel</code>, and every particle is worked out from the shared clock and the orb positions alone. So every window draws the exact same particles, each through its own hole in the screen, and a stream that leaves one window lines up with where it enters the other. No server, no WebSockets.</p></div><h2>The trick: one screen, many holes</h2>
+<p>A web page normally thinks in its own coordinates: (0, 0) is the top left of the page. Here, everything lives on the monitor instead. A window knows where its page sits on the screen:</p>
+<pre><code class="language-ts">const rect = {
+  x: window.screenX + (window.outerWidth - window.innerWidth) / 2,
+  y: window.screenY + (window.outerHeight - window.innerHeight), // the tabs and address bar sit above the page
+  w: window.innerWidth,
+  h: window.innerHeight,
+};
+</code></pre>
+<p>Each window puts its orb at the middle of its own rect, in screen pixels. Then the vertex shader draws every particle at a screen position and subtracts this window&#39;s top left corner at the very end:</p>
+<pre><code class="language-glsl">vec4 toClip(vec2 s) {
+  vec2 q = (s - uOrigin) / uView;     // uOrigin = this window&#39;s corner on the screen
+  return vec4(q.x * 2. - 1., 1. - q.y * 2., 0., 1.);
+}
+</code></pre>
+<p>That&#39;s the whole illusion. Both windows draw the same scene, and each just looks at a different part of it. With two monitors it works the same way, because screen coordinates run across both displays.</p>
+<h2>Telling the other windows</h2>
+<p>Windows from the same site can talk to each other with <code>BroadcastChannel</code>, no server needed. Each window sends its id, when it opened and its rect whenever it moves and a few times a second anyway. There&#39;s no event for &quot;the window moved&quot;, so every frame it checks <code>screenX</code> and <code>screenY</code> and sends an update if they changed. A window that stops sending for 2.5 seconds is dropped, and closing one sends a goodbye straight away.</p>
+<p>Windows are put in order by when they opened, and the order picks the colour: blue, red, yellow, then paper. Up to four link up, which makes six streams.</p>
+<h2>Particles with no state</h2>
+<p>The part that makes it line up: no particle is ever stored or synced. Each one has a few random numbers baked in, and its position at any moment comes from those, the time and the orb positions. Every window reads the same wall clock (<code>performance.timeOrigin + performance.now()</code>), so two windows working out particle 4,012 get the same answer without ever talking about it. All of it runs in the vertex shader, about 70,000 points in a few draw calls.</p>
+<h2>What&#39;s drawn</h2>
+<p><strong>Each orb is a small magnet.</strong> Its axis points at the nearest other orb, so when you move a window the other orb swings round to face it. There are three layers:</p>
+<ul>
+<li><strong>A shell</strong>, a sphere spinning on the magnet&#39;s axis, brighter at the edge so it reads as round, and bulging toward the other orb the closer it is.</li>
+<li><strong>Field lines</strong>, thirty loops from pole to pole following the dipole curve r = L sin²θ, with particles flowing along them.</li>
+<li><strong>A core</strong>, a small, hot, fast swirl in the middle.</li>
+</ul>
+<p><strong>The streams are field lines between two magnets.</strong> Each particle rides one of about forty lanes. A lane leaves orb A at an angle, bows out and lands on orb B, as a cubic Bézier:</p>
+<pre><code class="language-glsl">vec3 e0 = vec3( dir * cos(th), 0.) + side;   // leaving A
+vec3 e1 = vec3(-dir * cos(th), 0.) + side;   // arriving at B, mirrored
+vec3 p0 = vec3(A.xy, 0.) + e0 * A.z * .85;
+vec3 p3 = vec3(B.xy, 0.) + e1 * B.z * .85;
+vec3 p  = bez(p0, p0 + e0 * reach, p3 + e1 * reach, p3, u);
+</code></pre>
+<p><code>u</code> moves from 0 to 1 over time. Half the particles go each way, and they fade from one orb&#39;s colour to the other&#39;s on the way. Small lane angles make the bright straight beam between the orbs and big ones make the wide loops around it, which is why it looks like iron filings round two magnets. One particle in twenty is a brighter comet head.</p>
+<p><strong>Under the particles</strong>, a full-screen shader draws a soft glow round each orb and along each link, in the same screen space. <strong>Behind everything</strong> is a starfield fixed to the monitor, not the window, so the windows really do look out onto one sky.</p>
+<p><strong>Movement:</strong> each orb eases toward its window&#39;s centre on a spring, so a dragged window tows its orb a little behind it instead of snapping.</p>
+<h2>The catch: Brave</h2>
+<p>My first test was in Brave across two displays, and both windows drew the same picture on top of each other. Brave Shields protects you from fingerprinting by faking <code>window.screenX</code> and <code>screenY</code>, so every window says it&#39;s in the same place. The page now notices when two windows claim the same spot and tells you to turn Shields off for the site or use Chrome or Safari. Phones only have one window, so they get a note instead of the button.</p>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a full-screen page with Three.js where every browser window that has the page open shows a glowing orb of particles, and the orbs are joined by streams of particles that cross the gap between windows and follow them as they move. Work in screen coordinates: each window's page rect on the monitor is screenX + (outerWidth - innerWidth) / 2, screenY + (outerHeight - innerHeight), innerWidth, innerHeight. Each window sends its id, open time and rect over a BroadcastChannel whenever it moves (check every frame) and every 400ms, answers a hello, sends bye on pagehide, and drops windows not heard from in 2.5s. Order windows by open time; the order sets the colour. Ease each orb toward its window's centre.</p>
+<p>Keep no particle state. Draw everything in vertex shaders from per-particle random attributes, uniforms for up to four orbs (x, y, radius, on) and the shared wall clock (performance.timeOrigin + performance.now()), and convert screen px to clip space by subtracting this window's corner. Orbs: a rim-lit spinning shell that bulges toward the nearest orb, dipole field loops (r = L sin²θ) around an axis aimed at the nearest orb, and a hot core, with a simple perspective divide. Streams: for every pair, particles on about 40 lanes, each a cubic Bézier that leaves one orb at an angle off the axis and lands on the other mirrored, flowing both ways and mixing colours. Add a full-screen additive glow round orbs and along links, and a starfield fixed to the screen. Use additive blending on a dark background, a button that opens a second window beside this one with window.open, and a warning when two windows report the same position (Brave Shields fakes it).</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

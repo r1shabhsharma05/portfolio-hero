@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pinch Time Travel: Scrubbing Video With Your Fingers in 300 Lines of Python | Rishabh Sharma</title>
+<meta name="description" content="Spread your fingers and a timelapse runs forward; squeeze and it rewinds. How Rishabh Sharma built a pinch-to-scrub video player with MediaPipe hand tracking an" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/pinch-time-travel-scrub-video-with-your-fingers-mediapipe/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Pinch Time Travel: Scrubbing Video With Your Fingers in 300 Lines of Python</h1>
+<p class="lede">Spread your fingers and a timelapse runs forward; squeeze and it rewinds. How Rishabh Sharma built a pinch-to-scrub video player with MediaPipe hand tracking and OpenCV — including the four bugs that only show up in front of a real camera.</p>
+<p class="meta">28 August 2026</p>
+<div class="tldr">
+<strong>TL;DR:</strong> Spread your thumb and index finger apart and a video runs forward. Squeeze them together and it rewinds. Point it at a timelapse — a sunflower opening over 83 days, a mushroom pushing out of the soil, a mushroom cloud blooming — and it stops feeling like operating a scrubber and starts feeling like pulling time itself back and forth. Built with MediaPipe hand tracking, OpenCV and NumPy in about 300 lines of Python. This post is the four places where the obvious implementation is quietly wrong.
+</div><div class="tech-stack">
+<span>Python</span>
+<span>MediaPipe 0.10.21</span>
+<span>OpenCV</span>
+<span>NumPy</span>
+<span>Computer Vision</span>
+<span>yt-dlp</span>
+</div><h2>The Core Trick: Pinch Distance Is Not the Distance Between Your Fingers</h2><p>The naive version measures the pixel distance between the thumb tip and the index tip and maps it onto the timeline. It feels broken immediately, and the reason is worth understanding: <strong>moving your hand toward the camera makes your fingers farther apart in pixels.</strong> So leaning forward scrubs the video. Every unrelated hand motion becomes input. The gesture never stabilizes.</p><p>The fix is to divide by something that scales the same way. MediaPipe gives <span class="stat">21 hand landmarks</span>, so we use the hand itself as the ruler:</p><pre><code>thumb   = lm[4]   # thumb tip
+index   = lm[8]   # index tip
+wrist   = lm[0]
+mid_mcp = lm[9]   # base knuckle of the middle finger
+
+hand_size = ||mid_mcp - wrist||
+pinch     = ||thumb - index|| / hand_size</code></pre><p><code>wrist → middle_MCP</code> is the palm's spine. It is rigid — it does not change when you open your fingers — and it grows and shrinks with distance from the camera at exactly the same rate the pinch gap does. Dividing one by the other cancels the depth term out. The measurement now means <em>"how open are your fingers, as a fraction of your palm"</em>, which is what we actually wanted, and you can wave your whole arm around without touching the timeline.</p><blockquote>This is a general pattern for gesture work: never use a raw distance, always use a ratio against a rigid part of the same body.</blockquote><h2>Calibration: The Constants You Hardcode Will Be Wrong</h2><p>The first version mapped the normalized pinch from <code>0.12</code> (closed) to <code>0.85</code> (fully spread) onto the timeline. Reasonable-looking numbers. Then I measured an actual hand in front of an actual webcam for 90 frames:</p><pre><code>hand detected in 80/90 frames
+raw pinch: min 0.12  max 0.43  mean 0.35
+maps to timeline pos: 0.00 .. 0.43</code></pre><p>A fully spread hand reached <code>0.43</code>, not <code>0.85</code>. Which means <strong>the back <span class="stat">57%</span> of every video was physically unreachable</strong> — you could open your fingers as wide as they go and the sunflower would never finish blooming. The gesture was not broken; the range was a guess, and the guess was off by a factor of two.</p><p>Guessing better numbers just moves the problem to the next hand and the next camera angle. So the range calibrates itself:</p><pre><code>class PinchRange:
+    def update(self, raw, dt):
+        self.lo = min(self.lo, raw)          # widen instantly for any new extreme
+        self.hi = max(self.hi, raw)
+        pull = RELAX * dt * (self.hi - self.lo)
+        self.lo, self.hi = self.lo + pull, self.hi - pull   # relax slowly back in
+        return clip((raw - self.lo) / (self.hi - self.lo), 0, 1)</code></pre><p>Widen instantly, relax slowly. Any new extreme is admitted on the frame it happens, so the first time you fully spread your fingers the far end of the timeline becomes reachable. Meanwhile the range creeps inward at <span class="stat">2% per second</span>, so if you settle into a smaller comfortable motion the mapping re-tightens around it and you get full travel without full extension. A <code>RANGE_MIN</code> floor stops it from collapsing to a point when your hand is still.</p><p>The practical upshot: wiggle open-and-closed once at launch and it is tuned to you. Press <code>r</code> to reset if you hand it to someone else.</p><h2>Two Ways to Map a Gesture Onto a Timeline</h2><p>These feel completely different and both are worth having.</p><h3>Absolute — your hand <em>is</em> the scrubber</h3><p>Absolute mapping puts pinch distance straight onto the timeline. Fingers touching is frame one, fully spread is the last frame. It is a direct positional grip on time. This is the magic one, and it is best on short clips, because the entire duration has to fit inside a few centimetres of finger travel.</p><pre><code>target = pinch * (n - 1)
+pos += (target - pos) * 0.5     # ease toward it, don't snap</code></pre><h3>Velocity — pinch controls speed, not position</h3><p>Velocity mapping has a neutral pose with a deadzone around it. Spread past it and you fast-forward, close past it and you rewind, and the further you go the faster it runs.</p><pre><code>delta = pinch - neutral
+if abs(delta) &gt; DEADZONE:
+    mag = (abs(delta) - DEADZONE) / (1 - DEADZONE)
+    pos += sign(delta) * mag**1.6 * MAX_FPS_SCRUB * dt</code></pre><p>The <code>**1.6</code> exponent matters more than it looks. A linear ramp makes slow, precise scrubbing nearly impossible, because the region right outside the deadzone is already moving fast. The exponent flattens the response near neutral — fine control where you need it — and lets it climb steeply at the extremes for fast travel. The deadzone itself exists because a hand is never perfectly still, and without it the video drifts constantly.</p><p>Absolute for short clips and demos, velocity for anything over a minute. <code>m</code> toggles between them; <code>c</code> recalibrates neutral to wherever your hand is now.</p><h2>Why the Whole Video Lives in RAM</h2><p>Scrubbing backward through an H.264 file is miserable. Inter-frame compression means frame <em>N</em> is stored as a diff against earlier frames, so seeking backward one frame makes the decoder jump to the previous keyframe and decode forward again. Do that every display frame and you get a stuttering mess exactly when the gesture should feel most fluid.</p><p>So the clip is decoded once, up front, into a list of NumPy arrays. After that, "go to frame N" is a list index — and crucially, <strong>backward costs exactly what forward costs.</strong> That symmetry is the entire feel of the thing.</p><p>The price is memory, and it is steep: one 640×360 BGR frame is <span class="stat">691 KB</span>, so 900 frames is <span class="stat">622 MB</span>. <code>MAX_FRAMES</code> caps it, and longer clips get evenly subsampled (keep every <em>k</em>-th frame) rather than truncated — you would rather have the whole video slightly coarser than the first third at full rate.</p><p>There is a subtle trap here I fell into. The loader originally normalized every frame to a 720px height — which <em>upscaled</em> the 360p test clips, turning a 622 MB buffer into a <span class="stat">2.5 GB</span> one to store interpolated pixels containing no additional information. Storage resolution and display resolution are different concerns:</p><pre><code>if h &gt; target_h:            # only ever downscale; upscaling just wastes RAM</code></pre><p>Frames are stored at native resolution and upscaled per-frame at display time, which is one cheap resize of one image.</p><h2>Four Bugs, and What They Have in Common</h2><p>Every one of these was invisible in the code and obvious the moment something real ran.</p><h3>1. The webcam's first frame is always empty</h3>
+<p>On macOS, the first <code>cap.read()</code> after opening a capture device returns <code>False</code>. The main loop said <code>if not ok: break</code> — the textbook idiom — so the app exited instantly on launch, every time, before drawing a single frame. It now warms the camera up with a few discarded reads and tolerates transient drops mid-session, giving up only after ~2 seconds of silence.</p><h3>2. The overlays were sized in pixels</h3>
+<p>The webcam inset was hardcoded to 180px tall. The camera ignores the 640×480 request and hands back 16:9, so the inset computed to <strong>320×180 — on a 320×240 video.</strong> It covered the entire width and 75% of the height; the HUD ate another 92px of the remaining 60. The video was completely buried, and the symptom reported was "I just see myself and not the video." Nothing was wrong with the video pipeline at all. Everything is now a fraction of the canvas: the inset is 22% of canvas width, and the HUD's band, font, padding and timeline all scale off canvas height.</p><h3>3. A negative slice index that didn't crash</h3>
+<p>The same inset math computed its x-origin as <code>canvas_width - pip_width - 16</code> = <code>320 - 320 - 16</code> = <code>-16</code>. NumPy happily interprets that as an offset from the right edge and produces a silently wrong (often empty) slice instead of raising. <code>draw_pip</code> now bails out if the inset cannot fit.</p><h3>4. The unreachable back half of the timeline</h3>
+<p>Described above — the hardcoded <code>0.85</code> ceiling against a real maximum of <code>0.43</code>.</p><p>The common thread: none of these are logic errors you would catch by rereading the file. They are all collisions between the code and the messy specifics of a real camera, a real screen, and a real hand. The headless smoke test — stubbing <code>imshow</code>/<code>waitKey</code> and driving the actual loop against the actual webcam — caught three of them in about a minute, and is by far the highest-leverage thing in the repo.</p><h2>Getting Test Footage</h2><p>Timelapses are the ideal material, and <code>yt-dlp</code> is the tool. As of now the defaults fail with <code>HTTP Error 403</code> — YouTube requires solving a JS challenge, and yt-dlp needs both a JS runtime and a separately-distributed solver script:</p><pre><code>yt-dlp --js-runtimes node --remote-components ejs:github \
+       --extractor-args "youtube:player_client=web_safari,tv,mweb" \
+       -f "bv*[height&lt;=720]+ba/b[height&lt;=720]" --merge-output-format mp4 \
+       -o "%(title).60s.%(ext)s" --restrict-filenames "&lt;url&gt;"</code></pre><p>Forcing <code>player_client</code> matters: the default <code>android_vr</code> client's URLs get rejected outright. Even then the high-res streams demand a PO token and it falls back to format 18 (360p combined). For this project that is not a real loss — 360p keeps the frame buffer small, and the footage gets upscaled for display anyway.</p><h2>Running It</h2><pre><code>python3 -m venv .venv &amp;&amp; .venv/bin/pip install -r requirements.txt
+./run.sh                                    # first clip in ./videos
+./run.sh videos/explosion.mp4
+./run.sh videos/mushroom.mp4 --mode velocity
+./run.sh videos/rocket.mp4 --max-frames 1800 --display-height 1000</code></pre><table>
+<thead><tr><th>Key</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td><code>q</code> / <code>ESC</code></td><td>Quit</td></tr>
+<tr><td><code>m</code></td><td>Switch absolute ↔ velocity</td></tr>
+<tr><td><code>c</code></td><td>Recalibrate neutral (velocity mode)</td></tr>
+<tr><td><code>r</code></td><td>Reset the learned pinch range</td></tr>
+<tr><td><code>h</code></td><td>Show/hide the HUD scrubber (hidden by default)</td></tr>
+<tr><td><code>f</code></td><td>Flip the webcam horizontally</td></tr>
+<tr><td><code>SPACE</code></td><td>Freeze the timeline</td></tr>
+</tbody>
+</table><p><strong>MediaPipe must be pinned to 0.10.21.</strong> Version 1.x removed the entire <code>mp.solutions.*</code> namespace, so <code>mp.solutions.hands</code> no longer exists. On macOS your terminal also needs Camera permission under System Settings → Privacy &amp; Security.</p><h2>Tuning Dials</h2><p>All at the top of <code>pinch_player.py</code>:</p><table>
+<thead><tr><th>Constant</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>SMOOTH</code></td><td><code>0.35</code></td><td>Response speed. Lower is smoother and laggier</td></tr>
+<tr><td><code>MAX_FRAMES</code></td><td><code>900</code></td><td>RAM budget vs. scrub resolution</td></tr>
+<tr><td><code>DEADZONE</code></td><td><code>0.06</code></td><td>Velocity mode: how still "still" has to be</td></tr>
+<tr><td><code>MAX_FPS_SCRUB</code></td><td><code>90.0</code></td><td>Velocity mode: top scrub speed</td></tr>
+<tr><td><code>RELAX</code></td><td><code>0.02</code></td><td>How fast the learned range re-tightens</td></tr>
+<tr><td><code>PIP_FRAC</code></td><td><code>0.22</code></td><td>Webcam inset width, as a fraction of the canvas</td></tr>
+</tbody>
+</table><p><code>SMOOTH</code> is the one to reach for first. Everything else is usually fine.</p><h2>Why This Kind of Project Is Worth Building</h2><p>Three hundred lines of Python, one model, one webcam — and almost all of the difficulty lives in the gap between what the code says and what the physical world does. The scale-invariant ratio, the self-widening range, the exponent on the velocity curve, the decision to burn 600 MB of RAM so that rewinding costs what fast-forwarding costs: none of those are visible in a feature list, and all of them are the difference between a gesture demo and a gesture that feels like a grip on time.</p><p>If you liked this, the same MediaPipe stack drives the <a href="/learn/gesture-controlled-portfolio-mediapipe-threejs/">gesture-controlled version of my portfolio</a> and the <a href="/learn/motion-gallery-gesture-controlled-3d-painting-orb/">3D painting orb you rotate with your hands</a>.</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

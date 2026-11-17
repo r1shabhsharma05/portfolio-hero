@@ -11,6 +11,7 @@
 export const WORLD_SCENES = {
   build: { scene: "/build-sky.webp", name: "Build" },
   brand: { scene: "/brand-seascape.jpg", name: "Brand" },
+  learn: { scene: "/build-sky.webp", name: "Learn" },
 } as const;
 export type WorldId = keyof typeof WORLD_SCENES;
 export const WORLD_SCENE = WORLD_SCENES.build.scene;
@@ -85,8 +86,8 @@ export function openWorldTransition(href: string = WORLD_HREF, world: WorldId = 
   c.appendChild(h);
   d.appendChild(c);
   d.appendChild(u);
-  // Brand's cover (Avi's): red/yellow leaves drift down over the seascape.
-  if (world === "brand") {
+  // Brand's and Learn's covers (Avi's): red/yellow leaves drift down.
+  if (world === "brand" || world === "learn") {
     [8, 22, 38, 55, 70, 84].forEach((left, i) => {
       const leaf = document.createElement("i");
       leaf.className = "world-transition-leaf";

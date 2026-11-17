@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Prompt I Used to Build a Premium Property Site on Replit (Scroll as the Medium) | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable Replit Agent prompt for a luxury property site where scroll is the medium — a masked arch preloader, a sticky hero dive, a word-spacing spread," />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-premium-property-site-scroll-choreography-replit/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Prompt</p>
+<h1>The Prompt I Used to Build a Premium Property Site on Replit (Scroll as the Medium)</h1>
+<p class="lede">A copy-pasteable Replit Agent prompt for a luxury property site where scroll is the medium — a masked arch preloader, a sticky hero dive, a word-spacing spread, a horizontal track sized from its own content, clip-path curtains, a page that clips into a card at the footer, and six reveal primitives that each have a mirrored exit.</p>
+<p class="meta">10 September 2026</p>
+<h2>Overview</h2>
+<p>
+        A single luxury residential development, one page, and scroll doing all
+        the work. A plum curtain opens through an arch-shaped hole that widens
+        and flies off the top of the screen. The hero holds still while the
+        camera dives into it. A four-word sentence pulls itself apart. The
+        location section turns sideways. The amenities grid scales up until the
+        next section is revealed <em>through</em> it. Two clip-path curtains
+        open like an aperture. Then the whole page clips inward into a card and
+        the footer rises up behind it.
+</p>
+<p>
+        No two sections animate the same way, and every entrance has a matching
+        exit — scroll back up and it rewinds rather than re-triggering. A small
+        mark in the top-left corner never stops spinning, and it spins faster
+        when you flick and reverses when you scroll up.
+</p>
+<p>
+        I wrote this after
+<a href="/learn/era-residence-scroll-choreography-design-language/"
+          >taking apart era-residence.com</a>
+        section by section. That post is the teardown — what the site does and
+        why it works. This one is the build: the whole thing turned into a
+        single brief for <a href="https://replit.com/" target="_blank" rel="noreferrer">Replit Agent</a>, with
+        the reference site's own bugs fixed on the way in.
+</p><div class="highlight">
+<p>
+<strong>What it produces:</strong> a masked arch preloader built from
+          four composited CSS mask layers, a sticky-scroll hero dive, a
+          word-spacing spread, a horizontal location track whose length is
+          derived from its own content, a zoom-through hand-off, clip-path
+          architecture curtains, a page that clips itself into a card at the
+          footer, six reveal primitives that each have a mirrored exit, five
+          parallax variants, a velocity-tracking corner mark, and a draggable
+          progress rail with a two-digit counter.
+</p>
+<p style="margin-bottom: 0">
+<strong>Stack:</strong> vanilla HTML/CSS/JS modules on Vite, GSAP
+          (ScrollTrigger, SplitText, CustomEase) and Lenis. No framework, no
+          WebGL, no canvas — every effect is a transform, an opacity, a
+          clip-path or a mask.
+</p>
+</div><h2>Supply the imagery first</h2>
+<p>
+        This is a site where the interface is deliberately three flat colours
+        and all the richness comes from photography. That means the assets are
+        not decoration you add at the end — they are the thing the choreography
+        is choreographing. Get them in place before the agent wires anything.
+</p>
+<ul>
+<li>
+<strong>One hero image at 4K, shot with room to fly into.</strong> The
+          hero dive scales it to 2× from a transform origin at 75% height. If
+          the subject already fills the frame, the end of the dive is a crop of
+          nothing. Shoot or source wide.
+</li>
+<li>
+<strong>An establishing aerial for the full-bleed location
+          frame.</strong> It carries that section on its own — no scrim, no
+          gradient, no overlay, one letterspaced caption in a corner. A
+          mediocre aerial has nothing to hide behind here.
+</li>
+<li>
+<strong>Three to five decorative video loops, 3–6 seconds,
+          silent.</strong> Movement in a place: foliage in wind, water, light
+          moving across a wall. No people, no story. Encode both MP4/H.264 and
+          WebM/VP9 — the reference site is WebM-only and strips WebM for Safari,
+          so all eight of its loops simply do not exist there.
+</li>
+<li>
+<strong>A radially symmetric corner mark.</strong> It rotates forever.
+          A horizontal wordmark rotating reads as a logo that has fallen over; a
+          circular ring around a small glyph reads as motion. Design it for the
+          animation, not the other way round.
+</li>
+</ul><h2>The prompt</h2>
+<p>Paste the whole thing at once.</p><div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt" id="property-prompt">Build **a marketing site for a single luxury residential development**. It should feel like a film reel, not a brochure — **scroll is the medium**. Every section has its own scroll behaviour, its own entrance and its own matching exit. Restraint over spectacle: the interface is plum, paper and sky, and the photography carries all the colour.<p><strong>Stack — use exactly this, no substitutions:</strong></p>
+<ul>
+<li>Vanilla HTML + CSS + JS modules (no framework), Vite for the dev server</li>
+<li><code>npm i gsap lenis</code> — GSAP 3.15+ with ScrollTrigger, SplitText and CustomEase; Lenis 1.3+ for smooth scroll</li>
+<li><strong>No WebGL, no canvas, no shader library.</strong> Everything is <code>transform</code>, <code>opacity</code>, <code>clip-path</code>, <code>mask</code> and CSS custom properties</li>
+<li>Must run with a clean console and no layout shift</li>
+</ul>
+<hr>
+<h2>Step 0 — Non-negotiables</h2>
+<ol>
+<li><strong>Desktop-first, never broken on mobile.</strong> Gate all heavy choreography behind a <code>992px</code> breakpoint using <code>gsap.matchMedia()</code>. Below it, sections still reveal — but no horizontal scroll, no snapping, no magnetic hover.</li>
+<li><strong>Respect <code>prefers-reduced-motion</code>.</strong> If reduced motion is on: do not initialise smooth scroll, do not scrub anything, and set every reveal to its final state immediately.</li>
+<li><strong>Real semantic HTML.</strong> Every control is a <code>&amp;lt;button&amp;gt;</code> or <code>&amp;lt;a&amp;gt;</code>, never a <code>&amp;lt;div&amp;gt;</code> with a click handler. Real <code>alt</code> on every content image. Exactly one <code>&amp;lt;h1&amp;gt;</code> per page.</li>
+<li><strong>Nothing parked invisible.</strong> Reveals start hidden only after JS confirms it is running. If JS fails, all content is visible.</li>
+</ol>
+<h2>Step 1 — Colour and type</h2>
+<p>Four brand colours plus one ink and one paper:</p>
+<ul>
+<li><code>--plum: #340C24</code> — preloader ground, footer ground, side rails. The &quot;closed curtain&quot; colour.</li>
+<li><code>--sky: #B5CEDB</code> — large calm sections that host oversized display type.</li>
+<li><code>--blush: #F8BBCB</code> — accent only: small marks, hover fills, active dots. Never a section ground.</li>
+<li><code>--paper: #F3F3EC</code> — default page ground, and reversed-out type on plum.</li>
+<li><code>--ink: #17233B</code> — all type on light grounds. Never pure black.</li>
+</ul>
+<p>Rules: only two type colours exist — <code>--ink</code> on light, <code>--paper</code> on dark. <strong>No greys.</strong> Generate opacity ramps instead of extra colours (<code>--ink-60/30/10/05</code> as <code>#17233B99 / 4D / 1A / 0D</code>, same for paper) and build every hairline and muted label out of those.</p>
+<p>Type — three roles, no more:</p>
+<ul>
+<li><strong>Display:</strong> Bodoni Moda, UPPERCASE, 400, <code>font-size: clamp(3rem, 13vw, 13rem)</code>, <code>letter-spacing: -0.024em</code>, <code>line-height: 0.92</code>, <code>text-wrap: balance</code>. Display type is <em>always</em> huge and <em>always</em> the only thing in its frame. There is no medium-sized display type on this site.</li>
+<li><strong>Script:</strong> Pinyon Script. A place name, a signature, a watermark. Used once or twice per page. Never a heading, never body copy.</li>
+<li><strong>UI / body:</strong> Archivo. Micro-labels are UPPERCASE 700 at 11–13px with <code>letter-spacing: 0.05em</code>; running copy is 400 at 16–18px. This one label setting does most of the &quot;premium&quot; work.</li>
+</ul>
+<p><strong>Continuous theme swapping.</strong> Tag every section <code>data-bg=&quot;light&quot; | &quot;dark&quot; | &quot;color&quot;</code> and every piece of fixed UI (corner mark, nav labels, scroll counter) <code>data-theme</code>. One ScrollTrigger per section swaps the fixed elements between <code>theme_on-light</code> / <code>theme_on-dark</code> / <code>theme_on-color</code> so the corner mark stays legible over every ground without a visible flip.</p>
+<h2>Step 2 — Smooth scroll, wired exactly like this</h2>
+<pre><code class="language-js">lenis = new Lenis({
+  wrapper: window, duration: 1.2, smoothWheel: true, touchMultiplier: 2,
+  easing: (t) =&amp;gt; Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+});
+lenis.on(&quot;scroll&quot;, ScrollTrigger.update);      // ScrollTrigger reads Lenis, not native scroll
+gsap.ticker.add((t) =&amp;gt; lenis.raf(t * 1000));   // one rAF loop for the whole site
+gsap.ticker.lagSmoothing(0);                   // REQUIRED
+</code></pre>
+<p>Three details that are not optional: <code>lagSmoothing(0)</code>, or GSAP fast-forwards after a dropped frame and every scrub desyncs from scroll position; the <strong>exponential</strong> easing, because <code>power2</code> or linear feels like lag rather than weight; and <strong>do not enable smooth touch</strong> — leave native momentum scrolling on mobile.</p>
+<p>Skip smooth scroll entirely under reduced motion. Scroll lock (preloader, modals) must measure the scrollbar width into a custom property and pad the body, or the layout jumps when it engages.</p>
+<h2>Step 3 — Define the timing language once, then never write a raw ease again</h2>
+<pre><code class="language-js">export const BREAKPOINT = 992;
+export const durS = 0.4, durM = 0.8, durL = 1.2;
+export const stagger = 0.1, delayReveal = 0.3;
+
+CustomEase.create(&quot;InOut&quot;,     &quot;0.75,0,0.25,1&quot;);
+CustomEase.create(&quot;Out&quot;,       &quot;0.25,1,0.5,1&quot;);
+CustomEase.create(&quot;In&quot;,        &quot;0.5,0,0.75,0&quot;);
+CustomEase.create(&quot;Ease&quot;,      &quot;0.25,0.1,0.25,1&quot;);
+CustomEase.create(&quot;diveIn&quot;,    &quot;0.6,0,0,1&quot;);     // preloader arch dive
+CustomEase.create(&quot;horScroll&quot;, &quot;0.25,0,0.75,1&quot;); // horizontal section
+</code></pre>
+<p>Every animation on the site uses one of <code>durS/durM/durL</code> and one of those six eases. No ad-hoc numbers anywhere.</p>
+<h2>Step 4 — The core mechanic: tall wrapper + CSS sticky. Never <code>pin: true</code>.</h2>
+<p><strong>This is the most important instruction in this prompt.</strong> Every &quot;the screen holds still while things happen&quot; moment is built as an outer wrapper with an explicit height of 2–4 viewport heights, a child at <code>position: sticky; top: 0; height: 100vh</code>, and one ScrollTrigger on the wrapper reading <code>start: &quot;top top&quot;</code> → <code>end: &quot;bottom bottom&quot;</code> with <code>scrub</code>.</p>
+<pre><code class="language-css">.scroll-area         { position: relative; height: 340vh; }
+.scroll-area__screen { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+</code></pre>
+<p><strong>Do not use ScrollTrigger&#39;s <code>pin: true</code>.</strong> It injects a pin-spacer and toggles <code>position: fixed</code>, which forces layout at each boundary and produces 1px jitter against Lenis. CSS sticky is compositor-only and never touches document flow.</p>
+<p>Put <code>translateZ: 10</code> on every scaled or parallaxed layer. It forces a compositor layer so Safari does not resample the image on each scale step.</p>
+<h2>Step 5 — Six sections, six different behaviours</h2>
+<p>Do <strong>not</strong> build one reveal component and reuse it everywhere. That is exactly what makes a site feel templated.</p>
+<p><strong>5.1 Hero — &quot;the dive&quot;</strong> (<code>340vh</code> wrapper). Inside the sticky screen, content lifts faster than the background, then the background scales <code>1 → 2</code> with <code>transformOrigin: &quot;50% 75%&quot;</code> so it reads as a camera flying in rather than a flat zoom. Overlap the scale with the tail of the lift (<code>-=0.2</code>). <strong>Wait for the hero image to decode before building the timeline</strong> — <code>img.complete ? build() : img.addEventListener(&quot;load&quot;, build, { once: true })</code> — or the offsets are measured against a zero-height box.</p>
+<p><strong>5.2 Display-type section — word-spacing spread.</strong> Scrub <code>word-spacing</code> from <code>0rem</code> to <code>10rem</code> on a short line so the sentence physically pulls itself apart as the section passes, <code>ease: &quot;none&quot;</code>. This is a layout-triggering property, so obey two constraints: short lines only (2–4 words), and <strong>nothing else in that section animates at the same time</strong>.</p>
+<p><strong>5.3 Location — horizontal scroll</strong> (desktop only, inside <code>gsap.matchMedia()</code>). Set the wrapper&#39;s height <em>from the track&#39;s width</em> so vertical and horizontal distance are 1:1 by construction and never need tuning:</p>
+<pre><code class="language-js">const distance = track.scrollWidth - area.offsetWidth;
+area.style.height = `${track.scrollWidth}px`;
+ScrollTrigger.refresh();
+const tween = gsap.to(track, { x: -distance, ease: &quot;horScroll&quot;,
+  scrollTrigger: { trigger: area, start: &quot;2.5% top&quot;, end: &quot;97.5% bottom&quot;, scrub: 0.25 } });
+area._horizontalTween = tween;
+</code></pre>
+<p>Ease the track, do not run it linear — that is what gives it weight. The <code>2.5% / 97.5%</code> buffer parks the track before the section leaves, so there is no snap at the seam. Counter-drift the title lines on X in alternating directions with <code>gsap.utils.wrap</code>. <strong>Anything inside the track needs <code>containerAnimation: area._horizontalTween</code> and <code>start: &quot;left bottom&quot;</code></strong> or its reveals never fire.</p>
+<p><strong>5.4 Amenities — zoom-through hand-off</strong> (<code>285vh</code>). Scale the grid <code>1 → 2</code> while the layer above it fades <code>1 → 0</code> on the same frames, so the next section is revealed <em>through</em> the current one.</p>
+<p><strong>5.5 Architecture — clip-path curtains as a camera</strong> (<code>190vh</code>). Two background halves each carry a multi-point <code>clip-path: polygon()</code> aperture that opens, then the whole frame scales <code>1 → 1.84</code> while decorative motifs push outward (<code>xPercent: ∓50</code>) and the following section scales <code>0.75 → 1</code> from <code>transformOrigin: &quot;center top&quot;</code> to meet it. All values in percentages so it is resolution independent. This is the most paint-expensive section — nothing else animates here.</p>
+<p><strong>5.6 Footer — the page closes on itself.</strong> Clip the whole page inward as the footer arrives, so the site shrinks into a card while the footer scales up behind it:</p>
+<pre><code class="language-js">const target = innerWidth &amp;gt;= BREAKPOINT ? &quot;inset(8% 22% 8% 22%)&quot; : &quot;inset(4% 32% 4% 32%)&quot;;
+tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quot; }, { clipPath: target, ease: &quot;none&quot; }, 0)
+  .fromTo(&quot;.footer-inner&quot;, { opacity: 0, scale: 0.75 }, { opacity: 1, scale: 1, ease: &quot;none&quot; }, 0);
+</code></pre>
+<p>Note the hybrid: the clip <strong>scrubs</strong>, but the footer text fires <strong>discretely</strong> from <code>onEnter</code> / <code>onLeaveBack</code>. Apply that rule site-wide — <strong>backgrounds, scale and clip scrub; type never does.</strong> Scrubbed text is unreadable.</p>
+<h2>Step 6 — The reveal system: six primitives, three states, one attribute</h2>
+<p>Build exactly six functions with the signature <code>(elements, state, delay)</code> where state is <code>&quot;reveal&quot; | &quot;hide&quot; | &quot;initial&quot;</code>. Markup opts in with <code>data-reveal=&quot;h&quot;</code>. <strong>Every primitive needs a mirrored exit in the opposite direction</strong> — that is what makes scrolling back up feel like rewinding instead of re-triggering.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Split</th>
+<th>Reveal</th>
+<th>Hide (opposite)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>a</code></td>
+<td>chars</td>
+<td><code>opacity 0→1, rotateX 90→0, x 10rem→0</code>, origin center bottom</td>
+<td><code>rotateX -90, x -10rem</code>, origin center top</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td>words, chars</td>
+<td><code>opacity 0→1, yPercent 50→0, rotateY 90→0</code></td>
+<td><code>yPercent -50, rotateY -90</code></td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>lines, words, <code>mask:&quot;lines&quot;</code></td>
+<td><code>yPercent 110→0</code> behind the line mask</td>
+<td><code>yPercent -110</code></td>
+</tr>
+<tr>
+<td><code>ctn</code></td>
+<td>—</td>
+<td><code>opacity 0→1, y 3.33rem→0</code></td>
+<td><code>opacity 0</code></td>
+</tr>
+<tr>
+<td><code>line</code></td>
+<td>—</td>
+<td><code>clip-path inset(0 0 100% 0) → inset(0)</code></td>
+<td><code>inset(100% 0 0 0)</code></td>
+</tr>
+<tr>
+<td><code>slide</code></td>
+<td>—</td>
+<td>4-point polygon wipe + child <code>scale 1.5→1, xPercent 25→0</code></td>
+<td>reverse wipe, <code>xPercent -25</code></td>
+</tr>
+</tbody></table>
+<p>Split with SplitText using <code>autoSplit: true</code> and an <code>onSplit</code> that re-applies the hidden state, so line splits survive a resize. Use <code>durL</code> + <code>ease: &quot;Out&quot;</code> to reveal and <code>durS</code> + <code>ease: &quot;In&quot;</code> to hide — exits are faster than entrances.</p>
+<p>Two structural rules:</p>
+<ol>
+<li><strong>Group by wrapper.</strong> Collect all <code>[data-reveal]</code> elements inside their nearest <code>[data-reveal=&quot;w&quot;]</code> ancestor and give the group <strong>one</strong> ScrollTrigger, so a heading and its paragraph stagger together instead of firing independently.</li>
+<li><strong>Cap the stagger in lists.</strong> Mark repeating blocks <code>data-reveal-first</code>, group them by parent, and strip <code>data-reveal</code> from every sibling after the first. In a grid of 30 cards, only the first animates.</li>
+</ol>
+<p>Put <code>once: true</code> on every reveal trigger so it kills itself after firing.</p>
+<h2>Step 7 — Constant feedback: the rotating corner mark</h2>
+<p>The mark in the top-left corner <strong>never stops spinning</strong>, and its speed and direction follow scroll velocity. Idle at 30 deg/sec; on scroll, tween a <code>state.speed</code> object to <code>dir * (30 + 10 * Math.abs(velocity))</code> over 0.3s, and after 100ms of quiet ease it back to idle over <code>durL</code>. Advance the angle in <code>gsap.ticker</code> with the delta <strong>clamped</strong> (<code>Math.min(delta, 100)</code>) so it does not jump after a tab blur, and ignore programmatic scrolls until a real <code>wheel</code> or <code>touchmove</code> has happened.</p>
+<p><strong>Design the mark for this:</strong> it must be radially symmetric — a circular wordmark ring around a small glyph — so rotation reads as motion rather than as a tilted logo.</p>
+<p>Companion: a two-digit scroll counter and a draggable progress rail, both driven by <strong>one</strong> document-wide ScrollTrigger that writes <code>--progress</code> as a percentage and pads the counter with <code>padStart(2, &quot;0&quot;)</code>. CSS does the rest (<code>thumb { top: var(--progress) }</code>, fill via <code>clip-path: rect(...)</code>). Map dragging the thumb to <code>lenis.scrollTo(target, { duration: 3.2 })</code> — the long duration is deliberate, dragging should feel like a slow camera move, not a jump.</p>
+<h2>Step 8 — Preloader and the arch reveal</h2>
+<p>Hold everything behind a full-screen plum mask until the page is measured, then open an <strong>arch-shaped window</strong> that widens and lifts off the top of the screen. Gate the page because the site runs a custom scroll engine, ~150 scroll-linked timelines and 4K imagery — letting someone scroll before all of that is registered means broken triggers and mistimed reveals.</p>
+<p>Build the arch as a <strong>four-layer composited CSS mask</strong>, not SVG geometry and not <code>clip-path</code>, driven by two custom properties <code>--arch-w</code> and <code>--arch-y</code>:</p>
+<pre><code class="language-css">[data-preloader] {
+  --arch-w: 36vw;
+  --arch-h: calc(var(--arch-w) / (560 / 2592));  /* locked to the arch asset&#39;s ratio */
+  --arch-y: 100vh;
+  position: fixed; inset: 0; z-index: 999; background: var(--plum);
+  mask-image:
+    linear-gradient(white, white),   /* left column */
+    linear-gradient(white, white),   /* centre, above the arch */
+    linear-gradient(white, white),   /* right column */
+    url(&quot;/arch.svg&quot;);                /* the arch itself */
+  mask-size:
+    calc(50% - (var(--arch-w) / 2) + 2px) 100%,
+    calc(var(--arch-w) + 4px) calc(var(--arch-y) + 2px),
+    calc(50% - (var(--arch-w) / 2) + 2px) 100%,
+    var(--arch-w) var(--arch-h);
+  mask-position: left top, center top, right top, center var(--arch-y);
+  mask-repeat: no-repeat;
+}
+</code></pre>
+<p>Layers 1–3 mask everything except an arch-width gap; layer 4 fills the arch shape. The union is &quot;the whole screen except an arch-shaped hole&quot;, and animating the two properties moves and grows that hole. Behind it, put two concentric arch outlines built from <strong>border radii only</strong> (<code>border-top-left-radius: var(--arch-w)</code> with an inset 1px outline) — that is how you get a perfect arch at any size with no SVG.</p>
+<p>Timeline: assemble the logo lockup with the reveal primitives → fade in the script watermark → run a loading bar on a <strong>hand-drawn irregular CustomEase</strong> so it surges and settles instead of moving linearly → open the arch (<code>--arch-w: 24vw → 36vw</code>, <code>--arch-y: 104vh → 15vh</code>, <code>ease: &quot;InOut&quot;</code>) → dive it off the top (<code>125vw</code>, <code>-100vh</code>, <code>ease: &quot;diveIn&quot;</code>) → unlock scroll and <code>display: none</code> the preloader.</p>
+<p><strong>Pre-set the hero image to <code>scale: 0.75</code> with <code>transformOrigin: &quot;center top&quot;</code> and animate it to <code>1</code> on the same frames as the arch dive, at <code>&quot;&amp;lt;&quot;</code>.</strong> That overlap is what makes it read as one camera move instead of two effects. Do not sequence them.</p>
+<p>Store <code>sessionStorage.hasVisited</code> and on a repeat visit play only the arch dive — skip the logo assembly and the bar.</p>
+<h2>Step 9 — Parallax primitives</h2>
+<p>Five attribute-driven variants, all <code>ease: &quot;none&quot;</code>, all with <code>translateZ: 10</code>, all wrapped in <code>gsap.matchMedia()</code> so they <strong>rebuild on breakpoint change</strong> rather than reading the breakpoint once at build time:</p>
+<pre><code>[data-parallax=&quot;img&quot;]      yPercent -15 → 15   start &quot;top bottom&quot;, scrub 0.5
+[data-parallax=&quot;img-out&quot;]  yPercent   0 → 20   start &quot;bottom bottom&quot;, end &quot;bottom top&quot;, scrub 0.5
+[data-parallax=&quot;img-in&quot;]   yPercent -20 → 0    start &quot;top bottom&quot;, end &quot;bottom bottom&quot;, scrub true
+[data-parallax=&quot;ctn-down&quot;] yPercent -10 → 10   start &quot;top 125%&quot;, end &quot;bottom -25%&quot;, scrub 0.5
+[data-parallax=&quot;ctn-up&quot;]   yPercent  10 → -10  start &quot;top 125%&quot;, end &quot;bottom -25%&quot;, scrub 0.5
+</code></pre>
+<p>Each element resolves its trigger from <code>el.closest(&#39;[data-parallax=&quot;w&quot;]&#39;)</code>. Support per-element opt-out with <code>data-desk=&quot;off&quot;</code> / <code>data-mob=&quot;off&quot;</code>.</p>
+<h2>Step 10 — Assets</h2>
+<p><strong>Images.</strong> Source at 4K, ship a responsive set at <code>640 / 1024 / 1600 / 2400 / 3840</code>, AVIF with WebP fallback, <strong>under 400 KB for hero-class images at 1600px</strong>. <code>fetchpriority=&quot;high&quot;</code> and eager on the hero only; <code>loading=&quot;lazy&quot;</code> + <code>decoding=&quot;async&quot;</code> on everything below the second viewport. Always set explicit <code>width</code>/<code>height</code> or <code>aspect-ratio</code>. <strong>Reveal images with geometry, not opacity</strong> — a wipe, an opening polygon, a scale from 1.15 to 1 — and vary the geometry between sections.</p>
+<p><strong>Video is texture, never narrative.</strong> Short 3–6s silent loops of movement in a place: foliage in wind, water, light moving. No people, no voiceover. Ship <strong>both</strong> MP4/H.264 and WebM/VP9 sources. <code>muted playsinline loop preload=&quot;metadata&quot;</code>, <code>autoplay</code> <strong>off</strong> — start and stop from a ScrollTrigger on <code>onEnter</code>/<code>onEnterBack</code>/<code>onLeave</code>/<code>onLeaveBack</code> with <code>v.play().catch(() =&amp;gt; {})</code>. Always provide a poster frame.</p>
+<h2>Step 11 — Accessibility</h2>
+<ul>
+<li><code>prefers-reduced-motion</code> branch: no smooth scroll, no scrub, every <code>[data-reveal]</code> set straight to its revealed state</li>
+<li>Exactly one <code>&amp;lt;h1&amp;gt;</code>; sections use <code>&amp;lt;h2&amp;gt;</code>/<code>&amp;lt;h3&amp;gt;</code>; <code>alt=&quot;&quot;</code> + <code>aria-hidden</code> on decorative images and on <strong>all</strong> SplitText spans</li>
+<li>Tabs, accordions and modal triggers are <code>&amp;lt;button&amp;gt;</code> with <code>aria-expanded</code> / <code>aria-selected</code> and arrow-key support</li>
+<li>Visible <code>:focus-visible</code> ring in both plum and paper contexts; skip link to <code>#main</code>; <code>Esc</code> closes every modal</li>
+<li>The custom scrollbar is supplementary — Space, PageDown and Home/End still work</li>
+<li>Contrast: ink on paper, ink on sky, paper on plum all pass AA at body sizes</li>
+<li><strong>No section snapping.</strong> Snapping to whichever section covers half the viewport fights a reader who stopped deliberately.</li>
+</ul>
+<h2>Acceptance checks — verify each one before you finish</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Scroll top to bottom at speed: no jitter, no boundary snap, no layout shift</li>
+<li><input disabled="" type="checkbox"> Corner mark spins faster when you flick, reverses when you scroll up, eases back to idle ~1s after you stop</li>
+<li><input disabled="" type="checkbox"> Preloader: arch opens, widens, dives off the top — and the hero scale resolves on the same frames, not after</li>
+<li><input disabled="" type="checkbox"> Second visit in the same session plays the short loader</li>
+<li><input disabled="" type="checkbox"> Scroll back up through every section: everything exits in the opposite direction it entered</li>
+<li><input disabled="" type="checkbox"> No two sections share the same scroll behaviour</li>
+<li><input disabled="" type="checkbox"> Resize mid-page: line-split paragraphs re-split correctly, parallax rebuilds across 992px</li>
+<li><input disabled="" type="checkbox"> Safari: every video plays, no image resampling artefacts during scale</li>
+<li><input disabled="" type="checkbox"> Reduced motion on: page fully readable, nothing moves, all content visible</li>
+<li><input disabled="" type="checkbox"> Keyboard-only pass: every control reachable, focus always visible</li>
+<li><input disabled="" type="checkbox"> LCP under 2.5s on the hero, CLS 0</li>
+</ul>
+<p>All imagery, copy, brand marks and typefaces must be original or licensed. Do not reproduce any existing development&#39;s name, logo or photography.</div></p>
+</div><h2>Why the prompt is written this way</h2>
+<p>
+        The first version of this brief was three sentences: a luxury property
+        site, smooth scroll, lots of scroll animation. What came back was
+        competent and completely inert — a stack of sections that each faded up
+        from <code>opacity: 0</code> with a 40px rise, the same reveal every
+        time, smooth scroll bolted on top. Nothing was broken. It just had no
+        choreography, because "lots of scroll animation" is not a spec, it is an
+        adjective.
+</p>
+<p>
+        Every clause below is in the prompt because its absence produced a
+        specific, repeatable failure of that kind.
+</p><h3>Ban the pin</h3>
+<p><em>Do not use ScrollTrigger's <code>pin: true</code>.</em></p>
+<p>
+        This is the clause I would keep if I could keep only one. Ask any agent
+        for a section that holds still while its contents animate and you get
+<code>pin: true</code>, because that is what every tutorial and every
+        answer on the internet says. It works, in isolation. Combined with
+        Lenis it produces about a pixel of jitter at each pin boundary, and it
+        does it on a real machine at 120Hz in a way you will spend an afternoon
+        failing to reproduce in a screenshot.
+</p>
+<p>
+        The reason is mechanical: pinning injects a pin-spacer element and
+        toggles the pinned element between <code>position: fixed</code> and
+        static, so both boundaries force layout while a smooth-scroll engine is
+        interpolating scroll position on the same frames. A tall wrapper with a
+<code>position: sticky</code> child never touches document flow — the
+        browser handles it on the compositor, and there is no boundary to cross.
+</p>
+<p>
+        So the prompt does not describe the effect and hope. It names the
+        structure — wrapper at 2–4 viewport heights, sticky child at
+<code>top: 0; height: 100vh</code>, one scrubbed ScrollTrigger from
+<code>top top</code> to <code>bottom bottom</code> — and then bans the
+        alternative by name. Banning by name matters. "Prefer CSS sticky" gets
+        you sticky in the section that was described first and
+<code>pin: true</code> in the four the agent wrote afterwards.
+</p><h3>Give the sections different behaviours, explicitly, one by one</h3>
+<p>
+<em           >Do not build one reveal component and reuse it everywhere. That is
+          exactly what makes a site feel templated.</em>
+</p>
+<p>
+        Agents optimise for consistency, and consistency is the enemy here. Left
+        alone, it will factor out a single <code>revealSection()</code> and call
+        it six times, which is genuinely better code and a worse site. What
+        makes this kind of page feel authored is that you cannot predict what
+        the next section will do.
+</p>
+<p>
+        The fix is to spend the length. Each section gets its own numbered step,
+        its own mechanic, its own wrapper height, and its own numbers — 340vh
+        for the dive, 285vh for the zoom-through, 190vh for the curtains. A
+        table of "section → behaviour" alone does not survive; the agent reads
+        it as a summary of something it can implement generically. Six separate
+        specs cannot be collapsed.
+</p><h3>Derive the horizontal length instead of picking one</h3>
+<p>
+<em           >Set the wrapper's height from the track's width so vertical and
+          horizontal distance are 1:1 by construction.</em>
+</p>
+<p>
+        Horizontal scroll sections are where hand-tuned magic numbers go to die.
+        The usual implementation gives the wrapper something like
+<code>300vh</code> and translates the track by its overflow width, which
+        means the mapping between the two depends on the viewport, the font
+        rendering, and how many cards the content happens to have today. It
+        feels right on the machine it was tuned on and drags or races
+        everywhere else.
+</p>
+<p>
+        Setting <code>area.style.height = track.scrollWidth + "px"</code> makes
+        one pixel of vertical scroll equal one pixel of horizontal travel,
+        permanently, with no constant to tune. The
+<code>ScrollTrigger.refresh()</code> immediately after is not optional —
+        you have just changed the height of the document from JavaScript, and
+        every trigger below it is now measured against a stale layout.
+</p>
+<p>
+        The <code>containerAnimation</code> clause is in the prompt because its
+        absence is a silent failure. Reveals inside a horizontally translated
+        track never fire: the elements never enter the viewport vertically, so
+        their triggers never activate, and the section looks like it lost half
+        its content. It also needs the axis words swapped —
+<code>start: "left bottom"</code>, not <code>"top bottom"</code> — which
+        is the part that gets missed even when <code>containerAnimation</code>
+        is remembered.
+</p><h3>Scrub geometry, fire type</h3>
+<p>
+<em>Backgrounds, scale and clip scrub; type never does.</em>
+</p>
+<p>
+        Scrub is intoxicating and it is wrong for text. Words tied to scroll
+        position move as fast as the wheel does, stop when you stop, and reverse
+        when you scroll back — which means they are never held still long enough
+        to be read, and the reader feels responsible for a job the page should
+        be doing. Every "premium" site that is exhausting to actually read is
+        exhausting for this reason.
+</p>
+<p>
+        The footer in this prompt is the demonstration: the page clip scrubs
+        with scroll, while the footer text fires discretely from
+<code>onEnter</code> and hides on <code>onLeaveBack</code>, in the same
+        trigger. That hybrid is what a hand-built site does, and it is not what
+        you get by default — asked for "a scroll-driven footer", an agent
+        scrubs everything in it, text included.
+</p><h3>Every entrance needs its exit named as the opposite</h3>
+<p>
+<em>
+          Every primitive needs a mirrored exit in the opposite direction.</em>
+</p>
+<p>
+        This is the difference between a site that rewinds and a site that
+        re-triggers, and it is almost never implemented, because it costs twice
+        the work for something only visible on the way back up. Ask for reveals
+        and you get reveals: elements animate in, and on the return trip they
+        either sit there or play the same entrance again, which reads as a
+        glitch — you scrolled backwards and something moved forwards.
+</p>
+<p>
+        Writing the primitives as a three-state function
+        (<code>"reveal" | "hide" | "initial"</code>) with a table whose "hide"
+        column is literally the sign-flipped "reveal" column is what makes this
+        cheap to specify and hard to get wrong. The asymmetry in timing is
+        deliberate too: <code>durL</code> with an out-ease to enter,
+<code>durS</code> with an in-ease to leave. Exits should be faster than
+        entrances, because an exit is a thing getting out of the way.
+</p><h3>Name the two list rules, or the grid staggers forever</h3>
+<p>
+<em           >Group by wrapper, and strip <code>data-reveal</code> from every
+          sibling after the first.</em>
+</p>
+<p>
+        Both of these are invisible in a spec and obvious in a build. Without
+        wrapper grouping, a heading and its paragraph get separate triggers, so
+        they fire a few pixels apart and the pairing that makes a stagger feel
+        composed is gone. Without the first-card rule, a grid of thirty
+        apartment cards staggers thirty times at 0.1s each and the last card
+        arrives three seconds after you got there.
+</p>
+<p>
+<code>once: true</code> on every reveal trigger is in the same family.
+        On the reference site it takes the live trigger count from about 156 to
+        about 82 as you read down the page — half the scroll handlers delete
+        themselves once they have done their one job.
+</p><h3>Give the ambient motion its physics in numbers</h3>
+<p>
+<em           >Idle at 30 deg/sec, <code>30 + 10 * Math.abs(velocity)</code>, back
+          to idle 100ms after you stop.</em>
+</p>
+<p>
+        A logo that spins in response to scroll is a two-line idea and a
+        surprisingly deep spec. Asked for it plainly, you get rotation mapped
+        directly to scroll position — which means it stops dead the instant you
+        stop, and a thing that stops dead reads as broken rather than as
+        responsive.
+</p>
+<p>
+        The behaviour that works is a constant idle spin with velocity as a
+        modifier, tweened rather than assigned, and eased back to idle after a
+        short delay. Three details in the prompt exist purely because their
+        absence is a visible bug: the <code>Math.min(delta, 100)</code> clamp,
+        or the mark makes a full jerking revolution the moment you return to a
+        backgrounded tab; the <code>userScrolled</code> gate, or the loader's own
+        programmatic <code>scrollToTop</code> spins it before anyone has
+        touched anything; and <code>overwrite: true</code> on the speed tween,
+        or a hundred queued tweens fight over one property.
+</p><h3>Overlap the preloader hand-off, and say so</h3>
+<p>
+<em           >Animate the hero from 0.75 to 1 on the same frames as the arch dive.
+          Do not sequence them.</em>
+</p>
+<p>
+        The arch opening and the hero settling are two animations that have to
+        be perceived as one camera move. Sequenced — arch leaves, then hero
+        scales — you get a loader followed by an effect, and the seam is
+        obvious. Overlapped at <code>"&lt;"</code>, the arch flies past a hero
+        that is still growing, and the eye reads a single push through a
+        doorway.
+</p>
+<p>
+        Agents sequence by default, because a timeline is a list and a list is
+        ordered. "Do not sequence them" has to be said out loud, as does the
+<code>"&lt;90%"</code> position on the dive — starting the dive at 90% of
+        the previous tween rather than after it is what removes the pause where
+        the arch sits open doing nothing.
+</p><h3>Fix the reference site's bugs in the brief</h3>
+<p>
+        Building from a reference means inheriting its decisions, including the
+        bad ones. Four of these are called out in the prompt as corrections
+        rather than as features, because otherwise a faithful implementation
+        reproduces them:
+</p>
+<ul>
+<li>
+<strong>No <code>prefers-reduced-motion</code> branch.</strong> The
+          reference site has none — the smooth scroll, the scrubs and the
+          snapping all run regardless. This is the one non-negotiable that is
+          purely a fix rather than a match.
+</li>
+<li>
+<strong>Breakpoint read once at build time.</strong> Parallax
+          initialised outside <code>gsap.matchMedia()</code> is correct until
+          someone resizes across 992px, after which desktop-only tweens are
+          running on a phone-width layout. Wrapping every variant in
+<code>matchMedia</code> makes it rebuild instead.
+</li>
+<li>
+<strong>WebM-only video with Safari stripped.</strong> Eight
+          decorative loops that exist for most visitors and silently do not for
+          the rest. Ship both codecs.
+</li>
+<li>
+<strong>Section snapping.</strong> Snapping to whichever section
+          covers half the viewport 40ms after you stop scrolling actively fights
+          a reader who stopped on purpose. The prompt drops it, and says why —
+          otherwise it comes back as a feature.
+</li>
+</ul><h3>End with checks the agent can actually fail</h3>
+<p>
+        The acceptance list is written as observable behaviour, not as
+        intentions. "Corner mark reverses when you scroll up" either happens or
+        it does not. "Second visit in the same session plays the short loader"
+        is one reload away from a verdict. "Everything exits in the opposite
+        direction it entered" is the only way to catch a missing
+<code>"hide"</code> state, because nothing about the page looks wrong
+        until you scroll back up through it.
+</p>
+<p>
+        Each line in that list is a bug I have watched this prompt produce
+        without it.
+</p><h2>What goes wrong, and what it means</h2>
+<ul>
+<li>
+<strong>A pixel of jitter at the top or bottom of a sticky
+          section.</strong>
+<code>pin: true</code> survived somewhere. Search the build for it —
+          it is usually in a section that was added after the first pass.
+</li>
+<li>
+<strong>The hero dive is offset, or overshoots by a screen.</strong>
+          The timeline was built before the hero image decoded, so
+<code>bg.offsetHeight</code> was measured on a zero-height box. Gate
+          the build on <code>img.complete</code> or the <code>load</code> event.
+</li>
+<li>
+<strong>Nothing inside the horizontal track ever appears.</strong>
+          Missing <code>containerAnimation</code>. If it is present and reveals
+          still do not fire, the trigger is still using
+<code>start: "top bottom"</code> instead of
+<code>"left bottom"</code>.
+</li>
+<li>
+<strong>The horizontal section snaps at the very end.</strong> The
+          track had not finished parking before the section left the viewport.
+          That is what the <code>2.5% / 97.5%</code> buffer is for.
+</li>
+<li>
+<strong>Everything below the location section triggers at the wrong
+          place.</strong> The wrapper height was set from JavaScript without a
+          following <code>ScrollTrigger.refresh()</code>.
+</li>
+<li>
+<strong>The word-spacing section drops frames badly.</strong> Either
+          the line is too long, or something else is animating in that section.
+<code>word-spacing</code> triggers layout on every scrub tick — it can
+          have the section to itself.
+</li>
+<li>
+<strong>Images look soft or shimmer while scaling in Safari.</strong>
+          Missing <code>translateZ: 10</code> on the scaled layer, so it is
+          being resampled at every step instead of composited.
+</li>
+<li>
+<strong>Paragraphs break mid-line after a resize.</strong> SplitText
+          without <code>autoSplit</code>, or with it but no
+<code>onSplit</code> to re-apply the hidden state, so the re-split
+          lines land visible.
+</li>
+<li>
+<strong>The corner mark makes one violent revolution when you come
+          back to the tab.</strong> Unclamped ticker delta.
+</li>
+<li>
+<strong>The mark is already spinning during the loader.</strong> The
+<code>userScrolled</code> gate is missing and the loader's own
+<code>scrollToTop</code> registered as scroll input.
+</li>
+<li>
+<strong>The loading bar moves at a constant rate.</strong> A standard
+          ease instead of the irregular hand-drawn one. A loader that moves
+          linearly looks fake, because real loading does not.
+</li>
+<li>
+<strong>The arch opens, pauses, then dives.</strong> The dive was
+          sequenced after the open instead of starting at
+<code>"&lt;90%"</code>.
+</li>
+<li>
+<strong>The page jumps sideways when the loader engages.</strong>
+          Scroll lock did not measure the scrollbar width into a custom property
+          before hiding overflow.
+</li>
+<li>
+<strong>Scroll feels laggy rather than weighty.</strong> Wrong Lenis
+          easing — a linear or <code>power2</code> curve instead of the
+          exponential one. Check <code>lagSmoothing(0)</code> too.
+</li>
+<li>
+<strong>Scrubs desync from the wheel after a stutter.</strong>
+<code>gsap.ticker.lagSmoothing(0)</code> is missing, so GSAP
+          fast-forwards through the frames it dropped.
+</li>
+<li>
+<strong>Every card in a grid animates.</strong> The
+<code>data-reveal-first</code> rule was not applied.
+</li>
+<li>
+<strong>Scrolling back up feels like the page glitching.</strong>
+          Reveal primitives were built without their <code>"hide"</code> states.
+</li>
+<li>
+<strong>The corner mark disappears over one particular
+          section.</strong> That section is missing its <code>data-bg</code>
+          tag, so the theme swap never fires for it.
+</li>
+<li>
+<strong>Videos never play, or play everywhere at once.</strong>
+<code>autoplay</code> was left on instead of the section being gated
+          by a ScrollTrigger — or the trigger exists but has no
+<code>onEnterBack</code>, so nothing resumes on the way up.
+</li>
+</ul><h2>Recap</h2>
+<ul>
+<li>
+          Ban the wrong technique by name. "Prefer sticky" is advice;
+          "<code>pin: true</code> is forbidden" is a constraint, and only one of
+          them survives into the fifth section the agent writes.
+</li>
+<li>
+          Specify every section separately, with its own numbers. Anything you
+          express as a general rule will come back as one reusable component,
+          which is better code and a worse site.
+</li>
+<li>
+          Derive dimensions from content wherever you can. A horizontal track
+          whose wrapper height equals its own scroll width has no magic number
+          to tune and cannot drift.
+</li>
+<li>
+          Scrub geometry, fire type. Text tied to scroll position is never held
+          still long enough to read.
+</li>
+<li>
+          Name the exit for every entrance. It is half the work of the reveal
+          system and the entire difference between rewinding and re-triggering.
+</li>
+<li>
+          Ambient motion needs literal physics — an idle rate, a velocity
+          coefficient, a settle delay. "Responds to scroll" gets you rotation
+          mapped to position, which stops dead and reads as broken.
+</li>
+<li>
+          Say "do not sequence these" where two animations must be perceived as
+          one. Timelines are lists, and an agent will order anything orderable.
+</li>
+<li>
+          Define the timing tokens once, up front, and require every tween to
+          use them. Six eases and three durations are what make a site feel
+          authored rather than assembled.
+</li>
+<li>
+          Correct the reference's mistakes in the brief, marked as corrections.
+          A faithful build reproduces the missing reduced-motion branch as
+          diligently as it reproduces the good parts.
+</li>
+<li>
+          Put the invisible structural rules in writing — wrapper grouping,
+          first-card-only staggers, <code>once: true</code>,
+<code>ScrollTrigger.refresh()</code> after a height change. Nothing
+          about the page looks wrong when they are missing until it does.
+</li>
+<li>
+          End with checks that can fail on observation, each one a bug you
+          already know the prompt will otherwise produce.
+</li>
+</ul><p>
+        The teardown this came from is
+<a href="/learn/era-residence-scroll-choreography-design-language/"
+          >here</a>. The companion brief — the same idea taken into WebGL, with
+        scroll-scrubbed WebP frame sequences instead of transforms — is
+<a href="/learn/prompt-scroll-scrubbed-cinematic-site-webgl-replit/"
+          >the pear.no-style cinematic site prompt</a>. If you want more prompts in this shape, there is
+<a href="/learn/prompt-luma-floor-lamp-lit-hero-replit/"
+          >a floor lamp hero with a brass switch that lights the whole page</a>,
+<a href="/learn/prompt-lumina-interactive-light-gallery-replit/"
+          >an interactive light gallery with pull-chain physics</a>, and
+<a href="/learn/prompt-kinetic-wind-wall-threejs-vertex-shader/"
+          >a kinetic wind wall in a vertex shader</a>.
+</p>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>

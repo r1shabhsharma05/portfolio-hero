@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scent Cloud: A Perfume Store Where You Can See the Spray | Rishabh Sharma</title>
+<meta name="description" content="How I built a perfume page where holding the bottle sprays a cloud of particles that drifts on a breeze, gathers into the names of the notes and fades the way a" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/scent-cloud-see-a-perfume/" />
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
+body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+nav a { color:var(--muted); text-decoration:none; }
+nav a[aria-current="page"] { color:var(--fg); }
+.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
+.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
+h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
+.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
+.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
+h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
+h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
+a { color:inherit; }
+img, video { max-width:100%; height:auto; border-radius:12px; }
+pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
+code { font-size:.9em; }
+pre code { font-size:1em; }
+table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
+.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
+@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
+ul, ol { padding-left:1.25rem; }
+footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
+<main>
+<a class="back" href="/learn/">&larr; All 91 posts</a>
+<p class="kicker">Learn &middot; Build</p>
+<h1>Scent Cloud: A Perfume Store Where You Can See the Spray</h1>
+<p class="lede">How I built a perfume page where holding the bottle sprays a cloud of particles that drifts on a breeze, gathers into the names of the notes and fades the way a scent does, top notes first. Codex bottles and about a hundred lines of canvas.</p>
+<p class="meta">13 November 2026</p>
+<p>The problem with selling perfume online is that you can&#39;t smell a screen. Every perfume page answers it the same way, with a list: top notes, heart notes, base notes. I wanted that list to be something you watch happen. <a href="https://www.avivashishta.com/lab/scent" target="_blank" rel="noreferrer">Spray one at avivashishta.com/lab/scent</a>.</p>
+<p>Hold the bottle (or the space bar) and it sprays. A cloud bursts out of the nozzle, drifts and curls on a breeze, then gathers into the names of its notes, and fades in the order a scent does on skin: the top note first, the base note last. Spray a second one while the first is in the air and they hang side by side, the way people layer two scents.</p>
+<div class="highlight"><p><strong>The short version:</strong> Codex makes a product shot of each bottle, cut out with macOS Vision. The spray is a few thousand particles on a 2D canvas. Each one belongs to a note, has a colour and a lifetime, and is given a point inside that note's name, sampled from the word drawn on a hidden canvas. For its first half second it flies and drifts; then a spring pulls it into its letter; near the end of its life the spring lets go and it fades.</p></div><h2>Step 1: the bottles (Codex)</h2>
+<p>On black, because glass shows its edges best against black, and Vision cuts it out either way:</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>A luxury fragrance product photo of a heavy faceted clear glass perfume bottle filled with amber liquid and a chunky gold cap, unbranded, no text, no labels, no logos, standing upright, front view, centered with generous margin, on a pure seamless black background (#000000), dramatic soft studio light with crisp highlights on the glass, photoreal. Square 1:1, 1024x1024.</p>
+</div>
+</div><pre><code class="language-bash">bun scripts/prepare-scent.mjs ./raw
+</code></pre>
+<h2>Step 2: words to points</h2>
+<p>Each note&#39;s name is drawn once on an invisible canvas in the site&#39;s serif (read off the page&#39;s own headline, because the font loader renames the family), and every few pixels where the letters are solid becomes a target point:</p>
+<pre><code class="language-ts">x.font = `italic 400 ${size}px ${family}`; // the site&#39;s serif, read off the page
+x.fillText(word, w / 2, h / 2);
+for (let yy = 0; yy &lt; h; yy += step) for (let xx = 0; xx &lt; w; xx += step)
+  if (d[(yy * w + xx) * 4 + 3] &gt; 120) pts.push([cx - w / 2 + xx, cy - h / 2 + yy]);
+</code></pre>
+<p>The three names are stacked to the right of the bottle: top, heart, base.</p>
+<h2>Step 3: a particle&#39;s life</h2>
+<p>While you hold the bottle, 110 particles a frame leave the nozzle in a cone, each assigned a note (a bit more often the top note) and a random point in that note&#39;s word. Then:</p>
+<pre><code class="language-ts">// First the burst and the breeze, then the pull into its word, then a slow loosening as it fades.
+const pull = clamp((age - 0.5) / 1.2) * (1 - clamp((age - life * 0.7) / (life * 0.3)));
+p.vx += fx * 60 * dt * (1 - pull);        // the breeze
+p.vx += (p.tx - p.x) * 16 * pull * dt;    // the spring into its letter
+</code></pre>
+<p>The breeze is a flow field made of a few sines, turned sideways so it swirls instead of collecting in sinks, which is the idea behind curl noise without the noise. The lifetimes come from perfumery: the top note lives 3.6 seconds, the heart 6.5, the base 9.5. So the words go in that order, as they would on your wrist over a day.</p>
+<p>Particles are drawn with <code>multiply</code> on the paper background, so dense parts get darker like ink in water, and two clouds that overlap mix their colours.</p>
+<h2>The small things</h2>
+<ul>
+<li><strong>Layering:</strong> spray a second scent while the first is still there and its words appear beside the first, and the panel names the pair.</li>
+<li><strong>The bottle dips</strong> a few pixels while you hold it, like a finger on the pump.</li>
+<li><strong>The shelf</strong> along the bottom has all six; the notes in the panel use the same colours as the cloud.</li>
+</ul>
+<h2>Build your own</h2>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy prompt</button>
+<div class="prompt">
+<p>Build a perfume page with a visible spray (React, canvas 2D, no libraries). Each product has a cut-out bottle image and three notes (top, heart, base) with a name and colour. While the user holds the bottle (pointer or space), emit about 110 particles a frame from the nozzle in a cone up and to the right. Each particle gets a note, that note's colour, a lifetime (top 3.6 s, heart 6.5 s, base 9.5 s) and a target point sampled from that note's name drawn on an offscreen canvas in a serif font, the three names stacked to the right of the bottle.</p>
+<p>Each frame: add a swirling flow field (sums of sines) and a little lift for the first half second, then blend into a spring toward the target, release the spring over the last 30% of life and fade out. Apply drag. Draw particles as tiny squares with multiply blending on a light background. Show the product with notes, sizes, price and Add to bag, and a shelf of bottles to switch.</p>
+</div>
+</div>
+
+</main>
+<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
+</div>
+</body>
+</html>
