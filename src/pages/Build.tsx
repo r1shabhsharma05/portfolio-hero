@@ -1,9 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ChatModal from "../components/ChatModal";
 import CursorLabel from "../components/CursorLabel";
-import LiquidGlassCarousel, {
-  type LiquidGlassCarouselItem,
-} from "../components/LiquidGlassCarousel";
 import ReelCard from "../components/ReelCard";
 import SkillSphere from "../components/SkillSphere";
 import {
@@ -95,22 +92,6 @@ const BUILT = [
   { ...PROJECTS[0], role: "Solo", tags: ["React", "TypeScript", "Prisma", "Supabase"] },
   { ...PROJECTS[3], role: "Solo", tags: ["React", "Node.js", "Supabase", "Razorpay"] },
 ];
-
-/** Measured image aspect (w/h) per Built-myself screenshot. */
-const BUILT_ASPECT: Record<string, number> = {
-  "/projects/railsync.jpg": 1600 / 900,
-  "/projects/localkart.jpg": 1536 / 1024,
-  "/projects/healthcare.jpg": 1536 / 1024,
-  "/projects/morphai.jpg": 1536 / 1024,
-  "/projects/secureguard.jpg": 1600 / 900,
-  "/projects/farmer.jpg": 1600 / 900,
-};
-
-const BUILT_ITEMS: LiquidGlassCarouselItem[] = BUILT.map((b) => ({
-  src: b.image,
-  title: b.name,
-  aspect: BUILT_ASPECT[b.image] ?? 16 / 9,
-}));
 
 const WORKED_AT = [PROJECTS[0], PROJECTS[1], PROJECTS[3]].map((p) => ({
   name: p.name,
@@ -464,7 +445,6 @@ export default function Build() {
   // World transition (Avi's mechanism): arriving from the homepage, the
   // full-screen sky scene is already covering; it morphs into the hero.
   const [showTransition] = useState(() => shouldShowWorldTransition());
-  const [builtActive, setBuiltActive] = useState(0);
   useEffect(() => {
     if (!showTransition) return;
     const cleanup = revealWorldTransition();
@@ -673,24 +653,20 @@ export default function Build() {
             Side projects that shipped — each one taught me something the big
             ones needed.
           </p>
-          <div className="built-carousel">
-            <LiquidGlassCarousel
-              items={BUILT_ITEMS}
-              panelHeight={340}
-              background="#f3f3f1"
-              onActiveChange={setBuiltActive}
-            />
-          </div>
-          {(() => {
-            const b = BUILT[builtActive] ?? BUILT[0];
-            if (!b) return null;
-            return (
-              <div className="built-detail">
-                <p className="built-role">{b.role}</p>
+          <div className="built-grid">
+            {BUILT.map((b) => (
+              <div className="built-card" key={b.name} data-cursor="OPEN">
+                <div className="built-card-media">
+                  <img src={b.image} alt={`${b.name} screenshot`} loading="lazy" />
+                  <span className="built-card-wand" aria-hidden="true">
+                    ✦<span className="built-card-wand-tip">Edit with AI</span>
+                  </span>
+                </div>
+                <p className="built-card-meta">2026 · {b.role.toUpperCase()}</p>
                 <h3>
-                  <span className="card-title">{b.name}</span>
+                  <span className="built-card-title">{b.name}</span>
                 </h3>
-                <p>{b.description}</p>
+                <p className="built-card-desc">{b.description}</p>
                 {b.tags.length > 0 && (
                   <ul className="ship-tags">
                     {b.tags.map((t) => (
@@ -698,21 +674,23 @@ export default function Build() {
                     ))}
                   </ul>
                 )}
-                <p className="card-links">
-                  {b.live && (
-                    <a href={b.live} target="_blank" rel="noreferrer">
-                      Live ↗
-                    </a>
-                  )}
-                  {b.repo && (
-                    <a href={b.repo} target="_blank" rel="noreferrer">
-                      GitHub ↗
-                    </a>
-                  )}
-                </p>
+                {(b.live || b.repo) && (
+                  <p className="card-links">
+                    {b.live && (
+                      <a className="ship-link" href={b.live} target="_blank" rel="noreferrer">
+                        Live ↗
+                      </a>
+                    )}
+                    {b.repo && (
+                      <a className="ship-link" href={b.repo} target="_blank" rel="noreferrer">
+                        GitHub ↗
+                      </a>
+                    )}
+                  </p>
+                )}
               </div>
-            );
-          })()}
+            ))}
+          </div>
         </section>
 
         <section className="section build-experiments" aria-label="Experiments">
