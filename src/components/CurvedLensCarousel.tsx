@@ -24,7 +24,7 @@ export type LensSlide = {
   alt?: string
   /** Live clip for this card; when set the texture is fed from the video. */
   video?: string
-  /** World the card belongs to ("build" | "open-source" | "learn") — drives
+  /** World the card belongs to ("build" | "brand" | "learn") — drives
    *  the sentence-hover focus dim and the hover outline colour. */
   world?: string
 }
@@ -100,9 +100,10 @@ const VERT =
   "p.y-=(1.-uIntro)*uSize.y*.9;" +
   "vec2 n=p/(uRes*.5);" +
   "float x=clamp(n.x,-1.4,1.4);" +
-  "n.y*=1.+uBend*x*x;" +
+  "float bend=uBend;" +
+  "n.y*=1.+bend*x*x;" +
   "n.y+=uVel*.05*sin(ap.x*3.14159)*(ap.y-.5);" +
-  "n.x*=1.-.06*uBend*x*x;n.y+=uLift;" +
+  "n.x*=1.-.06*bend*x*x;n.y+=uLift;" +
   "vUv=aPos;vX=x;" +
   "gl_Position=vec4(n,0.,1.);}"
 
@@ -359,7 +360,7 @@ export default function CurvedLensCarousel({
     let hovered = -1
     const WORLD_COLOR: Record<string, [number, number, number]> = {
       build: [0x2f / 255, 0x55 / 255, 0xff / 255],
-      "open-source": [0xef / 255, 0x3b / 255, 0x2d / 255],
+      brand: [0xef / 255, 0x3b / 255, 0x2d / 255],
       learn: [0xff / 255, 0xc8 / 255, 0x1a / 255],
     }
     const dimTarget = (i: number) =>
@@ -556,7 +557,7 @@ export default function CurvedLensCarousel({
     }
     const onMotion = () => kick()
 
-    // Wheel rotates the ring, live-site exact: 0.12 deg per wheel unit,
+    // Wheel rotates the wall, live-site exact: 0.12 deg per wheel unit,
     // clamped to +/-240 per event, dominant axis, line/page normalised.
     // Scroll-down moves the cards left, scroll-up moves them right; the
     // page itself never scrolls under the hero.
