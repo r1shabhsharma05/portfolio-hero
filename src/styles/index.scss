@@ -9,7 +9,7 @@
   --color-night: #1a1a1c;
   --color-line: rgb(17 17 17 / 10%);
   --world-build: #2f55ff;
-  --world-opensource: #ef3b2d;
+  --world-brand: #ef3b2d;
   --world-learn: #ffc81a;
   --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -30,6 +30,10 @@ body {
 
 a { color: inherit; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+
+/* Programmatic focus targets (world-transition h1) are for screen readers,
+   not keyboard users — no visible ring. */
+[tabindex="-1"]:focus { outline: none; }
 
 /* ---------- header (live: name + worlds left, Human/Agent right) ---------- */
 .site-header {
@@ -600,6 +604,21 @@ body[data-phase="leaving"] .site-header .mode-switch {
 .world-transition.is-covered .world-transition-scene { clip-path: inset(0 0% 0 0); }
 .world-transition.is-covered .world-transition-name > span { transform: none; }
 .world-transition.is-covered .world-transition-light { opacity: 0; }
+
+/* Brand cover leaves (Avi's): red/yellow petals drift down the seascape. */
+.world-transition-leaf {
+  position: absolute;
+  top: -24px;
+  width: 14px;
+  height: 10px;
+  border-radius: 50% 0 50% 50%;
+  opacity: 0.9;
+  z-index: 3;
+  animation: leaf-fall 3.2s ease-in forwards;
+}
+@keyframes leaf-fall {
+  to { transform: translateY(110vh) rotate(320deg); opacity: 0.7; }
+}
 
 /* Hero: sky panel + brief form. */
 /* Hero: one painted-sky panel; the brief card sits on it (Avi's layout). */
@@ -1361,4 +1380,376 @@ body[data-phase="leaving"] .site-header .mode-switch {
     grid-template-columns: repeat(2, 1fr);
     column-gap: 16px;
   }
+}
+
+/* ---------- Brand page (/brands) — Avi's media-kit layout ---------- */
+
+/* Hero: one seascape panel; copy left, best-Reels fan right (Avi's layout). */
+.brand-hero {
+  box-sizing: border-box;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  align-items: end;
+  gap: 40px;
+  min-height: min(600px, 100svh - 140px);
+  margin: 0 16px;
+  padding: 40px clamp(24px, 4vw, 56px);
+  border-radius: 28px;
+  background: var(--color-paper-deep) url("/brand-seascape.jpg") 50% 88% / cover;
+}
+
+/* Scroll zoom (Avi's --hero-p): the seascape grows to 1.3x and sinks 22%
+   as the hero scrolls out, clipped by the panel; a paper veil fades in. */
+.brand-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: inherit;
+  transform-origin: 50% 100%;
+  transform: translate3d(0, calc(var(--hero-p, 0) * 22%), 0)
+    scale(calc(1 + var(--hero-p, 0) * 0.3));
+  will-change: transform;
+}
+.brand-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-paper);
+  opacity: calc(var(--hero-p, 0) * 0.45);
+  pointer-events: none;
+}
+
+.brand-hero-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  color: var(--color-ink);
+}
+
+.brand-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.brand-hero-copy h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(38px, 4vw, 62px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.brand-underline {
+  text-decoration: underline;
+  text-decoration-color: #ef3b2d;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+
+.brand-hero-copy p:not(.brand-eyebrow) {
+  max-width: 52ch;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.brand-hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.brand-hero-links a { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Fan carousel: fanned phone cards, front card in red. */
+.brand-hero-carousel {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.brand-fan { position: relative; height: 400px; }
+.brand-fan-card {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 200px;
+  aspect-ratio: 9 / 16;
+  margin-left: -100px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.5);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  display: block;
+}
+.brand-fan-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.brand-fan-card.is-front { outline: 2px solid #ef3b2d; outline-offset: 2px; }
+.brand-fan-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  background: #111;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 999px;
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+.brand-fan-card:hover .brand-fan-play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.brand-fan-views {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  background: rgb(0 0 0 / 0.65);
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+}
+.brand-sticker {
+  position: absolute;
+  z-index: 11;
+  background: #fff;
+  color: #111;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 4px;
+  box-shadow: 0 10px 24px -12px rgb(0 0 0 / 0.4);
+}
+.brand-fan > .brand-sticker:nth-of-type(1) { top: 2%; left: 2%; transform: rotate(-5deg); }
+.brand-fan > .brand-sticker:nth-of-type(2) { top: 44%; right: 0; transform: rotate(3deg); }
+.brand-fan > .brand-sticker:nth-of-type(3) { bottom: 2%; left: 14%; transform: rotate(-2deg); }
+.brand-fan-meta { color: var(--color-ink); }
+.brand-fan-meta p { margin: 0 0 8px; }
+.brand-fan-meta b { font-family: var(--font-serif); font-size: 20px; font-weight: 400; }
+.brand-fan-pills { display: flex; gap: 8px; align-items: center; font-size: 13px; }
+.brand-fan-pills span,
+.brand-fan-pills a {
+  border: 1px solid var(--color-line);
+  background: rgb(255 255 255 / 0.7);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.brand-fan-nav { display: flex; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 12px; }
+.brand-fan-nav button {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.75);
+  font-size: 15px;
+  line-height: 1;
+}
+.brand-fan-nav button:hover { background: #111; color: #fff; }
+
+/* Selected work articles. */
+.brand-articles { display: grid; gap: 24px; margin-top: 32px; }
+.brand-article {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border: 1px solid var(--color-line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+.brand-article-media { position: relative; display: block; overflow: hidden; }
+.brand-article-media img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 9 / 16; }
+.brand-article-media:hover .brand-fan-play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.brand-article-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 8px; }
+.brand-article-body p { margin: 0; }
+.brand-article-kicker { font-size: 15px; }
+.brand-article-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  margin-top: 8px;
+}
+.brand-article-serif { font-family: var(--font-serif); font-size: 26px; line-height: 1.15; }
+.brand-article-big .brand-stat-num {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  line-height: 1;
+  color: #ef3b2d;
+}
+.brand-article-big .brand-stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  margin-left: 8px;
+}
+
+/* Numbers panel. */
+.brand-numbers.section {
+  background: var(--color-paper-deep);
+  border-radius: 28px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.brand-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
+.brand-stat-num {
+  font-family: var(--font-serif);
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1;
+  color: #ef3b2d;
+  display: block;
+}
+.brand-stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  display: block;
+  margin-top: 8px;
+}
+
+/* Audience pills. */
+.brand-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.brand-pill {
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  background: var(--color-surface);
+}
+
+/* Reach panel — seascape, three fanned cards. */
+.brand-reach {
+  background: var(--color-paper-deep) url("/brand-seascape.jpg") 50% 30% / cover;
+  border-radius: 28px;
+  padding: 40px clamp(24px, 4vw, 56px);
+  color: #fff;
+}
+.brand-reach .section-label { color: rgb(255 255 255 / 0.85); }
+.brand-reach .section-title { color: #fff; }
+.brand-fan-static { height: 380px; margin-top: 32px; }
+
+/* Formats + how it works, included + rates: two-column hairline rows. */
+.brand-split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.brand-rows { list-style: none; margin: 24px 0 0; padding: 0; }
+.brand-rows li { border-top: 1px solid var(--color-line); padding: 18px 0; }
+.brand-rows h3 { font-family: var(--font-serif); font-size: 22px; font-weight: 400; margin: 0 0 6px; }
+.brand-rows p { margin: 0; color: var(--color-ink-soft); font-size: 15px; line-height: 1.6; }
+.brand-checks { list-style: none; margin: 24px 0 0; padding: 0; }
+.brand-checks li { border-top: 1px solid var(--color-line); padding: 14px 0; font-size: 15px; }
+.brand-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  padding: 3px 8px;
+  color: var(--color-ink-soft);
+}
+
+/* Campaign CTA — seascape card with the sentence form. */
+.brand-cta {
+  background: var(--color-paper-deep) url("/brand-seascape.jpg") 50% 60% / cover;
+  border-radius: 28px;
+  padding: 48px clamp(24px, 4vw, 56px);
+  color: #fff;
+}
+.brand-cta .section-label { color: rgb(255 255 255 / 0.85); }
+.brand-cta .section-title { color: #fff; }
+.brand-cta-sentence {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.4;
+  max-width: 32ch;
+  margin: 24px 0 0;
+}
+.brand-cta-sentence input {
+  font: inherit;
+  color: #fff;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid rgb(255 255 255 / 0.6);
+  outline: none;
+  width: 11ch;
+  padding: 0 2px;
+}
+.brand-cta-sentence input::placeholder { color: rgb(255 255 255 / 0.5); }
+.brand-cta-sentence input:focus { border-bottom-color: #fff; }
+.brand-month {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  border: 1px solid rgb(255 255 255 / 0.5);
+  border-radius: 999px;
+  padding: 4px 12px;
+  color: #fff;
+}
+.brand-month.is-selected { background: #ef3b2d; border-color: #ef3b2d; }
+.brand-cta-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.75);
+  margin: 24px 0 0;
+}
+.brand-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.brand-cta-actions button {
+  border: 1px solid rgb(255 255 255 / 0.5);
+  border-radius: 999px;
+  padding: 10px 18px;
+  color: #fff;
+  font-size: 14px;
+}
+.brand-cta-actions button:hover { border-color: #fff; }
+.brand-cta-actions .brand-send { background: #ef3b2d; border-color: #ef3b2d; }
+.brand-cta-actions .brand-send:hover { background: #d92f22; }
+
+/* Reveal on scroll. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-reveal].is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+@media (max-width: 900px) {
+  .brand-hero { grid-template-columns: 1fr; min-height: 0; }
+  .brand-split { grid-template-columns: 1fr; gap: 32px; }
+  .brand-article { grid-template-columns: 1fr; }
+  .brand-article-media img { aspect-ratio: 16 / 9; }
+  .brand-stats { grid-template-columns: 1fr; gap: 16px; }
+  .brand-fan { height: 360px; }
+}
+@media (max-width: 700px) {
+  .brand-fan-card { width: 160px; margin-left: -80px; }
+  .brand-fan-static { height: 320px; }
 }
