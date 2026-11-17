@@ -6,8 +6,15 @@
 // navigate -> on /projects the scene morphs into the hero sky panel and
 // fades out while the hero content fades in. Direct loads show no transition.
 
-export const WORLD_SCENE = "/build-sky.webp";
-export const WORLD_NAME = "Build";
+/** Per-world transition scene + name (Avi's mechanism: the destination's
+ *  hero image wipes in with the world name). */
+export const WORLD_SCENES = {
+  build: { scene: "/build-sky.webp", name: "Build" },
+  brand: { scene: "/brand-seascape.jpg", name: "Brand" },
+} as const;
+export type WorldId = keyof typeof WORLD_SCENES;
+export const WORLD_SCENE = WORLD_SCENES.build.scene;
+export const WORLD_NAME = WORLD_SCENES.build.name;
 export const WORLD_HREF = "/projects/";
 
 const EASE_COVER = "cubic-bezier(.65,0,.35,1)";
@@ -21,8 +28,8 @@ function prefersReducedMotion(): boolean {
 }
 
 /** Preload the scene image so the cover is instant (Avi preloads on hover). */
-export function preloadWorldScene(): void {
-  new Image().src = WORLD_SCENE;
+export function preloadWorldScene(scene: string = WORLD_SCENE): void {
+  new Image().src = scene;
 }
 
 /** True when arriving on /projects from the homepage (the transition trigger). */
@@ -52,37 +59,49 @@ function inertPage(inert: boolean): HTMLElement[] {
 }
 
 /**
- * Homepage side: cover the screen with the scene + "Build.", then navigate.
+ * Homepage side: cover the screen with the scene + world name, then navigate.
  * Escape cancels the cover (no navigation). Reduced motion navigates directly.
  * Returns a cancel function.
  */
-export function openWorldTransition(href: string = WORLD_HREF): () => void {
+export function openWorldTransition(href: string = WORLD_HREF, world: WorldId = "build"): () => void {
   if (prefersReducedMotion()) {
     window.location.href = href;
     return () => {};
   }
   if (document.querySelector(".world-transition")) return () => {};
 
+  const { scene, name: worldName } = WORLD_SCENES[world];
   const d = document.createElement("div");
   d.className = "world-transition";
   d.setAttribute("aria-hidden", "true");
-  d.style.setProperty("--scene", `url("${WORLD_SCENE}")`);
+  d.style.setProperty("--scene", `url("${scene}")`);
   const c = document.createElement("div");
   c.className = "world-transition-scene";
   const u = document.createElement("i");
   u.className = "world-transition-light";
   const h = document.createElement("span");
   h.className = "world-transition-name";
-  h.innerHTML = `<span>${WORLD_NAME}.</span>`;
+  h.innerHTML = `<span>${worldName}.</span>`;
   c.appendChild(h);
   d.appendChild(c);
   d.appendChild(u);
+  // Brand's cover (Avi's): red/yellow leaves drift down over the seascape.
+  if (world === "brand") {
+    [8, 22, 38, 55, 70, 84].forEach((left, i) => {
+      const leaf = document.createElement("i");
+      leaf.className = "world-transition-leaf";
+      leaf.style.left = `${left}%`;
+      leaf.style.animationDelay = `${i * 0.35}s`;
+      leaf.style.background = i % 2 ? "#e63b2e" : "#ffc81a";
+      d.appendChild(leaf);
+    });
+  }
   document.body.appendChild(d);
 
   const p = document.createElement("span");
   p.className = "sr-only";
   p.setAttribute("role", "status");
-  p.textContent = `Opening ${WORLD_NAME}`;
+  p.textContent = `Opening ${worldName}`;
   document.body.appendChild(p);
 
   const page = inertPage(true);
@@ -149,18 +168,18 @@ export function openWorldTransition(href: string = WORLD_HREF): () => void {
 }
 
 /**
- * /projects side: the overlay is already in the DOM in its covered state
- * (rendered by Build.tsx). Morph the scene into the hero sky panel, fade the
+ * Destination side: the overlay is already in the DOM in its covered state
+ * (rendered by the world page). Morph the scene into the hero panel, fade the
  * overlay out, fade the hero content in. Returns a cleanup function.
  */
-export function revealWorldTransition(): () => void {
+export function revealWorldTransition(opts: { hero?: string; copy?: string; form?: string } = {}): () => void {
   const d = document.querySelector<HTMLElement>(".world-transition");
   if (!d) return () => {};
   const c = d.querySelector<HTMLElement>(".world-transition-scene");
   const h = d.querySelector<HTMLElement>(".world-transition-name");
-  const hero = document.querySelector<HTMLElement>(".build-hero");
-  const copy = document.querySelector<HTMLElement>(".build-hero-copy");
-  const form = document.querySelector<HTMLElement>(".brief-form");
+  const hero = document.querySelector<HTMLElement>(opts.hero ?? ".build-hero");
+  const copy = document.querySelector<HTMLElement>(opts.copy ?? ".build-hero-copy");
+  const form = document.querySelector<HTMLElement>(opts.form ?? ".brief-form");
   const h1 = document.querySelector<HTMLElement>("main h1");
 
   // No hero to morph into: just fade the overlay out.

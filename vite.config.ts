@@ -67,6 +67,7 @@ export default defineConfig({
       input: {
         main: resolve(ROOT, "index.html"),
         projects: resolve(ROOT, "projects/index.html"),
+        brands: resolve(ROOT, "brands/index.html"),
       },
     },
   },

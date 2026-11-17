@@ -16,7 +16,7 @@ export const PROFILE = {
   name: "Rishabh Sharma",
   headline: "Full-stack Developer | Open Source Contributor | Tech Creator",
   summary:
-    "Full-stack developer and B.Tech Computer Science student at GLA University, Mathura (2025–2028). Builds and ships real products for web and mobile, contributes to open source, and makes tech Reels as @cod.ehx. LeetCode 213 solved.",
+    "Full-stack developer and B.Tech Computer Science student at GLA University, Mathura (2025–2028). Builds and ships real products for web and mobile, contributes to open source, and makes tech Reels as @cod.ehx. LeetCode 218 solved.",
   url: "https://portfolio-hero-psi-lemon.vercel.app",
   email: "rishabhsharma14426@gmail.com",
   location: {
@@ -107,8 +107,8 @@ export const PROFILE = {
   },
   highlights: [
     "23 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects",
-    "212 LeetCode problems solved (88 Easy, 99 Medium, 25 Hard)",
-    "Shipped 7 products: RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI",
+    "218 LeetCode problems solved (92 Easy, 100 Medium, 26 Hard)",
+    "Shipped 8 products: RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI, Rkhshak",
     "Tech creator — Reels about AI tools and coding as @cod.ehx",
     "Built SafeLife: emergency SOS app with live location tracking and guardian alerts",
   ],

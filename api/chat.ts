@@ -61,7 +61,7 @@ About Rishabh:
 - Education: B.Tech in Computer Science at GLA University, Mathura (2025–2028). Home town: Bulandshahr, Uttar Pradesh, India.
 - Full-stack developer: React, Next.js, React Native, TypeScript, JavaScript, Node.js, Express.js, FastAPI, Python, Tailwind CSS, Supabase, PostgreSQL, Prisma, Vite, Expo, GSAP, GitHub Actions, Vercel, Render.
 - Open source: 23 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects.
-- LeetCode: 212 problems solved (88 Easy, 99 Medium, 25 Hard).
+- LeetCode: 218 problems solved (92 Easy, 100 Medium, 26 Hard).
 - Products he built and shipped:
   - SecureGaurd — application security for every repository (https://secureguard-main.vercel.app)
   - SafeLife — emergency SOS app with live location tracking and guardian alerts (https://safelife-ai.vercel.app)
@@ -70,6 +70,7 @@ About Rishabh:
   - LocalKart — campus marketplace for pre-loved essentials (https://localkart-jet.vercel.app)
   - Healthcare Hub — connected healthcare platform
   - MorphAI — AI-powered content tooling
+  - Rkhshak — master security skills: complete production-readiness security audit + minimal-code fixes (https://github.com/r1shabhsharma05/Rkhshak)
 - Tech creator: makes tech Reels about AI tools and coding as @cod.ehx on Instagram (https://www.instagram.com/cod.ehx). Runs a faceless history YouTube channel @UntoldHx.
 - Skills include Video Editing (tech Reels).
 - Contact: rishabhsharma14426@gmail.com | LinkedIn: linkedin.com/in/rishabh-sharma-342575438 | GitHub: github.com/r1shabhsharma05

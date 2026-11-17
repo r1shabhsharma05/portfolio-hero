@@ -33,18 +33,18 @@ contributes to open source, and makes tech Reels as @cod.ehx.
 
 I build production web and mobile products end to end — React and Next.js on
 the front, Node.js and FastAPI on the back, with Supabase and PostgreSQL for
-data. I have shipped seven products, from an AI railway block planner to an
+data. I have shipped eight products, from an AI railway block planner to an
 emergency SOS app, and I contribute to open source: 23 pull requests merged
 and 8 open across Jenkins, WordPress/Gutenberg and other projects.
 
 Alongside engineering, I create. I make tech Reels about AI tools and coding
-as @cod.ehx, and I have solved 212 LeetCode problems.
+as @cod.ehx, and I have solved 218 LeetCode problems.
 
 ## Highlights
 
 - **23 pull requests merged, 8 open** — Jenkins, WordPress/Gutenberg and more
-- **212 LeetCode problems solved** (88 Easy, 99 Medium, 25 Hard)
-- **7 products shipped** — RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI
+- **218 LeetCode problems solved** (92 Easy, 100 Medium, 26 Hard)
+- **8 products shipped** — RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI, Rkhshak
 - **SafeLife** — emergency SOS app with live location tracking and guardian alerts
 - **Tech creator** — Reels about AI tools and coding as @cod.ehx
 
@@ -78,7 +78,7 @@ tech Reels as @cod.ehx.
   Express, FastAPI, Python, Supabase, PostgreSQL, Prisma, Tailwind CSS.
 - Open source: 23 pull requests merged and 8 open across Jenkins,
   WordPress/Gutenberg and other projects.
-- LeetCode: 212 problems solved (88 Easy, 99 Medium, 25 Hard).
+- LeetCode: 218 problems solved (92 Easy, 100 Medium, 26 Hard).
 - Creator: tech Reels as @cod.ehx; faceless history YouTube channel @UntoldHx.
 
 ## Products
@@ -200,7 +200,7 @@ export const PAGES = {
   "/": {
     title: "Rishabh Sharma — Full-stack Developer",
     description:
-      "Full-stack developer and B.Tech CS student at GLA University. 23 OSS PRs merged, LeetCode 213 solved, 7 products shipped, tech Reels as @cod.ehx.",
+      "Full-stack developer and B.Tech CS student at GLA University. 23 OSS PRs merged, LeetCode 218 solved, 8 products shipped, tech Reels as @cod.ehx.",
     markdown: HOME,
   },
   "/about": {

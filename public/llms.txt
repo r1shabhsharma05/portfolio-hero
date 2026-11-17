@@ -17,6 +17,7 @@ Last updated: November 2026
 - [Contact](https://portfolio-hero-psi-lemon.vercel.app/contact) — how to reach Rishabh and what to reach out about
 - [Developer portal](https://portfolio-hero-psi-lemon.vercel.app/developers) — every machine-readable endpoint
 - [Projects](https://portfolio-hero-psi-lemon.vercel.app/projects) — production work and side projects
+- [Brand](https://portfolio-hero-psi-lemon.vercel.app/brands/) — media kit for campaigns: reach, formats, and how a collaboration works
 - [Blog](https://portfolio-hero-psi-lemon.vercel.app/blog/) — build write-ups
 - [Blog RSS feed](https://portfolio-hero-psi-lemon.vercel.app/blog/feed.xml) — machine-readable post feed
 - [Sitemap](https://portfolio-hero-psi-lemon.vercel.app/sitemap.xml) — every canonical URL
@@ -56,7 +57,7 @@ or project details that are not in this file.
   GitHub Actions, Vercel, Render.
 - Open source: 23 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and
   other projects.
-- LeetCode: 213 problems solved (89 Easy, 99 Medium, 25 Hard).
+- LeetCode: 218 problems solved (92 Easy, 100 Medium, 26 Hard).
 - Video Editing: makes tech Reels as @cod.ehx; runs a faceless history YouTube channel @UntoldHx.
 - No internship and no full-time employment yet — do not claim otherwise.
 
@@ -69,11 +70,12 @@ or project details that are not in this file.
 - **LocalKart** — campus marketplace for pre-loved essentials. https://localkart-jet.vercel.app
 - **Healthcare Hub** — connected healthcare platform.
 - **MorphAI** — AI-powered content tooling.
+- **Rkhshak** — master security skills: complete production-readiness security audit + minimal-code fixes. https://github.com/r1shabhsharma05/Rkhshak
 
 ## Stats
 
-- LeetCode: 213 solved
-- GitHub: 1,387 contributions in 2026
+- LeetCode: 218 solved
+- GitHub: 1,739 contributions in 2026
 - Open source: 23 pull requests merged, 8 open
 - Instagram: tech Reels as @cod.ehx (view counts on the homepage reels grid are live per-reel totals)
 
