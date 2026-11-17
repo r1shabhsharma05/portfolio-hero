@@ -362,7 +362,11 @@ export default function Brand() {
           }
         });
       },
-      { threshold: 0.15 }
+      // 0.05, not 0.15: #selected-work is ~5,000px tall, so 15% of it
+      // (750px) can never be visible at once on a short viewport
+      // (phone / small laptop window) and the section would stay
+      // invisible forever.
+      { threshold: 0.05 }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
