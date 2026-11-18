@@ -14,7 +14,7 @@
 :root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 * { box-sizing:border-box; }
 body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
-/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+/* Paper grain, kept faint (low opacity). */
 body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
 a { color:inherit; text-decoration:none; }
 #progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
@@ -88,13 +88,6 @@ a { color:inherit; text-decoration:none; }
 .post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
 .post img, .post video { max-width:100%; height:auto; border-radius:12px; }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
-.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
-.reel figcaption { color:var(--ink); }
-.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
-.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
-.reelFoot span { color:var(--ink); }
-.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
-.reelFoot a:hover { transform:translateY(-1px); }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
 .toc ol { list-style:none; margin:0; padding:0; }
@@ -118,8 +111,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   .site-head { padding-left:12px; padding-right:12px; gap:16px; }
   .wrap { grid-template-columns:1fr; }
   .aside { order:-1; max-height:none; position:static; }
-  .reel { flex-flow:wrap; align-items:center; }
-  .reel video { width:120px; }
   .toc { display:none; }
   .toc b, .keep li a span { transition:none; }
   .outputOpen { transition:none; }
@@ -830,7 +821,6 @@ here. The companion brief — the same idea taken into WebGL, with
 </div>
 </main>
 <aside class="aside">
-<figure class="reel"><figcaption>You came from this Reel</figcaption><video src="/reels/DdG4XZqyh6e-preview.mp4" poster="/reels/DdG4XZqyh6e.webp" muted loop playsinline preload="none" aria-label="Reel"></video><div class="reelFoot" style="justify-content:flex-end"><a href="https://www.instagram.com/reel/DdG4XZqyh6e/" target="_blank" rel="noopener noreferrer">Watch on Instagram ↗</a></div></figure>
 <nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#supply-the-imagery-first"><i>02</i><b>Supply the imagery first</b></a></li><li><a href="#the-prompt"><i>03</i><b>The prompt</b></a></li><li><a href="#step-0-non-negotiables"><i>04</i><b>Step 0 — Non-negotiables</b></a></li><li><a href="#step-1-colour-and-type"><i>05</i><b>Step 1 — Colour and type</b></a></li><li><a href="#step-2-smooth-scroll-wired-exactly-like-this"><i>06</i><b>Step 2 — Smooth scroll, wired exactly like this</b></a></li><li><a href="#step-3-define-the-timing-language-once-then-never-write-a-raw-ease-again"><i>07</i><b>Step 3 — Define the timing language once, then never write a raw ease again</b></a></li><li><a href="#step-4-the-core-mechanic-tall-wrapper-css-sticky-never-pin-true"><i>08</i><b>Step 4 — The core mechanic: tall wrapper + CSS sticky. Never pin: true.</b></a></li><li><a href="#step-5-six-sections-six-different-behaviours"><i>09</i><b>Step 5 — Six sections, six different behaviours</b></a></li><li><a href="#step-6-the-reveal-system-six-primitives-three-states-one-attribute"><i>10</i><b>Step 6 — The reveal system: six primitives, three states, one attribute</b></a></li><li><a href="#step-7-constant-feedback-the-rotating-corner-mark"><i>11</i><b>Step 7 — Constant feedback: the rotating corner mark</b></a></li><li><a href="#step-8-preloader-and-the-arch-reveal"><i>12</i><b>Step 8 — Preloader and the arch reveal</b></a></li><li><a href="#step-9-parallax-primitives"><i>13</i><b>Step 9 — Parallax primitives</b></a></li><li><a href="#step-10-assets"><i>14</i><b>Step 10 — Assets</b></a></li><li><a href="#step-11-accessibility"><i>15</i><b>Step 11 — Accessibility</b></a></li><li><a href="#acceptance-checks-verify-each-one-before-you-finish"><i>16</i><b>Acceptance checks — verify each one before you finish</b></a></li><li><a href="#why-the-prompt-is-written-this-way"><i>17</i><b>Why the prompt is written this way</b></a></li><li><a href="#what-goes-wrong-and-what-it-means"><i>18</i><b>What goes wrong, and what it means</b></a></li><li><a href="#recap"><i>19</i><b>Recap</b></a></li></ol></nav>
 </aside>
 </div>
@@ -888,17 +878,6 @@ here. The companion brief — the same idea taken into WebGL, with
       } else done();
     });
   });
-  // Reel videos play when in view, pause when scrolled away.
-  var reels = document.querySelectorAll(".reel video");
-  if ("IntersectionObserver" in window && reels.length) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.play().catch(function () {});
-        else e.target.pause();
-      });
-    }, { threshold: 0.3 });
-    reels.forEach(function (v) { rio.observe(v); });
-  }
 })();
 </script>
 </body>

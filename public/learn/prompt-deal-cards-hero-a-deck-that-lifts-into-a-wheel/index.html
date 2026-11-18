@@ -14,7 +14,7 @@
 :root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 * { box-sizing:border-box; }
 body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
-/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+/* Paper grain, kept faint (low opacity). */
 body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
 a { color:inherit; text-decoration:none; }
 #progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
@@ -88,13 +88,6 @@ a { color:inherit; text-decoration:none; }
 .post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
 .post img, .post video { max-width:100%; height:auto; border-radius:12px; }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
-.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
-.reel figcaption { color:var(--ink); }
-.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
-.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
-.reelFoot span { color:var(--ink); }
-.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
-.reelFoot a:hover { transform:translateY(-1px); }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
 .toc ol { list-style:none; margin:0; padding:0; }
@@ -118,8 +111,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   .site-head { padding-left:12px; padding-right:12px; gap:16px; }
   .wrap { grid-template-columns:1fr; }
   .aside { order:-1; max-height:none; position:static; }
-  .reel { flex-flow:wrap; align-items:center; }
-  .reel video { width:120px; }
   .toc { display:none; }
   .toc b, .keep li a span { transition:none; }
   .outputOpen { transition:none; }
@@ -139,9 +130,9 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 19 OCTOBER 2026 &middot; 11 min</p>
 <h1 class="title">The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</h1>
 <p class="lede">A copy-pasteable prompt and the code concepts behind the Deal hero: Reel cards dealt face down, flipped into a fan while the loader counts, then lifted into a wheel of playing videos rising out of the clouds.</p>
-<figure class="output"><figcaption><span>The output, live</span><span class="outputUrl">avivashishta.com/lab/deal-hero</span></figcaption><a class="outputWindow" href="https://www.avivashishta.com/lab/deal-hero" target="_blank" rel="noreferrer"><span class="outputCardUrl">avivashishta.com/lab/deal-hero</span><span class="outputOpen">Open the live page ↗</span></a></figure>
+
 <div class="post">
-<p>My homepage opens with a small tilted ring of Reels that expands into a 3D carousel. I wrote up <a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/">the prompt and the code behind that one</a>. This post is about the second hero I built to compete with it, and you can <a href="https://www.avivashishta.com/lab/deal-hero" target="_blank" rel="noreferrer">see it live at avivashishta.com/lab/deal-hero</a>. It is the same homepage, word for word, with only the hero swapped, so you can open both in two tabs and compare.</p>
+<p>My homepage opens with a small tilted ring of Reels that expands into a 3D carousel. I wrote up <a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/">the prompt and the code behind that one</a>. This post is about the second hero I built to compete with it. It is the same homepage, word for word, with only the hero swapped.</p>
 <p>The Deal hero starts like a card trick. While the counter climbs, a deck flies up from below the screen. Every card arrives face down, flips face up mid-flight and lands in a fan. When the loader hits 100, the fan does not get replaced. It lifts, tips back, opens into a wider wheel of bigger cards and starts turning, while the sky and the cloud bank arrive around it and the Reels near the top start playing.</p>
 <div class="highlight"><p><strong>The short version:</strong> the deck is a full 360 degree wheel pinned to a pivot below the screen, so only its top third is ever visible. Each card has one home angle on that wheel. The homepage's own loader already animates two numbers, <code>formation</code> and <code>expansion</code>. Map <code>formation</code> to the deal and <code>expansion</code> to the lift, and the whole sequence comes from one transform per card.</p></div><h2 id="the-prompt">The prompt</h2>
 <p>Paste this into Claude Code, Cursor or Replit. It describes the behaviour rather than my file layout, so it works in any React project.</p>
@@ -216,12 +207,11 @@ stage.style.transform =
 <li><strong>Size to the frame.</strong> The scene scales to the hero frame&#39;s size, not the window&#39;s. On a short laptop screen the lifted wheel would otherwise poke out of the top of the frame.</li>
 </ul>
 <h2 id="ring-or-deal">Ring or deal?</h2>
-<p>The ring is about immersion: you end up inside a room of Reels. The deal is about presentation: a hand of cards held up for you to pick from, and it shows more covers at once at a readable size. I haven&#39;t decided which one stays. Open <a href="/">the homepage</a> and <a href="https://www.avivashishta.com/lab/deal-hero" target="_blank" rel="noreferrer">the Deal version</a> side by side and tell me which one you&#39;d keep.</p>
+<p>The ring is about immersion: you end up inside a room of Reels. The deal is about presentation: a hand of cards held up for you to pick from, and it shows more covers at once at a readable size. I haven&#39;t decided which one stays.</p>
 
 </div>
 </main>
 <aside class="aside">
-
 <nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#the-prompt"><i>01</i><b>The prompt</b></a></li><li><a href="#concept-1-a-fan-is-a-wheel-you-only-see-the-top-of"><i>02</i><b>Concept 1: a fan is a wheel you only see the top of</b></a></li><li><a href="#concept-2-pivot-rotate-push-out"><i>03</i><b>Concept 2: pivot, rotate, push out</b></a></li><li><a href="#concept-3-deal-from-the-middle-out"><i>04</i><b>Concept 3: deal from the middle out</b></a></li><li><a href="#concept-4-the-loader-already-tells-you-when-to-lift"><i>05</i><b>Concept 4: the loader already tells you when to lift</b></a></li><li><a href="#concept-5-the-clouds-are-solid-the-videos-fade-in"><i>06</i><b>Concept 5: the clouds are solid, the videos fade in</b></a></li><li><a href="#concept-6-smooth-is-mostly-about-what-you-don-39-t-do"><i>07</i><b>Concept 6: smooth is mostly about what you don&amp;#39;t do</b></a></li><li><a href="#ring-or-deal"><i>08</i><b>Ring or deal?</b></a></li></ol></nav>
 </aside>
 </div>
@@ -279,17 +269,6 @@ stage.style.transform =
       } else done();
     });
   });
-  // Reel videos play when in view, pause when scrolled away.
-  var reels = document.querySelectorAll(".reel video");
-  if ("IntersectionObserver" in window && reels.length) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.play().catch(function () {});
-        else e.target.pause();
-      });
-    }, { threshold: 0.3 });
-    reels.forEach(function (v) { rio.observe(v); });
-  }
 })();
 </script>
 </body>

@@ -14,7 +14,7 @@
 :root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 * { box-sizing:border-box; }
 body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
-/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+/* Paper grain, kept faint (low opacity). */
 body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
 a { color:inherit; text-decoration:none; }
 #progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
@@ -88,13 +88,6 @@ a { color:inherit; text-decoration:none; }
 .post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
 .post img, .post video { max-width:100%; height:auto; border-radius:12px; }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
-.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
-.reel figcaption { color:var(--ink); }
-.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
-.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
-.reelFoot span { color:var(--ink); }
-.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
-.reelFoot a:hover { transform:translateY(-1px); }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
 .toc ol { list-style:none; margin:0; padding:0; }
@@ -118,8 +111,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   .site-head { padding-left:12px; padding-right:12px; gap:16px; }
   .wrap { grid-template-columns:1fr; }
   .aside { order:-1; max-height:none; position:static; }
-  .reel { flex-flow:wrap; align-items:center; }
-  .reel video { width:120px; }
   .toc { display:none; }
   .toc b, .keep li a span { transition:none; }
   .outputOpen { transition:none; }
@@ -179,7 +170,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <tbody>
 <tr><td>1</td><td><strong>Bolna AI</strong><br>Fall 2025, ~21 people</td><td>Voice AI to enable India's next billion<br><small>Bengaluru, KA, India</small></td><td><a href="https://bolna.ai" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/bolna-ai" target="_blank" rel="noreferrer">YC</a></td></tr>
 <tr><td>2</td><td><strong>Vahan</strong><br>Summer 2019, ~85 people</td><td>AI recruiter for India's massive blue-collar workforce<br><small>Bengaluru, KA, India</small></td><td><a href="https://vahan.ai" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/vahan" target="_blank" rel="noreferrer">YC</a></td></tr>
-<tr><td>3</td><td><strong>Kalam Labs</strong><br>Summer 2021, ~10 people</td><td>Autonomous Stratospheric UAVs<br><small>India</small></td><td><a href="http://www.kalamlabs.in" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/kalam-labs" target="_blank" rel="noreferrer">YC</a></td></tr>
+<tr><td>3</td><td><strong>Kalam Labs</strong><br>Summer 2021, ~10 people</td><td>Autonomous Stratospheric UAVs<br><small>India</small></td><td>Site · <a href="https://www.ycombinator.com/companies/kalam-labs" target="_blank" rel="noreferrer">YC</a></td></tr>
 <tr><td>4</td><td><strong>Coulomb AI</strong><br>Summer 2021, ~10 people</td><td>Battery Observability Platform for Electric Vehicles<br><small>Bengaluru, KA, India</small></td><td><a href="https://coulomb.ai/" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/coulomb-ai" target="_blank" rel="noreferrer">YC</a></td></tr>
 <tr><td>5</td><td><strong>Neodocs</strong><br>Summer 2021, ~20 people</td><td>Instant lab tests on your smartphone<br><small>MH, India</small></td><td><a href="https://www.neodocs.in" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/neodocs" target="_blank" rel="noreferrer">YC</a></td></tr>
 <tr><td>6</td><td><strong>SalaryBox</strong><br>Summer 2021, ~40 people</td><td>Gusto for India<br><small>Gurugram, HR, India</small></td><td><a href="https://salarybox.in/" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/salarybox" target="_blank" rel="noreferrer">YC</a></td></tr>
@@ -307,7 +298,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <tr><td>99</td><td><strong>Superset</strong><br>Spring 2026, ~4 people</td><td>Building self-improving software<br><small>San Francisco, CA, USA</small></td><td><a href="https://www.superset.sh/" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/superset" target="_blank" rel="noreferrer">YC</a></td></tr>
 <tr><td>100</td><td><strong>Replicas</strong><br>Spring 2026, ~2 people</td><td>Run any coding agent harness in the cloud<br><small>San Francisco, CA, USA</small></td><td><a href="https://replicas.dev" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/replicas" target="_blank" rel="noreferrer">YC</a></td></tr>
 <tr><td>101</td><td><strong>Reason Machines</strong><br>Spring 2026, ~2 people</td><td>Reason Machines builds Reason Agent, the autonomous software engineer<br><small>San Francisco, CA, USA</small></td><td><a href="https://reasonmachines.com" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/reason-machines" target="_blank" rel="noreferrer">YC</a></td></tr>
-<tr><td>102</td><td><strong>Waddle Labs</strong><br>Summer 2026, ~2 people</td><td>LLMs that control robots<br><small>San Francisco, CA, USA</small></td><td><a href="https://www.waddlelabs.ai/" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/waddle-labs" target="_blank" rel="noreferrer">YC</a></td></tr>
+<tr><td>102</td><td><strong>Waddle Labs</strong><br>Summer 2026, ~2 people</td><td>LLMs that control robots<br><small>San Francisco, CA, USA</small></td><td>Site · <a href="https://www.ycombinator.com/companies/waddle-labs" target="_blank" rel="noreferrer">YC</a></td></tr>
 <tr><td>103</td><td><strong>Glen</strong><br>Summer 2026, ~1 people</td><td>Institutional Learning Layer for Every Agent in Your Company<br><small>San Francisco, CA, USA</small></td><td><a href="https://www.tryglen.com/" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/glen" target="_blank" rel="noreferrer">YC</a></td></tr>
 <tr><td>104</td><td><strong>Workers IO</strong><br>Fall 2026, ~2 people</td><td>Simulation Environments for Verifying Mission Critical Software<br><small>San Francisco, CA, USA</small></td><td><a href="https://workers.io" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/workers-io" target="_blank" rel="noreferrer">YC</a></td></tr>
 <tr><td>105</td><td><strong>Simantic</strong><br>Fall 2026, ~4 people</td><td>Firmware simulation for AI agents<br><small>Waterloo, ON, Canada</small></td><td><a href="https://simantic.dev" target="_blank" rel="noreferrer">Site</a> · <a href="https://www.ycombinator.com/companies/simantic" target="_blank" rel="noreferrer">YC</a></td></tr>
@@ -333,7 +324,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 </div>
 </main>
 <aside class="aside">
-
 <nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#how"><i>01</i><b>How to use this list</b></a></li><li><a href="#email"><i>02</i><b>The email I'd send</b></a></li><li><a href="#india-yc"><i>03</i><b>1. India AI startups on YC's hiring list (18)</b></a></li><li><a href="#india-listed"><i>04</i><b>2. India AI startups with intern or 0 to 1 year roles listed (19)</b></a></li><li><a href="#live"><i>05</i><b>3. AI startups with a live internship posting right now (21)</b></a></li><li><a href="#remote"><i>06</i><b>4. Early-stage YC AI startups hiring, with remote roles (38)</b></a></li><li><a href="#devtools"><i>07</i><b>5. Brand new YC AI dev tool startups, 2026 batches (10)</b></a></li><li><a href="#how-id-use-this"><i>08</i><b>How I'd use this</b></a></li></ol></nav>
 </aside>
 </div>
@@ -391,17 +381,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
       } else done();
     });
   });
-  // Reel videos play when in view, pause when scrolled away.
-  var reels = document.querySelectorAll(".reel video");
-  if ("IntersectionObserver" in window && reels.length) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.play().catch(function () {});
-        else e.target.pause();
-      });
-    }, { threshold: 0.3 });
-    reels.forEach(function (v) { rio.observe(v); });
-  }
 })();
 </script>
 </body>

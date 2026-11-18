@@ -14,7 +14,7 @@
 :root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 * { box-sizing:border-box; }
 body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
-/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+/* Paper grain, kept faint (low opacity). */
 body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
 a { color:inherit; text-decoration:none; }
 #progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
@@ -88,13 +88,6 @@ a { color:inherit; text-decoration:none; }
 .post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
 .post img, .post video { max-width:100%; height:auto; border-radius:12px; }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
-.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
-.reel figcaption { color:var(--ink); }
-.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
-.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
-.reelFoot span { color:var(--ink); }
-.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
-.reelFoot a:hover { transform:translateY(-1px); }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
 .toc ol { list-style:none; margin:0; padding:0; }
@@ -118,8 +111,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   .site-head { padding-left:12px; padding-right:12px; gap:16px; }
   .wrap { grid-template-columns:1fr; }
   .aside { order:-1; max-height:none; position:static; }
-  .reel { flex-flow:wrap; align-items:center; }
-  .reel video { width:120px; }
   .toc { display:none; }
   .toc b, .keep li a span { transition:none; }
   .outputOpen { transition:none; }
@@ -178,11 +169,11 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
         This runs against the Higgsfield MCP server in two passes: a still,
         then an image-to-video morph off that still. Doing it in one text-to-video
         pass does not work — the lettering drifts and the spelling falls apart.
-        Swap <code>AVI.</code> for your own word.
+        Swap <code>RISHABH.</code> for your own word.
 </p><div class="promptbox"><button class="copybtn" type="button" data-copy>Copy prompt</button><div class="prompt">Use the Higgsfield MCP to generate a looping wordmark video, in two passes.<p>PASS 1 — MASTER STILL (text-to-image, 16:9)
 Generate one still with this prompt:</p>
 <p>  &quot;A 3D typographic wordmark on a pure #000000 black background. The word reads
-  exactly: AVI. — three uppercase Latin letters A, V, I followed by a full stop.
+  exactly: RISHABH. — three uppercase Latin letters A, V, I followed by a full stop.
   Spelling must be exactly A-V-I-period, no other letters, no extra characters.
   The lettering is an extremely heavy geometric grotesque sans-serif, ultra-bold,
   tight letter spacing, letters nearly touching. The wordmark is HUGE: it spans
@@ -201,7 +192,7 @@ vertically centred. Check the spelling by looking at it. Regenerate if not.</p>
 <p>PASS 2 — MATERIAL MORPH (image-to-video, 15s, 1080p)
 Pass the still&#39;s job_id as start_image. Prompt:</p>
 <p>  &quot;Locked-off static camera. No zoom, no pan, no push-in, no rotation. The camera
-  never moves. The wordmark reads AVI. and keeps its EXACT letterforms, spelling,
+  never moves. The wordmark reads RISHABH. and keeps its EXACT letterforms, spelling,
   size, position, baseline and framing identical in every frame, edge to edge,
   vertically centred, on a pure #000000 black background. The letters never move,
   never scale, never deform. ONLY the surface material of the letters changes.
@@ -247,7 +238,7 @@ them to line the video up with its own type.</div></div></p>
         Feed it the four <code>MARK</code> numbers from the step above.
 </p><div class="promptbox"><button class="copybtn" type="button" data-copy>Copy prompt</button><div class="prompt">Build a single-screen homepage (index.html + one CSS file + one JS file, raw WebGL2, no Three.js, no shader library) where moving the cursor spreads ink that punches through the page to reveal a video underneath.<p>LAYOUT</p>
 <ul>
-<li>White page, no scrolling. A very heavy black grotesque wordmark (&quot;AVI.&quot;), drawn
+<li>White page, no scrolling. A very heavy black grotesque wordmark (&quot;RISHABH.&quot;), drawn
 CENTRED, filling ~70% of viewport width. Use Archivo Black or similar, tracking
 about -0.03em.</li>
 <li>Small interface in the four corners, above the reveal: two-line intro and a
@@ -541,7 +532,6 @@ a drivable 3D car game, and
 </div>
 </main>
 <aside class="aside">
-<figure class="reel"><figcaption>You came from this Reel</figcaption><video src="/reels/DbYR8HdBdml-preview.mp4" poster="/reels/DbYR8HdBdml.webp" muted loop playsinline preload="none" aria-label="Reel"></video><div class="reelFoot" style="justify-content:flex-end"><a href="https://www.instagram.com/reel/DbYR8HdBdml/" target="_blank" rel="noopener noreferrer">Watch on Instagram ↗</a></div></figure>
 <nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#prompt-1-the-wordmark-video"><i>02</i><b>Prompt 1 — the wordmark video</b></a></li><li><a href="#prompt-2-the-page"><i>03</i><b>Prompt 2 — the page</b></a></li><li><a href="#why-the-prompts-are-written-this-way"><i>04</i><b>Why the prompts are written this way</b></a></li><li><a href="#making-it-loop-and-why-you-should-measure-it"><i>05</i><b>Making it loop, and why you should measure it</b></a></li><li><a href="#knobs-to-turn-first"><i>06</i><b>Knobs to turn first</b></a></li><li><a href="#if-it-comes-out-wrong"><i>07</i><b>If it comes out wrong</b></a></li><li><a href="#recap"><i>08</i><b>Recap</b></a></li></ol></nav>
 </aside>
 </div>
@@ -599,17 +589,6 @@ a drivable 3D car game, and
       } else done();
     });
   });
-  // Reel videos play when in view, pause when scrolled away.
-  var reels = document.querySelectorAll(".reel video");
-  if ("IntersectionObserver" in window && reels.length) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.play().catch(function () {});
-        else e.target.pause();
-      });
-    }, { threshold: 0.3 });
-    reels.forEach(function (v) { rio.observe(v); });
-  }
 })();
 </script>
 </body>

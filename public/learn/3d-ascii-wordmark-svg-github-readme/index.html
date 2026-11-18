@@ -14,7 +14,7 @@
 :root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 * { box-sizing:border-box; }
 body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
-/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+/* Paper grain, kept faint (low opacity). */
 body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
 a { color:inherit; text-decoration:none; }
 #progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
@@ -88,13 +88,6 @@ a { color:inherit; text-decoration:none; }
 .post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
 .post img, .post video { max-width:100%; height:auto; border-radius:12px; }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
-.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
-.reel figcaption { color:var(--ink); }
-.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
-.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
-.reelFoot span { color:var(--ink); }
-.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
-.reelFoot a:hover { transform:translateY(-1px); }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
 .toc ol { list-style:none; margin:0; padding:0; }
@@ -118,8 +111,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   .site-head { padding-left:12px; padding-right:12px; gap:16px; }
   .wrap { grid-template-columns:1fr; }
   .aside { order:-1; max-height:none; position:static; }
-  .reel { flex-flow:wrap; align-items:center; }
-  .reel video { width:120px; }
   .toc { display:none; }
   .toc b, .keep li a span { transition:none; }
   .outputOpen { transition:none; }
@@ -144,8 +135,8 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <h2 id="overview">Overview</h2>
 <p>
         My
-<a href="https://github.com/AVIVASHISHTA29" target="_blank" rel="noreferrer">GitHub profile README</a>
-        opens with the word <strong>AVI</strong> extruded into a 3D slab,
+<a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub profile README</a>
+        opens with the word <strong>RISHABH</strong> extruded into a 3D slab,
         rasterized to ASCII characters, wiping in left to right and then rocking
         gently on its vertical axis so you can see it has depth. It sits beside
         a self-typing ASCII portrait, with a live contribution graph underneath.
@@ -309,11 +300,11 @@ grid[row[order], col[order]] = idx[order]</div><div class="highlight">
         of the sort.
 </p><h3>1. The word rendered as one solid slab</h3>
 <p>
-        The first version spelled out <strong>AVI VASHISHTA</strong> across the
+        The first version spelled out <strong>RISHABH SHARMA</strong> across the
         full width. It came out as an unbroken brick with faint notches.
 </p>
 <p>
-        The arithmetic: thirteen characters across an 860px README column, at a
+        The arithmetic: fourteen characters across an 860px README column, at a
         readable ASCII cell size, is about <strong>12 grid columns per
         letter</strong>. The gaps between letters — and the counters inside them
         — worked out to one or two columns. But rotating the slab offsets the
@@ -467,7 +458,7 @@ grid[row[order], col[order]] = idx[order]</div><div class="highlight">
 </ul>
 <p>
         The generator lives in
-<a href="https://github.com/AVIVASHISHTA29/AVIVASHISHTA29" target="_blank" rel="noreferrer" rel="nofollow"
+<a href="https://github.com/r1shabhsharma05/r1shabhsharma05" target="_blank" rel="noreferrer" rel="nofollow"
           >the profile repo</a>
         as <code>scripts/make_wordmark_svg.py</code>. Text, font, tilt, frame
         count, extrusion depth, panel size and yaw range are all flags or
@@ -485,7 +476,6 @@ the earlier post on building the profile.
 </div>
 </main>
 <aside class="aside">
-
 <nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#the-constraint-that-shapes-everything"><i>02</i><b>The constraint that shapes everything</b></a></li><li><a href="#the-pipeline"><i>03</i><b>The pipeline</b></a></li><li><a href="#three-bugs-that-were-actually-geometry"><i>04</i><b>Three bugs that were actually geometry</b></a></li><li><a href="#picking-the-typeface"><i>05</i><b>Picking the typeface</b></a></li><li><a href="#fitting-it-to-the-page"><i>06</i><b>Fitting it to the page</b></a></li><li><a href="#recap"><i>07</i><b>Recap</b></a></li></ol></nav>
 </aside>
 </div>
@@ -543,17 +533,6 @@ the earlier post on building the profile.
       } else done();
     });
   });
-  // Reel videos play when in view, pause when scrolled away.
-  var reels = document.querySelectorAll(".reel video");
-  if ("IntersectionObserver" in window && reels.length) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.play().catch(function () {});
-        else e.target.pause();
-      });
-    }, { threshold: 0.3 });
-    reels.forEach(function (v) { rio.observe(v); });
-  }
 })();
 </script>
 </body>

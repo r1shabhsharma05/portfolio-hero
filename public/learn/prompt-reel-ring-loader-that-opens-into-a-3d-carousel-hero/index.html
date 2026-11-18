@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero | Rishabh Sharma</title>
-<meta name="description" content="A copy-pasteable prompt and the code concepts behind avivashishta.com: Reel cards dealt around a small tilted ring while a counter loads, then the same cards ex" />
+<meta name="description" content="A copy-pasteable prompt and the code concepts behind portfolio-hero-psi-lemon.vercel.app: Reel cards dealt around a small tilted ring while a counter loads, the" />
 <link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,7 +14,7 @@
 :root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 * { box-sizing:border-box; }
 body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
-/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+/* Paper grain, kept faint (low opacity). */
 body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
 a { color:inherit; text-decoration:none; }
 #progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
@@ -88,13 +88,6 @@ a { color:inherit; text-decoration:none; }
 .post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
 .post img, .post video { max-width:100%; height:auto; border-radius:12px; }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
-.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
-.reel figcaption { color:var(--ink); }
-.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
-.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
-.reelFoot span { color:var(--ink); }
-.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
-.reelFoot a:hover { transform:translateY(-1px); }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
 .toc ol { list-style:none; margin:0; padding:0; }
@@ -118,8 +111,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   .site-head { padding-left:12px; padding-right:12px; gap:16px; }
   .wrap { grid-template-columns:1fr; }
   .aside { order:-1; max-height:none; position:static; }
-  .reel { flex-flow:wrap; align-items:center; }
-  .reel video { width:120px; }
   .toc { display:none; }
   .toc b, .keep li a span { transition:none; }
   .outputOpen { transition:none; }
@@ -138,10 +129,10 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <main>
 <p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 18 OCTOBER 2026 &middot; 9 min</p>
 <h1 class="title">The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero</h1>
-<p class="lede">A copy-pasteable prompt and the code concepts behind avivashishta.com: Reel cards dealt around a small tilted ring while a counter loads, then the same cards expand into the full-screen carousel. One pose function, no handoff, no second scene.</p>
+<p class="lede">A copy-pasteable prompt and the code concepts behind portfolio-hero-psi-lemon.vercel.app: Reel cards dealt around a small tilted ring while a counter loads, then the same cards expand into the full-screen carousel. One pose function, no handoff, no second scene.</p>
 <figure class="output"><figcaption><span>The output, live</span><span class="outputUrl">portfolio-hero-psi-lemon.vercel.app</span></figcaption><a class="outputWindow" href="https://portfolio-hero-psi-lemon.vercel.app/" target="_blank" rel="noreferrer"><span class="outputCardUrl">portfolio-hero-psi-lemon.vercel.app</span><span class="outputOpen">Open the live page ↗</span></a></figure>
 <div class="post">
-<p>Open <a href="https://avivashishta.com" target="_blank" rel="noreferrer">avivashishta.com</a> and you see a white page, a big counter and a small ring of Reels tilted like a coin on a table. The cards are dealt out one by one while the percentage climbs. When it hits 100, the ring does not disappear. It opens. The camera swings down, the radius grows from a few hundred pixels to a few thousand, and the same cards are now the carousel you drag on the homepage.</p>
+<p>Open <a href="https://portfolio-hero-psi-lemon.vercel.app">portfolio-hero-psi-lemon.vercel.app</a> and you see a white page, a big counter and a small ring of Reels tilted like a coin on a table. The cards are dealt out one by one while the percentage climbs. When it hits 100, the ring does not disappear. It opens. The camera swings down, the radius grows from a few hundred pixels to a few thousand, and the same cards are now the carousel you drag on the homepage.</p>
 <p>That is the whole idea: <strong>the loader and the hero are one scene at two moments.</strong> There is no loading screen that gets replaced by a hero. Everything below serves that sentence.</p>
 <div class="highlight"><p><strong>The short version:</strong> every card has a resting angle on a cylinder. One function, <code>reelPose(angle, formation, scene)</code>, turns that angle into a position and rotation. The loader is <code>scene</code> at expansion 0 (small ring, tilted camera, dutch roll). The hero is <code>scene</code> at expansion 1 (big ring, level camera). Animate two numbers, <code>formation</code> and <code>expansion</code>, and the whole sequence falls out.</p></div><h2 id="the-prompt">The prompt</h2>
 <p>Paste this into Claude Code, Cursor or Replit. It describes the behaviour, not the file layout, so it works in any React project.</p>
@@ -248,7 +239,6 @@ const write = (key: string, value: string, apply: () =&gt; void) =&gt; {
 </div>
 </main>
 <aside class="aside">
-
 <nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#the-prompt"><i>01</i><b>The prompt</b></a></li><li><a href="#concept-1-a-cylinder-is-just-angles"><i>02</i><b>Concept 1: a cylinder is just angles</b></a></li><li><a href="#concept-2-one-pose-function-owns-the-animation"><i>03</i><b>Concept 2: one pose function owns the animation</b></a></li><li><a href="#concept-3-the-loader-and-hero-are-two-ends-of-one-interpolation"><i>04</i><b>Concept 3: the loader and hero are two ends of one interpolation</b></a></li><li><a href="#concept-4-two-motion-values-no-timeline"><i>05</i><b>Concept 4: two motion values, no timeline</b></a></li><li><a href="#concept-5-write-styles-only-when-they-change"><i>06</i><b>Concept 5: write styles only when they change</b></a></li><li><a href="#concept-6-leave-a-way-out"><i>07</i><b>Concept 6: leave a way out</b></a></li><li><a href="#what-i-39-d-tell-you-before-you-build-it"><i>08</i><b>What I&amp;#39;d tell you before you build it</b></a></li></ol></nav>
 </aside>
 </div>
@@ -306,17 +296,6 @@ const write = (key: string, value: string, apply: () =&gt; void) =&gt; {
       } else done();
     });
   });
-  // Reel videos play when in view, pause when scrolled away.
-  var reels = document.querySelectorAll(".reel video");
-  if ("IntersectionObserver" in window && reels.length) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.play().catch(function () {});
-        else e.target.pause();
-      });
-    }, { threshold: 0.3 });
-    reels.forEach(function (v) { rio.observe(v); });
-  }
 })();
 </script>
 </body>

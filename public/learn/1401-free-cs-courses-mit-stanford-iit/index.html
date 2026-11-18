@@ -14,7 +14,7 @@
 :root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 * { box-sizing:border-box; }
 body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
-/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+/* Paper grain, kept faint (low opacity). */
 body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
 a { color:inherit; text-decoration:none; }
 #progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
@@ -88,13 +88,6 @@ a { color:inherit; text-decoration:none; }
 .post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
 .post img, .post video { max-width:100%; height:auto; border-radius:12px; }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
-.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
-.reel figcaption { color:var(--ink); }
-.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
-.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
-.reelFoot span { color:var(--ink); }
-.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
-.reelFoot a:hover { transform:translateY(-1px); }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
 .toc ol { list-style:none; margin:0; padding:0; }
@@ -118,8 +111,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   .site-head { padding-left:12px; padding-right:12px; gap:16px; }
   .wrap { grid-template-columns:1fr; }
   .aside { order:-1; max-height:none; position:static; }
-  .reel { flex-flow:wrap; align-items:center; }
-  .reel video { width:120px; }
   .toc { display:none; }
   .toc b, .keep li a span { transition:none; }
   .outputOpen { transition:none; }
@@ -211,7 +202,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 </ol>
 <h3 id="data-structures-and-algorithms">Data Structures and Algorithms (101)</h3>
 <ol start="37">
-<li><a href="https://lupteach.gitlab.io/courses/ucd-ecs36c/online/" target="_blank" rel="noreferrer">ECS 36C - Data Structures and Algorithms (C++) - Spring 2020 - Joël Porquet-Lupine - UC Davis</a></li>
+<li>ECS 36C - Data Structures and Algorithms (C++) - Spring 2020 - Joël Porquet-Lupine - UC Davis</li>
 <li><a href="https://www.cmi.ac.in/~madhavan/courses/python2021sep/" target="_blank" rel="noreferrer">Programming and Data Structures with Python, 2021-2022, Sem I - by Prof. Madhavan Mukund, CMI</a></li>
 <li><a href="https://www.youtube.com/watch?v=0qF7tPSQdCg" target="_blank" rel="noreferrer">Graph Algorithms - Robert Sedgewick - Princeton University</a></li>
 <li><a href="https://sites.google.com/site/thsaranurak/teaching/intro-algo" target="_blank" rel="noreferrer">EECS 477 - Introduction to Algorithms, Winter 2023, UMichigan</a></li>
@@ -327,7 +318,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <ol start="145">
 <li><a href="https://www.youtube.com/playlist?list=PLTsf9UeqkReZbK7xqIYn_mXmsQZIb011T" target="_blank" rel="noreferrer">Gatech CS6200 Intro to OS</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLunILarQwxnm3ycdZKCg5Ex6DeuJhEWaG" target="_blank" rel="noreferrer">APS 105 - Computer Fundamentals - Winter 2025 - Jon Eyolfson - University of Toronto</a>: (Winter 2024)</li>
-<li><a href="https://lupteach.gitlab.io/courses/ucd-ecs150/online/" target="_blank" rel="noreferrer">ECS 150 - Operating Systems and Systems Programming - Fall 2020 - Joël Porquet-Lupine - UC Davis</a></li>
+<li>ECS 150 - Operating Systems and Systems Programming - Fall 2020 - Joël Porquet-Lupine - UC Davis</li>
 <li><a href="https://www.youtube.com/playlist?list=PLunILarQwxnntWWNJ64E7wC4KhsEwHWxB" target="_blank" rel="noreferrer">ECE 344 - Operating Systems - Fall 2024 - Jon Eyolfson - University of Toronto</a>: (Fall 2024 Section 2) (Fall 2023) (Fall 2022)</li>
 <li><a href="https://www.youtube.com/playlist?list=PLunILarQwxnlUsOvAOhMs9yCHnH0Vs9w2" target="_blank" rel="noreferrer">ECE 353 - Systems Software - Winter 2025 - Jon Eyolfson - University of Toronto</a>: (Winter 2024) (Winter 2023)</li>
 <li><a href="https://www.youtube.com/playlist?list=PLunILarQwxnlzwF1oYp2CJc1rFNldOisZ" target="_blank" rel="noreferrer">ECE 454 - Computer Systems Programming - Fall 2024 - Jon Eyolfson - University of Toronto</a></li>
@@ -521,7 +512,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <li><a href="https://www.youtube.com/playlist?list=PLQl_xdhSmQeh4eRfAwETbtJJLPKcDLrzw" target="_blank" rel="noreferrer">LxMLS Lisbon Machine Learning School 2024</a>: (YouTube-2023) (YouTube-2022) (YouTube-2021) (YouTube-2020)</li>
 <li><a href="https://www.youtube.com/playlist?list=PL2UML_KCiC0UlY7iCQDSiGDMovaupqc83" target="_blank" rel="noreferrer">Applied Machine Learning (Cornell Tech CS 5787, Fall 2020)</a></li>
 <li><a href="https://cs229.stanford.edu/index.html-spr26" target="_blank" rel="noreferrer">Stanford CS229: Machine Learning Course</a>: (Summer 2019) (Spring 2022) (Spring 2026)</li>
-<li><a href="http://tensorlab.cms.caltech.edu/users/anima/cms165-2019.html" target="_blank" rel="noreferrer">CMS 165 Foundations of Machine Learning - 2019 - Caltech</a>: (Youtube)</li>
+<li>CMS 165 Foundations of Machine Learning - 2019 - Caltech: (Youtube)</li>
 <li><a href="https://www.youtube.com/playlist?list=PLVNifWxslHCDlbyitaLLYBOAEPbmF1AHg" target="_blank" rel="noreferrer">CMS 165 Foundations of Machine Learning and Statistical Inference - 2020 - Caltech</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PL34iyE0uXtxo7vPXGFkmm6KbgZQwjf9Kf" target="_blank" rel="noreferrer">Microsoft Research - Machine Learning Course</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLQcasX5-oG91TgY6A_gz-IW7YSpwdnD2O" target="_blank" rel="noreferrer">CS 446 - Machine Learning, Fall 2016, UIUC</a></li>
@@ -713,7 +704,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <li><a href="https://www.cs.umd.edu/class/fall2020/cmsc828W/" target="_blank" rel="noreferrer">CMSC 828W Foundations of Deep Learning (Fall 2020) - UMD</a>: (YouTube)</li>
 <li><a href="https://cvg.cit.tum.de/teaching/ws2024/i2dl" target="_blank" rel="noreferrer">TUM IN2346 Introduction to Deep Learning Fall 2024, by Daniel Cremers</a>: (Summer 2023)</li>
 <li><a href="https://ut.philkr.net/advances_in_deeplearning/" target="_blank" rel="noreferrer">UT Austin - Advances in Deep Learning</a></li>
-<li><a href="https://ma-lab-berkeley.github.io/deep-representation-learning-book/community.html" target="_blank" rel="noreferrer">HKU - Data 8014 Principles of Deep Representation Learning Fall 2025, by Yi Ma</a></li>
+<li>HKU - Data 8014 Principles of Deep Representation Learning Fall 2025, by Yi Ma</li>
 <li><a href="https://www.youtube.com/playlist?list=PLbuogVdPnkCoto690B1eTReTznuSC9qYX" target="_blank" rel="noreferrer">Local Explanations for Deep Learning Models (Fall 2023)</a></li>
 <li><a href="https://utah-llm-interpretability.notion.site/s26" target="_blank" rel="noreferrer">CS 6966/5966 Interpretability of LLMs (Spring 2026) - University of Utah</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLug43ldmRSo14Y_vt7S6vanPGh-JpHR7T" target="_blank" rel="noreferrer">Deep Graph Learning (DGL, 2025) - Prof. Islem Rekik - Imperial College London</a></li>
@@ -768,8 +759,8 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rNjRoawgt72BBNwL2V7doGI" target="_blank" rel="noreferrer">Stanford CS330: Deep Multi-Task and Meta Learning I Autumn 2022</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLftoLyLEwECBEJyfRBJoSBd0UaTjEcs3I" target="_blank" rel="noreferrer">ES 661 (2023): Probabilistic Machine Learning - IIT Gandhinagar</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLaE1lKCe0jH3ePp9wCU1ygTquVOXY-UYv" target="_blank" rel="noreferrer">Information Retrieval in High Dimensional Data</a></li>
-<li><a href="https://scalabletrustworthyai.github.io/courses/tml_winter_2324/" target="_blank" rel="noreferrer">Trustworthy Machine Learning - Winter Semester 2023-2024, University of Tübingen</a></li>
-<li><a href="https://scalabletrustworthyai.github.io/courses/tml_winter_2425/" target="_blank" rel="noreferrer">Trustworthy Machine Learning - Winter Semester 2024-2025, University of Tübingen</a></li>
+<li>Trustworthy Machine Learning - Winter Semester 2023-2024, University of Tübingen</li>
+<li>Trustworthy Machine Learning - Winter Semester 2024-2025, University of Tübingen</li>
 <li><a href="https://video.ethz.ch/lectures/d-infk/2019/autumn/252-0535-00L.html" target="_blank" rel="noreferrer">ETH Zürich Advanced Machine Learning fall 2019, by Joachim M. Buhmann</a></li>
 <li><a href="https://1five9.github.io/" target="_blank" rel="noreferrer">CS 159 Advanced Topics in Machine Learning, Spring 2021 - Caltech</a></li>
 <li><a href="https://boazbk.github.io/mltheoryseminar/cs229br.html" target="_blank" rel="noreferrer">CS 229br Advanced Topics in the theory of machine learning, Spring 2021 - Harvard</a></li>
@@ -1007,7 +998,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <li><a href="https://nptel.ac.in/courses/106106094/" target="_blank" rel="noreferrer">Discrete Mathematical Structures - IIT Madras</a></li>
 <li><a href="https://itunes.apple.com/us/course/discrete-structures/id546468789" target="_blank" rel="noreferrer">Discrete Structures - Pepperdine University</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLgTkKBA6LRqYuuQ-LboerRblBoD_q_eUM" target="_blank" rel="noreferrer">CMU 21 228 Discrete Mathematics spring 2021, by Po-Shen Loh</a></li>
-<li><a href="https://cglab.ca/~morin/teaching/2804/" target="_blank" rel="noreferrer">COMP2804: Discrete Structures II</a></li>
+<li>COMP2804: Discrete Structures II</li>
 <li><a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtNM_Y-bUAhblSAdWRnmBUcr" target="_blank" rel="noreferrer">Statistics - CrashCourse</a></li>
 <li><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-041sc-probabilistic-systems-analysis-and-applied-probability-fall-2013/" target="_blank" rel="noreferrer">6.041 Probabilistic Systems Analysis and Applied Probability - MIT OCW</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOpr_A7B9SriE_iZmkanvUg" target="_blank" rel="noreferrer">Stanford CS109 Introduction to Probability for Computer Scientists I 2022 I Chris Piech</a></li>
@@ -1033,7 +1024,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <li><a href="https://www.math.uci.edu/~rvershyn/teaching/hdp/hdp.html" target="_blank" rel="noreferrer">High-Dimensional Probability</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLLyj1Zd4UWrPZH-fknPLak0tlUpUISBZR" target="_blank" rel="noreferrer">Mathematical Statistics - 2024</a>: (YouTube-2020)</li>
 <li><a href="https://www.youtube.com/playlist?list=PLBqnAso5Dy7O0IVoVn2b-WtetXQk5CDk6" target="_blank" rel="noreferrer">Bayesian Data Analysis</a></li>
-<li><a href="https://biaslab.github.io/teaching/bmlip/" target="_blank" rel="noreferrer">Bayesian Machine Learning and Information Processing</a>: (YouTube-2021/22) (YouTube-2020/21)</li>
+<li>Bayesian Machine Learning and Information Processing: (YouTube-2021/22) (YouTube-2020/21)</li>
 <li><a href="https://www.youtube.com/playlist?list=PLLyj1Zd4UWrP3rME2XvFvE4Q5vI3H_7_Z" target="_blank" rel="noreferrer">Markov Processes - Spring 2023</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLLyj1Zd4UWrO6VtBSiQLsNlo9QBm30nxC" target="_blank" rel="noreferrer">Measure Theoretic Probability</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLoazKTcS0RzZ1SUgeOgc6SWt51gfT80N0" target="_blank" rel="noreferrer">Causal Inference Course - Brady Neal</a></li>
@@ -1539,9 +1530,9 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <li><a href="https://courses.cs.washington.edu/courses/cse478/25wi/schedule/" target="_blank" rel="noreferrer">CSE 478 – Autonomous Robotics – Winter 2025 - University of Washington</a>: (Winter 2024)</li>
 <li><a href="https://courses.cs.washington.edu/courses/cse571/23sp/" target="_blank" rel="noreferrer">CSE 571 – AI-Robotics – Spring 2023 - University of Washington</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOhE007XQu707Dy52qXiZGV" target="_blank" rel="noreferrer">EE 259 – Principles of Sensing for Autonomy – Spring 2023 - Stanford University</a></li>
-<li><a href="http://wavelab.uwaterloo.ca/index6ea9.html?page_id=267" target="_blank" rel="noreferrer">ME 597 – Autonomous Mobile Robotics – Fall 2014</a></li>
-<li><a href="http://wavelab.uwaterloo.ca/indexaef8.html?page_id=481" target="_blank" rel="noreferrer">ME 780 – Perception For Autonomous Driving – Spring 2017</a></li>
-<li><a href="http://wavelab.uwaterloo.ca/indexe9a5.html?page_id=533" target="_blank" rel="noreferrer">ME780 – Nonlinear State Estimation for Robotics and Computer Vision – Spring 2017</a></li>
+<li>ME 597 – Autonomous Mobile Robotics – Fall 2014</li>
+<li>ME 780 – Perception For Autonomous Driving – Spring 2017</li>
+<li>ME780 – Nonlinear State Estimation for Robotics and Computer Vision – Spring 2017</li>
 <li><a href="http://robotics.itee.uq.edu.au/~metr4202/lectures.html" target="_blank" rel="noreferrer">METR 4202/7202 -- Robotics &amp; Automation - University of Queensland</a></li>
 <li><a href="http://luthuli.cs.uiuc.edu/~daf/courses/MAAV-21/588-2021-records.html" target="_blank" rel="noreferrer">UIUC CS-588 Autonomous Vehicle System Engineering Outline</a></li>
 <li><a href="https://nptel.ac.in/courses/112101099/" target="_blank" rel="noreferrer">Robotics - IIT Bombay</a></li>
@@ -1597,8 +1588,8 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <li><a href="https://prg.cs.umd.edu/enae788m" target="_blank" rel="noreferrer">ENAE 788M: Hands On Autonomous Aerial Robotics - University of Maryland</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLMe2pHxzxHp-UJ1jd-uuGSGK7P7Phtm-f" target="_blank" rel="noreferrer">Robot Learning 2025: Foundational Models for Robotics and Scaling DeepRL - Montreal Robotics</a></li>
 <li><a href="https://www.youtube.com/@MontrealRobotics/playlists" target="_blank" rel="noreferrer">Mila Robot Learning Seminar - Montreal Robotics</a></li>
-<li><a href="https://temp.shadmehrlab.org/courses_learning" target="_blank" rel="noreferrer">Johns Hopkins Learning, Estimation, and Control spring 2026, by Reza Shadmehr</a>: Youtube</li>
-<li><a href="https://wzhanglab.site/teaching/moderncontrolestimation/" target="_blank" rel="noreferrer">SUSTech ME424 Modern Control and Estimation ( Kalman Filter Theory ) fall 2021, by Wei Zhang</a>: Youtube 1Youtube 2</li>
+<li>Johns Hopkins Learning, Estimation, and Control spring 2026, by Reza Shadmehr: Youtube</li>
+<li>SUSTech ME424 Modern Control and Estimation ( Kalman Filter Theory ) fall 2021, by Wei Zhang: Youtube 1Youtube 2</li>
 <li><a href="https://cvg.ethz.ch/lectures/Robot-Learning/" target="_blank" rel="noreferrer">Robot Learning - ETH Zurich</a>: (Youtube, Guest lectures)</li>
 </ol>
 <h3 id="computational-finance">Computational Finance (18)</h3>
@@ -1720,7 +1711,6 @@ the free 523-lesson AI engineering course.
 </div>
 </main>
 <aside class="aside">
-
 <nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#repos"><i>01</i><b>The repo</b></a></li><li><a href="#start"><i>02</i><b>The 4 I'd start with (and what to build after each)</b></a></li><li><a href="#subjects"><i>03</i><b>Subjects</b></a></li><li><a href="#courses"><i>04</i><b>The courses, by subject (1401)</b></a></li><li><a href="#how-id-use-this"><i>05</i><b>How I'd use this</b></a></li></ol></nav>
 </aside>
 </div>
@@ -1778,17 +1768,6 @@ the free 523-lesson AI engineering course.
       } else done();
     });
   });
-  // Reel videos play when in view, pause when scrolled away.
-  var reels = document.querySelectorAll(".reel video");
-  if ("IntersectionObserver" in window && reels.length) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.play().catch(function () {});
-        else e.target.pause();
-      });
-    }, { threshold: 0.3 });
-    reels.forEach(function (v) { rio.observe(v); });
-  }
 })();
 </script>
 </body>
