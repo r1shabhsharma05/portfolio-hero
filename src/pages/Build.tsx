@@ -63,13 +63,13 @@ const SHIPPED: ShipItem[] = [
   },
   {
     ...PROJECTS[2],
-    period: "2026",
+    period: "2026 · Forked · rebuilt",
     stats: [{ value: "4", label: "PRs merged upstream" }],
     tags: ["Python", "CP-SAT"],
   },
   {
     ...PROJECTS[5],
-    period: "2026",
+    period: "2026 · Solo",
     stats: [],
     tags: [],
   },

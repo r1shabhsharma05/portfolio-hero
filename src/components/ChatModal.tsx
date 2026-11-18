@@ -73,7 +73,8 @@ export default function ChatModal({ onClose }: { onClose: () => void }) {
             if (payload === "[DONE]") break;
             try {
               const parsed = JSON.parse(payload);
-              const delta = parsed.choices?.[0]?.delta?.content;
+              const delta =
+                parsed.content ?? parsed.choices?.[0]?.delta?.content;
               if (delta) {
                 reply += delta;
                 setMessages([...next, { role: "assistant", content: reply }]);
