@@ -54,7 +54,7 @@ const SHIPPED: ShipItem[] = [
   },
   {
     ...PROJECTS[3],
-    period: "2026 · Solo",
+    period: "2026 · Forked · rebuilt",
     stats: [
       { value: "457", label: "backend tests passing" },
       { value: "12", label: "stages live" },
@@ -75,7 +75,7 @@ const SHIPPED: ShipItem[] = [
   },
   {
     ...PROJECTS[4],
-    period: "2026 · Solo",
+    period: "2026 · Forked · rebuilt",
     stats: [
       { value: "6", label: "live listings" },
       { value: "3", label: "upstream PRs merged" },
@@ -85,12 +85,12 @@ const SHIPPED: ShipItem[] = [
 ];
 
 const BUILT = [
-  { ...PROJECTS[2], role: "Solo", tags: ["Python"] },
-  { ...PROJECTS[4], role: "Solo", tags: ["React", "Node.js", "MongoDB"] },
+  { ...PROJECTS[2], role: "Forked · rebuilt", tags: ["Python"] },
+  { ...PROJECTS[4], role: "Forked · rebuilt", tags: ["React", "Node.js", "MongoDB"] },
   { ...PROJECTS[5], role: "Solo", tags: [] as string[] },
   { ...PROJECTS[6], role: "Solo", tags: [] as string[] },
   { ...PROJECTS[0], role: "Solo", tags: ["React", "TypeScript", "Prisma", "Supabase"] },
-  { ...PROJECTS[3], role: "Solo", tags: ["React", "Node.js", "Supabase", "Razorpay"] },
+  { ...PROJECTS[3], role: "Forked · rebuilt", tags: ["React", "Node.js", "Supabase", "Razorpay"] },
 ];
 
 const WORKED_AT = [PROJECTS[0], PROJECTS[1], PROJECTS[3]].map((p) => ({
@@ -142,7 +142,7 @@ function BuildStat({ value, label }: { value: string; label: string }) {
           io.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0 }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -207,7 +207,7 @@ const BRIEF_WHEN = ["in 8 weeks", "in 3 months", "when it's right"];
 const WHAT_PH = "an app for my business";
 const WHO_PH = "my customers";
 
-/** Sentence brief (Avi's form, Rishabh's details): the visitor fills the
+/** Sentence brief (the reference's form, Rishabh's details): the visitor fills the
  *  blanks, picks a timeline, and Send opens a pre-filled email to him. The
  *  round buttons hand the same brief to Claude / ChatGPT to draft it. */
 function BriefForm() {
@@ -442,7 +442,7 @@ function ShipCard({ item, index }: { item: ShipItem; index: number }) {
 export default function Build() {
   const [chatOpen, setChatOpen] = useState(false);
   const [headerHidden, setHeaderHidden] = useState(false);
-  // World transition (Avi's mechanism): arriving from the homepage, the
+  // World transition (the reference's mechanism): arriving from the homepage, the
   // full-screen sky scene is already covering; it morphs into the hero.
   const [showTransition] = useState(() => shouldShowWorldTransition());
   useEffect(() => {
@@ -464,7 +464,7 @@ export default function Build() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll zoom (Avi's --hero-p): the sky inside the hero grows to 1.3x and
+  // Scroll zoom (the reference's --hero-p): the sky inside the hero grows to 1.3x and
   // sinks 22% as the hero scrolls out; a paper veil fades in over it.
   useEffect(() => {
     const hero = document.querySelector<HTMLElement>("[data-world-hero]");
@@ -636,8 +636,8 @@ export default function Build() {
           <p className="section-label">Shipped — end to end</p>
           <h2 className="section-title">Shipped, end to end.</h2>
           <p className="section-body">
-            Six products I took from idea to production — designed, built and
-            shipped solo.
+            Six products shipped to production — built, rebuilt and improved
+            by hand.
           </p>
           <div className="ship-list">
             {SHIPPED.map((s, i) => (
@@ -646,9 +646,9 @@ export default function Build() {
           </div>
         </section>
 
-        <section className="section build-built" aria-label="Built myself">
-          <p className="section-label">Built — solo</p>
-          <h2 className="section-title">Built myself.</h2>
+        <section className="section build-built" aria-label="Built and shipped">
+          <p className="section-label">Built & shipped</p>
+          <h2 className="section-title">Built and shipped.</h2>
           <p className="section-body">
             Side projects that shipped — each one taught me something the big
             ones needed.

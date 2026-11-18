@@ -373,7 +373,7 @@ ${reel}${reelLink}${toc}
 <aside class="keep"><h2>Keep reading</h2><ul>${keepItems}</ul></aside>
 <footer>
 <div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
-<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a><a href="/blog/feed.xml">RSS</a></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
 <div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
 </footer>
 <script>

@@ -61,7 +61,7 @@ About Rishabh:
 - Education: B.Tech in Computer Science at GLA University, Mathura (2025–2028). Home town: Bulandshahr, Uttar Pradesh, India.
 - Full-stack developer: React, Next.js, React Native, TypeScript, JavaScript, Node.js, Express.js, FastAPI, Python, Tailwind CSS, Supabase, PostgreSQL, Prisma, Vite, Expo, GSAP, GitHub Actions, Vercel, Render.
 - Open source: 23 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects.
-- LeetCode: 218 problems solved (92 Easy, 100 Medium, 26 Hard).
+- LeetCode: 219 problems solved (92 Easy, 100 Medium, 27 Hard).
 - Products he built and shipped:
   - SecureGaurd — application security for every repository (https://secureguard-main.vercel.app)
   - SafeLife — emergency SOS app with live location tracking and guardian alerts (https://safelife-ai.vercel.app)
@@ -181,7 +181,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
+        model: "qwen/qwen3.8-27b",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           ...messages,

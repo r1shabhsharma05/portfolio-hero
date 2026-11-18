@@ -557,20 +557,21 @@ export default function CurvedLensCarousel({
     }
     const onMotion = () => kick()
 
-    // Wheel rotates the wall, live-site exact: 0.12 deg per wheel unit,
-    // clamped to +/-240 per event, dominant axis, line/page normalised.
-    // Scroll-down moves the cards left, scroll-up moves them right; the
-    // page itself never scrolls under the hero.
-    const onWheel = (e: WheelEvent) => {
-      if (e.ctrlKey || e.metaKey || intro < 1) return
-      const t = e.target instanceof Element ? e.target : null
-      if (t?.closest("input, textarea, select, [role='dialog']")) return
-      e.preventDefault()
-      const r = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1
-      const d = (Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * r
-      target += (0.12 * Math.max(-240, Math.min(240, d))) / (360 / n)
+    // Scroll rotates the wall (the reference's scroll-linked carousel):
+    // the page scrolls and the wall turns with it — scroll-down moves the
+    // cards left, scroll-up moves them right, at the same 0.12 deg per px
+    // the wheel rate was. No wheel capture: the page must scroll under
+    // the hero for this to work.
+    let lastScrollY = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      const d = y - lastScrollY
+      lastScrollY = y
+      if (d === 0 || dragging || !visible || intro < 1) return
+      target += (0.12 * d) / (360 / n)
       kick()
     }
+    window.addEventListener("scroll", onScroll, { passive: true })
 
     canvas.addEventListener("pointerdown", onDown)
     canvas.addEventListener("pointermove", onMove)
@@ -579,7 +580,6 @@ export default function CurvedLensCarousel({
     canvas.addEventListener("pointerup", onUp)
     canvas.addEventListener("pointercancel", onUp)
     root.addEventListener("keydown", onKey)
-    root.addEventListener("wheel", onWheel, { passive: false })
     reduced.addEventListener("change", onMotion)
 
     const ro = new ResizeObserver((entries) => {
@@ -614,7 +614,7 @@ export default function CurvedLensCarousel({
       canvas.removeEventListener("pointerup", onUp)
       canvas.removeEventListener("pointercancel", onUp)
       root.removeEventListener("keydown", onKey)
-      root.removeEventListener("wheel", onWheel)
+      window.removeEventListener("scroll", onScroll)
       reduced.removeEventListener("change", onMotion)
       for (const t of tex) gl.deleteTexture(t.t)
       gl.deleteBuffer(buf)

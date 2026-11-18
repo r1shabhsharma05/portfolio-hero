@@ -313,7 +313,7 @@ const MONTHS = ["this month", "next month", "we're flexible"] as const;
 const PRODUCT_EXAMPLE = "an AI coding tool";
 const AUDIENCE_EXAMPLE = "developers in India";
 
-/** One reach card — Avi's behavior: the poster clip plays muted on hover
+/** One reach card — the reference's behavior: the poster clip plays muted on hover
  *  and pauses (frozen) on leave; the whole card links the IG Reel in a
  *  new tab. Poster-only reels (no preview clip) show the still. */
 function ReachCard({ reel }: { reel: Reel }) {
@@ -355,7 +355,7 @@ function ReachCard({ reel }: { reel: Reel }) {
 export default function Brand() {
   const [chatOpen, setChatOpen] = useState(false);
   const [headerHidden, setHeaderHidden] = useState(false);
-  // World transition (Avi's mechanism): arriving from the homepage, the
+  // World transition (the reference's mechanism): arriving from the homepage, the
   // full-screen seascape scene is already covering; it morphs into the hero.
   const [showTransition] = useState(() => shouldShowWorldTransition());
   const [product, setProduct] = useState(PRODUCT_EXAMPLE);
@@ -388,7 +388,7 @@ export default function Brand() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll zoom (Avi's --hero-p): the seascape inside the hero grows to 1.3x
+  // Scroll zoom (the reference's --hero-p): the seascape inside the hero grows to 1.3x
   // and sinks 22% as the hero scrolls out; a paper veil fades in over it.
   useEffect(() => {
     const hero = document.querySelector<HTMLElement>("[data-world-hero]");
@@ -487,7 +487,7 @@ export default function Brand() {
       </header>
 
       <main>
-        {/* hero — seascape panel + best-Reels fan (Avi's media-kit hero) */}
+        {/* hero — seascape panel + best-Reels fan (the reference's media-kit hero) */}
         <section className="brand-hero" data-world-hero aria-label="Brand media kit">
           <div className="brand-hero-copy">
             <p className="brand-eyebrow">{BRAND_HERO.label}</p>
@@ -784,7 +784,6 @@ export default function Brand() {
           <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">LinkedIn</a>
           <a href="https://github.com/r1shabhsharma05">GitHub</a>
           <a href={`mailto:${PROFILE.email}`}>Email</a>
-          <a href="/blog/feed.xml">RSS</a>
           <a href="/privacy">Privacy</a>
           <a href="/developers">Developers</a>
         </nav>

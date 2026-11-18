@@ -18,7 +18,6 @@ Machine-readable index for this site:
 - Full context: ${SITE}/llms.txt
 - Sitemap: ${SITE}/sitemap.xml
 - Developer portal: ${SITE}/developers
-- Blog feed: ${SITE}/blog/feed.xml
 
 Every page listed above also responds to \`Accept: text/markdown\`.
 `;
@@ -38,12 +37,12 @@ emergency SOS app, and I contribute to open source: 23 pull requests merged
 and 8 open across Jenkins, WordPress/Gutenberg and other projects.
 
 Alongside engineering, I create. I make tech Reels about AI tools and coding
-as @cod.ehx, and I have solved 218 LeetCode problems.
+as @cod.ehx, and I have solved 219 LeetCode problems.
 
 ## Highlights
 
 - **23 pull requests merged, 8 open** — Jenkins, WordPress/Gutenberg and more
-- **218 LeetCode problems solved** (92 Easy, 100 Medium, 26 Hard)
+- **219 LeetCode problems solved** (92 Easy, 100 Medium, 27 Hard)
 - **8 products shipped** — RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI, Rkhshak
 - **SafeLife** — emergency SOS app with live location tracking and guardian alerts
 - **Tech creator** — Reels about AI tools and coding as @cod.ehx
@@ -78,7 +77,7 @@ tech Reels as @cod.ehx.
   Express, FastAPI, Python, Supabase, PostgreSQL, Prisma, Tailwind CSS.
 - Open source: 23 pull requests merged and 8 open across Jenkins,
   WordPress/Gutenberg and other projects.
-- LeetCode: 218 problems solved (92 Easy, 100 Medium, 26 Hard).
+- LeetCode: 219 problems solved (92 Easy, 100 Medium, 27 Hard).
 - Creator: tech Reels as @cod.ehx; faceless history YouTube channel @UntoldHx.
 
 ## Products
@@ -158,7 +157,6 @@ Machine-readable interfaces to this site: llms.txt, sitemap, RSS, the
 | \`/llms.txt\` | GET | Structured context about Rishabh Sharma |
 | \`/index.md\`, \`/about.md\`, \`/contact.md\`, \`/privacy.md\`, \`/developers.md\` | GET | Markdown with YAML frontmatter |
 | \`/sitemap.xml\` | GET | Every canonical URL |
-| \`/blog/feed.xml\` | GET | RSS feed of blog posts |
 | \`/openapi.json\` | GET | OpenAPI 3.1 description of this API |
 | \`/.well-known/ai-catalog.json\` | GET | Agentic Resource Discovery catalog |
 | \`/.well-known/api-catalog\` | GET | RFC 9727 linkset |
@@ -200,7 +198,7 @@ export const PAGES = {
   "/": {
     title: "Rishabh Sharma — Full-stack Developer",
     description:
-      "Full-stack developer and B.Tech CS student at GLA University. 23 OSS PRs merged, LeetCode 218 solved, 8 products shipped, tech Reels as @cod.ehx.",
+      "Full-stack developer and B.Tech CS student at GLA University. 23 OSS PRs merged, LeetCode 219 solved, 8 products shipped, tech Reels as @cod.ehx.",
     markdown: HOME,
   },
   "/about": {
@@ -279,7 +277,7 @@ Start from one of these instead:
 - All canonical URLs: ${SITE}/sitemap.xml
 - Developer portal and API docs: ${SITE}/developers
 - Homepage: ${SITE}/
-- Blog index: ${SITE}/blog/
+- Learn: ${SITE}/learn/
 
 Canonical pages also respond to \`Accept: text/markdown\`.
 `;

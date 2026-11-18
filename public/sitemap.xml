@@ -37,30 +37,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://portfolio-hero-psi-lemon.vercel.app/blog/</loc>
-    <lastmod>2026-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://portfolio-hero-psi-lemon.vercel.app/blog/how-i-got-14-open-source-prs-merged</loc>
-    <lastmod>2026-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://portfolio-hero-psi-lemon.vercel.app/blog/building-safelife-sos</loc>
-    <lastmod>2026-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://portfolio-hero-psi-lemon.vercel.app/blog/my-claude-code-skills-setup</loc>
-    <lastmod>2026-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://portfolio-hero-psi-lemon.vercel.app/projects/</loc>
     <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>

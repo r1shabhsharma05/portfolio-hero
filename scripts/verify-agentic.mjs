@@ -398,7 +398,7 @@ for (const [path, key] of [
 for (const [path, needle] of [
   ["/robots.txt", "Sitemap:"],
   ["/sitemap.xml", "<urlset"],
-  ["/blog/feed.xml", "<rss"],
+  ["/blog/", "Learn"],
 ]) {
   const res = await get(path);
   const body = await res.text();

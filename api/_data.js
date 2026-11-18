@@ -16,7 +16,7 @@ export const PROFILE = {
   name: "Rishabh Sharma",
   headline: "Full-stack Developer | Open Source Contributor | Tech Creator",
   summary:
-    "Full-stack developer and B.Tech Computer Science student at GLA University, Mathura (2025–2028). Builds and ships real products for web and mobile, contributes to open source, and makes tech Reels as @cod.ehx. LeetCode 218 solved.",
+    "Full-stack developer and B.Tech Computer Science student at GLA University, Mathura (2025–2028). Builds and ships real products for web and mobile, contributes to open source, and makes tech Reels as @cod.ehx. LeetCode 219 solved.",
   url: "https://portfolio-hero-psi-lemon.vercel.app",
   email: "rishabhsharma14426@gmail.com",
   location: {
@@ -107,7 +107,7 @@ export const PROFILE = {
   },
   highlights: [
     "23 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects",
-    "218 LeetCode problems solved (92 Easy, 100 Medium, 26 Hard)",
+    "219 LeetCode problems solved (92 Easy, 100 Medium, 27 Hard)",
     "Shipped 8 products: RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI, Rkhshak",
     "Tech creator — Reels about AI tools and coding as @cod.ehx",
     "Built SafeLife: emergency SOS app with live location tracking and guardian alerts",
@@ -130,7 +130,7 @@ export const PROFILE = {
     instagram: "https://www.instagram.com/cod.ehx",
     youtube: "https://www.youtube.com/@UntoldHx",
     llmsTxt: "https://portfolio-hero-psi-lemon.vercel.app/llms.txt",
-    blog: "https://portfolio-hero-psi-lemon.vercel.app/blog/",
+    blog: "https://portfolio-hero-psi-lemon.vercel.app/learn/",
   },
 };
 
@@ -210,6 +210,17 @@ export const PROJECTS = [
     technologies: ["React", "Node.js", "AI APIs"],
     url: null,
     repositoryUrl: "https://github.com/r1shabhsharma05",
+    year: 2025,
+  },
+  {
+    id: "rkhshak",
+    name: "Rkhshak",
+    description:
+      "Master security skills for any user and any agent: complete production-readiness security audit and minimal-code fixes.",
+    category: "ai",
+    technologies: ["TypeScript", "Node.js", "Security"],
+    url: null,
+    repositoryUrl: "https://github.com/r1shabhsharma05/Rkhshak",
     year: 2025,
   },
 ];

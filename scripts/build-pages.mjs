@@ -115,7 +115,7 @@ const STYLES = `
 
 const NAV = `<nav>
       <a href="/">Home</a><a href="/about">About</a><a href="/contact">Contact</a>
-      <a href="/developers">Developers</a><a href="/blog/">Blog</a>
+      <a href="/developers">Developers</a><a href="/learn/">Learn</a>
       <a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a>
     </nav>`;
 
@@ -222,7 +222,7 @@ async function injectHomepage() {
     <div id="static-content">
 ${renderMarkdown(PAGES["/"].markdown)}
       <p><a href="/about">About</a> · <a href="/contact">Contact</a> ·
-         <a href="/developers">Developers</a> · <a href="/blog/">Blog</a> ·
+         <a href="/developers">Developers</a> · <a href="/learn/">Learn</a> ·
          <a href="/privacy">Privacy</a> · <a href="/llms.txt">llms.txt</a></p>
     </div>
     <script>

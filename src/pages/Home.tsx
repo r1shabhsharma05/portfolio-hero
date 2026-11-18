@@ -1,6 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { LEARN_POSTS, PROFILE, PROJECTS, REELS, STATS, WORLDS } from "../data/site";
+import {
+  HOME_AGENT_CURLS,
+  HOME_AGENT_DOES,
+  HOME_AGENT_ENDPOINTS,
+  HOME_AGENT_READS,
+  HOME_AGENT_WORK,
+  HOME_PERSONAS,
+  LEARN_POSTS,
+  PROFILE,
+  PROJECTS,
+  REELS,
+  STATS,
+  WORLDS,
+} from "../data/site";
 import ReelCard from "../components/ReelCard";
 import CurvedLensCarousel from "../components/CurvedLensCarousel";
 import {
@@ -222,11 +235,289 @@ const SENTENCE_CHOICES: Choice[] = [
   { label: "talk to my AI", sup: "04", world: "var(--color-ink)", on: "var(--color-paper)", action: "chat" },
 ];
 
+type AiChoice = "claude" | "chatgpt" | "perplexity";
+
+const AI_URLS: Record<AiChoice, string> = {
+  claude: "https://claude.ai/new?q=",
+  chatgpt: "https://chatgpt.com/?q=",
+  perplexity: "https://www.perplexity.ai/search?q=",
+};
+
+const AI_LABELS: Record<AiChoice, string> = {
+  claude: "Claude",
+  chatgpt: "ChatGPT",
+  perplexity: "Perplexity",
+};
+
+/** The developer portal strip — identical in the human and agent views. */
+function DevPortal() {
+  return (
+    <section className="section" id="developers" aria-label="For developers and AI agents">
+      <div className="dev-portal">
+        <p className="section-label">For developers and AI agents</p>
+        <h2 className="section-title">This site is machine-readable.</h2>
+        <p className="section-body">
+          llms.txt, a full OpenAPI spec, markdown versions of every page, an RSS feed and an
+          AI chat endpoint — built so agents can answer questions about Rishabh without
+          guessing.
+        </p>
+        <div className="dev-links">
+          <a href="/developers">Developer portal</a>
+          <a href="/llms.txt">llms.txt</a>
+          <a href="/openapi.json">openapi.json</a>
+          <a href="/index.md">index.md</a>
+          <a href="/sitemap.xml">sitemap.xml</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Home Agent view — mirrors the reference's home agent view: sky hero,
+ *  five persona rows (one open at a time, Founder by default), "Plug this
+ *  site into your agent", "What Rishabh does", "Work with Rishabh", then
+ *  the developer portal. The switch is instant (no loading screen, no
+ *  stagger) and the sections appear at once on scroll, like the reference. */
+function AgentView({
+  openPersona,
+  setOpenPersona,
+  ai,
+  setAi,
+  copied,
+  copyPrompt,
+}: {
+  openPersona: string;
+  setOpenPersona: (id: string) => void;
+  ai: AiChoice;
+  setAi: (a: AiChoice) => void;
+  copied: string | null;
+  copyPrompt: (id: string, text: string) => void;
+}) {
+  return (
+    <>
+      <section className="home-agent-hero" aria-label="For AI agents">
+        <div className="home-agent-sky" aria-hidden="true">
+          <img src="/sky.jpg" alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+        </div>
+        <div className="home-agent-copy">
+          <p className="home-agent-eyebrow">AGENT SIDE</p>
+          <h1>Ask your AI about Rishabh.</h1>
+          <p className="home-agent-sub">
+            Pick who you are. You send one prompt, your AI reads this site, and you get an
+            answer written for you.
+          </p>
+          <p className="home-agent-iam">I AM A</p>
+          <p className="home-agent-five">FIVE PEOPLE, FIVE ANSWERS</p>
+        </div>
+        <div className="home-agent-personas" aria-label="Who are you?">
+          {HOME_PERSONAS.map((p) => {
+            const open = p.id === openPersona;
+            return (
+              <div
+                key={p.id}
+                className={open ? "home-agent-persona is-open" : "home-agent-persona"}
+                style={{ "--accent": p.accent, "--on-accent": p.accent === "#FFC81A" ? "#111111" : "#FFFFFF" } as React.CSSProperties}
+              >
+                <button
+                  type="button"
+                  className="home-agent-persona-head"
+                  aria-expanded={open}
+                  onClick={() => setOpenPersona(open ? "" : p.id)}
+                >
+                  <span className="home-agent-persona-num">{p.num}</span>
+                  <span className="home-agent-persona-name">{p.name}</span>
+                  <span className="home-agent-persona-tag">{p.tagline}</span>
+                  <span className="home-agent-persona-thumb" aria-hidden="true">
+                    <img src="/sky.jpg" alt="" />
+                  </span>
+                  <span className="home-agent-persona-toggle">{open ? "CLOSE" : "OPEN"}</span>
+                </button>
+                {open && (
+                  <div className="home-agent-persona-body">
+                    <p className="home-agent-step">1 · SEND THIS</p>
+                    <p className="home-agent-kicker">YOUR PROMPT</p>
+                    <p className="home-agent-kicker">OPENS IN A NEW TAB</p>
+                    <p className="home-agent-prompt">{p.prompt}</p>
+                    <div className="home-agent-airow">
+                      <div className="home-agent-ai" role="group" aria-label="Your AI">
+                        {(Object.keys(AI_URLS) as AiChoice[]).map((k) => (
+                          <button
+                            key={k}
+                            type="button"
+                            aria-pressed={ai === k}
+                            className={ai === k ? "home-agent-ai-choice is-selected" : "home-agent-ai-choice"}
+                            onClick={() => setAi(k)}
+                          >
+                            {AI_LABELS[k]}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        className="home-agent-copy"
+                        aria-label="Copy prompt"
+                        onClick={() => copyPrompt(`persona-${p.id}`, p.prompt)}
+                      >
+                        {copied === `persona-${p.id}` ? (
+                          "✓"
+                        ) : (
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                            <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+                            <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2H3.5A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5" stroke="currentColor" strokeWidth="1.5" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                    <a
+                      className="home-agent-ask"
+                      href={`${AI_URLS[ai]}${encodeURIComponent(p.prompt)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Ask {AI_LABELS[ai]} ↗
+                    </a>
+                    <p className="home-agent-step">2 · YOUR AI READS</p>
+                    <p className="home-agent-kicker">WHAT YOUR AI DOES</p>
+                    <ul className="home-agent-reads">
+                      {HOME_AGENT_READS.map((r) => (
+                        <li key={r.label}>
+                          <span>{r.label}</span> — {r.desc}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="home-agent-step">3 · YOU GET</p>
+                    <p className="home-agent-kicker">WHAT COMES BACK</p>
+                    <p className="home-agent-kicker">EXAMPLE ANSWER</p>
+                    <ul className="home-agent-example">
+                      {p.example.map((e) => (
+                        <li key={e.lead}>
+                          <b>{e.lead}</b> {e.text}
+                        </li>
+                      ))}
+                    </ul>
+                    {p.quote && <p className="home-agent-quote">&ldquo;{p.quote}&rdquo;</p>}
+                    {p.curl && (
+                      <div className="home-agent-curl">
+                        <code>{p.curl}</code>
+                        <button type="button" onClick={() => copyPrompt(`curl-${p.id}`, p.curl!)}>
+                          {copied === `curl-${p.id}` ? "Copied ✓" : "Copy"}
+                        </button>
+                      </div>
+                    )}
+                    <p className="home-agent-footnotes">{p.footnotes.join("  ")}</p>
+                    <p className="home-agent-rather">
+                      RATHER READ IT YOURSELF? <a href={p.readHref}>{p.readLabel} ↗</a>
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="home-agent-plug" aria-label="Plug this site into your agent">
+        <p className="home-agent-eyebrow">05 · DEVELOPERS</p>
+        <h2>Plug this site into your agent.</h2>
+        <p className="home-agent-plug-text">
+          Plain text, Markdown and JSON for everything here. No keys, no signup.
+        </p>
+        <a className="home-agent-devbtn" href="/developers">
+          Open the developer page ↗
+        </a>
+        <p className="home-agent-label">START HERE</p>
+        <div className="home-agent-curls">
+          {HOME_AGENT_CURLS.map((c) => (
+            <div key={c} className="home-agent-curl">
+              <code>{c}</code>
+              <button type="button" onClick={() => copyPrompt(`start-${c.slice(7, 22)}`, c)}>
+                {copied === `start-${c.slice(7, 22)}` ? "Copied ✓" : "Copy"}
+              </button>
+            </div>
+          ))}
+        </div>
+        <div className="home-agent-endpoints">
+          {HOME_AGENT_ENDPOINTS.map((g) => (
+            <div key={g.group} className="home-agent-group">
+              <p className="home-agent-group-name">{g.group}</p>
+              <ul>
+                {g.rows.map((r) => (
+                  <li key={r.path}>
+                    <span className={`home-agent-method${r.method === "POST" ? " is-post" : ""}`}>{r.method}</span>
+                    <code>{r.path}</code>
+                    <span className="home-agent-endpoint-desc">{r.desc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="home-agent-does" aria-label="What Rishabh does">
+        <h2>What Rishabh does</h2>
+        <p className="home-agent-does-intro">{HOME_AGENT_DOES.intro}</p>
+        <div className="home-agent-does-grid">
+          {HOME_AGENT_DOES.items.map((item) => (
+            <div key={item.title} className="home-agent-does-card">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="home-agent-work" aria-label="Work with Rishabh">
+        <h2>Work with Rishabh</h2>
+        <p>{HOME_AGENT_WORK}</p>
+        <a className="home-agent-work-mail" href={`mailto:${PROFILE.email}`}>
+          {PROFILE.email} ↗
+        </a>
+      </section>
+
+      <DevPortal />
+    </>
+  );
+}
+
 export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; entered: boolean }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [navWorld, setNavWorld] = useState<string | null>(null);
+  const [view, setView] = useState<"human" | "agent">("human");
+  const [openPersona, setOpenPersona] = useState("founder");
+  const [ai, setAi] = useState<AiChoice>("claude");
+  const [copied, setCopied] = useState<string | null>(null);
+  const copyPrompt = async (id: string, text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(id);
+      window.setTimeout(() => setCopied((c) => (c === id ? null : c)), 1500);
+    } catch {
+      /* clipboard unavailable: the prompt is visible to copy by hand */
+    }
+  };
   const sentenceRef = useRef<HTMLParagraphElement | null>(null);
   const frameRef = useRef<HTMLDivElement | null>(null);
+  const skyRef = useRef<HTMLDivElement | null>(null);
+  // Sky parallax: the sky drifts slower than the wall as the page scrolls
+  // (the reference's slow hero parallax), clamped to the sky layer's
+  // overscan so no edge ever shows.
+  useEffect(() => {
+    if (view !== "human") return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const y = Math.min(window.scrollY, 112) * 0.25;
+        if (skyRef.current) skyRef.current.style.transform = `translateY(${y}px)`;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, [view]);
   // Sentence hover focuses one world (live site's data-focus): the wall
   // dims only the other worlds' cards; "talk to my AI" focuses nothing.
   // Hovering a header world link focuses that world too.
@@ -345,15 +636,29 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
             </span>
           </nav>
         </div>
-        <div className="mode-switch" data-mode="human" role="group" aria-label="View this page as">
+        <div className="mode-switch" data-mode={view} role="group" aria-label="View this page as">
           <span className="mode-option">
-            <button type="button" aria-pressed="true" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+            <button
+              type="button"
+              aria-pressed={view === "human"}
+              onClick={() => {
+                setView("human");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
               Human
             </button>
           </span>
           <span className="mode-option">
             <span className="mode-slash" aria-hidden="true">/</span>
-            <button type="button" aria-pressed="false" onClick={onOpenChat}>
+            <button
+              type="button"
+              aria-pressed={view === "agent"}
+              onClick={() => {
+                setView("agent");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
               Agent
             </button>
           </span>
@@ -361,10 +666,12 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
       </header>
 
       <main>
+        {view === "human" ? (
+          <>
         {/* hero — one viewport: sky wall + sentence strip, like the live site */}
         <section className="stage" data-stage data-focus={focusWorld ?? undefined} aria-label="Intro">
           <div className="world-frame" ref={frameRef}>
-            <div className="sky-layer">
+            <div className="sky-layer" ref={skyRef}>
               <img src="/sky.jpg" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
             </div>
             <div className="cloud-layer" aria-hidden="true" />
@@ -473,7 +780,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
                 <div className="body">
                   <p className="tagline">{post.tag}</p>
                   <h3>{post.title}</h3>
-                  <a href={`/blog/${post.slug}/`}>Read the write-up ↗</a>
+                  <a href={`/learn/${post.slug}/`}>Read the write-up ↗</a>
                 </div>
               </article>
             ))}
@@ -493,26 +800,18 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
           </a>
         </section>
 
-        {/* developers portal */}
-        <section className="section" id="developers" aria-label="For developers and AI agents">
-          <div className="dev-portal">
-            <p className="section-label">For developers and AI agents</p>
-            <h2 className="section-title">This site is machine-readable.</h2>
-            <p className="section-body">
-              llms.txt, a full OpenAPI spec, markdown versions of every page, an RSS feed and an
-              AI chat endpoint — built so agents can answer questions about Rishabh without
-              guessing.
-            </p>
-            <div className="dev-links">
-              <a href="/developers">Developer portal</a>
-              <a href="/llms.txt">llms.txt</a>
-              <a href="/openapi.json">openapi.json</a>
-              <a href="/index.md">index.md</a>
-              <a href="/blog/feed.xml">RSS feed</a>
-              <a href="/sitemap.xml">sitemap.xml</a>
-            </div>
-          </div>
-        </section>
+        <DevPortal />
+          </>
+        ) : (
+          <AgentView
+            openPersona={openPersona}
+            setOpenPersona={setOpenPersona}
+            ai={ai}
+            setAi={setAi}
+            copied={copied}
+            copyPrompt={copyPrompt}
+          />
+        )}
       </main>
 
       <footer className="site-footer">

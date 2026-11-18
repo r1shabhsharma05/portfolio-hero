@@ -60,7 +60,7 @@ export const REELS: Reel[] = [
 ];
 
 export const STATS = [
-  { value: "218", label: "LeetCode solved" },
+  { value: "219", label: "LeetCode solved" },
   { value: "1,739", label: "GitHub contributions in 2026" },
   { value: "23", label: "Pull requests merged" },
 ];
@@ -89,7 +89,7 @@ export const WORLDS = [
   {
     id: "build",
     title: "Build: products for everyone",
-    body: "Idea to launch for real products: the eight products he built himself, from an AI railway planner to an emergency SOS app.",
+    body: "Idea to launch for real products: the eight products he shipped, from an AI railway planner to an emergency SOS app.",
     link: "/projects/",
     linkLabel: "See the products ↗",
   },
@@ -104,12 +104,12 @@ export const WORLDS = [
     id: "learn",
     title: "Learn: free resources",
     body: "Roadmaps, prompts and build write-ups, each with the Reel it came from — everything he learns, shared for free.",
-    link: "/blog/",
+    link: "/learn/",
     linkLabel: "Read the write-ups ↗",
   },
 ];
 
-/** Header nav worlds — Build / Brand / Learn (Avi's three worlds). */
+/** Header nav worlds — Build / Brand / Learn (the reference's three worlds). */
 export const NAV_WORLDS = [
   { id: "build", label: "Build", color: "#2F55FF", text: "#ffffff", href: "/projects/" },
   { id: "brand", label: "Brand", color: "#EF3B2D", text: "#ffffff", href: "/brands/" },
@@ -117,7 +117,218 @@ export const NAV_WORLDS = [
 ] as const;
 
 export const LEARN_POSTS = [
-  { slug: "how-i-got-14-open-source-prs-merged", title: "How I got 14 open-source PRs merged", tag: "LEARN" },
-  { slug: "building-safelife-sos", title: "Building SafeLife SOS", tag: "LEARN" },
-  { slug: "my-claude-code-skills-setup", title: "My Claude Code skills setup", tag: "LEARN" },
+  { slug: "how-i-made-a-trending-song-lyric-video-with-ai", title: "How I Made a Trending Song's Lyric Video with AI", tag: "PROMPT" },
+  { slug: "round-up-micro-savings-app-india", title: "Someone Please Build This in India: The Round-Up Micro-Savings App", tag: "BUSINESS IDEA" },
+  { slug: "who-is-rishabh-sharma", title: "Who is Rishabh Sharma?", tag: "ABOUT" },
 ];
+
+/** Home Agent view — the 5 personas, prompt builder, endpoints and
+ *  "Plug this site into your agent" section. Mirrors the reference's
+ *  home agent view; every fact is Rishabh's own (verified 2026-11-12/18).
+ *  Accent colours follow the reference's persona hover: Founder blue,
+ *  Brand red, Student yellow, Curious + Developer black. */
+export interface HomePersona {
+  id: string;
+  num: string;
+  name: string;
+  tagline: string;
+  accent: string;
+  prompt: string;
+  example: { lead: string; text: string }[];
+  quote?: string;
+  curl?: string;
+  footnotes: string[];
+  readLabel: string;
+  readHref: string;
+}
+
+export const HOME_PERSONAS: HomePersona[] = [
+  {
+    id: "founder",
+    num: "01",
+    name: "Founder",
+    tagline: "Get your product idea scoped.",
+    accent: "#2F55FF",
+    prompt:
+      "Read /llms.txt and /projects. I'm a founder. What has Rishabh built, what is he best at, and could he help me build my product? Draft a short email I can send him.",
+    example: [
+      {
+        lead: "What he has built.",
+        text: "SafeLife AI, a personal safety app with live SOS; SecureGaurd, a security platform; RailSync 2.0, AI railway planning; plus LocalKart, Farmer Marketplace and Rkhshak. 23 open-source PRs merged. [1][2]",
+      },
+      {
+        lead: "Where he fits.",
+        text: "Taking an AI product from an idea to a first version people use. [2]",
+      },
+    ],
+    quote: "Hi Rishabh, I'm building [your product] and want a first version by [date]. Could we talk?",
+    footnotes: ["1 /LLMS.TXT", "2 /PROJECTS"],
+    readLabel: "See his projects",
+    readHref: "/projects/",
+  },
+  {
+    id: "brand",
+    num: "02",
+    name: "Brand",
+    tagline: "Get the media kit and a brief.",
+    accent: "#EF3B2D",
+    prompt:
+      "Read /llms.txt and /brands. I run a brand. What campaigns does Rishabh make, who watches him, and can you draft a short brief I can email him?",
+    example: [
+      {
+        lead: "What he makes.",
+        text: "Short Reels where an AI tool does something worth watching twice — motion type, lyric videos, AI builds on camera. [2]",
+      },
+      {
+        lead: "Who watches.",
+        text: "7,121 views across 16 Reels on @cod.ehx, mostly students and early-career developers in India. [1][2]",
+      },
+    ],
+    quote: "Hi Rishabh, we're [brand] and want a Reel for [launch] in [month]. What would you make?",
+    footnotes: ["1 /LLMS.TXT", "2 /BRANDS"],
+    readLabel: "See the media kit",
+    readHref: "/brands/",
+  },
+  {
+    id: "student",
+    num: "03",
+    name: "Student",
+    tagline: "Find the right free roadmap.",
+    accent: "#FFC81A",
+    prompt:
+      "Read /llms.txt and /learn. I'm a student learning to code. Which of Rishabh's free roadmaps should I start with, and why?",
+    example: [
+      {
+        lead: "Start here.",
+        text: "518 JavaScript interview questions, then 446 React questions. Both free, sorted by topic, with answers. [2]",
+      },
+      {
+        lead: "Then go deeper.",
+        text: "1,173 System Design lessons and 502 Python questions when you're ready. [2]",
+      },
+    ],
+    footnotes: ["1 /LLMS.TXT", "2 /LEARN"],
+    readLabel: "Browse the roadmaps",
+    readHref: "/learn/",
+  },
+  {
+    id: "curious",
+    num: "04",
+    name: "Curious",
+    tagline: "Ask anything about Rishabh.",
+    accent: "#111111",
+    prompt:
+      "Read /llms.txt and /about. Who is Rishabh Sharma, what does he build, and what is he known for?",
+    example: [
+      {
+        lead: "Who he is.",
+        text: "A CS undergrad at GLA University, Mathura, who builds AI products and shows how on Instagram. [1][2]",
+      },
+      {
+        lead: "Known for.",
+        text: "23 merged open-source PRs, 1,739 GitHub contributions in 2026, and free roadmaps for students. [1]",
+      },
+    ],
+    footnotes: ["1 /LLMS.TXT", "2 /ABOUT"],
+    readLabel: "Read about Rishabh",
+    readHref: "/about/",
+  },
+  {
+    id: "developer",
+    num: "05",
+    name: "Developer",
+    tagline: "Plug this site into your agent.",
+    accent: "#111111",
+    prompt:
+      "Read /llms.txt and /openapi.json. I'm a developer. What can my agent read and ask on portfolio-hero-psi-lemon.vercel.app, and what is the first request I should make? Show it with curl.",
+    example: [
+      {
+        lead: "What your agent can read.",
+        text: "Every page as Markdown, the Learn posts, and Rishabh's AI over POST /api/chat. No keys, no signup. [1][2]",
+      },
+    ],
+    curl: '$ curl "https://portfolio-hero-psi-lemon.vercel.app/openapi.json"',
+    footnotes: ["1 /LLMS.TXT", "2 /OPENAPI.JSON"],
+    readLabel: "Open the developer page",
+    readHref: "/developers/",
+  },
+];
+
+/** What the AI reads — the same three lines in every persona panel. */
+export const HOME_AGENT_READS = [
+  { label: "/llms.txt", desc: "The overview" },
+  { label: "/openapi.json", desc: "Every endpoint" },
+  { label: "First call", desc: "Written for you" },
+];
+
+/** "Plug this site into your agent" — the three START HERE curl boxes. */
+export const HOME_AGENT_CURLS = [
+  "$ curl https://portfolio-hero-psi-lemon.vercel.app/llms.txt",
+  '$ curl -H "Accept: text/markdown" https://portfolio-hero-psi-lemon.vercel.app/',
+  "$ curl https://portfolio-hero-psi-lemon.vercel.app/openapi.json",
+];
+
+/** Endpoint grid — only endpoints that exist on this site. */
+export const HOME_AGENT_ENDPOINTS: {
+  group: string;
+  rows: { method: "GET" | "POST"; path: string; desc: string }[];
+}[] = [
+  {
+    group: "READ",
+    rows: [
+      { method: "GET", path: "/llms.txt", desc: "Everything about Rishabh, in plain text" },
+      { method: "GET", path: "/index.md", desc: "Any page as Markdown: add .md" },
+      { method: "GET", path: "/openapi.json", desc: "OpenAPI 3.1" },
+    ],
+  },
+  {
+    group: "LEARN",
+    rows: [
+      { method: "GET", path: "/learn/", desc: "The roadmaps, prompts and business ideas" },
+    ],
+  },
+  {
+    group: "BUILD",
+    rows: [
+      { method: "GET", path: "/projects/", desc: "The shipped work" },
+      { method: "GET", path: "/brands/", desc: "The media kit" },
+    ],
+  },
+  {
+    group: "ASK",
+    rows: [
+      { method: "POST", path: "/api/chat", desc: "Questions about Rishabh and his posts" },
+    ],
+  },
+  {
+    group: "DISCOVER",
+    rows: [
+      { method: "GET", path: "/sitemap.xml", desc: "Every canonical URL" },
+      { method: "GET", path: "/developers", desc: "Developer portal" },
+    ],
+  },
+];
+
+/** "What Rishabh does" — the agent view's three-column version. */
+export const HOME_AGENT_DOES = {
+  intro:
+    "Rishabh Sharma is a full-stack developer studying Computer Science at GLA University, Mathura. He builds AI products, contributes to open source, and writes free roadmaps for students.",
+  items: [
+    {
+      title: "Build: products for founders",
+      body: "AI products and open-source tools: SafeLife AI, SecureGaurd, RailSync 2.0, LocalKart, Farmer Marketplace and Rkhshak — plus 23 merged open-source PRs.",
+    },
+    {
+      title: "Brand: the media kit",
+      body: "Tech Reels on @cod.ehx — 16 reels, 7,121 views: motion type, lyric videos, and AI builds on camera.",
+    },
+    {
+      title: "Learn: free resources",
+      body: "39 free roadmaps, prompts and business ideas for students learning to code.",
+    },
+  ],
+};
+
+/** "Work with Rishabh" — the agent view's version. */
+export const HOME_AGENT_WORK =
+  "Founders bring him products to build, from an MVP to an AI feature inside an existing app. Brands bring him campaigns. The best way to reach him is by email at rishabhsharma14426@gmail.com; he replies himself.";

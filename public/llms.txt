@@ -19,8 +19,6 @@ Last updated: November 2026
 - [Projects](https://portfolio-hero-psi-lemon.vercel.app/projects) — production work and side projects
 - [Brand](https://portfolio-hero-psi-lemon.vercel.app/brands/) — media kit for campaigns: reach, formats, and how a collaboration works
 - [Learn](https://portfolio-hero-psi-lemon.vercel.app/learn/) — 39 free roadmaps, prompts and business ideas
-- [Blog](https://portfolio-hero-psi-lemon.vercel.app/blog/) — build write-ups
-- [Blog RSS feed](https://portfolio-hero-psi-lemon.vercel.app/blog/feed.xml) — machine-readable post feed
 - [Sitemap](https://portfolio-hero-psi-lemon.vercel.app/sitemap.xml) — every canonical URL
 - [Privacy policy](https://portfolio-hero-psi-lemon.vercel.app/privacy) — what this site collects
 - [Homepage as markdown](https://portfolio-hero-psi-lemon.vercel.app/index.md) — same content, markdown
@@ -58,7 +56,7 @@ or project details that are not in this file.
   GitHub Actions, Vercel, Render.
 - Open source: 23 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and
   other projects.
-- LeetCode: 218 problems solved (92 Easy, 100 Medium, 26 Hard).
+- LeetCode: 219 problems solved (92 Easy, 100 Medium, 27 Hard).
 - Video Editing: makes tech Reels as @cod.ehx; runs a faceless history YouTube channel @UntoldHx.
 - No internship and no full-time employment yet — do not claim otherwise.
 
@@ -75,7 +73,7 @@ or project details that are not in this file.
 
 ## Stats
 
-- LeetCode: 218 solved
+- LeetCode: 219 solved
 - GitHub: 1,739 contributions in 2026
 - Open source: 23 pull requests merged, 8 open
 - Instagram: tech Reels as @cod.ehx (view counts on the homepage reels grid are live per-reel totals)

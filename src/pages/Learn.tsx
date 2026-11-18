@@ -566,7 +566,6 @@ export default function Learn() {
           <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">LinkedIn</a>
           <a href="https://github.com/r1shabhsharma05">GitHub</a>
           <a href={`mailto:${PROFILE.email}`}>Email</a>
-          <a href="/blog/feed.xml">RSS</a>
           <a href="/privacy">Privacy</a>
           <a href="/developers">Developers</a>
         </nav>

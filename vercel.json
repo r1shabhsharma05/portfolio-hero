@@ -5,6 +5,10 @@
   "outputDirectory": "dist",
   "trailingSlash": false,
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/blog", "destination": "/learn/", "permanent": true },
+    { "source": "/blog/:path*", "destination": "/learn/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/api/v1/chat", "destination": "/api/chat" },
     { "source": "/:path*", "destination": "/api/notfound?path=:path*" }
@@ -16,7 +20,7 @@
         { "key": "Vary", "value": "Accept, User-Agent, Accept-Encoding" },
         {
           "key": "Link",
-          "value": "</llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"LLM context\", </sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\", </developers>; rel=\"help\"; title=\"Developer portal\", </blog/feed.xml>; rel=\"alternate\"; type=\"application/rss+xml\"; title=\"Blog feed\""
+          "value": "</llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"LLM context\", </sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\", </developers>; rel=\"help\"; title=\"Developer portal\""
         }
       ]
     },
