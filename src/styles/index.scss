@@ -157,7 +157,7 @@ body[data-phase="done"] .hero-scene {
  * left/size/duration/delay/sway/colour comes from the Petals component
  * (deterministic, seeded). pointer-events: none so clicks reach the wall. */
 .petals { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.hero-scene .petals { z-index: 5; }
+.world-frame .petals { z-index: 4; }
 .home-agent-sky .petals { z-index: 1; }
 .petal {
   position: absolute; top: -8%; border-radius: 100% 3px 100% 3px;

@@ -155,7 +155,6 @@ function HeroScene({ focus, frameRef }: { focus: string | null; frameRef: React.
         focus={focus}
         onSlideClick={onSlideClick}
       />
-      <Petals />
     </div>
   );
 }
@@ -790,6 +789,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
               <img src="/sky.jpg" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
             </div>
             <div className="cloud-layer" aria-hidden="true" />
+            <Petals />
           </div>
           <HeroScene focus={focusWorld} frameRef={frameRef} />
           <div className={`below${entered ? " is-entered" : ""}`} aria-label="What Rishabh does, in one sentence">
