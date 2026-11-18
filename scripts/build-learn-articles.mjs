@@ -200,7 +200,14 @@ const REELS = {
 function reelHtml(fm) {
   const r = fm.reel && REELS[fm.reel];
   if (!r) return "";
-  return `<figure class="reel"><video src="${r.video}" poster="${r.poster}" muted loop autoplay playsinline></video><figcaption>${esc(r.caption)}</figcaption></figure>`;
+  return `<figure class="reel"><video src="${r.video}" poster="${r.poster}" muted loop autoplay playsinline controls preload="metadata"></video><figcaption>${esc(r.caption)}</figcaption></figure>`;
+}
+
+// A link card to Rishabh's own Instagram reel (frontmatter `reelLink:`),
+// used when there is no local video file for the reel.
+function reelLinkHtml(fm) {
+  if (!fm.reelLink) return "";
+  return `<figure class="reel"><a class="reelLink" href="${esc(fm.reelLink)}" target="_blank" rel="noreferrer"><span class="reelLinkHook">Someone please build this in India</span><span class="reelLinkOpen">Watch the reel on Instagram ↗</span></a><figcaption>Round-Up Micro-Savings App · 1 idea</figcaption></figure>`;
 }
 
 function tocHtml(toc) {
@@ -210,7 +217,7 @@ function tocHtml(toc) {
   return `<nav class="toc" aria-label="On this page"><span>On this page</span><ol>${items}</ol></nav>`;
 }
 
-function pageHtml({ title, description, label, date, mins, bodyHtml, slug, toc, keep, output, reel }) {
+function pageHtml({ title, description, label, date, mins, bodyHtml, slug, toc, keep, output, reel, reelLink }) {
   const canon = `${SITE}/learn/${slug}/`;
   const keepItems = keep.map((p) => {
     const t = listTitles.get(SLUG_RENAME[p.slug] ?? p.slug) ?? swapNames(p.title);
@@ -308,6 +315,9 @@ a { color:inherit; text-decoration:none; }
 .reel { margin:0 0 22px; }
 .reel video { width:100%; display:block; border-radius:12px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
 .reel figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-top:10px; }
+.reelLink { display:flex; flex-direction:column; gap:10px; background:#1a1a1a; color:#f3f3f1; border-radius:12px; padding:22px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reelLinkHook { font-family:var(--serif); font-size:24px; line-height:1.2; }
+.reelLinkOpen { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--learn); }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
@@ -357,7 +367,7 @@ ${bodyHtml}
 </div>
 </main>
 <aside class="aside">
-${reel}${toc}
+${reel}${reelLink}${toc}
 </aside>
 </div>
 <aside class="keep"><h2>Keep reading</h2><ul>${keepItems}</ul></aside>
@@ -396,6 +406,21 @@ ${reel}${toc}
       });
     }, { rootMargin: "-20% 0px -70% 0px" });
     heads.forEach(function (h) { io.observe(h); });
+  }
+  // Reel video: play when first scrolled into view (autoplay can be
+  // blocked in some browsers), then leave it to the user (native controls).
+  var reelVideo = document.querySelector(".reel video");
+  if (reelVideo && "IntersectionObserver" in window) {
+    var reelPlayed = false;
+    var ro = new IntersectionObserver(function (entries) {
+      if (!reelPlayed && entries[0].isIntersecting) {
+        reelPlayed = true;
+        var p = reelVideo.play();
+        if (p) p.catch(function () {});
+        ro.disconnect();
+      }
+    }, { threshold: 0.25 });
+    ro.observe(reelVideo);
   }
   // COPY buttons in prompt boxes.
   document.querySelectorAll("[data-copy]").forEach(function (btn) {
@@ -470,6 +495,7 @@ for (const post of POSTS) {
       keep: keepReading(post),
       output: outputHtml(fm),
       reel: reelHtml(fm),
+      reelLink: reelLinkHtml(fm),
     })
   );
   written++;

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Someone Please Build This in India: The Round-Up Micro-Savings App | Rishabh Sharma</title>
+<meta name="description" content="One idea from my first business-idea reel: an app that rounds up every UPI payment to the next round number and saves the spare change. Here is the full roadmap" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/round-up-micro-savings-app-india/" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+* { box-sizing:border-box; }
+body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
+/* Paper grain, kept faint (low opacity). */
+body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
+a { color:inherit; text-decoration:none; }
+#progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
+.site-head { max-width:1240px; margin:0 auto; padding:20px clamp(16px,4vw,48px); display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+.logo { font-family:var(--serif); font-size:22px; }
+.worlds { display:flex; gap:10px; align-items:baseline; font-family:var(--serif); font-size:18px; }
+.worlds .sep { color:var(--ink-soft); }
+.worlds a[aria-current="page"] { border-bottom:3px solid var(--learn); padding-bottom:2px; }
+.view-toggle { display:flex; gap:14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+.view-toggle .on { border-bottom:2px solid var(--learn); padding-bottom:2px; }
+.view-toggle a { color:var(--ink-soft); }
+.wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:clamp(32px,5vw,80px); max-width:1240px; margin:0 auto; padding:36px clamp(16px,4vw,48px) 0; }
+.meta { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin:0 0 14px; }
+.meta a { color:var(--ink); }
+.meta a:hover { text-underline-offset:3px; text-decoration:underline; }
+.title { font-family:var(--serif); letter-spacing:-.03em; margin:14px 0 0; font-size:clamp(40px,5vw,72px); font-weight:400; line-height:1; text-wrap:balance; }
+.lede { max-width:720px; color:var(--ink-soft); margin:20px 0 0; font-size:19px; line-height:1.6; }
+.output { max-width:760px; margin:32px 0 0; }
+.output figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink); display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; font-size:11px; }
+.outputUrl { color:var(--ink-soft); text-transform:none; letter-spacing:.02em; }
+.outputWindow { aspect-ratio:1440/900; background:var(--paper-deep) var(--grain); box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.outputCardUrl { font-family:var(--mono); font-size:13px; letter-spacing:.02em; color:var(--ink-soft); }
+.outputOpen { background:var(--ink); color:var(--paper); border-radius:8px; padding:9px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); position:absolute; bottom:12px; right:12px; }
+.outputWindow:hover .outputOpen { transform:translateY(-2px); }
+.post { max-width:760px; margin-top:36px; color:var(--ink); font-family:var(--sans); line-height:1.7; }
+.post a { color:var(--tech); }
+.post h1 { font-size:1.6rem; margin-bottom:.5rem; line-height:1.25; }
+.post h2 { font-family:var(--serif); letter-spacing:-.02em; font-size:clamp(28px,2.6vw,38px); font-weight:400; line-height:1.1; margin-top:2.5rem; padding-bottom:8px; scroll-margin-top:24px; background:linear-gradient(var(--learn),var(--learn)) 0 100%/0 4px no-repeat; transition:background-size .7s cubic-bezier(.22,1,.36,1); }
+.post h2[data-current] { background-size:64px 4px; }
+.post h3 { font-family:var(--serif); letter-spacing:-.01em; font-size:24px; font-weight:400; margin-top:1.75rem; margin-bottom:.25rem; }
+.post p { margin:1rem 0; }
+.post ul, .post ol { margin:1rem 0; padding-left:1.4rem; }
+.post li { margin:.5rem 0; }
+.post code { background:#11111114; background:color-mix(in srgb, var(--ink) 8%, transparent); border-radius:4px; padding:1px 5px; font-family:var(--mono); font-size:.9em; }
+.post pre { color:#e0e0e0; background:#1a1a1a; border-radius:8px; padding:20px; font-size:.88rem; line-height:1.6; overflow-x:auto; }
+.post pre code { color:inherit; background:transparent; padding:0; }
+.post .prompt, .post .code { color:#e6e6e6; white-space:pre-wrap; background:#1a1a1a; border-radius:10px; margin:1.5rem 0; padding:20px 22px; font-family:var(--mono); font-size:.78rem; line-height:1.6; overflow-x:auto; }
+.post .promptbox { margin:1.5rem 0; position:relative; }
+.post .promptbox .prompt { margin:0; padding-top:52px; }
+.post .copybtn { z-index:2; position:absolute; top:10px; right:10px; letter-spacing:.08em; text-transform:uppercase; color:#e6e6e6; cursor:pointer; background:#2b2b2b; border:1px solid #3d3d3d; border-radius:6px; min-height:34px; padding:9px 14px; font:600 .72rem/1 var(--mono); }
+.post .copybtn:hover { background:#3a3a3a; }
+.post .copybtn.done { color:#7ee39a; border-color:#2f6b41; }
+.post .highlight, .post blockquote { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post blockquote { color:#333; padding:4px 20px; font-style:italic; }
+.post .tldr { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post .card { background:#f8f8f8; border-left:4px solid #000; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card { background:#f8f8f8; border-left:4px solid #06c; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card h3 { margin:0 0 8px; font-size:1.3rem; }
+.post .stat { color:#06c; font-weight:700; }
+.post .stars { letter-spacing:.06em; color:#444; vertical-align:middle; background:#f2f2f2; border:1px solid #e2e2e2; border-radius:6px; margin-left:6px; padding:5px 9px; font:600 .72rem/1 var(--mono); }
+.post .tag { color:#1a56db; background:#e8f0fe; border-radius:12px; margin:2px; padding:2px 10px; font-size:.8rem; display:inline-block; }
+.post .tier-note { color:#666; margin-top:-.25rem; font-style:italic; }
+.post .signal, .post .check { color:#0a7d33; font-weight:600; }
+.post .signal { margin:.5rem 0 0; }
+.post .check { margin:.75rem 0 0; }
+.post .qnum { color:#06c; font-variant-numeric:tabular-nums; }
+.post .q { border-left:3px solid #e8e8e8; margin:1.6rem 0; padding-left:14px; }
+.post .q p { margin:.4rem 0; }
+.post .q .ask { font-size:1.02rem; font-weight:600; }
+.post .q .prep { color:#444; font-size:.95rem; }
+.post .q .prep strong { color:#1a1a1a; }
+.post .week { margin:1.1rem 0; }
+.post .src { font-size:.9rem; }
+.post .repo-link { word-break:break-all; font-family:var(--mono); font-size:.85rem; }
+.post .tech-stack { flex-wrap:wrap; gap:8px; margin:1rem 0; display:flex; }
+.post .tech-stack span { background:#f0f0f0; border-radius:20px; padding:4px 12px; font-size:.85rem; font-weight:500; }
+.post .sw { vertical-align:-1px; border-radius:2px; width:10px; height:10px; margin-right:8px; display:inline-block; }
+.post .tablewrap { margin:1.5rem 0; overflow-x:auto; }
+.post table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.9rem; }
+.post th { text-align:left; background:#f0f0f0; color:#444; font-weight:600; padding:10px 14px; }
+.post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
+.post img, .post video { max-width:100%; height:auto; border-radius:12px; }
+.reel { margin:0 0 22px; }
+.reel video { width:100%; display:block; border-radius:12px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reel figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-top:10px; }
+.reelLink { display:flex; flex-direction:column; gap:10px; background:#1a1a1a; color:#f3f3f1; border-radius:12px; padding:22px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reelLinkHook { font-family:var(--serif); font-size:24px; line-height:1.2; }
+.reelLinkOpen { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--learn); }
+.aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
+.toc { flex-direction:column; gap:6px; display:flex; }
+.toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
+.toc ol { list-style:none; margin:0; padding:0; }
+.toc a { border-top:1px solid var(--line); grid-template-columns:30px 1fr; align-items:baseline; padding:10px 0; display:grid; }
+.toc i { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-style:normal; }
+.toc b { font-family:var(--serif); background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; justify-self:start; margin:0 -.12em; padding:0 .12em; font-size:20px; font-weight:400; line-height:1.2; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.toc a:hover b, .toc a[aria-current] b { background-size:100% 100%; }
+.keep { max-width:1240px; margin:72px auto 0; padding:28px clamp(16px,4vw,48px) 0; }
+.keep h2 { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-weight:400; margin:0; }
+.keep ul { margin-top:10px; list-style:none; padding:0; }
+.keep li a { border-top:1px solid var(--line); font-family:var(--serif); padding:14px 0; font-size:26px; line-height:1.2; display:block; }
+.keep li a span { background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; margin:0 -.12em; padding:0 .12em; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.keep li a:hover span { background-size:100% 100%; }
+footer { max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,48px); border-top:1px solid var(--line); display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px; }
+footer .f-col { display:flex; flex-direction:column; gap:6px; }
+footer strong { font-family:var(--serif); font-size:20px; font-weight:400; }
+footer .f-label { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-bottom:4px; }
+footer span, footer a { font-size:14px; }
+footer a:hover { text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:860px) {
+  .site-head { padding-left:12px; padding-right:12px; gap:16px; }
+  .wrap { grid-template-columns:1fr; }
+  .aside { order:-1; max-height:none; position:static; }
+  .toc { display:none; }
+  .toc b, .keep li a span { transition:none; }
+  .outputOpen { transition:none; }
+  footer { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<header class="site-head">
+<a class="logo" href="/">Rishabh.</a>
+<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
+</header>
+<div class="wrap">
+<main>
+<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; BUSINESS IDEA SERIES &middot; 18 NOVEMBER 2026 &middot; 6 min</p>
+<h1 class="title">Someone Please Build This in India: The Round-Up Micro-Savings App</h1>
+<p class="lede">One idea from my first business-idea reel: an app that rounds up every UPI payment to the next round number and saves the spare change. Here is the full roadmap — the idea, who it is for, how to build it, what it costs, and the exact launch steps.</p>
+
+<div class="post">
+<h2 id="first-the-correction">First, the correction</h2>
+<p>This reel had <strong>one</strong> business idea in it — not several. The truck-parking idea was a different reel; it is not in this post, and it gets its own roadmap if it gets one.</p>
+<p>This is my first business-idea reel, posted 17 November. The idea is a <strong>Round-Up Micro-Savings App for India</strong> — an app that rounds up every payment to the next round number and automatically saves (or invests) the spare change.</p>
+<p>One line before the roadmap, because it matters: <strong>this idea was pitched in the reel; we did not build or launch this business ourselves.</strong> The roadmap below is the plan to build it — not a story about having done it.</p>
+<h2 id="the-idea-as-pitched-in-the-reel">The idea, as pitched in the reel</h2>
+<ul>
+<li><strong>Hook:</strong> &quot;Guys, someone please build this in India.&quot;</li>
+<li><strong>Premise:</strong> &quot;An app that saves money for you every time you spend money.&quot;</li>
+<li><strong>Example 1:</strong> Coffee ₹180 → ₹200, <strong>₹20 saved</strong>.</li>
+<li><strong>Example 2:</strong> Food order ₹470 → ₹500, <strong>₹30 saved</strong>.</li>
+<li><strong>Precedent:</strong> The UK app Moneybox — 1 million+ users, the same model already running there.</li>
+<li><strong>Punchline:</strong> &quot;I don&#39;t have a spending problem. I have a saving problem.&quot;</li>
+<li><strong>Ending poll:</strong> YES — round up everything / NO — I like being broke.</li>
+</ul>
+<h2 id="who-it-is-for">Who it is for</h2>
+<p>UPI users aged 22–35 — students, first-job salaried people, freelancers — who make 3–5 small payments a day on Swiggy, Zomato, Zara, coffee and cabs, but can&#39;t set aside a big amount at month-end.</p>
+<h2 id="the-problem-it-solves">The problem it solves</h2>
+<p>People promise themselves they&#39;ll save, and spending breaks the promise in three days. The problem isn&#39;t spending — it&#39;s friction in saving. Taking out a big amount at once hurts; ₹10–₹30 doesn&#39;t feel like anything. At an average of ₹20 × 3 payments a day, that&#39;s <strong>₹1,800 a month saved without feeling it</strong>.</p>
+<h2 id="how-to-build-it-step-by-step">How to build it, step by step</h2>
+<ol>
+<li><strong>See the transactions.</strong> An app can&#39;t intercept a UPI payment directly. The right route in India is an <strong>Account Aggregator</strong> (a provider like Finvu or Setu) reading the bank statement with the user&#39;s permission. In Phase 1, have the user upload a statement PDF or screenshot instead.</li>
+<li><strong>The round-up engine.</strong> Apply the rule to every debit — round up to the nearest ₹100. ₹180 → ₹20, ₹470 → ₹30. Give the user the choice: nearest ₹10 / ₹50 / ₹100, plus a 2x multiplier option.</li>
+<li><strong>Actually move the money.</strong> Don&#39;t pull money every day — collect the week&#39;s total (say ₹210/week) and debit it once, via UPI Autopay / e-NACH mandate. Small daily debits will fail and eat charges.</li>
+<li><strong>Where the money sits.</strong> Don&#39;t hold the money yourself — without a licence, that&#39;s illegal. Take the partner route: a liquid mutual fund through BSE StAR MF / an AMC / a SEBI-registered distributor, or at the start, a partner bank&#39;s savings pot. KYC needs PAN + Aadhaar / DigiLocker.</li>
+<li><strong>The app is just 4 screens.</strong> Home (how much saved this month), Round-ups list (every payment + its round-up), Goal (e.g. a ₹10,000 emergency fund), Withdraw.</li>
+</ol>
+<h2 id="ready-to-use-prompts">Ready-to-use prompts</h2>
+<p>The reel itself used no business-building prompt — and there is no prompt in the reel. The three prompts below are new, written for this blog. They are ready-to-use prompts, not prompts used in the reel.</p>
+<div class="promptbox"><button class="copybtn" type="button" data-copy>Copy prompt</button><div class="prompt">Help me validate a round-up micro-savings app for India. The idea: every UPI payment rounds up to the nearest ₹100 and the spare change is saved automatically (e.g. coffee ₹180 → ₹200, ₹20 saved). Target users are 22–35-year-old UPI users who make 3–5 small payments a day but can't save a lump sum at month-end. Write me: (1) a 10-question interview script for 15-minute calls — including how much they saved last month and whether they'd share their bank statement, (2) short waitlist landing-page copy with the hook "Someone please build this in India", and (3) the 5 numbers that would prove this idea is worth building (e.g. how many of 20 test users pay again in week 2).</div></div><div class="promptbox"><button class="copybtn" type="button" data-copy>Copy prompt</button><div class="prompt">Build a round-up micro-savings MVP for India in Flutter with a Supabase backend. Features: (1) read the user's bank statement via an Account Aggregator (Finvu/Setu) with their permission, or accept a statement PDF upload in Phase 1; (2) a round-up engine that rounds every debit to the nearest ₹10/₹50/₹100 (user's choice) with a 2x multiplier option; (3) a weekly total (e.g. ₹210/week) collected once via UPI Autopay / e-NACH mandate — never daily debits; (4) money goes to a partner liquid mutual fund via BSE StAR MF or a partner bank savings pot — never hold user funds in our own account; KYC via PAN + Aadhaar / DigiLocker; (5) only 4 screens: Home (saved this month), Round-ups list, Goal, Withdraw. Keep it to an Android-first MVP for 20 test users.</div></div><div class="promptbox"><button class="copybtn" type="button" data-copy>Copy prompt</button><div class="prompt">Write a 45-second Instagram Reel script for a round-up micro-savings app for India, in the same format as this one: Hook: "Guys, someone please build this in India." Premise: an app that saves money every time you spend. Two examples with real numbers: coffee ₹180 → ₹200 (₹20 saved), food order ₹470 → ₹500 (₹30 saved). One precedent: the UK app Moneybox with 1M+ users. Punchline: "I don't have a spending problem. I have a saving problem." End with a YES/NO poll: "Round up everything" vs "I like being broke". Keep it in simple, spoken English, one idea only, no jargon.</div></div><h2 id="what-it-takes-to-start">What it takes to start</h2>
+<p>These numbers were not in the reel — they are realistic India estimates.</p>
+<ul>
+<li><strong>Validation version (no app):</strong> ₹0–₹15,000, 1–2 weeks — landing page (Framer / Carrd free), Tally form, Instagram page, domain.</li>
+<li><strong>Concierge MVP:</strong> ₹15,000–₹50,000, 3–4 weeks — 20–50 users, statements processed manually / in a spreadsheet, weekly round-up summary sent to each user.</li>
+<li><strong>Real app MVP:</strong> ₹1.5–₹4 lakh via a freelancer, ₹0 cash if you code it yourself or with a co-founder, 2–3 months — Flutter or React Native, backend, Account Aggregator provider fees, UPI Autopay partner (Razorpay / Cashfree).</li>
+<li><strong>Skills:</strong> One coder, plus one person who understands fintech compliance. Holding funds or giving investment advice needs a SEBI/RBI licence — which is why you start with the partner model.</li>
+<li><strong>Tools:</strong> Figma, Flutter / Next.js, Supabase / Firebase, Finvu or Setu (Account Aggregator), Razorpay (mandate), BSE StAR MF (investment partner).</li>
+</ul>
+<h2 id="launching-the-first-version-step-by-step">Launching the first version, step by step</h2>
+<ol>
+<li><strong>Day 1–3:</strong> Put the landing page live — the headline is the same hook, one example card (₹180→₹200), and a waitlist form: name, phone, how many UPI payments you make a day.</li>
+<li><strong>Day 4–10:</strong> Get 200 waitlist signups from Reels / Shorts. Do 15-minute calls with 20 of them — ask how much they saved last month, and whether they&#39;re ready to show their statements.</li>
+<li><strong>Week 2–3 — concierge test:</strong> Take weekly statements from the 20 ready users, work out the round-ups in a spreadsheet, and WhatsApp each one: &quot;This week you&#39;d save ₹214.&quot; Then move that same amount with one UPI request into a separate goal-pot / partner liquid fund in their name. This is the real test — liking a summary is one thing, paying is another.</li>
+<li><strong>Week 4:</strong> If at least 12 of the 20 pay again in week two, build the app. If retention is under 60%, change the rule first (round up to the nearest ₹50, or debit at a ₹500 threshold instead of weekly).</li>
+<li><strong>Month 2–3:</strong> Build the app with only the 4 screens above, Android first. Connect the Account Aggregator + weekly Autopay. Give it to the same 20 users first in a Play Store closed test.</li>
+<li><strong>Launch day:</strong> Don&#39;t do a big public launch — open the waitlist in batches of 50, and monitor each user&#39;s first successful weekly debit yourself, because in fintech the first failed debit means the user is gone.</li>
+</ol>
+<h2 id="the-result">The result</h2>
+<p>One idea, one roadmap. If the truck-parking idea gets the same treatment, it gets its own post — this one stays clean.</p>
+
+</div>
+</main>
+<aside class="aside">
+<figure class="reel"><a class="reelLink" href="https://www.instagram.com/reel/Df1H97-j871/" target="_blank" rel="noreferrer"><span class="reelLinkHook">Someone please build this in India</span><span class="reelLinkOpen">Watch the reel on Instagram ↗</span></a><figcaption>Round-Up Micro-Savings App · 1 idea</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#first-the-correction"><i>01</i><b>First, the correction</b></a></li><li><a href="#the-idea-as-pitched-in-the-reel"><i>02</i><b>The idea, as pitched in the reel</b></a></li><li><a href="#who-it-is-for"><i>03</i><b>Who it is for</b></a></li><li><a href="#the-problem-it-solves"><i>04</i><b>The problem it solves</b></a></li><li><a href="#how-to-build-it-step-by-step"><i>05</i><b>How to build it, step by step</b></a></li><li><a href="#ready-to-use-prompts"><i>06</i><b>Ready-to-use prompts</b></a></li><li><a href="#what-it-takes-to-start"><i>07</i><b>What it takes to start</b></a></li><li><a href="#launching-the-first-version-step-by-step"><i>08</i><b>Launching the first version, step by step</b></a></li><li><a href="#the-result"><i>09</i><b>The result</b></a></li></ol></nav>
+</aside>
+</div>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/how-i-made-a-trending-song-lyric-video-with-ai/"><span>How I Made a Trending Song's Lyric Video with AI</span></a></li><li><a href="/learn/265-topics-to-master-ai-engineering/"><span>265 Topics to Master AI Engineering (and the 6-Week Order I'd Learn Them In)</span></a></li><li><a href="/learn/how-nvidia-built-a-5-trillion-dollar-empire/"><span>How a Gaming Chip Built a $5 Trillion Empire: The True Story of Nvidia and CUDA</span></a></li></ul></aside>
+<footer>
+<div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a><a href="/blog/feed.xml">RSS</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+</footer>
+<script>
+(function () {
+  var bar = document.getElementById("progress");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var f = max > 0 ? h.scrollTop / max : 0;
+    bar.style.width = Math.max(24, f * window.innerWidth) + "px";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  // Scroll-spy: TOC highlight + the H2's yellow underline.
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var heads = links.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && heads.length) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.removeAttribute("data-current");
+          current = e.target;
+          current.setAttribute("data-current", "");
+          links.forEach(function (a) {
+            if (a.getAttribute("href") === "#" + current.id) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+          });
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+  // Reel video: play when first scrolled into view (autoplay can be
+  // blocked in some browsers), then leave it to the user (native controls).
+  var reelVideo = document.querySelector(".reel video");
+  if (reelVideo && "IntersectionObserver" in window) {
+    var reelPlayed = false;
+    var ro = new IntersectionObserver(function (entries) {
+      if (!reelPlayed && entries[0].isIntersecting) {
+        reelPlayed = true;
+        var p = reelVideo.play();
+        if (p) p.catch(function () {});
+        ro.disconnect();
+      }
+    }, { threshold: 0.25 });
+    ro.observe(reelVideo);
+  }
+  // COPY buttons in prompt boxes.
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = btn.closest(".promptbox");
+      var prompt = box && box.querySelector(".prompt");
+      if (!prompt) return;
+      var done = function () {
+        btn.textContent = "Copied ✓";
+        btn.classList.add("done");
+        setTimeout(function () { btn.textContent = btn.dataset.label || "Copy prompt"; btn.classList.remove("done"); }, 2000);
+      };
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(prompt.textContent.trim()).then(done, done);
+      } else done();
+    });
+  });
+})();
+</script>
+</body>
+</html>

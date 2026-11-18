@@ -90,6 +90,9 @@ a { color:inherit; text-decoration:none; }
 .reel { margin:0 0 22px; }
 .reel video { width:100%; display:block; border-radius:12px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
 .reel figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-top:10px; }
+.reelLink { display:flex; flex-direction:column; gap:10px; background:#1a1a1a; color:#f3f3f1; border-radius:12px; padding:22px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reelLinkHook { font-family:var(--serif); font-size:24px; line-height:1.2; }
+.reelLinkOpen { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--learn); }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
@@ -225,7 +228,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 </div>
 </main>
 <aside class="aside">
-<figure class="reel"><video src="/reels/kalyani-lyric-preview.mp4" poster="/reels/kalyani-lyric.webp" muted loop autoplay playsinline></video><figcaption>Kalyani — Lyric video · 5,000 views</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#first-the-correction"><i>01</i><b>First, the correction</b></a></li><li><a href="#the-tools"><i>02</i><b>The tools</b></a></li><li><a href="#the-exact-steps"><i>03</i><b>The exact steps</b></a></li><li><a href="#settings"><i>04</i><b>Settings</b></a></li><li><a href="#what-you-need-before-starting"><i>05</i><b>What you need before starting</b></a></li><li><a href="#the-copy-paste-prompt"><i>06</i><b>The copy-paste prompt</b></a></li><li><a href="#the-result"><i>07</i><b>The result</b></a></li></ol></nav>
+<figure class="reel"><video src="/reels/kalyani-lyric-preview.mp4" poster="/reels/kalyani-lyric.webp" muted loop autoplay playsinline controls preload="metadata"></video><figcaption>Kalyani — Lyric video · 5,000 views</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#first-the-correction"><i>01</i><b>First, the correction</b></a></li><li><a href="#the-tools"><i>02</i><b>The tools</b></a></li><li><a href="#the-exact-steps"><i>03</i><b>The exact steps</b></a></li><li><a href="#settings"><i>04</i><b>Settings</b></a></li><li><a href="#what-you-need-before-starting"><i>05</i><b>What you need before starting</b></a></li><li><a href="#the-copy-paste-prompt"><i>06</i><b>The copy-paste prompt</b></a></li><li><a href="#the-result"><i>07</i><b>The result</b></a></li></ol></nav>
 </aside>
 </div>
 <aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li><li><a href="/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/"><span>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</span></a></li><li><a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/"><span>The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero</span></a></li></ul></aside>
@@ -264,6 +267,21 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
       });
     }, { rootMargin: "-20% 0px -70% 0px" });
     heads.forEach(function (h) { io.observe(h); });
+  }
+  // Reel video: play when first scrolled into view (autoplay can be
+  // blocked in some browsers), then leave it to the user (native controls).
+  var reelVideo = document.querySelector(".reel video");
+  if (reelVideo && "IntersectionObserver" in window) {
+    var reelPlayed = false;
+    var ro = new IntersectionObserver(function (entries) {
+      if (!reelPlayed && entries[0].isIntersecting) {
+        reelPlayed = true;
+        var p = reelVideo.play();
+        if (p) p.catch(function () {});
+        ro.disconnect();
+      }
+    }, { threshold: 0.25 });
+    ro.observe(reelVideo);
   }
   // COPY buttons in prompt boxes.
   document.querySelectorAll("[data-copy]").forEach(function (btn) {

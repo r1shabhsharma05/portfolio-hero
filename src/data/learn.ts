@@ -1,6 +1,7 @@
-/** Learn page data — 38 posts (roadmaps, prompts, career, case studies,
- *  about; Build posts removed 18 Nov 2026 on Rishabh's order, plus the two
- *  single-developer profile listicles the same day), with Rishabh's name
+/** Learn page data — 39 posts (roadmaps, prompts, career, case studies,
+ *  about, business ideas; Build posts removed 18 Nov 2026 on Rishabh's
+ *  order, plus the two single-developer profile listicles the same day),
+ *  with Rishabh's name
  *  substituted wherever the reference's appeared (one title). Rows open
  *  Rishabh's own article pages at /learn/<slug>/, same tab. */
 
@@ -9,7 +10,8 @@ export type LearnPostType =
   | "Prompt"
   | "Career"
   | "Case study"
-  | "About";
+  | "About"
+  | "Business idea series";
 
 export interface LearnPost {
   /** As shown on the list, e.g. "15 Nov". */
@@ -22,6 +24,8 @@ export interface LearnPost {
 }
 
 export const LEARN_POSTS: LearnPost[] = [
+  // Rishabh's own post (18 Nov 2026): the round-up micro-savings business idea.
+  { date: "18 Nov", type: "Business idea series", title: "Someone Please Build This in India: The Round-Up Micro-Savings App", url: "/learn/round-up-micro-savings-app-india/", hasReel: true },
   // Rishabh's own post (18 Nov 2026): the Kalyani lyric video pipeline.
   { date: "18 Nov", type: "Prompt", title: "How I Made a Trending Song's Lyric Video with AI", url: "/learn/how-i-made-a-trending-song-lyric-video-with-ai/", hasReel: true },
   { date: "15 Nov", type: "Roadmap", title: "265 Topics to Master AI Engineering (and the 6-Week Order I'd Learn Them In)", url: "/learn/265-topics-to-master-ai-engineering/", hasReel: false },
