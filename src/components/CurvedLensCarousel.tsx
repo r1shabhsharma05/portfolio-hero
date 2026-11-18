@@ -1,10 +1,10 @@
 // Restored from Rishabh's pasted 3d-curved-carousel prompt, verbatim except:
 // - "use client" dropped (Vite, no RSC); demo.tsx NOT included (Unsplash slides).
 // - Tap opens the reel (onSlideClick), big title hideable (showCopy).
-// - Self-rotation: an extremely slow drift, 0.5 deg/s on the target (the
-//   reference wall does not visibly autoplay — ~1 card per 5 minutes idle),
-//   plus wheel-to-rotate, 0.12 deg per wheel unit clamped
-//   to +/-240 (live-site value). Nothing else about the animation changed.
+// - Self-rotation: a steady drift, 20 deg/s on the target (the wall
+//   visibly auto-rotates, ~1 card per second), plus wheel-to-rotate,
+//   0.12 deg per wheel unit clamped to +/-240 (live-site value).
+//   Nothing else about the animation changed.
 // - Live video (video prop): the card texture is fed from the clip each frame.
 
 import * as React from "react"
@@ -472,9 +472,9 @@ export default function CurvedLensCarousel({
         intro = Math.min(1.5, (now - introStart) / 1100)
         if (intro >= 1.5) intro = 1
       }
-      // Barely-there drift: the target advances 0.5 deg/s (scaled by intro
+      // Steady drift: the target advances 20 deg/s (scaled by intro
       // progress), the spring eases pos after it. No timer, no steps.
-      if (!dragging && !reduced.matches) target += (0.5 / (360 / n)) * Math.min(1, Math.max(0, intro)) * dt
+      if (!dragging && !reduced.matches) target += (20 / (360 / n)) * Math.min(1, Math.max(0, intro)) * dt
       if (!dragging) {
         if (reduced.matches) {
           pos = target
