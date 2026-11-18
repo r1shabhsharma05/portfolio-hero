@@ -354,7 +354,7 @@ function AgentView({
                       </div>
                       <button
                         type="button"
-                        className="home-agent-copy"
+                        className="home-agent-copybtn"
                         aria-label="Copy prompt"
                         onClick={() => copyPrompt(`persona-${p.id}`, p.prompt)}
                       >
