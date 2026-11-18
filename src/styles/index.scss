@@ -97,8 +97,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .mode-switch button[aria-pressed="true"]:hover { color: var(--world-on, var(--color-paper)); }
 
 /* ---------- hero stage ---------- */
-/* Home scrolls like the reference: the page scrolls under the hero and the
- * reel wall turns with the scroll (see CurvedLensCarousel). */
+/* Home hero is a single viewport, like the reference: the page never scrolls
+ * under it — the wheel turns the reel wall instead (see CurvedLensCarousel).
+ * The :has() rule pins the page only while the hero stage exists (human
+ * view); the agent view has no stage, so it scrolls normally. */
+:is(html:has([data-stage]), body:has([data-stage])) { overflow: hidden; }
 .stage {
   --stage-top: 4px;
   height: calc(100svh - 68px);

@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import CursorLabel from "../components/CursorLabel";
 import {
+  openWorldTransition,
+  preloadWorldScene,
   revealWorldTransition,
   shouldShowWorldTransition,
   WORLD_SCENES,
@@ -170,6 +172,12 @@ export default function Learn() {
                   style={{ "--world": w.color, "--world-text": w.text } as React.CSSProperties}
                   href={w.href}
                   {...(w.id === "learn" ? { "aria-current": "page" } : {})}
+                  onMouseEnter={() => preloadWorldScene(WORLD_SCENES[w.id].scene)}
+                  onClick={(e) => {
+                    if (w.id === "learn") return;
+                    e.preventDefault();
+                    openWorldTransition(w.href, w.id);
+                  }}
                 >
                   {w.label}
                 </a>

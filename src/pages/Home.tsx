@@ -20,6 +20,7 @@ import {
   openWorldTransition,
   preloadWorldScene,
   WORLD_SCENES,
+  type WorldId,
 } from "../components/WorldTransition";
 
 /** Counts a stat up from 0 once `start` flips true — the live stats roll
@@ -498,26 +499,6 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
   };
   const sentenceRef = useRef<HTMLParagraphElement | null>(null);
   const frameRef = useRef<HTMLDivElement | null>(null);
-  const skyRef = useRef<HTMLDivElement | null>(null);
-  // Sky parallax: the sky drifts slower than the wall as the page scrolls
-  // (the reference's slow hero parallax), clamped to the sky layer's
-  // overscan so no edge ever shows.
-  useEffect(() => {
-    if (view !== "human") return;
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const y = Math.min(window.scrollY, 112) * 0.25;
-        if (skyRef.current) skyRef.current.style.transform = `translateY(${y}px)`;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, [view]);
   // Sentence hover focuses one world (live site's data-focus): the wall
   // dims only the other worlds' cards; "talk to my AI" focuses nothing.
   // Hovering a header world link focuses that world too.
@@ -671,7 +652,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
         {/* hero — one viewport: sky wall + sentence strip, like the live site */}
         <section className="stage" data-stage data-focus={focusWorld ?? undefined} aria-label="Intro">
           <div className="world-frame" ref={frameRef}>
-            <div className="sky-layer" ref={skyRef}>
+            <div className="sky-layer">
               <img src="/sky.jpg" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
             </div>
             <div className="cloud-layer" aria-hidden="true" />
@@ -735,6 +716,8 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
                 className="world-card"
                 href={w.link}
                 style={{ "--world": w.id === "build" ? "var(--world-build)" : w.id === "brand" ? "var(--world-brand)" : "var(--world-learn)" } as React.CSSProperties}
+                onMouseEnter={() => preloadWorldScene(WORLD_SCENES[w.id as WorldId].scene)}
+                onClick={(e) => { e.preventDefault(); openWorldTransition(w.link, w.id as WorldId); }}
               >
                 <h3>{w.title}</h3>
                 <p>{w.body}</p>

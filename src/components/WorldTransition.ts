@@ -1,4 +1,4 @@
-// World page transition — Avi's mechanism, adapted for our two-entry app
+// World page transition — the reference's mechanism, adapted for our two-entry app
 // (no client-side router, so the cover runs on the homepage and the reveal
 // runs on /projects, keyed off document.referrer like the old intro).
 //
@@ -6,7 +6,7 @@
 // navigate -> on /projects the scene morphs into the hero sky panel and
 // fades out while the hero content fades in. Direct loads show no transition.
 
-/** Per-world transition scene + name (Avi's mechanism: the destination's
+/** Per-world transition scene + name (the reference's mechanism: the destination's
  *  hero image wipes in with the world name). */
 export const WORLD_SCENES = {
   build: { scene: "/build-sky.webp", name: "Build" },
@@ -28,20 +28,28 @@ function prefersReducedMotion(): boolean {
   );
 }
 
-/** Preload the scene image so the cover is instant (Avi preloads on hover). */
+/** Preload the scene image so the cover is instant (the reference preloads on hover). */
 export function preloadWorldScene(scene: string = WORLD_SCENE): void {
   new Image().src = scene;
 }
 
-/** True when arriving on /projects from the homepage (the transition trigger). */
+/** True when arriving on a world page from a different page on this site
+ *  (the transition trigger). Any cross-page navigation shows the reveal —
+ *  Home -> Build, Build -> Brand, Learn -> Build, and so on. A direct load
+ *  (no referrer) or a refresh (same page as referrer) shows no transition. */
 export function shouldShowWorldTransition(): boolean {
   if (typeof window === "undefined" || prefersReducedMotion()) return false;
   try {
     const r = new URL(document.referrer);
-    return (
-      r.origin === window.location.origin &&
-      (r.pathname === "/" || r.pathname === "/index.html")
-    );
+    if (r.origin !== window.location.origin) return false;
+    // Same page in a different spelling (/projects/ vs /projects/index.html)
+    // is still the same page — a refresh, not a navigation.
+    const norm = (p: string) => {
+      let s = p.replace(/\/index\.html$/, "");
+      if (s.length > 1) s = s.replace(/\/$/, "");
+      return s || "/";
+    };
+    return norm(r.pathname) !== norm(window.location.pathname);
   } catch {
     return false;
   }
@@ -86,7 +94,7 @@ export function openWorldTransition(href: string = WORLD_HREF, world: WorldId = 
   c.appendChild(h);
   d.appendChild(c);
   d.appendChild(u);
-  // Brand's and Learn's covers (Avi's): red/yellow leaves drift down.
+  // Brand's and Learn's covers (the reference's): red/yellow leaves drift down.
   if (world === "brand" || world === "learn") {
     [8, 22, 38, 55, 70, 84].forEach((left, i) => {
       const leaf = document.createElement("i");

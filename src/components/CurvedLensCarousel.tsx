@@ -557,21 +557,18 @@ export default function CurvedLensCarousel({
     }
     const onMotion = () => kick()
 
-    // Scroll rotates the wall (the reference's scroll-linked carousel):
-    // the page scrolls and the wall turns with it — scroll-down moves the
-    // cards left, scroll-up moves them right, at the same 0.12 deg per px
-    // the wheel rate was. No wheel capture: the page must scroll under
-    // the hero for this to work.
-    let lastScrollY = window.scrollY
-    const onScroll = () => {
-      const y = window.scrollY
-      const d = y - lastScrollY
-      lastScrollY = y
-      if (d === 0 || dragging || !visible || intro < 1) return
-      target += (0.12 * d) / (360 / n)
+    // Wheel rotates the wall (the reference's captured scroll): the page
+    // never scrolls under the hero — the wheel turns the carousel instead,
+    // scroll-down moves the cards left, scroll-up moves them right, at
+    // 0.12 deg per wheel unit, fully reversible. Non-passive so the page
+    // stays pinned (the hero is a single viewport, like the reference).
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      if (dragging || !visible || intro < 1) return
+      target += (0.12 * e.deltaY) / (360 / n)
       kick()
     }
-    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("wheel", onWheel, { passive: false })
 
     canvas.addEventListener("pointerdown", onDown)
     canvas.addEventListener("pointermove", onMove)
@@ -614,7 +611,7 @@ export default function CurvedLensCarousel({
       canvas.removeEventListener("pointerup", onUp)
       canvas.removeEventListener("pointercancel", onUp)
       root.removeEventListener("keydown", onKey)
-      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("wheel", onWheel)
       reduced.removeEventListener("change", onMotion)
       for (const t of tex) gl.deleteTexture(t.t)
       gl.deleteBuffer(buf)

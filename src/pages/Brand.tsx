@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import ChatModal from "../components/ChatModal";
 import CursorLabel from "../components/CursorLabel";
 import {
+  openWorldTransition,
+  preloadWorldScene,
   revealWorldTransition,
   shouldShowWorldTransition,
   WORLD_SCENES,
@@ -462,6 +464,12 @@ export default function Brand() {
                   style={{ "--world": w.color, "--world-text": w.text } as React.CSSProperties}
                   href={w.href}
                   {...(w.id === "brand" ? { "aria-current": "page" } : {})}
+                  onMouseEnter={() => preloadWorldScene(WORLD_SCENES[w.id].scene)}
+                  onClick={(e) => {
+                    if (w.id === "brand") return;
+                    e.preventDefault();
+                    openWorldTransition(w.href, w.id);
+                  }}
                 >
                   {w.label}
                 </a>

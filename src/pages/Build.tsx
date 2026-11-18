@@ -4,10 +4,13 @@ import CursorLabel from "../components/CursorLabel";
 import ReelCard from "../components/ReelCard";
 import SkillSphere from "../components/SkillSphere";
 import {
+  openWorldTransition,
+  preloadWorldScene,
   revealWorldTransition,
   shouldShowWorldTransition,
   WORLD_NAME,
   WORLD_SCENE,
+  WORLD_SCENES,
 } from "../components/WorldTransition";
 import { NAV_WORLDS, PROFILE, PROJECTS, REELS, STATS } from "../data/site";
 
@@ -535,6 +538,12 @@ export default function Build() {
                   }
                   href={w.href}
                   {...(w.id === "build" ? { "aria-current": "page" } : {})}
+                  onMouseEnter={() => preloadWorldScene(WORLD_SCENES[w.id].scene)}
+                  onClick={(e) => {
+                    if (w.id === "build") return;
+                    e.preventDefault();
+                    openWorldTransition(w.href, w.id);
+                  }}
                 >
                   {w.label}
                 </a>
