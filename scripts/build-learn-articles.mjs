@@ -1,22 +1,24 @@
-// Generate the 39 Learn article pages from Avi's post markdown, in Avi's
-// rendered article design (post-module CSS, tokens + rules copied from his
-// live site 18 Nov 2026: paper #f3f3f1, ink #111, learn yellow #ffc81a,
-// tech blue #2f55ff, Instrument Serif + Geist stacks, 1240px grid with a
-// 340px sticky aside, yellow-sweep TOC / Keep Reading, scroll-progress bar).
-// Source: ~/workspace/tmp-work/avi-posts/*.md (fetched 17 Nov 2026 from
-// avivashishta.com/blog/<slug>.md) + avi-posts.json (dates, labels, reels).
+// Generate the Learn article pages from the source post markdown, in the
+// reference rendered article design (post-module CSS, tokens + rules copied
+// from the reference live site 18 Nov 2026: paper #f3f3f1, ink #111, learn
+// yellow #ffc81a, tech blue #2f55ff, Instrument Serif + Geist stacks,
+// 1240px grid with a 340px sticky aside, yellow-sweep TOC / Keep Reading,
+// scroll-progress bar).
+// Source: ~/workspace/tmp-work/avi-posts/*.md (fetched 17 Nov 2026) +
+// avi-posts.json (dates, labels).
 // Output: public/learn/<slug>/index.html, one static page per post.
-// Name swap (per Rishabh's order): Avi Vashishta -> Rishabh Sharma,
-// standalone Avi -> Rishabh, @avi_vashishta29 (his IG) -> @cod.ehx,
-// applied to prose only (fenced code untouched).
-// Links: /blog/<slug> -> /learn/<slug>/, /lab/* demos + /fitness stay on
-// avivashishta.com (absolute, open in a new tab). Reel videos/posters for
-// the 10 posts with a reel were mirrored into public/reels/ 18 Nov 2026.
-// The live-output window is a link card, NOT a live iframe: Avi's /lab
-// pages send X-Frame-Options: SAMEORIGIN + frame-ancestors 'self', so no
-// other origin can frame them.
+// Name swap (per Rishabh's order): the source author's name -> Rishabh
+// Sharma, standalone first name -> Rishabh, the source author's IG handle
+// -> @cod.ehx, applied to prose only (fenced code untouched).
+// Links: /blog/<slug> -> /learn/<slug>/; the source site's /lab/* demos +
+// /fitness pages are dropped (their links become plain text, 18 Nov 2026).
+// No reels are shown on article pages (removed 18 Nov 2026, Rishabh's
+// order); the mirrored reel media in public/reels/ was deleted with them.
+// The live-output window is a link card, NOT a live iframe: the source
+// /lab pages send X-Frame-Options: SAMEORIGIN + frame-ancestors 'self', so
+// no other origin can frame them — and /lab outputs are not emitted at all.
 // The who-is slug is renamed: who-is-avi-vashishta -> who-is-rishabh-sharma
-// (no Avi name in folder names, per the no-name rule).
+// (no source-author name in folder names, per the no-name rule).
 // Rendered with `marked` from node_modules (transitive dep, not in package.json).
 // Run: node scripts/build-learn-articles.mjs
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "node:fs";
@@ -27,13 +29,16 @@ import { marked } from "marked";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SRC = "/home/hatch/workspace/tmp-work/avi-posts";
 const META = JSON.parse(readFileSync("/home/hatch/workspace/tmp-work/avi-posts.json", "utf8"));
-// Build posts were removed from Learn on 18 Nov 2026 (Rishabh's order):
-// they are not generated, not linked, and not listed in the sitemap.
-const POSTS = META.data.filter((p) => p.type !== "build");
-const REMOVED = new Set(META.data.filter((p) => p.type === "build").map((p) => p.slug));
+// Build posts + the two single-developer profile listicles were removed
+// from Learn on 18 Nov 2026 (Rishabh's order): they are not generated, not
+// linked, and not listed in the sitemap.
+const REMOVED = new Set([
+  ...META.data.filter((p) => p.type === "build").map((p) => p.slug),
+  "best-nextjs-developers-india-2026",
+  "top-fullstack-developers-india-2026",
+]);
+const POSTS = META.data.filter((p) => !REMOVED.has(p.slug));
 const SITE = "https://portfolio-hero-psi-lemon.vercel.app";
-const AVI = "https://www.avivashishta.com";
-const FILE_EXT = /\.(webp|png|jpg|jpeg|gif|svg|mp4|webm|avif)$/i;
 const SLUG_RENAME = { "who-is-avi-vashishta": "who-is-rishabh-sharma" };
 const GRAIN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
 
@@ -62,25 +67,37 @@ function swapNames(t) {
     .replace(/Avi Vashishta/g, "Rishabh Sharma")
     .replace(/Avi's/g, "Rishabh's")
     .replace(/\bAvi\b/g, "Rishabh")
-    .replace(/avi_vashishta29/g, "cod.ehx");
+    .replace(/AVI VASHISHTA/g, "RISHABH SHARMA")
+    .replace(/\bAVI\b/g, "RISHABH")
+    .replace(/AVIVASHISHTA29/g, "r1shabhsharma05")
+    .replace(/avi_vashishta29/g, "cod.ehx")
+    // The 3D-ASCII wordmark spells the author's name; the new name is one
+    // character longer, so the article's character count follows it.
+    .replace(/thirteen characters/g, "fourteen characters");
 }
 
 function rewriteLinks(t) {
   return t
+    // The source site's /lab/* + /fitness + /avi-vashishta links become
+    // plain text (markdown + raw HTML, relative or absolute) — nothing on
+    // the live site may link to the source site (Rishabh's order, 18 Nov).
+    .replace(/\[([^\]]+)\]\((?:https?:\/\/[^/]+)?\/?(?:lab|fitness|avi-vashishta)[^)\s]*\)/g, "$1")
+    .replace(/<a[^>]*href="(?:https?:\/\/[^/]+)?\/?(?:lab|fitness|avi-vashishta)[^"]*"[^>]*>([\s\S]*?)<\/a>/g, "$1")
     .replace(/https:\/\/www\.avivashishta\.com\/blog\/([a-z0-9-]+)\.md/g, "/learn/$1/")
     .replace(/https:\/\/www\.avivashishta\.com\/blog\/([a-z0-9-]+)/g, "/learn/$1/")
     .replace(/https:\/\/www\.avivashishta\.com\/blog/g, "/learn/")
     .replace(/https:\/\/www\.avivashishta\.com\/brands/g, "/brands/")
     .replace(/https:\/\/www\.avivashishta\.com\/projects/g, "/projects/")
     .replace(/https:\/\/www\.avivashishta\.com/g, SITE)
+    .replace(/https:\/\/avivashishta\.com/g, SITE)
+    .replace(/linkedin\.com\/in\/avivashishta/g, "linkedin.com/in/rishabh-sharma-342575438")
     // relative /blog/ links (markdown + raw html)
     .replace(/(\]\(|href=")\/blog\/([a-z0-9-]+)/g, "$1/learn/$2/")
     .replace(/(\]\(|href=")\/blog\/?(?=[")\s])/g, "$1/learn/")
-    // /lab/* + /fitness + /avi-vashishta are Avi's live demos/pages: absolutize
-    .replace(/(\]\(|href=")\/((?:lab|fitness|avi-vashishta)[^")\s]*)/g, (m, pre, p) =>
-      FILE_EXT.test(p) ? m : `${pre}${AVI}/${p}`
-    )
-    .replace(/\/learn\/who-is-avi-vashishta\//g, "/learn/who-is-rishabh-sharma/");
+    .replace(/\/learn\/who-is-avi-vashishta\//g, "/learn/who-is-rishabh-sharma/")
+    // Any remaining mention of the source domain as link text (e.g. a
+    // homepage link whose href was already re-pointed) shows his domain.
+    .replace(/avivashishta\.com/g, "portfolio-hero-psi-lemon.vercel.app");
 }
 
 function dedentHtmlLines(t) {
@@ -149,8 +166,9 @@ function readMins(html) {
 }
 
 // Keep Reading = the 3 newest posts of the same type, excluding this one
-// (verified against Avi's live pages: 265 -> 502/550/518, who-is -> the
-// other 3 About posts). Fill with newest of any type when a type is short.
+// (verified against the reference live pages: 265 -> 502/550/518, who-is ->
+// the other profile post + newest). Fill with newest of any type when a
+// type is short.
 function keepReading(post) {
   const byDate = (a, b) => b.date.localeCompare(a.date) || apiIndex.get(a.slug) - apiIndex.get(b.slug);
   const picks = POSTS.filter((p) => p.slug !== post.slug && p.label === post.label).sort(byDate).slice(0, 3);
@@ -164,16 +182,12 @@ function keepReading(post) {
 function outputHtml(fm) {
   if (!fm.output) return "";
   const out = fm.output;
-  const href = out === "/" ? `${SITE}/` : `${AVI}${out}`;
-  const display = out === "/" ? "portfolio-hero-psi-lemon.vercel.app" : `avivashishta.com${out}`;
+  // Only same-site outputs are emitted; the source site's /lab demos are
+  // not linked (Rishabh's order, 18 Nov 2026).
+  if (out !== "/") return "";
+  const href = `${SITE}/`;
+  const display = "portfolio-hero-psi-lemon.vercel.app";
   return `<figure class="output"><figcaption><span>The output, live</span><span class="outputUrl">${esc(display)}</span></figcaption><a class="outputWindow" href="${esc(href)}" target="_blank" rel="noreferrer"><span class="outputCardUrl">${esc(display)}</span><span class="outputOpen">Open the live page ↗</span></a></figure>`;
-}
-
-function reelHtml(post) {
-  const reel = post.reel;
-  if (!reel) return "";
-  // Reel videos/posters are mirrored from avivashishta.com/reels/.
-  return `<figure class="reel"><figcaption>You came from this Reel</figcaption><video src="/reels/${reel.id}-preview.mp4" poster="/reels/${reel.id}.webp" muted loop playsinline preload="none" aria-label="Reel"></video><div class="reelFoot" style="justify-content:flex-end"><a href="${esc(reel.url)}" target="_blank" rel="noopener noreferrer">Watch on Instagram ↗</a></div></figure>`;
 }
 
 function tocHtml(toc) {
@@ -183,7 +197,7 @@ function tocHtml(toc) {
   return `<nav class="toc" aria-label="On this page"><span>On this page</span><ol>${items}</ol></nav>`;
 }
 
-function pageHtml({ title, description, label, date, mins, bodyHtml, slug, toc, keep, output, reel }) {
+function pageHtml({ title, description, label, date, mins, bodyHtml, slug, toc, keep, output }) {
   const canon = `${SITE}/learn/${slug}/`;
   const keepItems = keep.map((p) => {
     const t = listTitles.get(SLUG_RENAME[p.slug] ?? p.slug) ?? swapNames(p.title);
@@ -205,7 +219,7 @@ function pageHtml({ title, description, label, date, mins, bodyHtml, slug, toc, 
 :root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:${GRAIN}; }
 * { box-sizing:border-box; }
 body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
-/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+/* Paper grain, kept faint (low opacity). */
 body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
 a { color:inherit; text-decoration:none; }
 #progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
@@ -279,13 +293,6 @@ a { color:inherit; text-decoration:none; }
 .post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
 .post img, .post video { max-width:100%; height:auto; border-radius:12px; }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
-.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
-.reel figcaption { color:var(--ink); }
-.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
-.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
-.reelFoot span { color:var(--ink); }
-.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
-.reelFoot a:hover { transform:translateY(-1px); }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
 .toc ol { list-style:none; margin:0; padding:0; }
@@ -309,8 +316,6 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   .site-head { padding-left:12px; padding-right:12px; gap:16px; }
   .wrap { grid-template-columns:1fr; }
   .aside { order:-1; max-height:none; position:static; }
-  .reel { flex-flow:wrap; align-items:center; }
-  .reel video { width:120px; }
   .toc { display:none; }
   .toc b, .keep li a span { transition:none; }
   .outputOpen { transition:none; }
@@ -336,7 +341,6 @@ ${bodyHtml}
 </div>
 </main>
 <aside class="aside">
-${reel}
 ${toc}
 </aside>
 </div>
@@ -394,17 +398,6 @@ ${toc}
       } else done();
     });
   });
-  // Reel videos play when in view, pause when scrolled away.
-  var reels = document.querySelectorAll(".reel video");
-  if ("IntersectionObserver" in window && reels.length) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.play().catch(function () {});
-        else e.target.pause();
-      });
-    }, { threshold: 0.3 });
-    reels.forEach(function (v) { rio.observe(v); });
-  }
 })();
 </script>
 </body>
@@ -426,7 +419,7 @@ for (const post of POSTS) {
   if (fm.title && listTitles.get(outSlug) && fm.title !== listTitles.get(outSlug)) {
     mismatchedTitles.push(slug);
   }
-  const description = swapNames(fm.description ?? post.description ?? "");
+  const description = rewriteLinks(swapNames(fm.description ?? post.description ?? ""));
   let md = transformBody(body);
   md = md.replace(/^\s*# .+\n/, ""); // page H1 already covers a leading H1
   let html = marked.parse(md);
@@ -460,13 +453,12 @@ for (const post of POSTS) {
       toc: tocHtml(toc),
       keep: keepReading(post),
       output: outputHtml(fm),
-      reel: reelHtml(post),
     })
   );
   written++;
 }
 
-// Sitemap: replace any existing /learn/<slug>/ entries, then add the 39.
+// Sitemap: replace any existing /learn/<slug>/ entries, then add the current posts.
 const sitemapPath = join(ROOT, "public/sitemap.xml");
 let sitemap = readFileSync(sitemapPath, "utf8");
 sitemap = sitemap.replace(/  <url>\n    <loc>[^<]*\/learn\/[^<]+\/<\/loc>\n    <lastmod>[^<]*<\/lastmod>\n    <changefreq>[^<]*<\/changefreq>\n    <priority>[^<]*<\/priority>\n  <\/url>\n/g, "");

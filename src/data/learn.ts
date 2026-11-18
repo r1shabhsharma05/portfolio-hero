@@ -1,7 +1,8 @@
-/** Learn page data — 39 posts (roadmaps, prompts, career, case studies,
- *  about; Build posts removed 18 Nov 2026 on Rishabh's order), with
- *  Rishabh's name substituted wherever Avi's appeared (one title). Rows
- *  open Rishabh's own article pages at /learn/<slug>/, same tab. */
+/** Learn page data — 37 posts (roadmaps, prompts, career, case studies,
+ *  about; Build posts removed 18 Nov 2026 on Rishabh's order, plus the two
+ *  single-developer profile listicles the same day), with Rishabh's name
+ *  substituted wherever the reference's appeared (one title). Rows open
+ *  Rishabh's own article pages at /learn/<slug>/, same tab. */
 
 export type LearnPostType =
   | "Roadmap"
@@ -15,7 +16,7 @@ export interface LearnPost {
   date: string;
   type: LearnPostType;
   title: string;
-  /** Original article URL (Avi's blog). */
+  /** Original article URL (the reference blog). */
   url: string;
   hasReel: boolean;
 }
@@ -30,7 +31,7 @@ LEARN_POSTS.push(
   { date: "18 Oct", type: "Prompt", title: "The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero", url: "/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/", hasReel: false },
   { date: "5 Oct", type: "Roadmap", title: "502 Python Interview Questions to Crack Placements in 2027", url: "/learn/502-python-interview-questions/", hasReel: false },
   { date: "5 Oct", type: "Roadmap", title: "550 Frontend Interview Questions (HTML, CSS and JavaScript) for 2027", url: "/learn/550-frontend-interview-questions-html-css-javascript/", hasReel: false },
-  { date: "2 Oct", type: "Roadmap", title: "518 JavaScript Interview Questions to Crack Placements in 2027", url: "/learn/518-javascript-interview-questions/", hasReel: true },
+  { date: "2 Oct", type: "Roadmap", title: "518 JavaScript Interview Questions to Crack Placements in 2027", url: "/learn/518-javascript-interview-questions/", hasReel: false },
   { date: "1 Oct", type: "Roadmap", title: "446 React Interview Questions to Crack Frontend Placements", url: "/learn/446-react-interview-questions/", hasReel: false },
   { date: "29 Sep", type: "Roadmap", title: "1,401 Free CS Courses from MIT, Stanford and IITs to Learn by 2027", url: "/learn/1401-free-cs-courses-mit-stanford-iit/", hasReel: false },
   { date: "29 Sep", type: "Roadmap", title: "760 Companies That Hire Without LeetCode in 2027", url: "/learn/760-companies-that-hire-without-leetcode/", hasReel: false },
@@ -42,28 +43,26 @@ LEARN_POSTS.push(
   { date: "24 Sep", type: "Career", title: "career-ops: The Open-Source Repo That Runs Your Job Search", url: "/learn/career-ops-open-source-ai-job-search/", hasReel: false },
   { date: "24 Sep", type: "Career", title: "YC Summer 2027 Internships: Where to Apply (and What to Do From India)", url: "/learn/yc-summer-2027-internships-where-to-apply/", hasReel: false },
   { date: "23 Sep", type: "Career", title: "What 2027 Interviews Will Actually Ask You", url: "/learn/what-2027-interviews-will-actually-ask/", hasReel: false },
-  { date: "17 Sep", type: "Prompt", title: "The Prompt I Used to Build a pear.no-Style Scroll-Scrubbed Cinematic Site on Replit (WebP Frames, No Code)", url: "/learn/prompt-scroll-scrubbed-cinematic-site-webgl-replit/", hasReel: true },
-  { date: "10 Sep", type: "Prompt", title: "The Prompt I Used to Build a Premium Property Site on Replit (Scroll as the Medium)", url: "/learn/prompt-premium-property-site-scroll-choreography-replit/", hasReel: true },
+  { date: "17 Sep", type: "Prompt", title: "The Prompt I Used to Build a pear.no-Style Scroll-Scrubbed Cinematic Site on Replit (WebP Frames, No Code)", url: "/learn/prompt-scroll-scrubbed-cinematic-site-webgl-replit/", hasReel: false },
+  { date: "10 Sep", type: "Prompt", title: "The Prompt I Used to Build a Premium Property Site on Replit (Scroll as the Medium)", url: "/learn/prompt-premium-property-site-scroll-choreography-replit/", hasReel: false },
 );
 LEARN_POSTS.push(
-  { date: "4 Sep", type: "Roadmap", title: "I Built a 3D Car Dealership Without Opening Blender", url: "/learn/3d-car-dealership-tripo-ai-threejs/", hasReel: true },
-  { date: "29 Aug", type: "Prompt", title: "The Prompt I Used to Build a Fake Old Computer on Replit (Beige Plastic, a CRT Screen, and Buttons That Do Something)", url: "/learn/prompt-fake-old-hardware-crt-device-replit/", hasReel: true },
+  { date: "4 Sep", type: "Roadmap", title: "I Built a 3D Car Dealership Without Opening Blender", url: "/learn/3d-car-dealership-tripo-ai-threejs/", hasReel: false },
+  { date: "29 Aug", type: "Prompt", title: "The Prompt I Used to Build a Fake Old Computer on Replit (Beige Plastic, a CRT Screen, and Buttons That Do Something)", url: "/learn/prompt-fake-old-hardware-crt-device-replit/", hasReel: false },
   { date: "27 Aug", type: "About", title: "Top 5 Design Trends To Make Your Website 10x (Product and E-commerce, 2026)", url: "/learn/top-5-design-trends-website-10x-2026/", hasReel: false },
-  { date: "19 Aug", type: "Prompt", title: "The Prompt I Used to Build the Luma Floor Lamp Hero on Replit (A Brass Switch That Lights the Whole Room)", url: "/learn/prompt-luma-floor-lamp-lit-hero-replit/", hasReel: true },
-  { date: "18 Aug", type: "Prompt", title: "The Prompt I Used to Build Lumina, an Interactive Light Gallery on Replit (Pull-Chain Physics, Drag-and-Drop Rooms, and a Full Light Console)", url: "/learn/prompt-lumina-interactive-light-gallery-replit/", hasReel: true },
+  { date: "19 Aug", type: "Prompt", title: "The Prompt I Used to Build the Luma Floor Lamp Hero on Replit (A Brass Switch That Lights the Whole Room)", url: "/learn/prompt-luma-floor-lamp-lit-hero-replit/", hasReel: false },
+  { date: "18 Aug", type: "Prompt", title: "The Prompt I Used to Build Lumina, an Interactive Light Gallery on Replit (Pull-Chain Physics, Drag-and-Drop Rooms, and a Full Light Console)", url: "/learn/prompt-lumina-interactive-light-gallery-replit/", hasReel: false },
   { date: "12 Aug", type: "Prompt", title: "The Prompt I Used to Build Hook Lab in Emergent (20 Scored Instagram Hooks, Biased Toward What Already Works)", url: "/learn/prompt-hook-lab-instagram-hook-generator-emergent/", hasReel: false },
-  { date: "10 Aug", type: "Prompt", title: "The Prompt I Used to Build a Punch-Through Ice Wall in Three.js (Voronoi Shatter + Refracted Hero Reveal)", url: "/learn/prompt-threejs-ice-wall-punch-shatter-hero-reveal/", hasReel: true },
+  { date: "10 Aug", type: "Prompt", title: "The Prompt I Used to Build a Punch-Through Ice Wall in Three.js (Voronoi Shatter + Refracted Hero Reveal)", url: "/learn/prompt-threejs-ice-wall-punch-shatter-hero-reveal/", hasReel: false },
   { date: "5 Aug", type: "Prompt", title: "The Prompt I Used to Build a Kinetic Wind Wall in Three.js (2,000 Metal Blades, All Moved in the Vertex Shader)", url: "/learn/prompt-kinetic-wind-wall-threejs-vertex-shader/", hasReel: false },
   { date: "4 Aug", type: "Prompt", title: "The Prompt I Used to Build a Hover-Reveal Spaceship Scanner, with Higgsfield-Generated Hull Layers", url: "/learn/prompt-hover-reveal-spaceship-scanner-higgsfield/", hasReel: false },
   { date: "1 Aug", type: "Roadmap", title: "25 Projects To Build To Get Hired in 2026", url: "/learn/25-projects-to-build-to-get-hired-2026/", hasReel: false },
   { date: "30 Jul", type: "Prompt", title: "The Prompt I Used to Build Pin Board, a Single-File Sticky-Notes App (No Backend, No Build Step)", url: "/learn/prompt-pin-board-sticky-notes-single-file/", hasReel: false },
-  { date: "29 Jul", type: "Prompt", title: "The Prompt I Used to Build a Fluid Ink-Reveal Homepage, with a Higgsfield-Generated Wordmark Video", url: "/learn/prompt-fluid-ink-reveal-wordmark-higgsfield/", hasReel: true },
+  { date: "29 Jul", type: "Prompt", title: "The Prompt I Used to Build a Fluid Ink-Reveal Homepage, with a Higgsfield-Generated Wordmark Video", url: "/learn/prompt-fluid-ink-reveal-wordmark-higgsfield/", hasReel: false },
   { date: "27 Jul", type: "Roadmap", title: "How I Rendered a Rotating 3D ASCII Wordmark That Animates on GitHub (No JavaScript)", url: "/learn/3d-ascii-wordmark-svg-github-readme/", hasReel: false },
-  { date: "27 Jul", type: "Prompt", title: "The Prompt I Used to Build a Frosted-Glass Refraction Cube in Raw WebGL (One HTML File)", url: "/learn/prompt-frosted-glass-refraction-cube-webgl/", hasReel: true },
+  { date: "27 Jul", type: "Prompt", title: "The Prompt I Used to Build a Frosted-Glass Refraction Cube in Raw WebGL (One HTML File)", url: "/learn/prompt-frosted-glass-refraction-cube-webgl/", hasReel: false },
   { date: "13 Jul", type: "Case study", title: "Plate OS: Case Study", url: "/learn/plate-os-case-study/", hasReel: false },
-  { date: "1 Mar", type: "About", title: "Best Next.js Developers in India in 2026", url: "/learn/best-nextjs-developers-india-2026/", hasReel: false },
-  { date: "1 Mar", type: "About", title: "Top Fullstack Developers to Watch in India in 2026", url: "/learn/top-fullstack-developers-india-2026/", hasReel: false },
-  // Name substituted per Rishabh's order; the article itself is Avi's.
+  // Name substituted per Rishabh's order; the article body is the reference's.
   { date: "1 Mar", type: "About", title: "Who is Rishabh Sharma?", url: "/learn/who-is-rishabh-sharma/", hasReel: false },
 );
 
