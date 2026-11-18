@@ -43,6 +43,65 @@ function CountUp({ value, start }: { value: string; start: boolean }) {
   return <>{n.toLocaleString("en-US")}</>;
 }
 
+/** Falling petals over the hero panels (home + agent), like the reference:
+ *  ~18 small leaf/diamond shapes drifting down very slowly with a sideways
+ *  sway and a gentle tumble. Deterministic (seeded PRNG, module-level) so
+ *  the field never reshuffles on re-render. pointer-events: none; hidden
+ *  under prefers-reduced-motion (see the .petals CSS). */
+function mulberry32(seed: number) {
+  return () => {
+    seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const PETAL_COLORS = ["#ffc81a", "#ffd84d", "#ef3b2d", "#ff6b4a", "#fff8e7", "#f5ead6"];
+const PETALS = (() => {
+  const rand = mulberry32(20261118);
+  return Array.from({ length: 18 }, (_, i) => ({
+    left: 2 + rand() * 94,
+    w: 10 + rand() * 14,
+    h: 6 + rand() * 8,
+    duration: 40 + rand() * 50,
+    delay: -(rand() * 85),
+    sway: rand() * 56 - 28,
+    color: PETAL_COLORS[i % PETAL_COLORS.length],
+    opacity: 0.7 + rand() * 0.25,
+  }));
+})();
+function Petals() {
+  return (
+    <div className="petals" aria-hidden="true">
+      {PETALS.map((p, i) => (
+        <span
+          key={i}
+          className="petal"
+          style={{
+            left: `${p.left}%`,
+            width: `${p.w}px`,
+            height: `${p.h}px`,
+            background: p.color,
+            animationDuration: `${p.duration}s`,
+            animationDelay: `${p.delay}s`,
+            "--sway": `${p.sway}px`,
+            "--petal-opacity": p.opacity,
+          } as React.CSSProperties}
+        />
+      ))}
+    </div>
+  );
+}
+
+/** Check mark, shown by the copy button after a successful copy. */
+function CheckIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3 8.5l3.2 3L13 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 /** The single shared scene: one lens, mounted once, positioned over the
  *  hero frame. During loading the cards sit in formation (small and
  *  tilted, like the reference's formation wall); at 100% the paper
@@ -96,6 +155,7 @@ function HeroScene({ focus, frameRef }: { focus: string | null; frameRef: React.
         focus={focus}
         onSlideClick={onSlideClick}
       />
+      <Petals />
     </div>
   );
 }
@@ -305,18 +365,32 @@ function AgentView({
   copied,
   copyPrompt,
 }: {
-  openPersona: string;
-  setOpenPersona: (id: string) => void;
+  openPersona: string | null;
+  setOpenPersona: (id: string | null) => void;
   ai: AiChoice;
   setAi: (a: AiChoice) => void;
   copied: string | null;
   copyPrompt: (id: string, text: string) => void;
 }) {
+  // When a row opens, gently scroll it into view so the panel is visible.
+  // Skipped on first render (Founder is open by default on entering the view).
+  const firstOpenRef = useRef(true);
+  useEffect(() => {
+    if (firstOpenRef.current) {
+      firstOpenRef.current = false;
+      return;
+    }
+    if (!openPersona) return;
+    document
+      .querySelector(`[data-persona="${openPersona}"]`)
+      ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [openPersona]);
   return (
     <>
       <section className="home-agent-hero" aria-label="For AI agents">
         <div className="home-agent-sky" aria-hidden="true">
-          <img src="/sky.jpg" alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+          <img src="/sky-agent.jpg" alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+          <Petals />
         </div>
         <div className="home-agent-copy">
           <p className="home-agent-eyebrow">AGENT SIDE</p>
@@ -335,12 +409,20 @@ function AgentView({
           {HOME_PERSONAS.map((p) => {
             const open = p.id === openPersona;
             return (
-              <div key={p.id} className={open ? "home-agent-persona is-open" : "home-agent-persona"}>
+              <div
+                key={p.id}
+                data-persona={p.id}
+                className={open ? "home-agent-persona is-open" : "home-agent-persona"}
+                style={{
+                  "--persona-accent": p.accent,
+                  "--persona-on-accent": p.accent.toLowerCase() === "#111111" ? "#fff" : "#111",
+                } as React.CSSProperties}
+              >
                 <button
                   type="button"
                   className="home-agent-persona-head"
                   aria-expanded={open}
-                  onClick={() => setOpenPersona(open ? "" : p.id)}
+                  onClick={() => setOpenPersona(open ? null : p.id)}
                 >
                   <span className="home-agent-persona-num">{p.num}</span>
                   <span className="home-agent-persona-name">{p.name}</span>
@@ -381,7 +463,7 @@ function AgentView({
                           aria-label="Copy prompt"
                           onClick={() => copyPrompt(`persona-${p.id}`, p.prompt)}
                         >
-                          {copied === `persona-${p.id}` ? "Copied ✓" : (<><CopyIcon />Copy prompt</>)}
+                          {copied === `persona-${p.id}` ? <CheckIcon /> : <CopyIcon />}
                         </button>
                         <a
                           className="home-agent-ask"
@@ -389,7 +471,16 @@ function AgentView({
                           target="_blank"
                           rel="noreferrer"
                         >
-                          Ask {AI_LABELS[ai]} ↗
+                          Ask {AI_LABELS[ai]}
+                        </a>
+                        <a
+                          className="home-agent-askarrow"
+                          href={`${AI_URLS[ai]}${encodeURIComponent(p.prompt)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Ask ${AI_LABELS[ai]} in a new tab`}
+                        >
+                          ↑
                         </a>
                       </div>
                       <p className="home-agent-step">2 · YOUR AI READS</p>
@@ -408,7 +499,7 @@ function AgentView({
                         <div className="home-agent-curl">
                           <code>{p.curl}</code>
                           <button type="button" aria-label="Copy curl" onClick={() => copyPrompt(`curl-${p.id}`, p.curl!)}>
-                            {copied === `curl-${p.id}` ? "✓" : <CopyIcon />}
+                            {copied === `curl-${p.id}` ? <span className="home-agent-copied-square" aria-label="Copied" /> : <CopyIcon />}
                           </button>
                         </div>
                       )}
@@ -471,7 +562,7 @@ function AgentView({
                 <div key={c} className="home-agent-curl">
                   <code>{c}</code>
                   <button type="button" aria-label="Copy" onClick={() => copyPrompt(`start-${c.slice(7, 22)}`, c)}>
-                    {copied === `start-${c.slice(7, 22)}` ? "✓" : <CopyIcon />}
+                    {copied === `start-${c.slice(7, 22)}` ? <span className="home-agent-copied-square" aria-label="Copied" /> : <CopyIcon />}
                   </button>
                 </div>
               ))}
@@ -528,7 +619,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
   const [hovered, setHovered] = useState<string | null>(null);
   const [navWorld, setNavWorld] = useState<string | null>(null);
   const [view, setView] = useState<"human" | "agent">("human");
-  const [openPersona, setOpenPersona] = useState("founder");
+  const [openPersona, setOpenPersona] = useState<string | null>("founder");
   const [ai, setAi] = useState<AiChoice>("claude");
   const [copied, setCopied] = useState<string | null>(null);
   const copyPrompt = async (id: string, text: string) => {
