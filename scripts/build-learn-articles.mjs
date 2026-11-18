@@ -14,6 +14,8 @@
 // /fitness pages are dropped (their links become plain text, 18 Nov 2026).
 // No reels are shown on article pages (removed 18 Nov 2026, Rishabh's
 // order); the mirrored reel media in public/reels/ was deleted with them.
+// Exception: Rishabh's OWN reel is shown on his own new post (frontmatter
+// `reel: kalyani-lyric`), using his reel media in public/reels/.
 // The live-output window is a link card, NOT a live iframe: the source
 // /lab pages send X-Frame-Options: SAMEORIGIN + frame-ancestors 'self', so
 // no other origin can frame them — and /lab outputs are not emitted at all.
@@ -190,6 +192,17 @@ function outputHtml(fm) {
   return `<figure class="output"><figcaption><span>The output, live</span><span class="outputUrl">${esc(display)}</span></figcaption><a class="outputWindow" href="${esc(href)}" target="_blank" rel="noreferrer"><span class="outputCardUrl">${esc(display)}</span><span class="outputOpen">Open the live page ↗</span></a></figure>`;
 }
 
+// Rishabh's own reel on his own post only (frontmatter `reel:`). Other
+// posts show no reel.
+const REELS = {
+  "kalyani-lyric": { video: "/reels/kalyani-lyric-preview.mp4", poster: "/reels/kalyani-lyric.webp", caption: "Kalyani — Lyric video · 5,000 views" },
+};
+function reelHtml(fm) {
+  const r = fm.reel && REELS[fm.reel];
+  if (!r) return "";
+  return `<figure class="reel"><video src="${r.video}" poster="${r.poster}" muted loop autoplay playsinline></video><figcaption>${esc(r.caption)}</figcaption></figure>`;
+}
+
 function tocHtml(toc) {
   if (!toc.length) return "";
   const items = toc.map((h, i) =>
@@ -197,7 +210,7 @@ function tocHtml(toc) {
   return `<nav class="toc" aria-label="On this page"><span>On this page</span><ol>${items}</ol></nav>`;
 }
 
-function pageHtml({ title, description, label, date, mins, bodyHtml, slug, toc, keep, output }) {
+function pageHtml({ title, description, label, date, mins, bodyHtml, slug, toc, keep, output, reel }) {
   const canon = `${SITE}/learn/${slug}/`;
   const keepItems = keep.map((p) => {
     const t = listTitles.get(SLUG_RENAME[p.slug] ?? p.slug) ?? swapNames(p.title);
@@ -292,6 +305,9 @@ a { color:inherit; text-decoration:none; }
 .post th { text-align:left; background:#f0f0f0; color:#444; font-weight:600; padding:10px 14px; }
 .post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
 .post img, .post video { max-width:100%; height:auto; border-radius:12px; }
+.reel { margin:0 0 22px; }
+.reel video { width:100%; display:block; border-radius:12px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reel figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-top:10px; }
 .aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
 .toc { flex-direction:column; gap:6px; display:flex; }
 .toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
@@ -341,7 +357,7 @@ ${bodyHtml}
 </div>
 </main>
 <aside class="aside">
-${toc}
+${reel}${toc}
 </aside>
 </div>
 <aside class="keep"><h2>Keep reading</h2><ul>${keepItems}</ul></aside>
@@ -453,6 +469,7 @@ for (const post of POSTS) {
       toc: tocHtml(toc),
       keep: keepReading(post),
       output: outputHtml(fm),
+      reel: reelHtml(fm),
     })
   );
   written++;

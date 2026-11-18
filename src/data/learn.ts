@@ -1,4 +1,4 @@
-/** Learn page data — 37 posts (roadmaps, prompts, career, case studies,
+/** Learn page data — 38 posts (roadmaps, prompts, career, case studies,
  *  about; Build posts removed 18 Nov 2026 on Rishabh's order, plus the two
  *  single-developer profile listicles the same day), with Rishabh's name
  *  substituted wherever the reference's appeared (one title). Rows open
@@ -22,6 +22,8 @@ export interface LearnPost {
 }
 
 export const LEARN_POSTS: LearnPost[] = [
+  // Rishabh's own post (18 Nov 2026): the Kalyani lyric video pipeline.
+  { date: "18 Nov", type: "Prompt", title: "How I Made a Trending Song's Lyric Video with AI", url: "/learn/how-i-made-a-trending-song-lyric-video-with-ai/", hasReel: true },
   { date: "15 Nov", type: "Roadmap", title: "265 Topics to Master AI Engineering (and the 6-Week Order I'd Learn Them In)", url: "/learn/265-topics-to-master-ai-engineering/", hasReel: false },
   { date: "6 Nov", type: "Case study", title: "How a Gaming Chip Built a $5 Trillion Empire: The True Story of Nvidia and CUDA", url: "/learn/how-nvidia-built-a-5-trillion-dollar-empire/", hasReel: false },
 ];

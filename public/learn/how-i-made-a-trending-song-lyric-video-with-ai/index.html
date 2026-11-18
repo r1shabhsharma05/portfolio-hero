@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How I Made a Trending Song's Lyric Video with AI | Rishabh Sharma</title>
+<meta name="description" content="Kalyani is a released song by ARJN × KDS × Fifty4 × Ronn ft. Shreya Ghoshal. I didn't make the song — I made its lyric video with AI tools and code. Here's the " />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/how-i-made-a-trending-song-lyric-video-with-ai/" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+* { box-sizing:border-box; }
+body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
+/* Paper grain, kept faint (low opacity). */
+body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
+a { color:inherit; text-decoration:none; }
+#progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
+.site-head { max-width:1240px; margin:0 auto; padding:20px clamp(16px,4vw,48px); display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+.logo { font-family:var(--serif); font-size:22px; }
+.worlds { display:flex; gap:10px; align-items:baseline; font-family:var(--serif); font-size:18px; }
+.worlds .sep { color:var(--ink-soft); }
+.worlds a[aria-current="page"] { border-bottom:3px solid var(--learn); padding-bottom:2px; }
+.view-toggle { display:flex; gap:14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+.view-toggle .on { border-bottom:2px solid var(--learn); padding-bottom:2px; }
+.view-toggle a { color:var(--ink-soft); }
+.wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:clamp(32px,5vw,80px); max-width:1240px; margin:0 auto; padding:36px clamp(16px,4vw,48px) 0; }
+.meta { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin:0 0 14px; }
+.meta a { color:var(--ink); }
+.meta a:hover { text-underline-offset:3px; text-decoration:underline; }
+.title { font-family:var(--serif); letter-spacing:-.03em; margin:14px 0 0; font-size:clamp(40px,5vw,72px); font-weight:400; line-height:1; text-wrap:balance; }
+.lede { max-width:720px; color:var(--ink-soft); margin:20px 0 0; font-size:19px; line-height:1.6; }
+.output { max-width:760px; margin:32px 0 0; }
+.output figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink); display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; font-size:11px; }
+.outputUrl { color:var(--ink-soft); text-transform:none; letter-spacing:.02em; }
+.outputWindow { aspect-ratio:1440/900; background:var(--paper-deep) var(--grain); box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.outputCardUrl { font-family:var(--mono); font-size:13px; letter-spacing:.02em; color:var(--ink-soft); }
+.outputOpen { background:var(--ink); color:var(--paper); border-radius:8px; padding:9px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); position:absolute; bottom:12px; right:12px; }
+.outputWindow:hover .outputOpen { transform:translateY(-2px); }
+.post { max-width:760px; margin-top:36px; color:var(--ink); font-family:var(--sans); line-height:1.7; }
+.post a { color:var(--tech); }
+.post h1 { font-size:1.6rem; margin-bottom:.5rem; line-height:1.25; }
+.post h2 { font-family:var(--serif); letter-spacing:-.02em; font-size:clamp(28px,2.6vw,38px); font-weight:400; line-height:1.1; margin-top:2.5rem; padding-bottom:8px; scroll-margin-top:24px; background:linear-gradient(var(--learn),var(--learn)) 0 100%/0 4px no-repeat; transition:background-size .7s cubic-bezier(.22,1,.36,1); }
+.post h2[data-current] { background-size:64px 4px; }
+.post h3 { font-family:var(--serif); letter-spacing:-.01em; font-size:24px; font-weight:400; margin-top:1.75rem; margin-bottom:.25rem; }
+.post p { margin:1rem 0; }
+.post ul, .post ol { margin:1rem 0; padding-left:1.4rem; }
+.post li { margin:.5rem 0; }
+.post code { background:#11111114; background:color-mix(in srgb, var(--ink) 8%, transparent); border-radius:4px; padding:1px 5px; font-family:var(--mono); font-size:.9em; }
+.post pre { color:#e0e0e0; background:#1a1a1a; border-radius:8px; padding:20px; font-size:.88rem; line-height:1.6; overflow-x:auto; }
+.post pre code { color:inherit; background:transparent; padding:0; }
+.post .prompt, .post .code { color:#e6e6e6; white-space:pre-wrap; background:#1a1a1a; border-radius:10px; margin:1.5rem 0; padding:20px 22px; font-family:var(--mono); font-size:.78rem; line-height:1.6; overflow-x:auto; }
+.post .promptbox { margin:1.5rem 0; position:relative; }
+.post .promptbox .prompt { margin:0; padding-top:52px; }
+.post .copybtn { z-index:2; position:absolute; top:10px; right:10px; letter-spacing:.08em; text-transform:uppercase; color:#e6e6e6; cursor:pointer; background:#2b2b2b; border:1px solid #3d3d3d; border-radius:6px; min-height:34px; padding:9px 14px; font:600 .72rem/1 var(--mono); }
+.post .copybtn:hover { background:#3a3a3a; }
+.post .copybtn.done { color:#7ee39a; border-color:#2f6b41; }
+.post .highlight, .post blockquote { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post blockquote { color:#333; padding:4px 20px; font-style:italic; }
+.post .tldr { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post .card { background:#f8f8f8; border-left:4px solid #000; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card { background:#f8f8f8; border-left:4px solid #06c; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card h3 { margin:0 0 8px; font-size:1.3rem; }
+.post .stat { color:#06c; font-weight:700; }
+.post .stars { letter-spacing:.06em; color:#444; vertical-align:middle; background:#f2f2f2; border:1px solid #e2e2e2; border-radius:6px; margin-left:6px; padding:5px 9px; font:600 .72rem/1 var(--mono); }
+.post .tag { color:#1a56db; background:#e8f0fe; border-radius:12px; margin:2px; padding:2px 10px; font-size:.8rem; display:inline-block; }
+.post .tier-note { color:#666; margin-top:-.25rem; font-style:italic; }
+.post .signal, .post .check { color:#0a7d33; font-weight:600; }
+.post .signal { margin:.5rem 0 0; }
+.post .check { margin:.75rem 0 0; }
+.post .qnum { color:#06c; font-variant-numeric:tabular-nums; }
+.post .q { border-left:3px solid #e8e8e8; margin:1.6rem 0; padding-left:14px; }
+.post .q p { margin:.4rem 0; }
+.post .q .ask { font-size:1.02rem; font-weight:600; }
+.post .q .prep { color:#444; font-size:.95rem; }
+.post .q .prep strong { color:#1a1a1a; }
+.post .week { margin:1.1rem 0; }
+.post .src { font-size:.9rem; }
+.post .repo-link { word-break:break-all; font-family:var(--mono); font-size:.85rem; }
+.post .tech-stack { flex-wrap:wrap; gap:8px; margin:1rem 0; display:flex; }
+.post .tech-stack span { background:#f0f0f0; border-radius:20px; padding:4px 12px; font-size:.85rem; font-weight:500; }
+.post .sw { vertical-align:-1px; border-radius:2px; width:10px; height:10px; margin-right:8px; display:inline-block; }
+.post .tablewrap { margin:1.5rem 0; overflow-x:auto; }
+.post table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.9rem; }
+.post th { text-align:left; background:#f0f0f0; color:#444; font-weight:600; padding:10px 14px; }
+.post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
+.post img, .post video { max-width:100%; height:auto; border-radius:12px; }
+.reel { margin:0 0 22px; }
+.reel video { width:100%; display:block; border-radius:12px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reel figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-top:10px; }
+.aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
+.toc { flex-direction:column; gap:6px; display:flex; }
+.toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
+.toc ol { list-style:none; margin:0; padding:0; }
+.toc a { border-top:1px solid var(--line); grid-template-columns:30px 1fr; align-items:baseline; padding:10px 0; display:grid; }
+.toc i { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-style:normal; }
+.toc b { font-family:var(--serif); background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; justify-self:start; margin:0 -.12em; padding:0 .12em; font-size:20px; font-weight:400; line-height:1.2; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.toc a:hover b, .toc a[aria-current] b { background-size:100% 100%; }
+.keep { max-width:1240px; margin:72px auto 0; padding:28px clamp(16px,4vw,48px) 0; }
+.keep h2 { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-weight:400; margin:0; }
+.keep ul { margin-top:10px; list-style:none; padding:0; }
+.keep li a { border-top:1px solid var(--line); font-family:var(--serif); padding:14px 0; font-size:26px; line-height:1.2; display:block; }
+.keep li a span { background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; margin:0 -.12em; padding:0 .12em; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.keep li a:hover span { background-size:100% 100%; }
+footer { max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,48px); border-top:1px solid var(--line); display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px; }
+footer .f-col { display:flex; flex-direction:column; gap:6px; }
+footer strong { font-family:var(--serif); font-size:20px; font-weight:400; }
+footer .f-label { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-bottom:4px; }
+footer span, footer a { font-size:14px; }
+footer a:hover { text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:860px) {
+  .site-head { padding-left:12px; padding-right:12px; gap:16px; }
+  .wrap { grid-template-columns:1fr; }
+  .aside { order:-1; max-height:none; position:static; }
+  .toc { display:none; }
+  .toc b, .keep li a span { transition:none; }
+  .outputOpen { transition:none; }
+  footer { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<header class="site-head">
+<a class="logo" href="/">Rishabh.</a>
+<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
+</header>
+<div class="wrap">
+<main>
+<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 18 NOVEMBER 2026 &middot; 5 min</p>
+<h1 class="title">How I Made a Trending Song's Lyric Video with AI</h1>
+<p class="lede">Kalyani is a released song by ARJN × KDS × Fifty4 × Ronn ft. Shreya Ghoshal. I didn't make the song — I made its lyric video with AI tools and code. Here's the exact pipeline, step by step.</p>
+
+<div class="post">
+<p>First, the correction — because this post would be wrong without it.</p>
+<h2 id="first-the-correction">First, the correction</h2>
+<p>I did not make the song. <strong>Kalyani</strong> is an already-released song by <strong>ARJN × KDS × Fifty4 × Ronn ft. Shreya Ghoshal</strong>. What I made is the song&#39;s <strong>lyric video / visualizer</strong> — with AI tools and code.</p>
+<p>So there is no &quot;prompt that made the song&quot;. There is no single magic prompt for the video either — it was a proper code pipeline, and this post is that pipeline, exactly as it happened. The video on this page is the result: the Kalyani lyric video, 54.68 seconds, 1920×1080 at 60fps.</p>
+<h2 id="the-tools">The tools</h2>
+<p>Every tool is free and open-source, and everything ran locally.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it did</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Demucs (htdemucs model)</td>
+<td>Separated the vocals from the song (vocal stem + no-vocals stem), so the timing analysis ran on clean vocals</td>
+</tr>
+<tr>
+<td>faster-whisper (large-v3 model)</td>
+<td>Transcribed the vocals and gave every word an exact start and end time (word-level timestamps). WhisperX was tried first — its install failed, so faster-whisper was the fallback</td>
+</tr>
+<tr>
+<td>librosa</td>
+<td>Detected the song&#39;s tempo, beat grid and kick-drum hits</td>
+</tr>
+<tr>
+<td>HyperFrames (HTML/CSS/GSAP + headless Chrome)</td>
+<td>Built the whole video as a web composition and rendered it frame by frame into an MP4</td>
+</tr>
+<tr>
+<td>Python + Pillow</td>
+<td>Converted both photos into particle data</td>
+</tr>
+<tr>
+<td>FFmpeg / ffprobe</td>
+<td>Verified the final video (duration, resolution, sync checks)</td>
+</tr>
+<tr>
+<td>Editor (AI agent)</td>
+<td>Ran the whole pipeline, fixed the errors, verified every stage</td>
+</tr>
+</tbody></table></div>
+<h2 id="the-exact-steps">The exact steps</h2>
+<ol>
+<li><strong>Inputs collected.</strong> The song MP3 (a 54.67 sec clip), the lyrics — 18 lines / 88 words, drafted by reading the reference video&#39;s frames and confirmed by bubu — 2 photos (one of the artists, one traditional portrait), and the Spotify logo.</li>
+<li><strong>Environment setup.</strong> A Python venv, then Demucs, librosa and faster-whisper installed. Two install failures had to be fixed first — a torch version pin and a PyAV pin (<code>av==12.3.0</code>).</li>
+<li><strong>Vocal separation.</strong> Demucs split the song and gave back <code>vocals.wav</code>.</li>
+<li><strong>Word alignment.</strong> faster-whisper large-v3 (CPU, int8) ran on the vocals and returned a timestamp for every word. The heard words were then fuzzy-matched against the real lyrics and corrected — so the video always shows the correct lyrics, while the timings come from the machine.</li>
+<li><strong>A bug caught and fixed.</strong> The first pass missed the sung (melodic) female section — only 48 words came back. A second pass on the full mix (92 words) plus segment-locked positional mapping produced the final timings, cross-checked between both methods at ~0.1 sec agreement before it passed.</li>
+<li><strong>Beats and kicks.</strong> librosa found tempo <strong>129.2 BPM</strong>, <strong>118 beats</strong>, <strong>77 kick hits</strong>.</li>
+<li><strong>Section map.</strong> The song was split into 4 looks — Lines 1–4: Spotify Card look · Lines 5–12: Particle Portrait (the photo morphs at line 9) · Lines 13–14: Card reprise · Lines 15–17: Gold Motion Graphics · Line 18: Rain Player ending.</li>
+<li><strong>Particle sampling.</strong> Both photos were grayscale-sampled into <strong>6,000 matched particles</strong>, so photo 1 can morph into photo 2.</li>
+<li><strong>Composition generated.</strong> A Python script (<code>gen.py</code>) built the full 1920×1080 HTML composition from the analysis data — <strong>159 animation tweens</strong>, and not one lyric timing typed by hand. Everything is data-driven.</li>
+<li><strong>Checks and snapshots.</strong> The HyperFrames checker found 2 errors (overlay visibility + content overlap) — both fixed. The snapshots found a whitespace bug (the flex layout was eating spaces) — also fixed.</li>
+<li><strong>Render.</strong> Frame by frame at 60fps — <strong>3,280 frames, 13 min 14 sec</strong>.</li>
+<li><strong>Verify.</strong> Frames were pulled out of the rendered file and word sync was checked at 4 timestamps — 2.5s, 21s, 36s, 51s — all pass.</li>
+<li><strong>Deliver.</strong> Final MP4 — 1920×1080, 60fps, 54.68 sec, audio = the original song MP3, untouched. Posting was not mine — the file was delivered to bubu.</li>
+</ol>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><strong>Language (alignment):</strong> Hindi (<code>--lang hi</code>) — the song is a Malayalam rap + Hindi singing mix, and the lyrics were given in Romanised text</li>
+<li><strong>Whisper model:</strong> large-v3, CPU, int8 compute</li>
+<li><strong>Tempo:</strong> 129.2 BPM — detected from the song, not a setting</li>
+<li><strong>Video:</strong> 1920×1080 (16:9), 60fps, H.264</li>
+<li><strong>Spotify card:</strong> 3D tilt <code>rotateX(5°) rotateY(−10°) rotateZ(−3°)</code>, red gradient <code>#f43a4d</code> → <code>#8f0a22</code></li>
+<li><strong>Gold lyrics:</strong> Playfair Display italic, gold gradient <code>#fae7a8</code> → <code>#b9891f</code>, ~120ms blur transition on word change</li>
+<li><strong>Particles:</strong> 6,000 · 7 glow sparks on every sung word · particle-scene lyrics in Anton, alternating red <code>#ff3830</code> / white</li>
+<li><strong>Audio:</strong> the original MP3 as-is, no change</li>
+</ul>
+<h2 id="what-you-need-before-starting">What you need before starting</h2>
+<ul>
+<li>The song&#39;s MP3 file</li>
+<li>A lyrics text file — one line per lyric line, in the right order</li>
+<li>1–2 photos (artist / portrait) for the particle portrait</li>
+<li>A Spotify logo PNG (transparent)</li>
+<li>No paid account for anything — all the tools are free / open-source and local (Python, Node.js and FFmpeg installed)</li>
+<li>An AI coding agent that can run the pipeline — or basic Python / HTML understanding of your own</li>
+</ul>
+<blockquote>
+<p>One note, and it matters: make the video for <strong>your own song, or one you have permission for</strong>. Making a video for someone else&#39;s released song and monetising it is a different matter — get the rights first.</p>
+</blockquote>
+<h2 id="the-copy-paste-prompt">The copy-paste prompt</h2>
+<p>This is the prompt to give an AI coding agent. It is real — it describes the pipeline above, and it works.</p>
+<div class="promptbox"><button class="copybtn" type="button" data-copy>Copy prompt</button><div class="prompt">Take this song MP3, its lyrics (.txt, one line per line) and 2 photos, and build a Spotify-style particle lyric video in 1920×1080 at 60fps. Steps: (1) Separate the vocals with Demucs. (2) Get word-level timestamps with faster-whisper large-v3 and correct the words against my provided lyrics — never show misheard words. (3) Detect tempo, beats and kick hits with librosa. (4) Map the song into 4 looks: a tilted glowing Spotify lyrics card with karaoke word highlighting and spark particles for the opening lines; a monochrome particle portrait made from photo 1 that morphs into photo 2, dancing on the kicks, for the verse; gold Playfair italic motion-graphic lyrics with fast blur word changes for the melodic hook; and a black-and-white rain-on-glass music player for the last line. (5) Build it as a HyperFrames composition driven entirely by the analysis data — no hand-typed timings. (6) Run the checker, snapshot every look, render at 60fps, then verify word sync from the rendered file at 4 timestamps before delivering.</div></div><h2 id="the-result">The result</h2>
+<p>A 54.68-second lyric video, 1920×1080 at 60fps, with the original audio untouched — every word on screen timed to ~0.1 seconds, the particle portrait morphing mid-song, and the gold motion graphics carrying the hook. The reel of it has 5,000 views on Instagram.</p>
+<p>And if you want the other version of this post — making a whole song with AI (lyrics + music + voice, like Suno) — that is a separate project. It gets its own post, built for real, when it is done.</p>
+
+</div>
+</main>
+<aside class="aside">
+<figure class="reel"><video src="/reels/kalyani-lyric-preview.mp4" poster="/reels/kalyani-lyric.webp" muted loop autoplay playsinline></video><figcaption>Kalyani — Lyric video · 5,000 views</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#first-the-correction"><i>01</i><b>First, the correction</b></a></li><li><a href="#the-tools"><i>02</i><b>The tools</b></a></li><li><a href="#the-exact-steps"><i>03</i><b>The exact steps</b></a></li><li><a href="#settings"><i>04</i><b>Settings</b></a></li><li><a href="#what-you-need-before-starting"><i>05</i><b>What you need before starting</b></a></li><li><a href="#the-copy-paste-prompt"><i>06</i><b>The copy-paste prompt</b></a></li><li><a href="#the-result"><i>07</i><b>The result</b></a></li></ol></nav>
+</aside>
+</div>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li><li><a href="/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/"><span>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</span></a></li><li><a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/"><span>The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero</span></a></li></ul></aside>
+<footer>
+<div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a><a href="/blog/feed.xml">RSS</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+</footer>
+<script>
+(function () {
+  var bar = document.getElementById("progress");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var f = max > 0 ? h.scrollTop / max : 0;
+    bar.style.width = Math.max(24, f * window.innerWidth) + "px";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  // Scroll-spy: TOC highlight + the H2's yellow underline.
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var heads = links.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && heads.length) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.removeAttribute("data-current");
+          current = e.target;
+          current.setAttribute("data-current", "");
+          links.forEach(function (a) {
+            if (a.getAttribute("href") === "#" + current.id) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+          });
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+  // COPY buttons in prompt boxes.
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = btn.closest(".promptbox");
+      var prompt = box && box.querySelector(".prompt");
+      if (!prompt) return;
+      var done = function () {
+        btn.textContent = "Copied ✓";
+        btn.classList.add("done");
+        setTimeout(function () { btn.textContent = btn.dataset.label || "Copy prompt"; btn.classList.remove("done"); }, 2000);
+      };
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(prompt.textContent.trim()).then(done, done);
+      } else done();
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -229,7 +229,7 @@ export default function Learn() {
               ))}
               <div className="learn-hero-copy">
                 <p className="learn-kicker">
-                  LEARN · 37 FREE ROADMAPS AND PROMPTS
+                  LEARN · 38 FREE ROADMAPS AND PROMPTS
                 </p>
                 <h1>Tell me where you&rsquo;re headed.</h1>
                 <p className="learn-sub">
@@ -323,7 +323,7 @@ export default function Learn() {
                   <input
                     type="search"
                     value={query}
-                    placeholder="Search 37 posts…"
+                    placeholder="Search 38 posts…"
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </label>
