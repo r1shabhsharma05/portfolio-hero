@@ -7,44 +7,141 @@
 <meta name="description" content="A copy-pasteable Replit Agent prompt for a luxury property site where scroll is the medium — a masked arch preloader, a sticky hero dive, a word-spacing spread," />
 <link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-premium-property-site-scroll-choreography-replit/" />
 <link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
-@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
-body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
-nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
-nav a { color:var(--muted); text-decoration:none; }
-nav a[aria-current="page"] { color:var(--fg); }
-.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
-.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
-h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
-.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
-.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
-h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
-h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
-a { color:inherit; }
-img, video { max-width:100%; height:auto; border-radius:12px; }
-pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
-code { font-size:.9em; }
-pre code { font-size:1em; }
-table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
-th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
-.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
-@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
-ul, ol { padding-left:1.25rem; }
-footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+:root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+* { box-sizing:border-box; }
+body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
+/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
+a { color:inherit; text-decoration:none; }
+#progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
+.site-head { max-width:1240px; margin:0 auto; padding:20px clamp(16px,4vw,48px); display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+.logo { font-family:var(--serif); font-size:22px; }
+.worlds { display:flex; gap:10px; align-items:baseline; font-family:var(--serif); font-size:18px; }
+.worlds .sep { color:var(--ink-soft); }
+.worlds a[aria-current="page"] { border-bottom:3px solid var(--learn); padding-bottom:2px; }
+.view-toggle { display:flex; gap:14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+.view-toggle .on { border-bottom:2px solid var(--learn); padding-bottom:2px; }
+.view-toggle a { color:var(--ink-soft); }
+.wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:clamp(32px,5vw,80px); max-width:1240px; margin:0 auto; padding:36px clamp(16px,4vw,48px) 0; }
+.meta { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin:0 0 14px; }
+.meta a { color:var(--ink); }
+.meta a:hover { text-underline-offset:3px; text-decoration:underline; }
+.title { font-family:var(--serif); letter-spacing:-.03em; margin:14px 0 0; font-size:clamp(40px,5vw,72px); font-weight:400; line-height:1; text-wrap:balance; }
+.lede { max-width:720px; color:var(--ink-soft); margin:20px 0 0; font-size:19px; line-height:1.6; }
+.output { max-width:760px; margin:32px 0 0; }
+.output figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink); display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; font-size:11px; }
+.outputUrl { color:var(--ink-soft); text-transform:none; letter-spacing:.02em; }
+.outputWindow { aspect-ratio:1440/900; background:var(--paper-deep) var(--grain); box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.outputCardUrl { font-family:var(--mono); font-size:13px; letter-spacing:.02em; color:var(--ink-soft); }
+.outputOpen { background:var(--ink); color:var(--paper); border-radius:8px; padding:9px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); position:absolute; bottom:12px; right:12px; }
+.outputWindow:hover .outputOpen { transform:translateY(-2px); }
+.post { max-width:760px; margin-top:36px; color:var(--ink); font-family:var(--sans); line-height:1.7; }
+.post a { color:var(--tech); }
+.post h1 { font-size:1.6rem; margin-bottom:.5rem; line-height:1.25; }
+.post h2 { font-family:var(--serif); letter-spacing:-.02em; font-size:clamp(28px,2.6vw,38px); font-weight:400; line-height:1.1; margin-top:2.5rem; padding-bottom:8px; scroll-margin-top:24px; background:linear-gradient(var(--learn),var(--learn)) 0 100%/0 4px no-repeat; transition:background-size .7s cubic-bezier(.22,1,.36,1); }
+.post h2[data-current] { background-size:64px 4px; }
+.post h3 { font-family:var(--serif); letter-spacing:-.01em; font-size:24px; font-weight:400; margin-top:1.75rem; margin-bottom:.25rem; }
+.post p { margin:1rem 0; }
+.post ul, .post ol { margin:1rem 0; padding-left:1.4rem; }
+.post li { margin:.5rem 0; }
+.post code { background:#11111114; background:color-mix(in srgb, var(--ink) 8%, transparent); border-radius:4px; padding:1px 5px; font-family:var(--mono); font-size:.9em; }
+.post pre { color:#e0e0e0; background:#1a1a1a; border-radius:8px; padding:20px; font-size:.88rem; line-height:1.6; overflow-x:auto; }
+.post pre code { color:inherit; background:transparent; padding:0; }
+.post .prompt, .post .code { color:#e6e6e6; white-space:pre-wrap; background:#1a1a1a; border-radius:10px; margin:1.5rem 0; padding:20px 22px; font-family:var(--mono); font-size:.78rem; line-height:1.6; overflow-x:auto; }
+.post .promptbox { margin:1.5rem 0; position:relative; }
+.post .promptbox .prompt { margin:0; padding-top:52px; }
+.post .copybtn { z-index:2; position:absolute; top:10px; right:10px; letter-spacing:.08em; text-transform:uppercase; color:#e6e6e6; cursor:pointer; background:#2b2b2b; border:1px solid #3d3d3d; border-radius:6px; min-height:34px; padding:9px 14px; font:600 .72rem/1 var(--mono); }
+.post .copybtn:hover { background:#3a3a3a; }
+.post .copybtn.done { color:#7ee39a; border-color:#2f6b41; }
+.post .highlight, .post blockquote { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post blockquote { color:#333; padding:4px 20px; font-style:italic; }
+.post .tldr { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post .card { background:#f8f8f8; border-left:4px solid #000; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card { background:#f8f8f8; border-left:4px solid #06c; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card h3 { margin:0 0 8px; font-size:1.3rem; }
+.post .stat { color:#06c; font-weight:700; }
+.post .stars { letter-spacing:.06em; color:#444; vertical-align:middle; background:#f2f2f2; border:1px solid #e2e2e2; border-radius:6px; margin-left:6px; padding:5px 9px; font:600 .72rem/1 var(--mono); }
+.post .tag { color:#1a56db; background:#e8f0fe; border-radius:12px; margin:2px; padding:2px 10px; font-size:.8rem; display:inline-block; }
+.post .tier-note { color:#666; margin-top:-.25rem; font-style:italic; }
+.post .signal, .post .check { color:#0a7d33; font-weight:600; }
+.post .signal { margin:.5rem 0 0; }
+.post .check { margin:.75rem 0 0; }
+.post .qnum { color:#06c; font-variant-numeric:tabular-nums; }
+.post .q { border-left:3px solid #e8e8e8; margin:1.6rem 0; padding-left:14px; }
+.post .q p { margin:.4rem 0; }
+.post .q .ask { font-size:1.02rem; font-weight:600; }
+.post .q .prep { color:#444; font-size:.95rem; }
+.post .q .prep strong { color:#1a1a1a; }
+.post .week { margin:1.1rem 0; }
+.post .src { font-size:.9rem; }
+.post .repo-link { word-break:break-all; font-family:var(--mono); font-size:.85rem; }
+.post .tech-stack { flex-wrap:wrap; gap:8px; margin:1rem 0; display:flex; }
+.post .tech-stack span { background:#f0f0f0; border-radius:20px; padding:4px 12px; font-size:.85rem; font-weight:500; }
+.post .sw { vertical-align:-1px; border-radius:2px; width:10px; height:10px; margin-right:8px; display:inline-block; }
+.post .tablewrap { margin:1.5rem 0; overflow-x:auto; }
+.post table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.9rem; }
+.post th { text-align:left; background:#f0f0f0; color:#444; font-weight:600; padding:10px 14px; }
+.post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
+.post img, .post video { max-width:100%; height:auto; border-radius:12px; }
+.aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
+.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
+.reel figcaption { color:var(--ink); }
+.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
+.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
+.reelFoot span { color:var(--ink); }
+.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
+.reelFoot a:hover { transform:translateY(-1px); }
+.toc { flex-direction:column; gap:6px; display:flex; }
+.toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
+.toc ol { list-style:none; margin:0; padding:0; }
+.toc a { border-top:1px solid var(--line); grid-template-columns:30px 1fr; align-items:baseline; padding:10px 0; display:grid; }
+.toc i { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-style:normal; }
+.toc b { font-family:var(--serif); background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; justify-self:start; margin:0 -.12em; padding:0 .12em; font-size:20px; font-weight:400; line-height:1.2; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.toc a:hover b, .toc a[aria-current] b { background-size:100% 100%; }
+.keep { max-width:1240px; margin:72px auto 0; padding:28px clamp(16px,4vw,48px) 0; }
+.keep h2 { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-weight:400; margin:0; }
+.keep ul { margin-top:10px; list-style:none; padding:0; }
+.keep li a { border-top:1px solid var(--line); font-family:var(--serif); padding:14px 0; font-size:26px; line-height:1.2; display:block; }
+.keep li a span { background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; margin:0 -.12em; padding:0 .12em; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.keep li a:hover span { background-size:100% 100%; }
+footer { max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,48px); border-top:1px solid var(--line); display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px; }
+footer .f-col { display:flex; flex-direction:column; gap:6px; }
+footer strong { font-family:var(--serif); font-size:20px; font-weight:400; }
+footer .f-label { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-bottom:4px; }
+footer span, footer a { font-size:14px; }
+footer a:hover { text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:860px) {
+  .site-head { padding-left:12px; padding-right:12px; gap:16px; }
+  .wrap { grid-template-columns:1fr; }
+  .aside { order:-1; max-height:none; position:static; }
+  .reel { flex-flow:wrap; align-items:center; }
+  .reel video { width:120px; }
+  .toc { display:none; }
+  .toc b, .keep li a span { transition:none; }
+  .outputOpen { transition:none; }
+  footer { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
+<div id="progress"></div>
+<header class="site-head">
+<a class="logo" href="/">Rishabh.</a>
+<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
+</header>
 <div class="wrap">
-<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
 <main>
-<a class="back" href="/learn/">&larr; All 91 posts</a>
-<p class="kicker">Learn &middot; Prompt</p>
-<h1>The Prompt I Used to Build a Premium Property Site on Replit (Scroll as the Medium)</h1>
+<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 10 SEPTEMBER 2026 &middot; 29 min</p>
+<h1 class="title">The Prompt I Used to Build a Premium Property Site on Replit (Scroll as the Medium)</h1>
 <p class="lede">A copy-pasteable Replit Agent prompt for a luxury property site where scroll is the medium — a masked arch preloader, a sticky hero dive, a word-spacing spread, a horizontal track sized from its own content, clip-path curtains, a page that clips into a card at the footer, and six reveal primitives that each have a mirrored exit.</p>
-<p class="meta">10 September 2026</p>
-<h2>Overview</h2>
+
+<div class="post">
+<h2 id="overview">Overview</h2>
 <p>
         A single luxury residential development, one page, and scroll doing all
         the work. A plum curtain opens through an arch-shaped hole that widens
@@ -63,8 +160,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 </p>
 <p>
         I wrote this after
-<a href="/learn/era-residence-scroll-choreography-design-language/"
-          >taking apart era-residence.com</a>
+taking apart era-residence.com
         section by section. That post is the teardown — what the site does and
         why it works. This one is the build: the whole thing turned into a
         single brief for <a href="https://replit.com/" target="_blank" rel="noreferrer">Replit Agent</a>, with
@@ -86,7 +182,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
           WebGL, no canvas — every effect is a transform, an opacity, a
           clip-path or a mask.
 </p>
-</div><h2>Supply the imagery first</h2>
+</div><h2 id="supply-the-imagery-first">Supply the imagery first</h2>
 <p>
         This is a site where the interface is deliberately three flat colours
         and all the richness comes from photography. That means the assets are
@@ -119,7 +215,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
           circular ring around a small glyph reads as motion. Design it for the
           animation, not the other way round.
 </li>
-</ul><h2>The prompt</h2>
+</ul><h2 id="the-prompt">The prompt</h2>
 <p>Paste the whole thing at once.</p><div class="promptbox">
 <button class="copybtn" type="button" data-copy>Copy prompt</button>
 <div class="prompt" id="property-prompt">Build **a marketing site for a single luxury residential development**. It should feel like a film reel, not a brochure — **scroll is the medium**. Every section has its own scroll behaviour, its own entrance and its own matching exit. Restraint over spectacle: the interface is plum, paper and sky, and the photography carries all the colour.<p><strong>Stack — use exactly this, no substitutions:</strong></p>
@@ -130,14 +226,14 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li>Must run with a clean console and no layout shift</li>
 </ul>
 <hr>
-<h2>Step 0 — Non-negotiables</h2>
+<h2 id="step-0-non-negotiables">Step 0 — Non-negotiables</h2>
 <ol>
 <li><strong>Desktop-first, never broken on mobile.</strong> Gate all heavy choreography behind a <code>992px</code> breakpoint using <code>gsap.matchMedia()</code>. Below it, sections still reveal — but no horizontal scroll, no snapping, no magnetic hover.</li>
 <li><strong>Respect <code>prefers-reduced-motion</code>.</strong> If reduced motion is on: do not initialise smooth scroll, do not scrub anything, and set every reveal to its final state immediately.</li>
 <li><strong>Real semantic HTML.</strong> Every control is a <code>&amp;lt;button&amp;gt;</code> or <code>&amp;lt;a&amp;gt;</code>, never a <code>&amp;lt;div&amp;gt;</code> with a click handler. Real <code>alt</code> on every content image. Exactly one <code>&amp;lt;h1&amp;gt;</code> per page.</li>
 <li><strong>Nothing parked invisible.</strong> Reveals start hidden only after JS confirms it is running. If JS fails, all content is visible.</li>
 </ol>
-<h2>Step 1 — Colour and type</h2>
+<h2 id="step-1-colour-and-type">Step 1 — Colour and type</h2>
 <p>Four brand colours plus one ink and one paper:</p>
 <ul>
 <li><code>--plum: #340C24</code> — preloader ground, footer ground, side rails. The &quot;closed curtain&quot; colour.</li>
@@ -154,7 +250,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li><strong>UI / body:</strong> Archivo. Micro-labels are UPPERCASE 700 at 11–13px with <code>letter-spacing: 0.05em</code>; running copy is 400 at 16–18px. This one label setting does most of the &quot;premium&quot; work.</li>
 </ul>
 <p><strong>Continuous theme swapping.</strong> Tag every section <code>data-bg=&quot;light&quot; | &quot;dark&quot; | &quot;color&quot;</code> and every piece of fixed UI (corner mark, nav labels, scroll counter) <code>data-theme</code>. One ScrollTrigger per section swaps the fixed elements between <code>theme_on-light</code> / <code>theme_on-dark</code> / <code>theme_on-color</code> so the corner mark stays legible over every ground without a visible flip.</p>
-<h2>Step 2 — Smooth scroll, wired exactly like this</h2>
+<h2 id="step-2-smooth-scroll-wired-exactly-like-this">Step 2 — Smooth scroll, wired exactly like this</h2>
 <pre><code class="language-js">lenis = new Lenis({
   wrapper: window, duration: 1.2, smoothWheel: true, touchMultiplier: 2,
   easing: (t) =&amp;gt; Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -165,7 +261,7 @@ gsap.ticker.lagSmoothing(0);                   // REQUIRED
 </code></pre>
 <p>Three details that are not optional: <code>lagSmoothing(0)</code>, or GSAP fast-forwards after a dropped frame and every scrub desyncs from scroll position; the <strong>exponential</strong> easing, because <code>power2</code> or linear feels like lag rather than weight; and <strong>do not enable smooth touch</strong> — leave native momentum scrolling on mobile.</p>
 <p>Skip smooth scroll entirely under reduced motion. Scroll lock (preloader, modals) must measure the scrollbar width into a custom property and pad the body, or the layout jumps when it engages.</p>
-<h2>Step 3 — Define the timing language once, then never write a raw ease again</h2>
+<h2 id="step-3-define-the-timing-language-once-then-never-write-a-raw-ease-again">Step 3 — Define the timing language once, then never write a raw ease again</h2>
 <pre><code class="language-js">export const BREAKPOINT = 992;
 export const durS = 0.4, durM = 0.8, durL = 1.2;
 export const stagger = 0.1, delayReveal = 0.3;
@@ -178,14 +274,14 @@ CustomEase.create(&quot;diveIn&quot;,    &quot;0.6,0,0,1&quot;);     // preloade
 CustomEase.create(&quot;horScroll&quot;, &quot;0.25,0,0.75,1&quot;); // horizontal section
 </code></pre>
 <p>Every animation on the site uses one of <code>durS/durM/durL</code> and one of those six eases. No ad-hoc numbers anywhere.</p>
-<h2>Step 4 — The core mechanic: tall wrapper + CSS sticky. Never <code>pin: true</code>.</h2>
+<h2 id="step-4-the-core-mechanic-tall-wrapper-css-sticky-never-pin-true">Step 4 — The core mechanic: tall wrapper + CSS sticky. Never <code>pin: true</code>.</h2>
 <p><strong>This is the most important instruction in this prompt.</strong> Every &quot;the screen holds still while things happen&quot; moment is built as an outer wrapper with an explicit height of 2–4 viewport heights, a child at <code>position: sticky; top: 0; height: 100vh</code>, and one ScrollTrigger on the wrapper reading <code>start: &quot;top top&quot;</code> → <code>end: &quot;bottom bottom&quot;</code> with <code>scrub</code>.</p>
 <pre><code class="language-css">.scroll-area         { position: relative; height: 340vh; }
 .scroll-area__screen { position: sticky; top: 0; height: 100vh; overflow: hidden; }
 </code></pre>
 <p><strong>Do not use ScrollTrigger&#39;s <code>pin: true</code>.</strong> It injects a pin-spacer and toggles <code>position: fixed</code>, which forces layout at each boundary and produces 1px jitter against Lenis. CSS sticky is compositor-only and never touches document flow.</p>
 <p>Put <code>translateZ: 10</code> on every scaled or parallaxed layer. It forces a compositor layer so Safari does not resample the image on each scale step.</p>
-<h2>Step 5 — Six sections, six different behaviours</h2>
+<h2 id="step-5-six-sections-six-different-behaviours">Step 5 — Six sections, six different behaviours</h2>
 <p>Do <strong>not</strong> build one reveal component and reuse it everywhere. That is exactly what makes a site feel templated.</p>
 <p><strong>5.1 Hero — &quot;the dive&quot;</strong> (<code>340vh</code> wrapper). Inside the sticky screen, content lifts faster than the background, then the background scales <code>1 → 2</code> with <code>transformOrigin: &quot;50% 75%&quot;</code> so it reads as a camera flying in rather than a flat zoom. Overlap the scale with the tail of the lift (<code>-=0.2</code>). <strong>Wait for the hero image to decode before building the timeline</strong> — <code>img.complete ? build() : img.addEventListener(&quot;load&quot;, build, { once: true })</code> — or the offsets are measured against a zero-height box.</p>
 <p><strong>5.2 Display-type section — word-spacing spread.</strong> Scrub <code>word-spacing</code> from <code>0rem</code> to <code>10rem</code> on a short line so the sentence physically pulls itself apart as the section passes, <code>ease: &quot;none&quot;</code>. This is a layout-triggering property, so obey two constraints: short lines only (2–4 words), and <strong>nothing else in that section animates at the same time</strong>.</p>
@@ -206,9 +302,9 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
   .fromTo(&quot;.footer-inner&quot;, { opacity: 0, scale: 0.75 }, { opacity: 1, scale: 1, ease: &quot;none&quot; }, 0);
 </code></pre>
 <p>Note the hybrid: the clip <strong>scrubs</strong>, but the footer text fires <strong>discretely</strong> from <code>onEnter</code> / <code>onLeaveBack</code>. Apply that rule site-wide — <strong>backgrounds, scale and clip scrub; type never does.</strong> Scrubbed text is unreadable.</p>
-<h2>Step 6 — The reveal system: six primitives, three states, one attribute</h2>
+<h2 id="step-6-the-reveal-system-six-primitives-three-states-one-attribute">Step 6 — The reveal system: six primitives, three states, one attribute</h2>
 <p>Build exactly six functions with the signature <code>(elements, state, delay)</code> where state is <code>&quot;reveal&quot; | &quot;hide&quot; | &quot;initial&quot;</code>. Markup opts in with <code>data-reveal=&quot;h&quot;</code>. <strong>Every primitive needs a mirrored exit in the opposite direction</strong> — that is what makes scrolling back up feel like rewinding instead of re-triggering.</p>
-<table>
+<div class="tablewrap"><table>
 <thead>
 <tr>
 <th>Attribute</th>
@@ -253,7 +349,7 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
 <td>4-point polygon wipe + child <code>scale 1.5→1, xPercent 25→0</code></td>
 <td>reverse wipe, <code>xPercent -25</code></td>
 </tr>
-</tbody></table>
+</tbody></table></div>
 <p>Split with SplitText using <code>autoSplit: true</code> and an <code>onSplit</code> that re-applies the hidden state, so line splits survive a resize. Use <code>durL</code> + <code>ease: &quot;Out&quot;</code> to reveal and <code>durS</code> + <code>ease: &quot;In&quot;</code> to hide — exits are faster than entrances.</p>
 <p>Two structural rules:</p>
 <ol>
@@ -261,11 +357,11 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
 <li><strong>Cap the stagger in lists.</strong> Mark repeating blocks <code>data-reveal-first</code>, group them by parent, and strip <code>data-reveal</code> from every sibling after the first. In a grid of 30 cards, only the first animates.</li>
 </ol>
 <p>Put <code>once: true</code> on every reveal trigger so it kills itself after firing.</p>
-<h2>Step 7 — Constant feedback: the rotating corner mark</h2>
+<h2 id="step-7-constant-feedback-the-rotating-corner-mark">Step 7 — Constant feedback: the rotating corner mark</h2>
 <p>The mark in the top-left corner <strong>never stops spinning</strong>, and its speed and direction follow scroll velocity. Idle at 30 deg/sec; on scroll, tween a <code>state.speed</code> object to <code>dir * (30 + 10 * Math.abs(velocity))</code> over 0.3s, and after 100ms of quiet ease it back to idle over <code>durL</code>. Advance the angle in <code>gsap.ticker</code> with the delta <strong>clamped</strong> (<code>Math.min(delta, 100)</code>) so it does not jump after a tab blur, and ignore programmatic scrolls until a real <code>wheel</code> or <code>touchmove</code> has happened.</p>
 <p><strong>Design the mark for this:</strong> it must be radially symmetric — a circular wordmark ring around a small glyph — so rotation reads as motion rather than as a tilted logo.</p>
 <p>Companion: a two-digit scroll counter and a draggable progress rail, both driven by <strong>one</strong> document-wide ScrollTrigger that writes <code>--progress</code> as a percentage and pads the counter with <code>padStart(2, &quot;0&quot;)</code>. CSS does the rest (<code>thumb { top: var(--progress) }</code>, fill via <code>clip-path: rect(...)</code>). Map dragging the thumb to <code>lenis.scrollTo(target, { duration: 3.2 })</code> — the long duration is deliberate, dragging should feel like a slow camera move, not a jump.</p>
-<h2>Step 8 — Preloader and the arch reveal</h2>
+<h2 id="step-8-preloader-and-the-arch-reveal">Step 8 — Preloader and the arch reveal</h2>
 <p>Hold everything behind a full-screen plum mask until the page is measured, then open an <strong>arch-shaped window</strong> that widens and lifts off the top of the screen. Gate the page because the site runs a custom scroll engine, ~150 scroll-linked timelines and 4K imagery — letting someone scroll before all of that is registered means broken triggers and mistimed reveals.</p>
 <p>Build the arch as a <strong>four-layer composited CSS mask</strong>, not SVG geometry and not <code>clip-path</code>, driven by two custom properties <code>--arch-w</code> and <code>--arch-y</code>:</p>
 <pre><code class="language-css">[data-preloader] {
@@ -291,7 +387,7 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
 <p>Timeline: assemble the logo lockup with the reveal primitives → fade in the script watermark → run a loading bar on a <strong>hand-drawn irregular CustomEase</strong> so it surges and settles instead of moving linearly → open the arch (<code>--arch-w: 24vw → 36vw</code>, <code>--arch-y: 104vh → 15vh</code>, <code>ease: &quot;InOut&quot;</code>) → dive it off the top (<code>125vw</code>, <code>-100vh</code>, <code>ease: &quot;diveIn&quot;</code>) → unlock scroll and <code>display: none</code> the preloader.</p>
 <p><strong>Pre-set the hero image to <code>scale: 0.75</code> with <code>transformOrigin: &quot;center top&quot;</code> and animate it to <code>1</code> on the same frames as the arch dive, at <code>&quot;&amp;lt;&quot;</code>.</strong> That overlap is what makes it read as one camera move instead of two effects. Do not sequence them.</p>
 <p>Store <code>sessionStorage.hasVisited</code> and on a repeat visit play only the arch dive — skip the logo assembly and the bar.</p>
-<h2>Step 9 — Parallax primitives</h2>
+<h2 id="step-9-parallax-primitives">Step 9 — Parallax primitives</h2>
 <p>Five attribute-driven variants, all <code>ease: &quot;none&quot;</code>, all with <code>translateZ: 10</code>, all wrapped in <code>gsap.matchMedia()</code> so they <strong>rebuild on breakpoint change</strong> rather than reading the breakpoint once at build time:</p>
 <pre><code>[data-parallax=&quot;img&quot;]      yPercent -15 → 15   start &quot;top bottom&quot;, scrub 0.5
 [data-parallax=&quot;img-out&quot;]  yPercent   0 → 20   start &quot;bottom bottom&quot;, end &quot;bottom top&quot;, scrub 0.5
@@ -300,10 +396,10 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
 [data-parallax=&quot;ctn-up&quot;]   yPercent  10 → -10  start &quot;top 125%&quot;, end &quot;bottom -25%&quot;, scrub 0.5
 </code></pre>
 <p>Each element resolves its trigger from <code>el.closest(&#39;[data-parallax=&quot;w&quot;]&#39;)</code>. Support per-element opt-out with <code>data-desk=&quot;off&quot;</code> / <code>data-mob=&quot;off&quot;</code>.</p>
-<h2>Step 10 — Assets</h2>
+<h2 id="step-10-assets">Step 10 — Assets</h2>
 <p><strong>Images.</strong> Source at 4K, ship a responsive set at <code>640 / 1024 / 1600 / 2400 / 3840</code>, AVIF with WebP fallback, <strong>under 400 KB for hero-class images at 1600px</strong>. <code>fetchpriority=&quot;high&quot;</code> and eager on the hero only; <code>loading=&quot;lazy&quot;</code> + <code>decoding=&quot;async&quot;</code> on everything below the second viewport. Always set explicit <code>width</code>/<code>height</code> or <code>aspect-ratio</code>. <strong>Reveal images with geometry, not opacity</strong> — a wipe, an opening polygon, a scale from 1.15 to 1 — and vary the geometry between sections.</p>
 <p><strong>Video is texture, never narrative.</strong> Short 3–6s silent loops of movement in a place: foliage in wind, water, light moving. No people, no voiceover. Ship <strong>both</strong> MP4/H.264 and WebM/VP9 sources. <code>muted playsinline loop preload=&quot;metadata&quot;</code>, <code>autoplay</code> <strong>off</strong> — start and stop from a ScrollTrigger on <code>onEnter</code>/<code>onEnterBack</code>/<code>onLeave</code>/<code>onLeaveBack</code> with <code>v.play().catch(() =&amp;gt; {})</code>. Always provide a poster frame.</p>
-<h2>Step 11 — Accessibility</h2>
+<h2 id="step-11-accessibility">Step 11 — Accessibility</h2>
 <ul>
 <li><code>prefers-reduced-motion</code> branch: no smooth scroll, no scrub, every <code>[data-reveal]</code> set straight to its revealed state</li>
 <li>Exactly one <code>&amp;lt;h1&amp;gt;</code>; sections use <code>&amp;lt;h2&amp;gt;</code>/<code>&amp;lt;h3&amp;gt;</code>; <code>alt=&quot;&quot;</code> + <code>aria-hidden</code> on decorative images and on <strong>all</strong> SplitText spans</li>
@@ -313,7 +409,7 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
 <li>Contrast: ink on paper, ink on sky, paper on plum all pass AA at body sizes</li>
 <li><strong>No section snapping.</strong> Snapping to whichever section covers half the viewport fights a reader who stopped deliberately.</li>
 </ul>
-<h2>Acceptance checks — verify each one before you finish</h2>
+<h2 id="acceptance-checks-verify-each-one-before-you-finish">Acceptance checks — verify each one before you finish</h2>
 <ul>
 <li><input disabled="" type="checkbox"> Scroll top to bottom at speed: no jitter, no boundary snap, no layout shift</li>
 <li><input disabled="" type="checkbox"> Corner mark spins faster when you flick, reverses when you scroll up, eases back to idle ~1s after you stop</li>
@@ -328,7 +424,7 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
 <li><input disabled="" type="checkbox"> LCP under 2.5s on the hero, CLS 0</li>
 </ul>
 <p>All imagery, copy, brand marks and typefaces must be original or licensed. Do not reproduce any existing development&#39;s name, logo or photography.</div></p>
-</div><h2>Why the prompt is written this way</h2>
+</div><h2 id="why-the-prompt-is-written-this-way">Why the prompt is written this way</h2>
 <p>
         The first version of this brief was three sentences: a luxury property
         site, smooth scroll, lots of scroll animation. What came back was
@@ -562,7 +658,7 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
 <p>
         Each line in that list is a bug I have watched this prompt produce
         without it.
-</p><h2>What goes wrong, and what it means</h2>
+</p><h2 id="what-goes-wrong-and-what-it-means">What goes wrong, and what it means</h2>
 <ul>
 <li>
 <strong>A pixel of jitter at the top or bottom of a sticky
@@ -663,7 +759,7 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
           by a ScrollTrigger — or the trigger exists but has no
 <code>onEnterBack</code>, so nothing resumes on the way up.
 </li>
-</ul><h2>Recap</h2>
+</ul><h2 id="recap">Recap</h2>
 <ul>
 <li>
           Ban the wrong technique by name. "Prefer sticky" is advice;
@@ -719,8 +815,7 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
 </li>
 </ul><p>
         The teardown this came from is
-<a href="/learn/era-residence-scroll-choreography-design-language/"
-          >here</a>. The companion brief — the same idea taken into WebGL, with
+here. The companion brief — the same idea taken into WebGL, with
         scroll-scrubbed WebP frame sequences instead of transforms — is
 <a href="/learn/prompt-scroll-scrubbed-cinematic-site-webgl-replit/"
           >the pear.no-style cinematic site prompt</a>. If you want more prompts in this shape, there is
@@ -732,8 +827,79 @@ tl.fromTo(&quot;[data-page-clip]&quot;, { clipPath: &quot;inset(0% 0% 0% 0%)&quo
           >a kinetic wind wall in a vertex shader</a>.
 </p>
 
-</main>
-<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
 </div>
+</main>
+<aside class="aside">
+<figure class="reel"><figcaption>You came from this Reel</figcaption><video src="/reels/DdG4XZqyh6e-preview.mp4" poster="/reels/DdG4XZqyh6e.webp" muted loop playsinline preload="none" aria-label="Reel"></video><div class="reelFoot" style="justify-content:flex-end"><a href="https://www.instagram.com/reel/DdG4XZqyh6e/" target="_blank" rel="noopener noreferrer">Watch on Instagram ↗</a></div></figure>
+<nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#supply-the-imagery-first"><i>02</i><b>Supply the imagery first</b></a></li><li><a href="#the-prompt"><i>03</i><b>The prompt</b></a></li><li><a href="#step-0-non-negotiables"><i>04</i><b>Step 0 — Non-negotiables</b></a></li><li><a href="#step-1-colour-and-type"><i>05</i><b>Step 1 — Colour and type</b></a></li><li><a href="#step-2-smooth-scroll-wired-exactly-like-this"><i>06</i><b>Step 2 — Smooth scroll, wired exactly like this</b></a></li><li><a href="#step-3-define-the-timing-language-once-then-never-write-a-raw-ease-again"><i>07</i><b>Step 3 — Define the timing language once, then never write a raw ease again</b></a></li><li><a href="#step-4-the-core-mechanic-tall-wrapper-css-sticky-never-pin-true"><i>08</i><b>Step 4 — The core mechanic: tall wrapper + CSS sticky. Never pin: true.</b></a></li><li><a href="#step-5-six-sections-six-different-behaviours"><i>09</i><b>Step 5 — Six sections, six different behaviours</b></a></li><li><a href="#step-6-the-reveal-system-six-primitives-three-states-one-attribute"><i>10</i><b>Step 6 — The reveal system: six primitives, three states, one attribute</b></a></li><li><a href="#step-7-constant-feedback-the-rotating-corner-mark"><i>11</i><b>Step 7 — Constant feedback: the rotating corner mark</b></a></li><li><a href="#step-8-preloader-and-the-arch-reveal"><i>12</i><b>Step 8 — Preloader and the arch reveal</b></a></li><li><a href="#step-9-parallax-primitives"><i>13</i><b>Step 9 — Parallax primitives</b></a></li><li><a href="#step-10-assets"><i>14</i><b>Step 10 — Assets</b></a></li><li><a href="#step-11-accessibility"><i>15</i><b>Step 11 — Accessibility</b></a></li><li><a href="#acceptance-checks-verify-each-one-before-you-finish"><i>16</i><b>Acceptance checks — verify each one before you finish</b></a></li><li><a href="#why-the-prompt-is-written-this-way"><i>17</i><b>Why the prompt is written this way</b></a></li><li><a href="#what-goes-wrong-and-what-it-means"><i>18</i><b>What goes wrong, and what it means</b></a></li><li><a href="#recap"><i>19</i><b>Recap</b></a></li></ol></nav>
+</aside>
+</div>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li><li><a href="/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/"><span>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</span></a></li><li><a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/"><span>The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero</span></a></li></ul></aside>
+<footer>
+<div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a><a href="/blog/feed.xml">RSS</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+</footer>
+<script>
+(function () {
+  var bar = document.getElementById("progress");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var f = max > 0 ? h.scrollTop / max : 0;
+    bar.style.width = Math.max(24, f * window.innerWidth) + "px";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  // Scroll-spy: TOC highlight + the H2's yellow underline.
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var heads = links.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && heads.length) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.removeAttribute("data-current");
+          current = e.target;
+          current.setAttribute("data-current", "");
+          links.forEach(function (a) {
+            if (a.getAttribute("href") === "#" + current.id) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+          });
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+  // COPY buttons in prompt boxes.
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = btn.closest(".promptbox");
+      var prompt = box && box.querySelector(".prompt");
+      if (!prompt) return;
+      var done = function () {
+        btn.textContent = "Copied ✓";
+        btn.classList.add("done");
+        setTimeout(function () { btn.textContent = btn.dataset.label || "Copy prompt"; btn.classList.remove("done"); }, 2000);
+      };
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(prompt.textContent.trim()).then(done, done);
+      } else done();
+    });
+  });
+  // Reel videos play when in view, pause when scrolled away.
+  var reels = document.querySelectorAll(".reel video");
+  if ("IntersectionObserver" in window && reels.length) {
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) e.target.play().catch(function () {});
+        else e.target.pause();
+      });
+    }, { threshold: 0.3 });
+    reels.forEach(function (v) { rio.observe(v); });
+  }
+})();
+</script>
 </body>
 </html>

@@ -7,44 +7,141 @@
 <meta name="description" content="A copy-pasteable Replit Agent prompt for a single-page cinematic WebGL site in the style of pear.no — one sticky stage 60 viewports tall, one normalized progres" />
 <link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-scroll-scrubbed-cinematic-site-webgl-replit/" />
 <link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
-@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
-body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
-nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
-nav a { color:var(--muted); text-decoration:none; }
-nav a[aria-current="page"] { color:var(--fg); }
-.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
-.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
-h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
-.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
-.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
-h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
-h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
-a { color:inherit; }
-img, video { max-width:100%; height:auto; border-radius:12px; }
-pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
-code { font-size:.9em; }
-pre code { font-size:1em; }
-table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
-th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
-.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
-@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
-ul, ol { padding-left:1.25rem; }
-footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+:root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+* { box-sizing:border-box; }
+body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
+/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
+a { color:inherit; text-decoration:none; }
+#progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
+.site-head { max-width:1240px; margin:0 auto; padding:20px clamp(16px,4vw,48px); display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+.logo { font-family:var(--serif); font-size:22px; }
+.worlds { display:flex; gap:10px; align-items:baseline; font-family:var(--serif); font-size:18px; }
+.worlds .sep { color:var(--ink-soft); }
+.worlds a[aria-current="page"] { border-bottom:3px solid var(--learn); padding-bottom:2px; }
+.view-toggle { display:flex; gap:14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+.view-toggle .on { border-bottom:2px solid var(--learn); padding-bottom:2px; }
+.view-toggle a { color:var(--ink-soft); }
+.wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:clamp(32px,5vw,80px); max-width:1240px; margin:0 auto; padding:36px clamp(16px,4vw,48px) 0; }
+.meta { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin:0 0 14px; }
+.meta a { color:var(--ink); }
+.meta a:hover { text-underline-offset:3px; text-decoration:underline; }
+.title { font-family:var(--serif); letter-spacing:-.03em; margin:14px 0 0; font-size:clamp(40px,5vw,72px); font-weight:400; line-height:1; text-wrap:balance; }
+.lede { max-width:720px; color:var(--ink-soft); margin:20px 0 0; font-size:19px; line-height:1.6; }
+.output { max-width:760px; margin:32px 0 0; }
+.output figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink); display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; font-size:11px; }
+.outputUrl { color:var(--ink-soft); text-transform:none; letter-spacing:.02em; }
+.outputWindow { aspect-ratio:1440/900; background:var(--paper-deep) var(--grain); box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.outputCardUrl { font-family:var(--mono); font-size:13px; letter-spacing:.02em; color:var(--ink-soft); }
+.outputOpen { background:var(--ink); color:var(--paper); border-radius:8px; padding:9px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); position:absolute; bottom:12px; right:12px; }
+.outputWindow:hover .outputOpen { transform:translateY(-2px); }
+.post { max-width:760px; margin-top:36px; color:var(--ink); font-family:var(--sans); line-height:1.7; }
+.post a { color:var(--tech); }
+.post h1 { font-size:1.6rem; margin-bottom:.5rem; line-height:1.25; }
+.post h2 { font-family:var(--serif); letter-spacing:-.02em; font-size:clamp(28px,2.6vw,38px); font-weight:400; line-height:1.1; margin-top:2.5rem; padding-bottom:8px; scroll-margin-top:24px; background:linear-gradient(var(--learn),var(--learn)) 0 100%/0 4px no-repeat; transition:background-size .7s cubic-bezier(.22,1,.36,1); }
+.post h2[data-current] { background-size:64px 4px; }
+.post h3 { font-family:var(--serif); letter-spacing:-.01em; font-size:24px; font-weight:400; margin-top:1.75rem; margin-bottom:.25rem; }
+.post p { margin:1rem 0; }
+.post ul, .post ol { margin:1rem 0; padding-left:1.4rem; }
+.post li { margin:.5rem 0; }
+.post code { background:#11111114; background:color-mix(in srgb, var(--ink) 8%, transparent); border-radius:4px; padding:1px 5px; font-family:var(--mono); font-size:.9em; }
+.post pre { color:#e0e0e0; background:#1a1a1a; border-radius:8px; padding:20px; font-size:.88rem; line-height:1.6; overflow-x:auto; }
+.post pre code { color:inherit; background:transparent; padding:0; }
+.post .prompt, .post .code { color:#e6e6e6; white-space:pre-wrap; background:#1a1a1a; border-radius:10px; margin:1.5rem 0; padding:20px 22px; font-family:var(--mono); font-size:.78rem; line-height:1.6; overflow-x:auto; }
+.post .promptbox { margin:1.5rem 0; position:relative; }
+.post .promptbox .prompt { margin:0; padding-top:52px; }
+.post .copybtn { z-index:2; position:absolute; top:10px; right:10px; letter-spacing:.08em; text-transform:uppercase; color:#e6e6e6; cursor:pointer; background:#2b2b2b; border:1px solid #3d3d3d; border-radius:6px; min-height:34px; padding:9px 14px; font:600 .72rem/1 var(--mono); }
+.post .copybtn:hover { background:#3a3a3a; }
+.post .copybtn.done { color:#7ee39a; border-color:#2f6b41; }
+.post .highlight, .post blockquote { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post blockquote { color:#333; padding:4px 20px; font-style:italic; }
+.post .tldr { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post .card { background:#f8f8f8; border-left:4px solid #000; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card { background:#f8f8f8; border-left:4px solid #06c; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card h3 { margin:0 0 8px; font-size:1.3rem; }
+.post .stat { color:#06c; font-weight:700; }
+.post .stars { letter-spacing:.06em; color:#444; vertical-align:middle; background:#f2f2f2; border:1px solid #e2e2e2; border-radius:6px; margin-left:6px; padding:5px 9px; font:600 .72rem/1 var(--mono); }
+.post .tag { color:#1a56db; background:#e8f0fe; border-radius:12px; margin:2px; padding:2px 10px; font-size:.8rem; display:inline-block; }
+.post .tier-note { color:#666; margin-top:-.25rem; font-style:italic; }
+.post .signal, .post .check { color:#0a7d33; font-weight:600; }
+.post .signal { margin:.5rem 0 0; }
+.post .check { margin:.75rem 0 0; }
+.post .qnum { color:#06c; font-variant-numeric:tabular-nums; }
+.post .q { border-left:3px solid #e8e8e8; margin:1.6rem 0; padding-left:14px; }
+.post .q p { margin:.4rem 0; }
+.post .q .ask { font-size:1.02rem; font-weight:600; }
+.post .q .prep { color:#444; font-size:.95rem; }
+.post .q .prep strong { color:#1a1a1a; }
+.post .week { margin:1.1rem 0; }
+.post .src { font-size:.9rem; }
+.post .repo-link { word-break:break-all; font-family:var(--mono); font-size:.85rem; }
+.post .tech-stack { flex-wrap:wrap; gap:8px; margin:1rem 0; display:flex; }
+.post .tech-stack span { background:#f0f0f0; border-radius:20px; padding:4px 12px; font-size:.85rem; font-weight:500; }
+.post .sw { vertical-align:-1px; border-radius:2px; width:10px; height:10px; margin-right:8px; display:inline-block; }
+.post .tablewrap { margin:1.5rem 0; overflow-x:auto; }
+.post table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.9rem; }
+.post th { text-align:left; background:#f0f0f0; color:#444; font-weight:600; padding:10px 14px; }
+.post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
+.post img, .post video { max-width:100%; height:auto; border-radius:12px; }
+.aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
+.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
+.reel figcaption { color:var(--ink); }
+.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
+.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
+.reelFoot span { color:var(--ink); }
+.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
+.reelFoot a:hover { transform:translateY(-1px); }
+.toc { flex-direction:column; gap:6px; display:flex; }
+.toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
+.toc ol { list-style:none; margin:0; padding:0; }
+.toc a { border-top:1px solid var(--line); grid-template-columns:30px 1fr; align-items:baseline; padding:10px 0; display:grid; }
+.toc i { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-style:normal; }
+.toc b { font-family:var(--serif); background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; justify-self:start; margin:0 -.12em; padding:0 .12em; font-size:20px; font-weight:400; line-height:1.2; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.toc a:hover b, .toc a[aria-current] b { background-size:100% 100%; }
+.keep { max-width:1240px; margin:72px auto 0; padding:28px clamp(16px,4vw,48px) 0; }
+.keep h2 { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-weight:400; margin:0; }
+.keep ul { margin-top:10px; list-style:none; padding:0; }
+.keep li a { border-top:1px solid var(--line); font-family:var(--serif); padding:14px 0; font-size:26px; line-height:1.2; display:block; }
+.keep li a span { background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; margin:0 -.12em; padding:0 .12em; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.keep li a:hover span { background-size:100% 100%; }
+footer { max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,48px); border-top:1px solid var(--line); display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px; }
+footer .f-col { display:flex; flex-direction:column; gap:6px; }
+footer strong { font-family:var(--serif); font-size:20px; font-weight:400; }
+footer .f-label { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-bottom:4px; }
+footer span, footer a { font-size:14px; }
+footer a:hover { text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:860px) {
+  .site-head { padding-left:12px; padding-right:12px; gap:16px; }
+  .wrap { grid-template-columns:1fr; }
+  .aside { order:-1; max-height:none; position:static; }
+  .reel { flex-flow:wrap; align-items:center; }
+  .reel video { width:120px; }
+  .toc { display:none; }
+  .toc b, .keep li a span { transition:none; }
+  .outputOpen { transition:none; }
+  footer { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
+<div id="progress"></div>
+<header class="site-head">
+<a class="logo" href="/">Rishabh.</a>
+<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
+</header>
 <div class="wrap">
-<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
 <main>
-<a class="back" href="/learn/">&larr; All 91 posts</a>
-<p class="kicker">Learn &middot; Prompt</p>
-<h1>The Prompt I Used to Build a pear.no-Style Scroll-Scrubbed Cinematic Site on Replit (WebP Frames, No Code)</h1>
+<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 17 SEPTEMBER 2026 &middot; 23 min</p>
+<h1 class="title">The Prompt I Used to Build a pear.no-Style Scroll-Scrubbed Cinematic Site on Replit (WebP Frames, No Code)</h1>
 <p class="lede">A copy-pasteable Replit Agent prompt for a single-page cinematic WebGL site in the style of pear.no — one sticky stage 60 viewports tall, one normalized progress number, scroll-scrubbed WebP frame sequences instead of seeking a video, a halving-stride loader that never shows a blank frame, six shader transitions, and an asset pipeline that generates motion first and decomposes it with ffmpeg.</p>
-<p class="meta">17 September 2026</p>
-<h2>Overview</h2>
+
+<div class="post">
+<h2 id="overview">Overview</h2>
 <p>
         One page. One <code>&lt;section&gt;</code> sixty viewports tall with a
         single sticky child that never leaves the screen. As you scroll, an
@@ -88,7 +185,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
           scroll, one <code>requestAnimationFrame</code> loop. No GSAP, no
           ScrollTrigger, no Three.js, no Lenis, no Framer Motion.
 </p>
-</div><h2>Generate the motion first</h2>
+</div><h2 id="generate-the-motion-first">Generate the motion first</h2>
 <p>
         On the
 <a href="/learn/prompt-premium-property-site-scroll-choreography-replit/"
@@ -127,13 +224,13 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
           the agent will ship quality 90 and a 40 MB folder, and you will not
           notice until the sequence stalls on a real connection.
 </li>
-</ul><h2>The prompt</h2>
+</ul><h2 id="the-prompt">The prompt</h2>
 <p>
         Paste the whole thing at once. Fill in the <code>BRAND BRIEF</code>
         block first.
 </p><div class="promptbox">
 <button class="copybtn" type="button" data-copy>Copy prompt</button>
-<div class="prompt" id="cinematic-prompt">Build a single-page cinematic marketing site in the style of high-end WebGL agency sites (reference: pear.no). Do NOT use GSAP, ScrollTrigger, Three.js, Lenis, Framer Motion, or any animation library. Everything is vanilla TypeScript + hand-written WebGL1 + native scroll, bundled with Vite. Total JS budget: under 350 KB minified.<h2>BRAND BRIEF — fill this in</h2>
+<div class="prompt" id="cinematic-prompt">Build a single-page cinematic marketing site in the style of high-end WebGL agency sites (reference: pear.no). Do NOT use GSAP, ScrollTrigger, Three.js, Lenis, Framer Motion, or any animation library. Everything is vanilla TypeScript + hand-written WebGL1 + native scroll, bundled with Vite. Total JS budget: under 350 KB minified.<h2 id="brand-brief-fill-this-in">BRAND BRIEF — fill this in</h2>
 <ul>
 <li>Brand name: [[BRAND]]</li>
 <li>One-line positioning: [[e.g. &quot;Not an agency on the clock, a partner in the upside.&quot;]]</li>
@@ -143,7 +240,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li>Sections, in scroll order: [[Hero → The Model → The Work → The Terms → Questions/FAQ → Apply/Footer]]</li>
 <li>Copy per section: [[paste your copy]]</li>
 </ul>
-<h2>1. Core architecture</h2>
+<h2 id="1-core-architecture">1. Core architecture</h2>
 <p>One <code>&amp;lt;main&amp;gt;</code> containing one <code>&amp;lt;section class=&quot;stage&quot;&amp;gt;</code> that is roughly <strong>60–70 viewport heights tall</strong> (~50,000px on desktop). Inside it, one <code>&amp;lt;div class=&quot;pin&quot;&amp;gt;</code> that is <code>position: sticky; top: 0; height: 100vh; overflow: hidden</code>. Everything the user ever sees lives inside <code>.pin</code>. There are no other page sections and no scroll-snapping.</p>
 <p>Derive one global normalized progress value every frame:</p>
 <pre><code class="language-ts">const p = scrollY / (document.documentElement.scrollHeight - innerHeight); // 0..1
@@ -157,7 +254,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <li>An inline <code>&amp;lt;svg&amp;gt;</code> with <code>&amp;lt;filter&amp;gt;</code> defs using <code>feTurbulence</code> + <code>feDisplacementMap</code> + <code>feComponentTransfer</code> for a subtle organic warp/grain, applied to specific text blocks.</li>
 <li>Absolutely positioned HTML text layers (<code>.sign</code>, <code>.faq</code>, <code>.ft</code>) that fade and translate on progress ranges. Text stays real HTML for SEO and accessibility — never rendered into the canvas.</li>
 </ol>
-<h2>2. The visual system: scroll-scrubbed WebP frame sequences, NOT scroll-scrubbed video</h2>
+<h2 id="2-the-visual-system-scroll-scrubbed-webp-frame-sequences-not-scroll-scrubbed-video">2. The visual system: scroll-scrubbed WebP frame sequences, NOT scroll-scrubbed video</h2>
 <p>This is the single most important implementation decision. Seeking a <code>&amp;lt;video&amp;gt;</code> element by scroll position is janky on every browser. Instead:</p>
 <p><strong>Frame sequences (the main mechanism).</strong> Each cinematic beat is a folder of numbered WebP stills that you index by scroll position:</p>
 <pre><code>/public/films/&amp;lt;name&amp;gt;/f_001.webp ... f_121.webp        ← desktop tier (1920x1080 or 1280x720)
@@ -168,7 +265,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <pre><code class="language-json">{ &quot;tiers&quot;: { &quot;768&quot;: { &quot;count&quot;: 121 }, &quot;1440&quot;: { &quot;count&quot;: 121 } } }
 </code></pre>
 <p><strong>Real <code>&amp;lt;video&amp;gt;</code> only for ambient loops that are not scroll-driven.</strong> Use <code>&amp;lt;video autoplay muted loop playsinline preload=&quot;metadata&quot; poster=&quot;...-poster.jpg&quot;&amp;gt;</code> for exactly two things: the hero reveal loop behind the first viewport, and the footer loop behind the final CTA. Set <code>.muted = true</code> in JS <em>and</em> the <code>muted</code> attribute, call <code>.play()</code> on <code>canplay</code> and on the first <code>pointerdown</code>/<code>touchstart</code> (iOS needs the gesture fallback), and only start the footer loop once the user has scrolled past 50%. Each <code>.mp4</code> gets a matching <code>-poster.jpg</code>. Keep each under ~12 MB, H.264 High, faststart, 24fps.</p>
-<h2>3. The frame loader (implement exactly this — it&#39;s what makes it feel instant)</h2>
+<h2 id="3-the-frame-loader-implement-exactly-this-it-39-s-what-makes-it-feel-instant">3. The frame loader (implement exactly this — it&#39;s what makes it feel instant)</h2>
 <pre><code class="language-ts">function makeSequence(base: string, count: number, readyAt = 2, from = 0, to = 1)
 </code></pre>
 <ul>
@@ -186,7 +283,7 @@ for (let s = 32; s &amp;gt;= 1; s &amp;gt;&amp;gt;= 1)
 <li><code>readyAt</code> = how many frames must land before the sequence is allowed to render at all.</li>
 </ul>
 <p>Load images with <code>new Image()</code>, <code>decoding = &#39;async&#39;</code>, and cache-bust with a build-constant query (<code>?r=1</code>). Do not use <code>createImageBitmap</code> — plain <code>Image</code> + <code>decode()</code> has better memory behavior across 600+ frames.</p>
-<h2>4. The WebGL renderer</h2>
+<h2 id="4-the-webgl-renderer">4. The WebGL renderer</h2>
 <p>One WebGL1 context, one fullscreen triangle/quad, one fragment shader. Two <code>sampler2D</code> uniforms <code>uA</code> and <code>uB</code> plus <code>uMix</code> so any two frames — from the same sequence or across a sequence boundary — can be cross-dissolved. Upload frames with <code>texImage2D</code> into two reused textures (never allocate per frame); <code>NEAREST</code>/<code>LINEAR</code> filtering, <code>CLAMP_TO_EDGE</code>, no mipmaps, <code>UNPACK_FLIP_Y_WEBGL</code> true.</p>
 <p>Implement these named transitions, selected per section and switchable at runtime via a <code>?t=</code> query param for tuning:</p>
 <ul>
@@ -200,7 +297,7 @@ for (let s = 32; s &amp;gt;= 1; s &amp;gt;&amp;gt;= 1)
 <p>Default to <code>ring</code> for section changes and <code>halftone</code> for the centerpiece.</p>
 <p>Always-on post pass, all parameterized as uniforms so they can be tuned: film grain (~0.17), ordered dither (~0.01), value noise (~0.06), a very slight chromatic-ish edge, and a cream color grade pulling highlights toward <code>rgb(226,208,177)</code>. Guard derivatives with <code>#extension GL_OES_standard_derivatives : enable</code> and fall back to a constant AA width when unavailable. Add a <code>#define PHONE 1</code> branch that drops grain and halftone cost on mobile.</p>
 <p>Also support a <code>uZoom</code>/<code>uPan</code> pair so a sequence can slowly push in across its scroll range — a Ken Burns move layered on top of the frame scrub.</p>
-<h2>5. Asset generation on Replit — do this in this order</h2>
+<h2 id="5-asset-generation-on-replit-do-this-in-this-order">5. Asset generation on Replit — do this in this order</h2>
 <p>Do NOT try to generate 121 individually consistent frames with an image model; they will not match. Generate motion, then decompose it.</p>
 <p><strong>Step A — keyframe stills (image generation).</strong> For each of the 6 sequences, generate one 16:9 hero still at the highest resolution available, using one shared style suffix appended to every prompt so the look is identical across all of them: <code>[[art direction]], oil painting realism, soft directional sunlight, fine canvas grain, muted warm palette, cinematic composition, no text, no watermark</code>. Save these as <code>/assets/keys/&amp;lt;name&amp;gt;.png</code>. Review them and regenerate any that drift before moving on.</p>
 <p><strong>Step B — motion (video generation).</strong> Feed each still to image-to-video with a slow, single-axis camera instruction — <code>slow push in</code>, <code>slow orbit left</code>, <code>slow crane up</code>, <code>subtle wind in fabric and leaves, camera locked</code>. Ask for 5 seconds, 24fps, 16:9, no cuts. Slow and simple beats dramatic: the scrub reads better and frames compress smaller. Save as <code>/assets/raw/&amp;lt;name&amp;gt;.mp4</code>.</p>
@@ -224,9 +321,9 @@ du -sh &quot;$OUT&quot; &quot;$OUT/768&quot;
 </code></pre>
 <p>Run it per sequence and <strong>print the total directory size</strong>. Hard budget: <strong>under 12 MB per desktop sequence, under 4 MB per mobile sequence.</strong> If a sequence blows the budget, lower quality to 70 before lowering the frame count — below ~90 frames the scrub starts to strobe.</p>
 <p><strong>Step D — ambient loops.</strong> Take two of the generated clips, make them seamless (<code>ffmpeg</code> palindrome loop: concat the clip with its reversed self), encode H.264 with <code>-movflags +faststart -crf 23 -pix_fmt yuv420p</code>, and export a poster JPEG from frame 1. These are the only real <code>&amp;lt;video&amp;gt;</code> elements on the page.</p>
-<h2>6. Scroll timeline</h2>
+<h2 id="6-scroll-timeline">6. Scroll timeline</h2>
 <p>Lay the page out as normalized ranges. Use these as the starting map and expose them in one <code>TIMELINE</code> const so they&#39;re easy to retune:</p>
-<table>
+<div class="tablewrap"><table>
 <thead>
 <tr>
 <th>range</th>
@@ -269,9 +366,9 @@ du -sh &quot;$OUT&quot; &quot;$OUT/768&quot;
 <td>Apply/footer: ambient loop returns, address + email + CTA</td>
 <td><code>&amp;lt;video&amp;gt;</code> loop</td>
 </tr>
-</tbody></table>
+</tbody></table></div>
 <p>Text layers get <code>opacity</code> and <code>translateY</code> from a smoothstep over their own sub-range, with <code>will-change: transform, opacity</code> and nothing else animated in CSS.</p>
-<h2>7. Performance, accessibility, fallbacks</h2>
+<h2 id="7-performance-accessibility-fallbacks">7. Performance, accessibility, fallbacks</h2>
 <ul>
 <li>First paint must not wait on WebGL. Ship a <code>&amp;lt;img class=&quot;boot&quot;&amp;gt;</code> poster that covers the viewport and fades out once the first sequence reports ready.</li>
 <li>Preload only: the two fonts actually used above the fold, the boot poster, and the first sequence&#39;s manifest. Everything else is lazy.</li>
@@ -281,7 +378,7 @@ du -sh &quot;$OUT&quot; &quot;$OUT/768&quot;
 <li>Real semantic HTML underneath: one <code>&amp;lt;h1&amp;gt;</code>, <code>&amp;lt;h2&amp;gt;</code> per section, <code>&amp;lt;nav&amp;gt;</code>, meta description, OG image. The site must be readable with JS disabled.</li>
 <li>Test at 1440×900, 1920×1080, and 390×844. On mobile, reduce the stage to ~40vh-multiples and use the 768 tier throughout.</li>
 </ul>
-<h2>8. Deliverables</h2>
+<h2 id="8-deliverables">8. Deliverables</h2>
 <pre><code>index.html
 src/main.ts          — boot, RAF loop, global progress
 src/stage.ts         — sticky stage + timeline map
@@ -295,7 +392,7 @@ public/films/...     — generated sequences, loops, posters
 </code></pre>
 <p>Start by generating the assets (Steps A–D) and printing the size report. Then build the engine against them. Show me the first working scroll-scrub with one sequence before adding the rest.</p>
 <p>All imagery, copy, brand marks and typefaces must be original, generated, or licensed. The reference is for the class of interaction only — do not reproduce pear.no&#39;s imagery, copy or brand.</div></p>
-</div><h2>Why the prompt is written this way</h2>
+</div><h2 id="why-the-prompt-is-written-this-way">Why the prompt is written this way</h2>
 <p>
         The first version of this brief was a paragraph: a cinematic single-page
         site, WebGL, video that plays as you scroll, grain, a serif. What came
@@ -476,7 +573,7 @@ public/films/...     — generated sequences, loops, posters
         60-viewport sticky stage without a fallback is a blank page you cannot
         scroll out of. Write them into the brief and they get built with the
         same care as the halftone.
-</p><h2>What goes wrong, and what it means</h2>
+</p><h2 id="what-goes-wrong-and-what-it-means">What goes wrong, and what it means</h2>
 <ul>
 <li>
 <strong>Black flashes at section boundaries.</strong> The renderer is
@@ -546,7 +643,7 @@ public/films/...     — generated sequences, loops, posters
           library was pulled in "just for the easing" or "just for the matrix
           math". There is no matrix math in a fullscreen quad.
 </li>
-</ul><h2>Recap</h2>
+</ul><h2 id="recap">Recap</h2>
 <ul>
 <li>
           Ban video scrubbing by name and specify the replacement in the same
@@ -593,8 +690,7 @@ public/films/...     — generated sequences, loops, posters
 <a href="/learn/prompt-premium-property-site-scroll-choreography-replit/"
           >the premium property site prompt</a>
         — and the
-<a href="/learn/era-residence-scroll-choreography-design-language/"
-          >teardown it came from</a>. If you want more prompts in this shape, there is
+teardown it came from. If you want more prompts in this shape, there is
 <a href="/learn/prompt-frosted-glass-refraction-cube-webgl/"
           >a frosted-glass refraction cube in WebGL</a>,
 <a href="/learn/prompt-kinetic-wind-wall-threejs-vertex-shader/"
@@ -603,8 +699,79 @@ public/films/...     — generated sequences, loops, posters
           >a floor lamp hero with a brass switch that lights the whole page</a>.
 </p>
 
-</main>
-<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
 </div>
+</main>
+<aside class="aside">
+<figure class="reel"><figcaption>You came from this Reel</figcaption><video src="/reels/DdY9E6oSoWe-preview.mp4" poster="/reels/DdY9E6oSoWe.webp" muted loop playsinline preload="none" aria-label="Reel"></video><div class="reelFoot" style="justify-content:flex-end"><a href="https://www.instagram.com/reel/DdY9E6oSoWe/" target="_blank" rel="noopener noreferrer">Watch on Instagram ↗</a></div></figure>
+<nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#generate-the-motion-first"><i>02</i><b>Generate the motion first</b></a></li><li><a href="#the-prompt"><i>03</i><b>The prompt</b></a></li><li><a href="#brand-brief-fill-this-in"><i>04</i><b>BRAND BRIEF — fill this in</b></a></li><li><a href="#1-core-architecture"><i>05</i><b>1. Core architecture</b></a></li><li><a href="#2-the-visual-system-scroll-scrubbed-webp-frame-sequences-not-scroll-scrubbed-video"><i>06</i><b>2. The visual system: scroll-scrubbed WebP frame sequences, NOT scroll-scrubbed video</b></a></li><li><a href="#3-the-frame-loader-implement-exactly-this-it-39-s-what-makes-it-feel-instant"><i>07</i><b>3. The frame loader (implement exactly this — it&amp;#39;s what makes it feel instant)</b></a></li><li><a href="#4-the-webgl-renderer"><i>08</i><b>4. The WebGL renderer</b></a></li><li><a href="#5-asset-generation-on-replit-do-this-in-this-order"><i>09</i><b>5. Asset generation on Replit — do this in this order</b></a></li><li><a href="#6-scroll-timeline"><i>10</i><b>6. Scroll timeline</b></a></li><li><a href="#7-performance-accessibility-fallbacks"><i>11</i><b>7. Performance, accessibility, fallbacks</b></a></li><li><a href="#8-deliverables"><i>12</i><b>8. Deliverables</b></a></li><li><a href="#why-the-prompt-is-written-this-way"><i>13</i><b>Why the prompt is written this way</b></a></li><li><a href="#what-goes-wrong-and-what-it-means"><i>14</i><b>What goes wrong, and what it means</b></a></li><li><a href="#recap"><i>15</i><b>Recap</b></a></li></ol></nav>
+</aside>
+</div>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li><li><a href="/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/"><span>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</span></a></li><li><a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/"><span>The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero</span></a></li></ul></aside>
+<footer>
+<div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a><a href="/blog/feed.xml">RSS</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+</footer>
+<script>
+(function () {
+  var bar = document.getElementById("progress");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var f = max > 0 ? h.scrollTop / max : 0;
+    bar.style.width = Math.max(24, f * window.innerWidth) + "px";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  // Scroll-spy: TOC highlight + the H2's yellow underline.
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var heads = links.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && heads.length) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.removeAttribute("data-current");
+          current = e.target;
+          current.setAttribute("data-current", "");
+          links.forEach(function (a) {
+            if (a.getAttribute("href") === "#" + current.id) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+          });
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+  // COPY buttons in prompt boxes.
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = btn.closest(".promptbox");
+      var prompt = box && box.querySelector(".prompt");
+      if (!prompt) return;
+      var done = function () {
+        btn.textContent = "Copied ✓";
+        btn.classList.add("done");
+        setTimeout(function () { btn.textContent = btn.dataset.label || "Copy prompt"; btn.classList.remove("done"); }, 2000);
+      };
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(prompt.textContent.trim()).then(done, done);
+      } else done();
+    });
+  });
+  // Reel videos play when in view, pause when scrolled away.
+  var reels = document.querySelectorAll(".reel video");
+  if ("IntersectionObserver" in window && reels.length) {
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) e.target.play().catch(function () {});
+        else e.target.pause();
+      });
+    }, { threshold: 0.3 });
+    reels.forEach(function (v) { rio.observe(v); });
+  }
+})();
+</script>
 </body>
 </html>

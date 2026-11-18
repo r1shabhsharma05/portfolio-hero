@@ -33,7 +33,6 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
   { id: "Roadmap", label: "Roadmaps" },
   { id: "Prompt", label: "Prompts" },
-  { id: "Build", label: "Builds" },
   { id: "Career", label: "Career" },
 ];
 
@@ -82,7 +81,6 @@ export default function Learn() {
       all: LEARN_POSTS.length,
       Roadmap: 0,
       Prompt: 0,
-      Build: 0,
       Career: 0,
       "Case study": 0,
       About: 0,
@@ -231,7 +229,7 @@ export default function Learn() {
               ))}
               <div className="learn-hero-copy">
                 <p className="learn-kicker">
-                  LEARN · 91 FREE ROADMAPS, PROMPTS AND BUILDS
+                  LEARN · 39 FREE ROADMAPS AND PROMPTS
                 </p>
                 <h1>Tell me where you&rsquo;re headed.</h1>
                 <p className="learn-sub">
@@ -325,7 +323,7 @@ export default function Learn() {
                   <input
                     type="search"
                     value={query}
-                    placeholder="Search 91 posts…"
+                    placeholder="Search 39 posts…"
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </label>

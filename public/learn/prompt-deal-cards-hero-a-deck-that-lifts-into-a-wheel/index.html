@@ -7,46 +7,143 @@
 <meta name="description" content="A copy-pasteable prompt and the code concepts behind the Deal hero: Reel cards dealt face down, flipped into a fan while the loader counts, then lifted into a w" />
 <link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/" />
 <link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-:root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --code:#f5f5f5; }
-@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --fg:#f0f0f0; --muted:#a0a0a0; --line:#222; --code:#161616; } }
-body { margin:0; background:var(--bg); color:var(--fg); line-height:1.65; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-.wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
-nav { display:flex; flex-wrap:wrap; gap:1.25rem; padding-bottom:1.5rem; margin-bottom:2.5rem; border-bottom:1px solid var(--line); font-size:.95rem; }
-nav a { color:var(--muted); text-decoration:none; }
-nav a[aria-current="page"] { color:var(--fg); }
-.back { font-size:.9rem; color:var(--muted); text-decoration:none; }
-.kicker { font-family:ui-monospace,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 .5rem; }
-h1 { font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin:0 0 .5rem; letter-spacing:-.02em; font-family:Georgia,"Times New Roman",serif; }
-.lede { font-size:1.1rem; color:var(--muted); margin:.5rem 0 2rem; }
-.meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
-h2 { font-size:1.35rem; margin:2.5rem 0 .85rem; }
-h3 { font-size:1.15rem; margin:2rem 0 .75rem; }
-a { color:inherit; }
-img, video { max-width:100%; height:auto; border-radius:12px; }
-pre { overflow-x:auto; background:var(--code); padding:16px; border-radius:12px; font-size:.85rem; line-height:1.5; }
-code { font-size:.9em; }
-pre code { font-size:1em; }
-table { border-collapse:collapse; width:100%; margin:1.5rem 0; font-size:.9rem; display:block; overflow-x:auto; }
-th, td { border:1px solid var(--line); padding:.5rem .75rem; text-align:left; }
-.highlight { background:#fff7d6; border-radius:12px; padding:4px 20px; margin:24px 0; }
-@media (prefers-color-scheme: dark) { .highlight { background:#2a2305; } }
-ul, ol { padding-left:1.25rem; }
-footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+:root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+* { box-sizing:border-box; }
+body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
+/* Paper grain, kept faint (same SVG as Avi's, at low opacity). */
+body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
+a { color:inherit; text-decoration:none; }
+#progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
+.site-head { max-width:1240px; margin:0 auto; padding:20px clamp(16px,4vw,48px); display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+.logo { font-family:var(--serif); font-size:22px; }
+.worlds { display:flex; gap:10px; align-items:baseline; font-family:var(--serif); font-size:18px; }
+.worlds .sep { color:var(--ink-soft); }
+.worlds a[aria-current="page"] { border-bottom:3px solid var(--learn); padding-bottom:2px; }
+.view-toggle { display:flex; gap:14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+.view-toggle .on { border-bottom:2px solid var(--learn); padding-bottom:2px; }
+.view-toggle a { color:var(--ink-soft); }
+.wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:clamp(32px,5vw,80px); max-width:1240px; margin:0 auto; padding:36px clamp(16px,4vw,48px) 0; }
+.meta { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin:0 0 14px; }
+.meta a { color:var(--ink); }
+.meta a:hover { text-underline-offset:3px; text-decoration:underline; }
+.title { font-family:var(--serif); letter-spacing:-.03em; margin:14px 0 0; font-size:clamp(40px,5vw,72px); font-weight:400; line-height:1; text-wrap:balance; }
+.lede { max-width:720px; color:var(--ink-soft); margin:20px 0 0; font-size:19px; line-height:1.6; }
+.output { max-width:760px; margin:32px 0 0; }
+.output figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink); display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; font-size:11px; }
+.outputUrl { color:var(--ink-soft); text-transform:none; letter-spacing:.02em; }
+.outputWindow { aspect-ratio:1440/900; background:var(--paper-deep) var(--grain); box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.outputCardUrl { font-family:var(--mono); font-size:13px; letter-spacing:.02em; color:var(--ink-soft); }
+.outputOpen { background:var(--ink); color:var(--paper); border-radius:8px; padding:9px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); position:absolute; bottom:12px; right:12px; }
+.outputWindow:hover .outputOpen { transform:translateY(-2px); }
+.post { max-width:760px; margin-top:36px; color:var(--ink); font-family:var(--sans); line-height:1.7; }
+.post a { color:var(--tech); }
+.post h1 { font-size:1.6rem; margin-bottom:.5rem; line-height:1.25; }
+.post h2 { font-family:var(--serif); letter-spacing:-.02em; font-size:clamp(28px,2.6vw,38px); font-weight:400; line-height:1.1; margin-top:2.5rem; padding-bottom:8px; scroll-margin-top:24px; background:linear-gradient(var(--learn),var(--learn)) 0 100%/0 4px no-repeat; transition:background-size .7s cubic-bezier(.22,1,.36,1); }
+.post h2[data-current] { background-size:64px 4px; }
+.post h3 { font-family:var(--serif); letter-spacing:-.01em; font-size:24px; font-weight:400; margin-top:1.75rem; margin-bottom:.25rem; }
+.post p { margin:1rem 0; }
+.post ul, .post ol { margin:1rem 0; padding-left:1.4rem; }
+.post li { margin:.5rem 0; }
+.post code { background:#11111114; background:color-mix(in srgb, var(--ink) 8%, transparent); border-radius:4px; padding:1px 5px; font-family:var(--mono); font-size:.9em; }
+.post pre { color:#e0e0e0; background:#1a1a1a; border-radius:8px; padding:20px; font-size:.88rem; line-height:1.6; overflow-x:auto; }
+.post pre code { color:inherit; background:transparent; padding:0; }
+.post .prompt, .post .code { color:#e6e6e6; white-space:pre-wrap; background:#1a1a1a; border-radius:10px; margin:1.5rem 0; padding:20px 22px; font-family:var(--mono); font-size:.78rem; line-height:1.6; overflow-x:auto; }
+.post .promptbox { margin:1.5rem 0; position:relative; }
+.post .promptbox .prompt { margin:0; padding-top:52px; }
+.post .copybtn { z-index:2; position:absolute; top:10px; right:10px; letter-spacing:.08em; text-transform:uppercase; color:#e6e6e6; cursor:pointer; background:#2b2b2b; border:1px solid #3d3d3d; border-radius:6px; min-height:34px; padding:9px 14px; font:600 .72rem/1 var(--mono); }
+.post .copybtn:hover { background:#3a3a3a; }
+.post .copybtn.done { color:#7ee39a; border-color:#2f6b41; }
+.post .highlight, .post blockquote { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post blockquote { color:#333; padding:4px 20px; font-style:italic; }
+.post .tldr { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post .card { background:#f8f8f8; border-left:4px solid #000; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card { background:#f8f8f8; border-left:4px solid #06c; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card h3 { margin:0 0 8px; font-size:1.3rem; }
+.post .stat { color:#06c; font-weight:700; }
+.post .stars { letter-spacing:.06em; color:#444; vertical-align:middle; background:#f2f2f2; border:1px solid #e2e2e2; border-radius:6px; margin-left:6px; padding:5px 9px; font:600 .72rem/1 var(--mono); }
+.post .tag { color:#1a56db; background:#e8f0fe; border-radius:12px; margin:2px; padding:2px 10px; font-size:.8rem; display:inline-block; }
+.post .tier-note { color:#666; margin-top:-.25rem; font-style:italic; }
+.post .signal, .post .check { color:#0a7d33; font-weight:600; }
+.post .signal { margin:.5rem 0 0; }
+.post .check { margin:.75rem 0 0; }
+.post .qnum { color:#06c; font-variant-numeric:tabular-nums; }
+.post .q { border-left:3px solid #e8e8e8; margin:1.6rem 0; padding-left:14px; }
+.post .q p { margin:.4rem 0; }
+.post .q .ask { font-size:1.02rem; font-weight:600; }
+.post .q .prep { color:#444; font-size:.95rem; }
+.post .q .prep strong { color:#1a1a1a; }
+.post .week { margin:1.1rem 0; }
+.post .src { font-size:.9rem; }
+.post .repo-link { word-break:break-all; font-family:var(--mono); font-size:.85rem; }
+.post .tech-stack { flex-wrap:wrap; gap:8px; margin:1rem 0; display:flex; }
+.post .tech-stack span { background:#f0f0f0; border-radius:20px; padding:4px 12px; font-size:.85rem; font-weight:500; }
+.post .sw { vertical-align:-1px; border-radius:2px; width:10px; height:10px; margin-right:8px; display:inline-block; }
+.post .tablewrap { margin:1.5rem 0; overflow-x:auto; }
+.post table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.9rem; }
+.post th { text-align:left; background:#f0f0f0; color:#444; font-weight:600; padding:10px 14px; }
+.post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
+.post img, .post video { max-width:100%; height:auto; border-radius:12px; }
+.aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
+.reel { background:var(--paper-deep); border-radius:24px; flex-direction:column; gap:14px; margin:0; padding:20px; display:flex; }
+.reel figcaption { color:var(--ink); }
+.reel video { aspect-ratio:9/16; object-fit:cover; background:var(--paper-deep); border-radius:16px; align-self:center; width:min(240px,100%); box-shadow:0 30px 60px -24px #0009; }
+.reelFoot { justify-content:space-between; align-items:center; gap:10px; display:flex; }
+.reelFoot span { color:var(--ink); }
+.reelFoot a { background:var(--surface); white-space:nowrap; border-radius:999px; padding:8px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); }
+.reelFoot a:hover { transform:translateY(-1px); }
+.toc { flex-direction:column; gap:6px; display:flex; }
+.toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
+.toc ol { list-style:none; margin:0; padding:0; }
+.toc a { border-top:1px solid var(--line); grid-template-columns:30px 1fr; align-items:baseline; padding:10px 0; display:grid; }
+.toc i { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-style:normal; }
+.toc b { font-family:var(--serif); background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; justify-self:start; margin:0 -.12em; padding:0 .12em; font-size:20px; font-weight:400; line-height:1.2; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.toc a:hover b, .toc a[aria-current] b { background-size:100% 100%; }
+.keep { max-width:1240px; margin:72px auto 0; padding:28px clamp(16px,4vw,48px) 0; }
+.keep h2 { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-weight:400; margin:0; }
+.keep ul { margin-top:10px; list-style:none; padding:0; }
+.keep li a { border-top:1px solid var(--line); font-family:var(--serif); padding:14px 0; font-size:26px; line-height:1.2; display:block; }
+.keep li a span { background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; margin:0 -.12em; padding:0 .12em; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.keep li a:hover span { background-size:100% 100%; }
+footer { max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,48px); border-top:1px solid var(--line); display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px; }
+footer .f-col { display:flex; flex-direction:column; gap:6px; }
+footer strong { font-family:var(--serif); font-size:20px; font-weight:400; }
+footer .f-label { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-bottom:4px; }
+footer span, footer a { font-size:14px; }
+footer a:hover { text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:860px) {
+  .site-head { padding-left:12px; padding-right:12px; gap:16px; }
+  .wrap { grid-template-columns:1fr; }
+  .aside { order:-1; max-height:none; position:static; }
+  .reel { flex-flow:wrap; align-items:center; }
+  .reel video { width:120px; }
+  .toc { display:none; }
+  .toc b, .keep li a span { transition:none; }
+  .outputOpen { transition:none; }
+  footer { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
+<div id="progress"></div>
+<header class="site-head">
+<a class="logo" href="/">Rishabh.</a>
+<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
+</header>
 <div class="wrap">
-<nav><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Build</a><a href="/brands/">Brand</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/developers">Developers</a><a href="/llms.txt">llms.txt</a></nav>
 <main>
-<a class="back" href="/learn/">&larr; All 91 posts</a>
-<p class="kicker">Learn &middot; Prompt</p>
-<h1>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</h1>
+<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 19 OCTOBER 2026 &middot; 11 min</p>
+<h1 class="title">The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</h1>
 <p class="lede">A copy-pasteable prompt and the code concepts behind the Deal hero: Reel cards dealt face down, flipped into a fan while the loader counts, then lifted into a wheel of playing videos rising out of the clouds.</p>
-<p class="meta">19 October 2026</p>
+<figure class="output"><figcaption><span>The output, live</span><span class="outputUrl">avivashishta.com/lab/deal-hero</span></figcaption><a class="outputWindow" href="https://www.avivashishta.com/lab/deal-hero" target="_blank" rel="noreferrer"><span class="outputCardUrl">avivashishta.com/lab/deal-hero</span><span class="outputOpen">Open the live page ↗</span></a></figure>
+<div class="post">
 <p>My homepage opens with a small tilted ring of Reels that expands into a 3D carousel. I wrote up <a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/">the prompt and the code behind that one</a>. This post is about the second hero I built to compete with it, and you can <a href="https://www.avivashishta.com/lab/deal-hero" target="_blank" rel="noreferrer">see it live at avivashishta.com/lab/deal-hero</a>. It is the same homepage, word for word, with only the hero swapped, so you can open both in two tabs and compare.</p>
 <p>The Deal hero starts like a card trick. While the counter climbs, a deck flies up from below the screen. Every card arrives face down, flips face up mid-flight and lands in a fan. When the loader hits 100, the fan does not get replaced. It lifts, tips back, opens into a wider wheel of bigger cards and starts turning, while the sky and the cloud bank arrive around it and the Reels near the top start playing.</p>
-<div class="highlight"><p><strong>The short version:</strong> the deck is a full 360 degree wheel pinned to a pivot below the screen, so only its top third is ever visible. Each card has one home angle on that wheel. The homepage's own loader already animates two numbers, <code>formation</code> and <code>expansion</code>. Map <code>formation</code> to the deal and <code>expansion</code> to the lift, and the whole sequence comes from one transform per card.</p></div><h2>The prompt</h2>
+<div class="highlight"><p><strong>The short version:</strong> the deck is a full 360 degree wheel pinned to a pivot below the screen, so only its top third is ever visible. Each card has one home angle on that wheel. The homepage's own loader already animates two numbers, <code>formation</code> and <code>expansion</code>. Map <code>formation</code> to the deal and <code>expansion</code> to the lift, and the whole sequence comes from one transform per card.</p></div><h2 id="the-prompt">The prompt</h2>
 <p>Paste this into Claude Code, Cursor or Replit. It describes the behaviour rather than my file layout, so it works in any React project.</p>
 <div class="promptbox">
 <button class="copybtn" type="button" data-copy>Copy prompt</button>
@@ -64,7 +161,7 @@ footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); 
 <p>ACCESSIBILITY AND ESCAPES: Escape, Tab and a visible skip button end the entrance instantly. With prefers-reduced-motion both values jump to 1 and nothing moves on its own. Every card is a real link with a text label for screen readers.</p>
 <p>Show me the pose code for one card first, then the deal, then the lift, then video and gestures.</p>
 </div>
-</div><h2>Concept 1: a fan is a wheel you only see the top of</h2>
+</div><h2 id="concept-1-a-fan-is-a-wheel-you-only-see-the-top-of">Concept 1: a fan is a wheel you only see the top of</h2>
 <p>My first version was a real fan: 14 cards spread across 150 degrees. It looked great until you dragged it, because a fan has ends. When a card scrolled off one end it had to reappear at the other, and no amount of fading hid that jump.</p>
 <p>The fix was to stop building a fan. The deck is a full wheel of 34 cards around a pivot 500px below the centre of the hero (it drops further during the lift). With that geometry, the bottom half of the wheel is always off screen or behind the clouds, so the visible top looks exactly like a fan, and it can turn forever without a seam.</p>
 <pre><code class="language-ts">const step = 360 / cards.length;
@@ -73,7 +170,7 @@ const home = wrap(i * step - spin + kick);
 const away = Math.abs(home);
 const visible = p &gt; 0 &amp;&amp; away &lt; 105;
 </code></pre>
-<h2>Concept 2: pivot, rotate, push out</h2>
+<h2 id="concept-2-pivot-rotate-push-out">Concept 2: pivot, rotate, push out</h2>
 <p>Every card&#39;s position is one transform string, and the order is the whole trick:</p>
 <pre><code class="language-ts">const transform =
   `translate3d(0, ${pivot}px, ${-away * .5}px)` + // go to the pivot, top card frontmost
@@ -83,13 +180,13 @@ const visible = p &gt; 0 &amp;&amp; away &lt; 105;
   ` scale(${(.7 + .3 * p) * grow})`;
 </code></pre>
 <p>Read it right to left and it is how you would deal a card by hand: hold it at the deck, flip it, slide it out, rotate it into the fan. Every card starts 70 degrees to the right of its place and sweeps left into it. In my first version, the fan opened outward from the middle, so half the cards went right and half went left, and then the wheel turned left. That half second of rightward motion was the thing that made it feel unsmooth. One direction, all the way through, from the first card to the idle drift. The z offset matters more than it looks. Without it, card 0 overlaps card 33 and the fan has a visible seam at the top. With <code>-away * .5</code>, the card nearest the top always sits in front of its neighbours on both sides.</p>
-<h2>Concept 3: deal from the middle out</h2>
+<h2 id="concept-3-deal-from-the-middle-out">Concept 3: deal from the middle out</h2>
 <p>The ring hero deals cards around the circle in order. For a fan that reads wrong, because your eye goes to the top first. So each card&#39;s slot in the timeline comes from its distance to the top:</p>
 <pre><code class="language-ts">const order = Math.min(away, 100) / 100;          // 0 at the top, 1 at the edges
 const p = outCubic(span(deal, order * .6, order * .6 + .4));
 </code></pre>
 <p>Each card spends 40 percent of the deal moving and starts at its own point in the first 60 percent. The top card is dealt first, and the deal spreads to both sides at once, which makes it look symmetrical and deliberate.</p>
-<h2>Concept 4: the loader already tells you when to lift</h2>
+<h2 id="concept-4-the-loader-already-tells-you-when-to-lift">Concept 4: the loader already tells you when to lift</h2>
 <p>I didn&#39;t write a new timeline. The homepage&#39;s loader animates two motion values: <code>formation</code> while it counts, and <code>expansion</code> when the ring opens. It also handles the counter, the skip button, Escape, reduced motion and the moment the header and headline come in. The Deal hero just reads the same two numbers:</p>
 <pre><code class="language-ts">const dealt = formation.get(), lift = expansion.get();
 // Bigger cards need a bigger wheel, and a bigger wheel needs a lower pivot to stay in frame.
@@ -100,7 +197,7 @@ stage.style.transform =
 </code></pre>
 <p>The growth is part of the same motion. The deal packs small cards tightly, because a dense fan reads as a deck. The resting wheel needs the opposite: Reels big enough to watch, with a little air between them. Growing the cards, the radius and the pivot drop on the same <code>lift</code> value means the deck loosens into the carousel in one continuous move, and there&#39;s never a moment where it resizes.</p>
 <p>That is why the two heroes can share one page. Everything that makes the entrance feel finished (the real progress counter, the brand word flying into the header, the frame drawing in) belongs to the loader, and both heroes plug into it.</p>
-<h2>Concept 5: the clouds are solid, the videos fade in</h2>
+<h2 id="concept-5-the-clouds-are-solid-the-videos-fade-in">Concept 5: the clouds are solid, the videos fade in</h2>
 <p>Two small details made it feel like one world rather than cards over a picture.</p>
 <p>The cloud bank is fully opaque on this hero. On the ring, clouds at 92 percent read as mist. On a wheel whose lower half is always behind them, any transparency shows the cards through them, and the wheel stops looking like it rises out of the sky.</p>
 <p>Videos never pop. Each card shows its cover, and the video sits on top at opacity 0 until the browser fires <code>playing</code>:</p>
@@ -108,7 +205,7 @@ stage.style.transform =
 .preview[data-playing] { opacity: 1; }
 </code></pre>
 <p>Calling <code>play()</code> doesn&#39;t mean a frame is ready. Waiting for the event is the difference between a crossfade and a black flash.</p>
-<h2>Concept 6: smooth is mostly about what you don&#39;t do</h2>
+<h2 id="concept-6-smooth-is-mostly-about-what-you-don-39-t-do">Concept 6: smooth is mostly about what you don&#39;t do</h2>
 <p>The whole hero runs in one <code>requestAnimationFrame</code> loop that writes inline styles, with a few rules:</p>
 <ul>
 <li><strong>Write only what changed.</strong> A <code>Map</code> remembers the last value of every style per card and skips the write if it&#39;s the same. Settled and off-screen cards cost nothing.</li>
@@ -118,11 +215,82 @@ stage.style.transform =
 <li><strong>Follow, don&#39;t snap.</strong> The visible angle eases toward the target with <code>1 - Math.exp(-dt * 9)</code>, which stays the same at any frame rate. Flicks keep their velocity and decay smoothly, and a pause before letting go cancels the flick, so a slow, careful drag stops exactly where you left it.</li>
 <li><strong>Size to the frame.</strong> The scene scales to the hero frame&#39;s size, not the window&#39;s. On a short laptop screen the lifted wheel would otherwise poke out of the top of the frame.</li>
 </ul>
-<h2>Ring or deal?</h2>
+<h2 id="ring-or-deal">Ring or deal?</h2>
 <p>The ring is about immersion: you end up inside a room of Reels. The deal is about presentation: a hand of cards held up for you to pick from, and it shows more covers at once at a readable size. I haven&#39;t decided which one stays. Open <a href="/">the homepage</a> and <a href="https://www.avivashishta.com/lab/deal-hero" target="_blank" rel="noreferrer">the Deal version</a> side by side and tell me which one you&#39;d keep.</p>
 
-</main>
-<footer><span>&copy; 2026 Rishabh Sharma</span><a href="/learn/">&larr; All 91 posts</a></footer>
 </div>
+</main>
+<aside class="aside">
+
+<nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#the-prompt"><i>01</i><b>The prompt</b></a></li><li><a href="#concept-1-a-fan-is-a-wheel-you-only-see-the-top-of"><i>02</i><b>Concept 1: a fan is a wheel you only see the top of</b></a></li><li><a href="#concept-2-pivot-rotate-push-out"><i>03</i><b>Concept 2: pivot, rotate, push out</b></a></li><li><a href="#concept-3-deal-from-the-middle-out"><i>04</i><b>Concept 3: deal from the middle out</b></a></li><li><a href="#concept-4-the-loader-already-tells-you-when-to-lift"><i>05</i><b>Concept 4: the loader already tells you when to lift</b></a></li><li><a href="#concept-5-the-clouds-are-solid-the-videos-fade-in"><i>06</i><b>Concept 5: the clouds are solid, the videos fade in</b></a></li><li><a href="#concept-6-smooth-is-mostly-about-what-you-don-39-t-do"><i>07</i><b>Concept 6: smooth is mostly about what you don&amp;#39;t do</b></a></li><li><a href="#ring-or-deal"><i>08</i><b>Ring or deal?</b></a></li></ol></nav>
+</aside>
+</div>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li><li><a href="/learn/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero/"><span>The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero</span></a></li><li><a href="/learn/prompt-scroll-scrubbed-cinematic-site-webgl-replit/"><span>The Prompt I Used to Build a pear.no-Style Scroll-Scrubbed Cinematic Site on Replit (WebP Frames, No Code)</span></a></li></ul></aside>
+<footer>
+<div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a><a href="/blog/feed.xml">RSS</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+</footer>
+<script>
+(function () {
+  var bar = document.getElementById("progress");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var f = max > 0 ? h.scrollTop / max : 0;
+    bar.style.width = Math.max(24, f * window.innerWidth) + "px";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  // Scroll-spy: TOC highlight + the H2's yellow underline.
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var heads = links.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && heads.length) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.removeAttribute("data-current");
+          current = e.target;
+          current.setAttribute("data-current", "");
+          links.forEach(function (a) {
+            if (a.getAttribute("href") === "#" + current.id) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+          });
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+  // COPY buttons in prompt boxes.
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = btn.closest(".promptbox");
+      var prompt = box && box.querySelector(".prompt");
+      if (!prompt) return;
+      var done = function () {
+        btn.textContent = "Copied ✓";
+        btn.classList.add("done");
+        setTimeout(function () { btn.textContent = btn.dataset.label || "Copy prompt"; btn.classList.remove("done"); }, 2000);
+      };
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(prompt.textContent.trim()).then(done, done);
+      } else done();
+    });
+  });
+  // Reel videos play when in view, pause when scrolled away.
+  var reels = document.querySelectorAll(".reel video");
+  if ("IntersectionObserver" in window && reels.length) {
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) e.target.play().catch(function () {});
+        else e.target.pause();
+      });
+    }, { threshold: 0.3 });
+    reels.forEach(function (v) { rio.observe(v); });
+  }
+})();
+</script>
 </body>
 </html>
