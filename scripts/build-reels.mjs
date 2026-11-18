@@ -46,18 +46,14 @@ const esc = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 function page(reel, prev, next) {
-  const isReelUrl = /instagram\.com\/reel\//.test(reel.url);
-  const player = isReelUrl
-    ? `<blockquote class="instagram-media" data-instgrm-permalink="${esc(reel.url)}" data-instgrm-version="14" style="background:#fff;border:0;border-radius:16px;margin:0;max-width:540px;min-width:326px;padding:0;width:100%">
-        <a href="${esc(reel.url)}" target="_blank" rel="noreferrer">Watch this reel on Instagram</a>
-      </blockquote>
-      <script async src="//www.instagram.com/embed.js"></script>`
-    : reel.preview
-      ? `<video src="${esc(reel.preview)}" poster="${esc(reel.thumb)}" autoplay muted loop playsinline controls preload="metadata"></video>`
-      : `<img src="${esc(reel.thumb)}" alt="${esc(reel.title)}" />`;
-  const watchLink = isReelUrl
-    ? `<a class="reel-watch" href="${esc(reel.url)}" target="_blank" rel="noreferrer">Watch on Instagram ↗</a>`
-    : `<a class="reel-watch" href="https://www.instagram.com/cod.ehx/" target="_blank" rel="noreferrer">Watch the full reel on Instagram ↗</a>`;
+  // No Instagram embed: it renders a broken-link error live ("The link to
+  // this photo or video may be broken, or the post may have been removed"),
+  // verified 18 Nov 2026 on two reels. Play the local preview clip where
+  // one exists; otherwise show the poster and link out to Instagram.
+  const player = reel.preview
+    ? `<video src="${esc(reel.preview)}" poster="${esc(reel.thumb)}" autoplay muted loop playsinline controls preload="metadata"></video>`
+    : `<img src="${esc(reel.thumb)}" alt="${esc(reel.title)}" />`;
+  const watchLink = `<a class="reel-watch" href="${esc(reel.url)}" target="_blank" rel="noreferrer">Watch the full reel on Instagram ↗</a>`;
   const nav = (r, label) =>
     r
       ? `<a class="reel-nav" href="/reels/${esc(r.id)}/"><span>${label}</span><b>${esc(r.title)}</b></a>`
