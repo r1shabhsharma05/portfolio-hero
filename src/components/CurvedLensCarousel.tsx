@@ -471,9 +471,9 @@ export default function CurvedLensCarousel({
         intro = Math.min(1.5, (now - introStart) / 1100)
         if (intro >= 1.5) intro = 1
       }
-      // Continuous drift: the target advances 10 deg/s (scaled by intro
+      // Continuous drift: the target advances 20 deg/s (scaled by intro
       // progress), the spring eases pos after it. No timer, no steps.
-      if (!dragging && !reduced.matches) target += (10 / (360 / n)) * Math.min(1, Math.max(0, intro)) * dt
+      if (!dragging && !reduced.matches) target += (20 / (360 / n)) * Math.min(1, Math.max(0, intro)) * dt
       if (!dragging) {
         if (reduced.matches) {
           pos = target

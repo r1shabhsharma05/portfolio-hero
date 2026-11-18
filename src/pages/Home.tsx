@@ -69,7 +69,7 @@ function HeroScene({ focus, frameRef }: { focus: string | null; frameRef: React.
       REELS.map((r) => ({
         title: r.title,
         kicker: r.views ? `${r.views} views` : "New",
-        caption: "Tap to watch on Instagram ↗",
+        caption: "Tap to watch the reel ↗",
         image: r.thumb,
         alt: r.title,
         video: r.preview ?? undefined,
@@ -78,7 +78,7 @@ function HeroScene({ focus, frameRef }: { focus: string | null; frameRef: React.
     []
   );
   const onSlideClick = useCallback((i: number) => {
-    window.open(REELS[i].url, "_blank", "noopener,noreferrer");
+    window.open(`/reels/${REELS[i].id}/`, "_blank", "noopener,noreferrer");
   }, []);
   if (!rect) return null;
   return (
@@ -274,6 +274,24 @@ function DevPortal() {
   );
 }
 
+/** Copy icon shared by the agent panel and curl rows. */
+function CopyIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2H3.5A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+/** Renders "[1]" footnote markers in example text as superscript numerals. */
+function renderExampleText(text: string): ReactNode[] {
+  return text.split(/(\[\d+\])/g).map((part, i) => {
+    const m = /^\[(\d+)\]$/.exec(part);
+    return m ? <sup key={i}>{m[1]}</sup> : part;
+  });
+}
+
 /** Home Agent view — mirrors the reference's home agent view: sky hero,
  *  five persona rows (one open at a time, Founder by default), "Plug this
  *  site into your agent", "What Rishabh does", "Work with Rishabh", then
@@ -307,18 +325,17 @@ function AgentView({
             Pick who you are. You send one prompt, your AI reads this site, and you get an
             answer written for you.
           </p>
-          <p className="home-agent-iam">I AM A</p>
-          <p className="home-agent-five">FIVE PEOPLE, FIVE ANSWERS</p>
         </div>
-        <div className="home-agent-personas" aria-label="Who are you?">
+      </section>
+
+      <section className="home-agent-personas-sec" aria-label="Who are you?">
+        <p className="home-agent-iam">I AM A</p>
+        <p className="home-agent-five">FIVE PEOPLE,<br />FIVE ANSWERS</p>
+        <div className="home-agent-personas">
           {HOME_PERSONAS.map((p) => {
             const open = p.id === openPersona;
             return (
-              <div
-                key={p.id}
-                className={open ? "home-agent-persona is-open" : "home-agent-persona"}
-                style={{ "--accent": p.accent, "--on-accent": p.accent === "#FFC81A" ? "#111111" : "#FFFFFF" } as React.CSSProperties}
-              >
+              <div key={p.id} className={open ? "home-agent-persona is-open" : "home-agent-persona"}>
                 <button
                   type="button"
                   className="home-agent-persona-head"
@@ -334,81 +351,94 @@ function AgentView({
                   <span className="home-agent-persona-toggle">{open ? "CLOSE" : "OPEN"}</span>
                 </button>
                 {open && (
-                  <div className="home-agent-persona-body">
-                    <p className="home-agent-step">1 · SEND THIS</p>
-                    <p className="home-agent-kicker">YOUR PROMPT</p>
-                    <p className="home-agent-kicker">OPENS IN A NEW TAB</p>
-                    <p className="home-agent-prompt">{p.prompt}</p>
-                    <div className="home-agent-airow">
-                      <div className="home-agent-ai" role="group" aria-label="Your AI">
-                        {(Object.keys(AI_URLS) as AiChoice[]).map((k) => (
-                          <button
-                            key={k}
-                            type="button"
-                            aria-pressed={ai === k}
-                            className={ai === k ? "home-agent-ai-choice is-selected" : "home-agent-ai-choice"}
-                            onClick={() => setAi(k)}
-                          >
-                            {AI_LABELS[k]}
-                          </button>
-                        ))}
+                  <div className="home-agent-panel">
+                    <div className="home-agent-panel-left">
+                      <p className="home-agent-step">1 · SEND THIS</p>
+                      <div className="home-agent-prompt-head">
+                        <p className="home-agent-kicker">YOUR PROMPT</p>
+                        <p className="home-agent-kicker">OPENS IN A NEW TAB</p>
                       </div>
-                      <button
-                        type="button"
-                        className="home-agent-copybtn"
-                        aria-label="Copy prompt"
-                        onClick={() => copyPrompt(`persona-${p.id}`, p.prompt)}
-                      >
-                        {copied === `persona-${p.id}` ? (
-                          "✓"
-                        ) : (
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                            <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-                            <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2H3.5A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5" stroke="currentColor" strokeWidth="1.5" />
-                          </svg>
-                        )}
-                      </button>
-                    </div>
-                    <a
-                      className="home-agent-ask"
-                      href={`${AI_URLS[ai]}${encodeURIComponent(p.prompt)}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Ask {AI_LABELS[ai]} ↗
-                    </a>
-                    <p className="home-agent-step">2 · YOUR AI READS</p>
-                    <p className="home-agent-kicker">WHAT YOUR AI DOES</p>
-                    <ul className="home-agent-reads">
-                      {HOME_AGENT_READS.map((r) => (
-                        <li key={r.label}>
-                          <span>{r.label}</span> — {r.desc}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="home-agent-step">3 · YOU GET</p>
-                    <p className="home-agent-kicker">WHAT COMES BACK</p>
-                    <p className="home-agent-kicker">EXAMPLE ANSWER</p>
-                    <ul className="home-agent-example">
-                      {p.example.map((e) => (
-                        <li key={e.lead}>
-                          <b>{e.lead}</b> {e.text}
-                        </li>
-                      ))}
-                    </ul>
-                    {p.quote && <p className="home-agent-quote">&ldquo;{p.quote}&rdquo;</p>}
-                    {p.curl && (
-                      <div className="home-agent-curl">
-                        <code>{p.curl}</code>
-                        <button type="button" onClick={() => copyPrompt(`curl-${p.id}`, p.curl!)}>
-                          {copied === `curl-${p.id}` ? "Copied ✓" : "Copy"}
+                      <p className="home-agent-prompt">{p.prompt}</p>
+                      <div className="home-agent-airow">
+                        <div className="home-agent-ai" role="group" aria-label="Your AI">
+                          {(Object.keys(AI_URLS) as AiChoice[]).map((k) => (
+                            <button
+                              key={k}
+                              type="button"
+                              aria-pressed={ai === k}
+                              className={ai === k ? "home-agent-ai-choice is-selected" : "home-agent-ai-choice"}
+                              onClick={() => setAi(k)}
+                            >
+                              {AI_LABELS[k]}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="home-agent-actions">
+                        <button
+                          type="button"
+                          className="home-agent-copybtn"
+                          aria-label="Copy prompt"
+                          onClick={() => copyPrompt(`persona-${p.id}`, p.prompt)}
+                        >
+                          {copied === `persona-${p.id}` ? "Copied ✓" : (<><CopyIcon />Copy prompt</>)}
                         </button>
+                        <a
+                          className="home-agent-ask"
+                          href={`${AI_URLS[ai]}${encodeURIComponent(p.prompt)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Ask {AI_LABELS[ai]} ↗
+                        </a>
                       </div>
-                    )}
-                    <p className="home-agent-footnotes">{p.footnotes.join("  ")}</p>
-                    <p className="home-agent-rather">
-                      RATHER READ IT YOURSELF? <a href={p.readHref}>{p.readLabel} ↗</a>
-                    </p>
+                      <p className="home-agent-step">2 · YOUR AI READS</p>
+                      <ol className="home-agent-reads">
+                        {HOME_AGENT_READS.map((r, i) => (
+                          <li key={r.label}>
+                            <span className="home-agent-reads-num">{String(i + 1).padStart(2, "0")}</span>
+                            <span className="home-agent-reads-text">
+                              <span className="home-agent-reads-label">{r.label}</span>
+                              <span className="home-agent-reads-desc">{r.desc}</span>
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                      {p.curl && (
+                        <div className="home-agent-curl">
+                          <code>{p.curl}</code>
+                          <button type="button" aria-label="Copy curl" onClick={() => copyPrompt(`curl-${p.id}`, p.curl!)}>
+                            {copied === `curl-${p.id}` ? "✓" : <CopyIcon />}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <div className="home-agent-panel-right">
+                      <img className="home-agent-panel-photo" src="/sky.jpg" alt="" aria-hidden="true" />
+                      <div className="home-agent-photo-head">
+                        <p className="home-agent-step">3 · YOU GET</p>
+                        <div className="home-agent-photo-kickers">
+                          <p className="home-agent-kicker">WHAT COMES BACK</p>
+                          <p className="home-agent-kicker">EXAMPLE ANSWER</p>
+                        </div>
+                      </div>
+                      <div className="home-agent-answer">
+                        <ul className="home-agent-example">
+                          {p.example.map((e) => (
+                            <li key={e.lead}>
+                              <b>{e.lead}</b>
+                              <span>{renderExampleText(e.text)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        {p.quote && <p className="home-agent-quote">&ldquo;{p.quote}&rdquo;</p>}
+                        <p className="home-agent-footnotes">{p.footnotes.join("  ")}</p>
+                      </div>
+                      <div className="home-agent-rather">
+                        <span>RATHER READ IT YOURSELF?</span>
+                        <a href={p.readHref}>{p.readLabel} ↗</a>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -418,24 +448,35 @@ function AgentView({
       </section>
 
       <section className="home-agent-plug" aria-label="Plug this site into your agent">
-        <p className="home-agent-eyebrow">05 · DEVELOPERS</p>
-        <h2>Plug this site into your agent.</h2>
-        <p className="home-agent-plug-text">
-          Plain text, Markdown and JSON for everything here. No keys, no signup.
-        </p>
-        <a className="home-agent-devbtn" href="/developers">
-          Open the developer page ↗
-        </a>
-        <p className="home-agent-label">START HERE</p>
-        <div className="home-agent-curls">
-          {HOME_AGENT_CURLS.map((c) => (
-            <div key={c} className="home-agent-curl">
-              <code>{c}</code>
-              <button type="button" onClick={() => copyPrompt(`start-${c.slice(7, 22)}`, c)}>
-                {copied === `start-${c.slice(7, 22)}` ? "Copied ✓" : "Copy"}
-              </button>
+        <div className="home-agent-plug-top">
+          <div className="home-agent-plug-copy">
+            <p className="home-agent-eyebrow">05 · DEVELOPERS</p>
+            <h2>Plug this site into your agent.</h2>
+            <p className="home-agent-plug-text">
+              Plain text, Markdown and JSON for everything here. No keys, no signup.
+            </p>
+            <div className="home-agent-devrow">
+              <a className="home-agent-devbtn" href="/developers">
+                Open the developer page
+              </a>
+              <a className="home-agent-devarrow" href="/developers" aria-label="Open the developer page">
+                ↗
+              </a>
             </div>
-          ))}
+          </div>
+          <div className="home-agent-curlcard">
+            <p className="home-agent-label">START HERE</p>
+            <div className="home-agent-curls">
+              {HOME_AGENT_CURLS.map((c) => (
+                <div key={c} className="home-agent-curl">
+                  <code>{c}</code>
+                  <button type="button" aria-label="Copy" onClick={() => copyPrompt(`start-${c.slice(7, 22)}`, c)}>
+                    {copied === `start-${c.slice(7, 22)}` ? "✓" : <CopyIcon />}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="home-agent-endpoints">
           {HOME_AGENT_ENDPOINTS.map((g) => (
@@ -444,8 +485,10 @@ function AgentView({
               <ul>
                 {g.rows.map((r) => (
                   <li key={r.path}>
-                    <span className={`home-agent-method${r.method === "POST" ? " is-post" : ""}`}>{r.method}</span>
-                    <code>{r.path}</code>
+                    <span className="home-agent-endpoint-top">
+                      <span className={`home-agent-method${r.method === "POST" ? " is-post" : ""}`}>{r.method}</span>
+                      <code>{r.path}</code>
+                    </span>
                     <span className="home-agent-endpoint-desc">{r.desc}</span>
                   </li>
                 ))}

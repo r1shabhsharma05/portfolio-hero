@@ -282,4 +282,22 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <!-- reels -->
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/DfEjg7Hjghl/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/DfVSuL7zIhi/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/De6U9LDtLVf/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/De194H9DvUY/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/Dfmk0MQPvFn/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/DfGwobiFElT/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/DfnAhmGhVxY/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/DfFAweQH_TG/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/github-prompt/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/one-prompt/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/macbook-7day/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/alfaaz-single-prompt/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/muse-motion/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/kalyani-lyric/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/portfolio-reel/</loc></url>
+  <url><loc>https://portfolio-hero-psi-lemon.vercel.app/reels/claude-five-launches/</loc></url>
+  <!-- /reels -->
 </urlset>
