@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import ChatModal from "../components/ChatModal";
 import CursorLabel from "../components/CursorLabel";
+import AgentView from "../components/AgentView";
 import {
+  openAgentTransition,
   openWorldTransition,
   preloadWorldScene,
   revealWorldTransition,
@@ -355,7 +356,7 @@ function ReachCard({ reel }: { reel: Reel }) {
 }
 
 export default function Brand() {
-  const [chatOpen, setChatOpen] = useState(false);
+  const [view, setView] = useState<"human" | "agent">("human");
   const [headerHidden, setHeaderHidden] = useState(false);
   // World transition (the reference's mechanism): arriving from the homepage, the
   // full-screen seascape scene is already covering; it morphs into the hero.
@@ -461,7 +462,7 @@ export default function Brand() {
                 </span>
                 <a
                   className="world-link"
-                  style={{ "--world": w.color, "--world-text": w.text } as React.CSSProperties}
+                  style={{ "--world": w.color, "--world-on": w.text } as React.CSSProperties}
                   href={w.href}
                   {...(w.id === "brand" ? { "aria-current": "page" } : {})}
                   onMouseEnter={() => preloadWorldScene(WORLD_SCENES[w.id].scene)}
@@ -477,9 +478,9 @@ export default function Brand() {
             ))}
           </nav>
         </div>
-        <div className="mode-switch" data-mode="human" role="group" aria-label="View this page as">
+        <div className="mode-switch" data-mode={view} role="group" aria-label="View this page as" style={{ "--world": "#EF3B2D" } as React.CSSProperties}>
           <span className="mode-option">
-            <button type="button" aria-pressed="true" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+            <button type="button" aria-pressed={view === "human"} onClick={() => { setView("human"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
               Human
             </button>
           </span>
@@ -487,7 +488,7 @@ export default function Brand() {
             <span className="mode-slash" aria-hidden="true">
               /
             </span>
-            <button type="button" aria-pressed="false" onClick={() => setChatOpen(true)}>
+            <button type="button" aria-pressed={view === "agent"} onClick={() => { if (view !== "agent") openAgentTransition(() => setView("agent")); }} onMouseEnter={() => preloadWorldScene("/sky-agent.jpg")}>
               Agent
             </button>
           </span>
@@ -495,6 +496,8 @@ export default function Brand() {
       </header>
 
       <main>
+        {view === "human" ? (
+          <>
         {/* hero — seascape panel + best-Reels fan (the reference's media-kit hero) */}
         <section className="brand-hero" data-world-hero aria-label="Brand media kit">
           <div className="brand-hero-copy">
@@ -782,8 +785,13 @@ export default function Brand() {
             </p>
           </div>
         </section>
+      </>
+        ) : (
+          <AgentView />
+        )}
       </main>
 
+      {view === "human" && (
       <footer className="site-footer build-footer">
         <span>© 2026 Rishabh Sharma</span>
         <nav aria-label="Footer">
@@ -796,7 +804,7 @@ export default function Brand() {
           <a href="/developers">Developers</a>
         </nav>
       </footer>
-      {chatOpen && <ChatModal onClose={() => setChatOpen(false)} />}
+      )}
     </div>
   );
 }

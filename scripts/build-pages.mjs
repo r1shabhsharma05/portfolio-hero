@@ -14,6 +14,10 @@ import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 
 import { PAGES, SITE } from "../api/_content.js";
+import { applyStats, getLiveStats } from "../api/_stats.js";
+
+const STATS = await getLiveStats();
+const fill = (md) => applyStats(md, STATS);
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PUBLIC = join(ROOT, "public");
@@ -186,7 +190,7 @@ ${JSON.stringify(pageSchema(slug, page), null, 2)}
     <div class="wrap">
     ${NAV}
     <main>
-${renderMarkdown(page.markdown)}
+${renderMarkdown(fill(page.markdown))}
     </main>
     <footer>
       <p>Rishabh Sharma — Mathura, India · <a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></p>
@@ -220,7 +224,7 @@ async function injectHomepage() {
       #static-content[hidden] { display: none !important; }
     </style>
     <div id="static-content">
-${renderMarkdown(PAGES["/"].markdown)}
+${renderMarkdown(fill(PAGES["/"].markdown))}
       <p><a href="/about">About</a> · <a href="/contact">Contact</a> ·
          <a href="/developers">Developers</a> · <a href="/learn/">Learn</a> ·
          <a href="/privacy">Privacy</a> · <a href="/llms.txt">llms.txt</a></p>

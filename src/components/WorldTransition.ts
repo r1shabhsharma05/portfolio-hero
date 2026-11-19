@@ -177,6 +177,112 @@ export function openWorldTransition(href: string = WORLD_HREF, world: WorldId = 
 }
 
 /**
+ * Agent view (in-page, no navigation): same cover as the world transition —
+ * the agent sky wipes in with "Agent." — then `onCovered` swaps the view and
+ * the reveal morphs the scene into the agent hero panel. Escape cancels the
+ * cover (no swap). Reduced motion swaps directly.
+ */
+export function openAgentTransition(onCovered: () => void): void {
+  if (prefersReducedMotion()) {
+    onCovered();
+    return;
+  }
+  if (document.querySelector(".world-transition")) return;
+
+  const d = document.createElement("div");
+  d.className = "world-transition";
+  d.setAttribute("aria-hidden", "true");
+  d.style.setProperty("--scene", `url("/sky-agent.jpg")`);
+  const c = document.createElement("div");
+  c.className = "world-transition-scene";
+  const u = document.createElement("i");
+  u.className = "world-transition-light";
+  const h = document.createElement("span");
+  h.className = "world-transition-name";
+  h.innerHTML = `<span>Agent.</span>`;
+  c.appendChild(h);
+  d.appendChild(c);
+  d.appendChild(u);
+  [8, 22, 38, 55, 70, 84].forEach((left, i) => {
+    const leaf = document.createElement("i");
+    leaf.className = "world-transition-leaf";
+    leaf.style.left = `${left}%`;
+    leaf.style.animationDelay = `${i * 0.35}s`;
+    leaf.style.background = i % 2 ? "#e63b2e" : "#ffc81a";
+    d.appendChild(leaf);
+  });
+  document.body.appendChild(d);
+
+  const p = document.createElement("span");
+  p.className = "sr-only";
+  p.setAttribute("role", "status");
+  p.textContent = "Opening Agent";
+  document.body.appendChild(p);
+
+  const page = inertPage(true);
+  document.documentElement.classList.add("world-transition-active");
+
+  let cancelled = false;
+  const cleanup = () => {
+    if (cancelled) return;
+    cancelled = true;
+    d.remove();
+    p.remove();
+    page.forEach((el) => {
+      el.inert = false;
+    });
+    document.documentElement.classList.remove("world-transition-active");
+    window.removeEventListener("keydown", onKey, true);
+    window.clearTimeout(safety);
+  };
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      cleanup();
+    }
+  };
+  window.addEventListener("keydown", onKey, true);
+  const safety = window.setTimeout(cleanup, 8000);
+
+  const wipe = c.animate(
+    [{ clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)" }],
+    { duration: 700, easing: EASE_COVER, fill: "forwards" }
+  );
+  const light = u.animate(
+    [
+      { left: "-14%", opacity: 1 },
+      { left: "100%", opacity: 1 },
+      { left: "100%", opacity: 0 },
+    ],
+    { duration: 820, easing: EASE_COVER, fill: "forwards" }
+  );
+  const nameEl = h.firstElementChild as HTMLElement | null;
+  const name = nameEl
+    ? nameEl.animate(
+        [{ transform: "translateY(105%)" }, { transform: "none" }],
+        { duration: 700, delay: 280, easing: EASE_SOFT, fill: "forwards" }
+      )
+    : null;
+  name?.finished.catch(() => {});
+  Promise.all([wipe.finished, light.finished])
+    .then(() => {
+      if (cancelled) return;
+      // Hand the overlay to the reveal: drop cover-only bits, swap the view,
+      // then morph the scene into the agent hero panel.
+      p.remove();
+      window.removeEventListener("keydown", onKey, true);
+      window.clearTimeout(safety);
+      onCovered();
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          revealWorldTransition({ hero: ".home-agent-sky", copy: ".home-agent-copy" });
+        })
+      );
+    })
+    .catch(() => {});
+}
+
+/**
  * Destination side: the overlay is already in the DOM in its covered state
  * (rendered by the world page). Morph the scene into the hero panel, fade the
  * overlay out, fade the hero content in. Returns a cleanup function.

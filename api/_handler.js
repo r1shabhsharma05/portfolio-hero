@@ -11,7 +11,7 @@ import { apiHeaders, clientIp, problem, rateLimit } from "./_data.js";
  * } resolve
  */
 export function readOnlyJson(resolve) {
-  return function handler(req, res) {
+  return async function handler(req, res) {
     const { limited, remaining, resetSeconds } = rateLimit(clientIp(req));
     apiHeaders(res, { remaining, resetSeconds });
 
@@ -38,7 +38,7 @@ export function readOnlyJson(resolve) {
       );
     }
 
-    const result = resolve(req);
+    const result = await resolve(req);
     if (result.error) {
       const { status, code, title, detail, extra } = result.error;
       return problem(res, status, code, title, detail, extra);

@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import CursorLabel from "../components/CursorLabel";
+import AgentView from "../components/AgentView";
 import {
+  openAgentTransition,
   openWorldTransition,
   preloadWorldScene,
   revealWorldTransition,
@@ -9,7 +11,6 @@ import {
 } from "../components/WorldTransition";
 import {
   LEARN_GOALS,
-  LEARN_PERSONAS,
   LEARN_POSTS,
   type LearnPostType,
 } from "../data/learn";
@@ -17,20 +18,6 @@ import { NAV_WORLDS, PROFILE } from "../data/site";
 
 type View = "human" | "agent";
 type Filter = "all" | LearnPostType;
-type AiChoice = "claude" | "chatgpt" | "perplexity";
-
-const AI_URLS: Record<AiChoice, string> = {
-  claude: "https://claude.ai/new?q=",
-  chatgpt: "https://chatgpt.com/?q=",
-  perplexity: "https://www.perplexity.ai/search?q=",
-};
-
-const AI_LABELS: Record<AiChoice, string> = {
-  claude: "Claude",
-  chatgpt: "ChatGPT",
-  perplexity: "Perplexity",
-};
-
 const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
   { id: "Roadmap", label: "Roadmaps" },
@@ -64,9 +51,6 @@ export default function Learn() {
   const [query, setQuery] = useState("");
   const [done, setDone] = useState<Set<string>>(() => loadDone());
   const [activeRow, setActiveRow] = useState<string | null>(null);
-  const [openPersona, setOpenPersona] = useState("student");
-  const [ai, setAi] = useState<AiChoice>("claude");
-  const [copied, setCopied] = useState<string | null>(null);
 
   useEffect(() => {
     if (!showTransition) return;
@@ -119,15 +103,6 @@ export default function Learn() {
     });
   };
 
-  const copyPrompt = async (id: string, text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(id);
-      window.setTimeout(() => setCopied((c) => (c === id ? null : c)), 1500);
-    } catch {
-      /* clipboard unavailable: the prompt is visible to copy by hand */
-    }
-  };
 
   const heading = query.trim()
     ? `${shown.length} POSTS FOR \u201C${query.trim().toUpperCase()}\u201D`
@@ -169,7 +144,7 @@ export default function Learn() {
                 </span>
                 <a
                   className="world-link"
-                  style={{ "--world": w.color, "--world-text": w.text } as React.CSSProperties}
+                  style={{ "--world": w.color, "--world-on": w.text } as React.CSSProperties}
                   href={w.href}
                   {...(w.id === "learn" ? { "aria-current": "page" } : {})}
                   onMouseEnter={() => preloadWorldScene(WORLD_SCENES[w.id].scene)}
@@ -211,10 +186,8 @@ export default function Learn() {
             <button
               type="button"
               aria-pressed={view === "agent"}
-              onClick={() => {
-                setView("agent");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              onClick={() => { if (view !== "agent") openAgentTransition(() => setView("agent")); }}
+              onMouseEnter={() => preloadWorldScene("/sky-agent.jpg")}
             >
               Agent
             </button>
@@ -404,168 +377,11 @@ export default function Learn() {
             </section>
           </>
         ) : (
-          <>
-            <section className="learn-hero learn-hero-agent">
-              <div className="learn-hero-copy">
-                <p className="learn-kicker">
-                  LEARN · FOR AGENTS
-                </p>
-                <h1>Ask your AI about Rishabh.</h1>
-                <p className="learn-sub">
-                  Pick who you are. You send one prompt, your AI reads this
-                  site, and you get an answer written for you.
-                </p>
-              </div>
-            </section>
-
-            <section className="learn-personas" aria-label="Who are you?">
-              {LEARN_PERSONAS.map((persona) => {
-                const open = persona.id === openPersona;
-                const reads =
-                  persona.id === "student"
-                    ? [
-                        "/llms.txt",
-                        "/learn/",
-                        "/learn/518-javascript-interview-questions/",
-                      ]
-                    : ["/llms.txt", "/learn/"];
-                return (
-                  <div
-                    key={persona.id}
-                    className={
-                      open ? "learn-persona is-open" : "learn-persona"
-                    }
-                  >
-                    <button
-                      type="button"
-                      className="learn-persona-head"
-                      aria-expanded={open}
-                      onClick={() =>
-                        setOpenPersona(open ? "" : persona.id)
-                      }
-                    >
-                      <span className="learn-persona-num">{persona.num}</span>
-                      <span className="learn-persona-name">
-                        {persona.name}
-                      </span>
-                      <span className="learn-persona-toggle" aria-hidden="true">
-                        {open ? "−" : "+"}
-                      </span>
-                    </button>
-                    {open && (
-                      <div className="learn-persona-body">
-                        <p className="learn-agent-step">1 · THE PROMPT</p>
-                        <p className="learn-agent-prompt">{persona.prompt}</p>
-                        <button
-                          type="button"
-                          className="learn-copy"
-                          onClick={() => copyPrompt(persona.id, persona.prompt)}
-                        >
-                          {copied === persona.id ? "Copied ✓" : "Copy prompt"}
-                        </button>
-                        <p className="learn-agent-step">2 · YOUR AI READS</p>
-                        <ul className="learn-reads">
-                          {reads.map((r) => (
-                            <li key={r}>
-                              <a
-                                href={
-                                  r.startsWith("http")
-                                    ? r
-                                    : `https://portfolio-hero-psi-lemon.vercel.app${r}`
-                                }
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                {r}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                        <p className="learn-agent-step">3 · ASK YOUR AI</p>
-                        <div
-                          className="learn-ai-choices"
-                          role="group"
-                          aria-label="Choose your AI"
-                        >
-                          {(Object.keys(AI_URLS) as AiChoice[]).map((k) => (
-                            <button
-                              key={k}
-                              type="button"
-                              aria-pressed={ai === k}
-                              className={
-                                ai === k
-                                  ? "learn-ai-choice is-selected"
-                                  : "learn-ai-choice"
-                              }
-                              onClick={() => setAi(k)}
-                            >
-                              {AI_LABELS[k]}
-                            </button>
-                          ))}
-                        </div>
-                        <a
-                          className="learn-ask"
-                          href={`${AI_URLS[ai]}${encodeURIComponent(persona.prompt)}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Ask {AI_LABELS[ai]} ↗
-                        </a>
-                        {persona.example && (
-                          <>
-                            <p className="learn-agent-step">
-                              EXAMPLE ANSWER
-                            </p>
-                            <p className="learn-agent-example">
-                              {persona.example}
-                            </p>
-                          </>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </section>
-
-            <section className="learn-dev" aria-label="Plug this site into your agent">
-              <h2>Plug this site into your agent.</h2>
-              <ul className="learn-endpoints">
-                <li>
-                  <span className="learn-endpoint-name">READ</span>
-                  <a href="/llms.txt">/llms.txt</a>
-                  <span>Everything about Rishabh, in one file.</span>
-                </li>
-                <li>
-                  <span className="learn-endpoint-name">LEARN</span>
-                  <a href="/learn/">/learn/</a>
-                  <span>The roadmaps, prompts and builds.</span>
-                </li>
-                <li>
-                  <span className="learn-endpoint-name">BUILD</span>
-                  <a href="/projects/">/projects/</a>
-                  <span>The shipped work.</span>
-                </li>
-                <li>
-                  <span className="learn-endpoint-name">ASK</span>
-                  <a href="/api/chat">/api/chat</a>
-                  <span>Ask the site, get an answer.</span>
-                </li>
-                <li>
-                  <span className="learn-endpoint-name">DISCOVER</span>
-                  <a href="/sitemap.xml">/sitemap.xml</a>
-                  <span>Every page on this site.</span>
-                </li>
-              </ul>
-              <p className="learn-dev-note">
-                No keys. No signup.{" "}
-                <a href="/developers">Developer portal ↗</a>
-              </p>
-            </section>
-          </>
+          <AgentView />
         )}
       </main>
 
+      {view === "human" && (
       <footer className="site-footer build-footer">
         <span>© 2026 Rishabh Sharma</span>
         <nav aria-label="Footer">
@@ -578,6 +394,7 @@ export default function Learn() {
           <a href="/developers">Developers</a>
         </nav>
       </footer>
+      )}
     </div>
   );
 }

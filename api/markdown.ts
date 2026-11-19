@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { renderMarkdown, resolvePage } from "./_content.js";
+import { applyStats, getLiveStats } from "./_stats.js";
 
 /**
  * acceptmarkdown.com content negotiation.
@@ -8,7 +9,7 @@ import { renderMarkdown, resolvePage } from "./_content.js";
  * pass the original path through as `?path=`. Always sets `Vary: Accept` so a
  * CDN never serves the markdown variant to a browser asking for HTML.
  */
-export default function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Vary", "Accept, Accept-Encoding");
 
   if (req.method !== "GET" && req.method !== "HEAD") {
@@ -27,5 +28,5 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Cache-Control", "public, max-age=0, s-maxage=3600");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("X-Robots-Tag", "noarchive");
-  return res.status(200).send(renderMarkdown(key));
+  return res.status(200).send(applyStats(renderMarkdown(key), await getLiveStats()));
 }

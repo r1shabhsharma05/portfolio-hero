@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import ChatModal from "../components/ChatModal";
 import CursorLabel from "../components/CursorLabel";
+import AgentView from "../components/AgentView";
 import ReelCard from "../components/ReelCard";
 import SkillSphere from "../components/SkillSphere";
 import {
+  openAgentTransition,
   openWorldTransition,
   preloadWorldScene,
   revealWorldTransition,
@@ -12,12 +13,18 @@ import {
   WORLD_SCENE,
   WORLD_SCENES,
 } from "../components/WorldTransition";
-import { NAV_WORLDS, PROFILE, PROJECTS, REELS, STATS } from "../data/site";
+import { NAV_WORLDS, PROFILE, PROJECTS, REELS } from "../data/site";
+import { useLiveStats } from "../hooks/useLiveStats";
 
-const BUILD_STATS = [
-  ...STATS,
-  { value: "8", label: "Products shipped" },
-];
+function useBuildStats() {
+  const live = useLiveStats();
+  return [
+    { value: String(live.leetcode), label: "LeetCode solved" },
+    { value: live.contributions.toLocaleString("en-US"), label: `GitHub contributions in ${live.year}` },
+    { value: String(live.prsMerged), label: "Pull requests merged" },
+    { value: "8", label: "Products shipped" },
+  ];
+}
 
 type ShipItem = {
   name: string;
@@ -443,7 +450,8 @@ function ShipCard({ item, index }: { item: ShipItem; index: number }) {
 }
 
 export default function Build() {
-  const [chatOpen, setChatOpen] = useState(false);
+  const [view, setView] = useState<"human" | "agent">("human");
+  const buildStats = useBuildStats();
   const [headerHidden, setHeaderHidden] = useState(false);
   // World transition (the reference's mechanism): arriving from the homepage, the
   // full-screen sky scene is already covering; it morphs into the hero.
@@ -533,7 +541,7 @@ export default function Build() {
                   style={
                     {
                       "--world": w.color,
-                      "--world-text": w.text,
+                      "--world-on": w.text,
                     } as React.CSSProperties
                   }
                   href={w.href}
@@ -553,15 +561,16 @@ export default function Build() {
         </div>
         <div
           className="mode-switch"
-          data-mode="human"
+          data-mode={view}
           role="group"
           aria-label="View this page as"
+          style={{ "--world": "#2F55FF" } as React.CSSProperties}
         >
           <span className="mode-option">
             <button
               type="button"
-              aria-pressed="true"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              aria-pressed={view === "human"}
+              onClick={() => { setView("human"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
             >
               Human
             </button>
@@ -572,8 +581,8 @@ export default function Build() {
             </span>
             <button
               type="button"
-              aria-pressed="false"
-              onClick={() => setChatOpen(true)}
+              aria-pressed={view === "agent"}
+              onClick={() => { if (view !== "agent") openAgentTransition(() => setView("agent")); }} onMouseEnter={() => preloadWorldScene("/sky-agent.jpg")}
             >
               Agent
             </button>
@@ -582,6 +591,8 @@ export default function Build() {
       </header>
 
       <main>
+        {view === "human" ? (
+          <>
         <section
           className="build-hero"
           id="brief"
@@ -623,7 +634,7 @@ export default function Build() {
         </section>
 
         <section className="build-stats" aria-label="Numbers">
-          {BUILD_STATS.map((s) => (
+          {buildStats.map((s) => (
             <BuildStat key={s.label} value={s.value} label={s.label} />
           ))}
         </section>
@@ -752,8 +763,13 @@ export default function Build() {
             Tell me about it <span aria-hidden="true">↑</span>
           </a>
         </section>
+      </>
+        ) : (
+          <AgentView />
+        )}
       </main>
 
+      {view === "human" && (
       <footer className="site-footer build-footer">
         <span>© 2026 Rishabh Sharma</span>
         <nav aria-label="Footer">
@@ -770,7 +786,7 @@ export default function Build() {
           <a href="/privacy">Privacy</a>
         </nav>
       </footer>
-      {chatOpen && <ChatModal onClose={() => setChatOpen(false)} />}
+      )}
     </div>
   );
 }

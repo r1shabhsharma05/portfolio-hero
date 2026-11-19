@@ -60,9 +60,9 @@ export const REELS: Reel[] = [
 ];
 
 export const STATS = [
-  { value: "219", label: "LeetCode solved" },
-  { value: "1,739", label: "GitHub contributions in 2026" },
-  { value: "23", label: "Pull requests merged" },
+  { value: "221", label: "LeetCode solved" },
+  { value: "1,875", label: "GitHub contributions in 2026" },
+  { value: "24", label: "Pull requests merged" },
 ];
 
 export interface Project {
@@ -154,7 +154,7 @@ export const HOME_PERSONAS: HomePersona[] = [
     example: [
       {
         lead: "What he has built.",
-        text: "SafeLife AI, a personal safety app with live SOS; SecureGaurd, a security platform; RailSync 2.0, AI railway planning; plus LocalKart, Farmer Marketplace and Rkhshak. 23 open-source PRs merged. [1][2]",
+        text: "SafeLife AI, a personal safety app with live SOS; SecureGaurd, a security platform; RailSync 2.0, AI railway planning; plus LocalKart, Farmer Marketplace and Rkhshak. {{PRS_MERGED}} open-source PRs merged. [1][2]",
       },
       {
         lead: "Where he fits.",
@@ -226,7 +226,7 @@ export const HOME_PERSONAS: HomePersona[] = [
       },
       {
         lead: "Known for.",
-        text: "23 merged open-source PRs, 1,739 GitHub contributions in 2026, and free roadmaps for students. [1]",
+        text: "{{PRS_MERGED}} merged open-source PRs, {{CONTRIBUTIONS}} GitHub contributions in {{YEAR}}, and free roadmaps for students. [1]",
       },
     ],
     footnotes: ["1 /LLMS.TXT", "2 /ABOUT"],
@@ -279,6 +279,7 @@ export const HOME_AGENT_ENDPOINTS: {
       { method: "GET", path: "/llms.txt", desc: "Everything about Rishabh, in plain text" },
       { method: "GET", path: "/index.md", desc: "Any page as Markdown: add .md" },
       { method: "GET", path: "/openapi.json", desc: "OpenAPI 3.1" },
+      { method: "GET", path: "/api/v1/stats", desc: "Live LeetCode + GitHub numbers" },
     ],
   },
   {
@@ -316,7 +317,7 @@ export const HOME_AGENT_DOES = {
   items: [
     {
       title: "Build: products for founders",
-      body: "AI products and open-source tools: SafeLife AI, SecureGaurd, RailSync 2.0, LocalKart, Farmer Marketplace and Rkhshak — plus 23 merged open-source PRs.",
+      body: "AI products and open-source tools: SafeLife AI, SecureGaurd, RailSync 2.0, LocalKart, Farmer Marketplace and Rkhshak — plus {{PRS_MERGED}} merged open-source PRs.",
     },
     {
       title: "Brand: the media kit",

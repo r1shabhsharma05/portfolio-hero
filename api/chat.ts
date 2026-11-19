@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { applyStats, getLiveStats } from "./_stats.js";
 
 const ALLOWED_ORIGINS = [
   "https://portfolio-hero-psi-lemon.vercel.app",
@@ -60,8 +61,8 @@ About Rishabh:
 - Full name: Rishabh Sharma, 19 years old
 - Education: B.Tech in Computer Science at GLA University, Mathura (2025–2028). Home town: Bulandshahr, Uttar Pradesh, India.
 - Full-stack developer: React, Next.js, React Native, TypeScript, JavaScript, Node.js, Express.js, FastAPI, Python, Tailwind CSS, Supabase, PostgreSQL, Prisma, Vite, Expo, GSAP, GitHub Actions, Vercel, Render.
-- Open source: 23 pull requests merged and 8 open across Jenkins, WordPress/Gutenberg and other projects.
-- LeetCode: 219 problems solved (92 Easy, 100 Medium, 27 Hard).
+- Open source: {{PRS_MERGED}} pull requests merged and {{PRS_OPEN}} open across Jenkins, WordPress/Gutenberg and other projects.
+- LeetCode: {{LEETCODE}} problems solved ({{LEETCODE_EASY}} Easy, {{LEETCODE_MEDIUM}} Medium, {{LEETCODE_HARD}} Hard).
 - Products he built and shipped:
   - SecureGaurd — application security for every repository (https://secureguard-main.vercel.app)
   - SafeLife — emergency SOS app with live location tracking and guardian alerts (https://safelife-ai.vercel.app)
@@ -183,7 +184,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       body: JSON.stringify({
         model: "qwen/qwen3.8-27b",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: applyStats(SYSTEM_PROMPT, await getLiveStats()) },
           ...messages,
         ],
         max_tokens: 300,

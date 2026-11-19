@@ -33,16 +33,16 @@ contributes to open source, and makes tech Reels as @cod.ehx.
 I build production web and mobile products end to end — React and Next.js on
 the front, Node.js and FastAPI on the back, with Supabase and PostgreSQL for
 data. I have shipped eight products, from an AI railway block planner to an
-emergency SOS app, and I contribute to open source: 23 pull requests merged
+emergency SOS app, and I contribute to open source: {{PRS_MERGED}} pull requests merged
 and 8 open across Jenkins, WordPress/Gutenberg and other projects.
 
 Alongside engineering, I create. I make tech Reels about AI tools and coding
-as @cod.ehx, and I have solved 219 LeetCode problems.
+as @cod.ehx, and I have solved {{LEETCODE}} LeetCode problems.
 
 ## Highlights
 
-- **23 pull requests merged, 8 open** — Jenkins, WordPress/Gutenberg and more
-- **219 LeetCode problems solved** (92 Easy, 100 Medium, 27 Hard)
+- **{{PRS_MERGED}} pull requests merged, {{PRS_OPEN}} open** — Jenkins, WordPress/Gutenberg and more
+- **{{LEETCODE}} LeetCode problems solved** ({{LEETCODE_EASY}} Easy, {{LEETCODE_MEDIUM}} Medium, {{LEETCODE_HARD}} Hard)
 - **8 products shipped** — RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI, Rkhshak
 - **SafeLife** — emergency SOS app with live location tracking and guardian alerts
 - **Tech creator** — Reels about AI tools and coding as @cod.ehx
@@ -75,9 +75,9 @@ tech Reels as @cod.ehx.
 - B.Tech Computer Science, GLA University, Mathura — 2025 to 2028.
 - Full-stack developer: React, Next.js, React Native, TypeScript, Node.js,
   Express, FastAPI, Python, Supabase, PostgreSQL, Prisma, Tailwind CSS.
-- Open source: 23 pull requests merged and 8 open across Jenkins,
+- Open source: {{PRS_MERGED}} pull requests merged and {{PRS_OPEN}} open across Jenkins,
   WordPress/Gutenberg and other projects.
-- LeetCode: 219 problems solved (92 Easy, 100 Medium, 27 Hard).
+- LeetCode: {{LEETCODE}} problems solved ({{LEETCODE_EASY}} Easy, {{LEETCODE_MEDIUM}} Medium, {{LEETCODE_HARD}} Hard).
 - Creator: tech Reels as @cod.ehx; faceless history YouTube channel @UntoldHx.
 
 ## Products
@@ -198,7 +198,7 @@ export const PAGES = {
   "/": {
     title: "Rishabh Sharma — Full-stack Developer",
     description:
-      "Full-stack developer and B.Tech CS student at GLA University. 23 OSS PRs merged, LeetCode 219 solved, 8 products shipped, tech Reels as @cod.ehx.",
+      "Full-stack developer and B.Tech CS student at GLA University. {{PRS_MERGED}} OSS PRs merged, LeetCode {{LEETCODE}} solved, 8 products shipped, tech Reels as @cod.ehx.",
     markdown: HOME,
   },
   "/about": {

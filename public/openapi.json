@@ -4,14 +4,14 @@
     "title": "portfolio-hero-psi-lemon.vercel.app API",
     "version": "1.0.0",
     "summary": "Structured data about Rishabh Sharma for agents and developers.",
-    "description": "Read-only JSON endpoints describing Rishabh Sharma's profile, experience, skills and projects, plus a conversational endpoint that answers questions about his work.\n\n**Authentication.** None. There is no API key, no OAuth flow and no signup. The one exception is `POST /api/v1/chat`, which is origin-locked rather than key-authenticated — see https://portfolio-hero-psi-lemon.vercel.app/auth.md.\n\n**Versioning.** The API is versioned in the URL path (`/api/v1`). Breaking changes ship under a new path segment (`/api/v2`); the previous version keeps working. Additive changes — new fields, new optional parameters, new endpoints — are made in place and are not breaking, so clients must ignore unknown fields.\n\n**Deprecation policy.** A version scheduled for removal returns the `Deprecation` header (an HTTP date) and a `Sunset` header (RFC 8594) giving the date after which it stops responding, plus a `Link` header with `rel=\"deprecation\"` pointing at the migration notes. A version is never sunset less than 180 days after the `Deprecation` header first appears.\n\n**Rate limits.** Every response carries `RateLimit-Limit`, `RateLimit-Remaining`, `RateLimit-Reset` and `RateLimit-Policy`. Read endpoints allow 60 requests per IP per minute; the chat endpoint allows 10. A `429` includes `Retry-After`.\n\n**Errors.** Every non-2xx response is an RFC 9457 problem detail with `application/problem+json`, carrying a stable machine-readable `code`.",
+    "description": "Read-only JSON endpoints describing Rishabh Sharma's profile, experience, skills and projects, plus a conversational endpoint that answers questions about his work.\n\n**Authentication.** None. There is no API key, no OAuth flow and no signup. The one exception is `POST /api/v1/chat`, which is origin-locked rather than key-authenticated \u2014 see https://portfolio-hero-psi-lemon.vercel.app/auth.md.\n\n**Versioning.** The API is versioned in the URL path (`/api/v1`). Breaking changes ship under a new path segment (`/api/v2`); the previous version keeps working. Additive changes \u2014 new fields, new optional parameters, new endpoints \u2014 are made in place and are not breaking, so clients must ignore unknown fields.\n\n**Deprecation policy.** A version scheduled for removal returns the `Deprecation` header (an HTTP date) and a `Sunset` header (RFC 8594) giving the date after which it stops responding, plus a `Link` header with `rel=\"deprecation\"` pointing at the migration notes. A version is never sunset less than 180 days after the `Deprecation` header first appears.\n\n**Rate limits.** Every response carries `RateLimit-Limit`, `RateLimit-Remaining`, `RateLimit-Reset` and `RateLimit-Policy`. Read endpoints allow 60 requests per IP per minute; the chat endpoint allows 10. A `429` includes `Retry-After`.\n\n**Errors.** Every non-2xx response is an RFC 9457 problem detail with `application/problem+json`, carrying a stable machine-readable `code`.",
     "contact": {
       "name": "Rishabh Sharma",
       "email": "rishabhsharma14426@gmail.com",
       "url": "https://portfolio-hero-psi-lemon.vercel.app/contact"
     },
     "license": {
-      "name": "Content © Rishabh Sharma. Reuse with attribution.",
+      "name": "Content \u00a9 Rishabh Sharma. Reuse with attribution.",
       "url": "https://portfolio-hero-psi-lemon.vercel.app/privacy"
     }
   },
@@ -278,7 +278,7 @@
           "chat"
         ],
         "summary": "Ask a natural-language question about Rishabh",
-        "description": "Answers questions about Rishabh's work, skills, projects and background in prose. Responds with a Server-Sent Event stream of incremental text terminated by `data: [DONE]`.\n\nThis endpoint is origin-locked: the request must carry an `Origin` or `Referer` header beginning with `https://portfolio-hero-psi-lemon.vercel.app`, otherwise it returns 403. Prefer `GET /profile` when you need facts rather than prose — it is cheaper, unrestricted, and returns typed data.",
+        "description": "Answers questions about Rishabh's work, skills, projects and background in prose. Responds with a Server-Sent Event stream of incremental text terminated by `data: [DONE]`.\n\nThis endpoint is origin-locked: the request must carry an `Origin` or `Referer` header beginning with `https://portfolio-hero-psi-lemon.vercel.app`, otherwise it returns 403. Prefer `GET /profile` when you need facts rather than prose \u2014 it is cheaper, unrestricted, and returns typed data.",
         "parameters": [
           {
             "name": "Origin",
@@ -349,6 +349,17 @@
           },
           "502": {
             "$ref": "#/components/responses/UpstreamError"
+          }
+        }
+      }
+    },
+    "/stats": {
+      "get": {
+        "summary": "Live profile stats",
+        "description": "LeetCode solved counts, GitHub contributions for the current year, and merged/open open-source PR counts. Refreshed hourly from the public sources.",
+        "responses": {
+          "200": {
+            "description": "Live stats"
           }
         }
       }

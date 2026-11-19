@@ -6,18 +6,39 @@
   "trailingSlash": false,
   "cleanUrls": true,
   "redirects": [
-    { "source": "/blog", "destination": "/learn/", "permanent": true },
-    { "source": "/blog/:path*", "destination": "/learn/", "permanent": true }
+    {
+      "source": "/blog",
+      "destination": "/learn/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/learn/",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    { "source": "/api/v1/chat", "destination": "/api/chat" },
-    { "source": "/:path*", "destination": "/api/notfound?path=:path*" }
+    {
+      "source": "/llms.txt",
+      "destination": "/api/llms"
+    },
+    {
+      "source": "/api/v1/chat",
+      "destination": "/api/chat"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/api/notfound?path=:path*"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Vary", "value": "Accept, User-Agent, Accept-Encoding" },
+        {
+          "key": "Vary",
+          "value": "Accept, User-Agent, Accept-Encoding"
+        },
         {
           "key": "Link",
           "value": "</llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"LLM context\", </sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\", </developers>; rel=\"help\"; title=\"Developer portal\""
@@ -45,30 +66,57 @@
     {
       "source": "/llms.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "X-Robots-Tag", "value": "noarchive" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noarchive"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     },
     {
       "source": "/auth.md",
       "headers": [
-        { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     },
     {
       "source": "/openapi.json",
       "headers": [
-        { "key": "Content-Type", "value": "application/openapi+json; charset=utf-8" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Content-Type",
+          "value": "application/openapi+json; charset=utf-8"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     },
     {
       "source": "/.well-known/ai-catalog.json",
       "headers": [
-        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     },
     {
@@ -78,14 +126,23 @@
           "key": "Content-Type",
           "value": "application/linkset+json; profile=\"https://www.rfc-editor.org/info/rfc9727\""
         },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     },
     {
       "source": "/robots.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     }
   ]

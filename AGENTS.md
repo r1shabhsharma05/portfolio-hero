@@ -69,10 +69,13 @@ crawlers and no-JS clients only. Do not make it visible to normal visitors.
 content, markdown negotiation, `Vary` headers, trust-anchor pages, JSON-LD
 completeness and robots policy.
 
-**Facts only.** Every number on the site is verified: LeetCode 218 solved (92 Easy, 100 Medium, 26 Hard; 16 Nov 2026),
-1,739 GitHub contributions in 2026 (16 Nov 2026), 23 merged / 8 open OSS PRs, reel view
+**Facts only.** Every number on the site is verified: LeetCode 221 solved (92 Easy, 102 Medium, 27 Hard; 19 Nov 2026),
+1,875 GitHub contributions in 2026 (19 Nov 2026), 24 merged / 7 open OSS PRs, reel view
 counts (total 7,121; the 2 newest counts are Rishabh's own figures, IG connector down 2026-11-13). Never invent employment,
-internships, credentials or follower counts.
+internships, credentials or follower counts. The LeetCode/GitHub/PR numbers are **live**:
+`api/_stats.js` fetches them from the public sources (hourly cache, last-verified fallback)
+and fills `{{TOKENS}}` in the texts; `GET /api/v1/stats` exposes them. Never hard-code
+those numbers back into a text — use the tokens.
 
 ## Style
 
