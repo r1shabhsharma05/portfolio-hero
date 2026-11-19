@@ -361,7 +361,8 @@
           "200": {
             "description": "Live stats"
           }
-        }
+        },
+        "operationId": "getStats"
       }
     }
   },
