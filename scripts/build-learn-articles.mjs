@@ -196,6 +196,7 @@ function outputHtml(fm) {
 // posts show no reel.
 const REELS = {
   "kalyani-lyric": { video: "/reels/kalyani-lyric-preview.mp4", poster: "/reels/kalyani-lyric.webp", caption: "Kalyani — Lyric video · 5,000 views" },
+  "clipping-skill": { video: "/reels/clipping-skill-preview.mp4", poster: "/reels/clipping-skill.webp", caption: "See this clip? Made by a skill" },
 };
 function reelHtml(fm) {
   const r = fm.reel && REELS[fm.reel];

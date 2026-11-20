@@ -24,6 +24,7 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: "Prompt", label: "Prompts" },
   { id: "Career", label: "Career" },
   { id: "Business idea series", label: "Business ideas" },
+  { id: "Build", label: "Builds" },
 ];
 
 const DONE_KEY = "learn-done-v1";
@@ -72,6 +73,7 @@ export default function Learn() {
       "Case study": 0,
       About: 0,
       "Business idea series": 0,
+      Build: 0,
     };
     for (const p of LEARN_POSTS) c[p.type] += 1;
     return c;
@@ -306,7 +308,7 @@ export default function Learn() {
                   <input
                     type="search"
                     value={query}
-                    placeholder="Search 39 posts…"
+                    placeholder={`Search ${LEARN_POSTS.length} posts…`}
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </label>

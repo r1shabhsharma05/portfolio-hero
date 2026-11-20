@@ -1,4 +1,4 @@
-/** Learn page data — 39 posts (roadmaps, prompts, career, case studies,
+/** Learn page data — 40 posts (roadmaps, prompts, career, case studies,
  *  about, business ideas; Build posts removed 18 Nov 2026 on Rishabh's
  *  order, plus the two single-developer profile listicles the same day),
  *  with Rishabh's name
@@ -11,7 +11,8 @@ export type LearnPostType =
   | "Career"
   | "Case study"
   | "About"
-  | "Business idea series";
+  | "Business idea series"
+  | "Build";
 
 export interface LearnPost {
   /** As shown on the list, e.g. "15 Nov". */
@@ -24,6 +25,8 @@ export interface LearnPost {
 }
 
 export const LEARN_POSTS: LearnPost[] = [
+  // Rishabh's own post (20 Nov 2026): the GTA 6 Clipper skill, step by step.
+  { date: "20 Nov", type: "Build", title: "One Skill, Ten Clips: How My GTA 6 Clipper Turns One Long Video Into Vertical Shorts", url: "/learn/gta6-clipper-skill-one-video-ten-shorts/", hasReel: true },
   // Rishabh's own post (18 Nov 2026): the round-up micro-savings business idea.
   { date: "18 Nov", type: "Business idea series", title: "Someone Please Build This in India: The Round-Up Micro-Savings App", url: "/learn/round-up-micro-savings-app-india/", hasReel: true },
   // Rishabh's own post (18 Nov 2026): the Kalyani lyric video pipeline.

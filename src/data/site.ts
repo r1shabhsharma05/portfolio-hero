@@ -39,7 +39,10 @@ export interface Reel {
  *  blurred-fill treatment so the cards read clean. 2 more Drive reels added
  *  2026-11-16 (tag NEW, no views): "Portfolio reel" (his video-editor showreel;
  *  letterboxed, blurred-fill poster/preview) and "Claude dropped five launches"
- *  (Claude Sheets / Whiteboards / Meetings / Plans explainer). Total 16 reels. */
+ *  (Claude Sheets / Whiteboards / Meetings / Plans explainer). 3 more Drive reels
+ *  added 2026-11-20 (tag NEW, no views): "See this clip? Made by a skill" (clipping
+ *  skill), "Create a digital product for your audience" (Claude business reel) and
+ *  "Only One Skill" (altura website skill). Total 19 reels. */
 export const REELS: Reel[] = [
   { id: "DfEjg7Hjghl", title: "100+ LLM apps sitting FREE on GitHub right now.", views: "206", viewsRaw: 206, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfEjg7Hjghl/", thumb: "/reels/llm-apps-206.jpg", preview: null },
   { id: "DfVSuL7zIhi", title: "Gemini 4 argon ....", views: "127", viewsRaw: 127, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfVSuL7zIhi/", thumb: "/reels/gemini.webp", preview: "/reels/gemini-preview.mp4" },
@@ -57,6 +60,9 @@ export const REELS: Reel[] = [
   { id: "kalyani-lyric", title: "Kalyani — Lyric video", views: "5,000", viewsRaw: 5000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/kalyani-lyric.webp", preview: "/reels/kalyani-lyric-preview.mp4" },
   { id: "portfolio-reel", title: "Portfolio reel", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/portfolio-reel.webp", preview: "/reels/portfolio-reel-preview.mp4" },
   { id: "claude-five-launches", title: "Claude dropped five launches", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/claude-five-launches.webp", preview: "/reels/claude-five-launches-preview.mp4" },
+  { id: "clipping-skill", title: "See this clip? Made by a skill", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/clipping-skill.webp", preview: "/reels/clipping-skill-preview.mp4" },
+  { id: "digital-product", title: "Create a digital product for your audience", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/digital-product.webp", preview: "/reels/digital-product-preview.mp4" },
+  { id: "only-one-skill", title: "Only One Skill", views: null, viewsRaw: null, world: "build", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/only-one-skill.webp", preview: "/reels/only-one-skill-preview.mp4" },
 ];
 
 export const STATS = [
@@ -181,7 +187,7 @@ export const HOME_PERSONAS: HomePersona[] = [
       },
       {
         lead: "Who watches.",
-        text: "7,121 views across 16 Reels on @cod.ehx, mostly students and early-career developers in India. [1][2]",
+        text: "7,121 views across 19 Reels on @cod.ehx, mostly students and early-career developers in India. [1][2]",
       },
     ],
     quote: "Hi Rishabh, we're [brand] and want a Reel for [launch] in [month]. What would you make?",
@@ -321,7 +327,7 @@ export const HOME_AGENT_DOES = {
     },
     {
       title: "Brand: the media kit",
-      body: "Tech Reels on @cod.ehx — 16 reels, 7,121 views: motion type, lyric videos, and AI builds on camera.",
+      body: "Tech Reels on @cod.ehx — 19 reels, 7,121 views: motion type, lyric videos, and AI builds on camera.",
     },
     {
       title: "Learn: free resources",

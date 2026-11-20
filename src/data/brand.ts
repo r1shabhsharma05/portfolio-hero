@@ -1,6 +1,6 @@
 import { PROFILE, REELS, type Reel } from "./site";
 
-/** Brand page (/brands) — Avi's media-kit structure, Rishabh's numbers only.
+/** Brand page (/brands) — the reference's media-kit structure, Rishabh's numbers only.
  *  No brand deals exist yet, so there is no worked-with strip and no client
  *  case studies: the work shown is his own Reels, with his stated view counts.
  *  Nothing here is invented — every figure comes from site.ts or is arithmetic
@@ -78,7 +78,7 @@ export const BRAND_NUMBERS = {
     label: "All time",
     rows: [
       { label: "Views", value: 7121, highlight: true },
-      { label: "Reels", value: 16, highlight: false },
+      { label: "Reels", value: 19, highlight: false },
       { label: "Most-watched Reel", value: 5000, highlight: false },
       { label: "Views, top 6 Reels", value: 6573, highlight: false },
       { label: "Reels over 1K views", value: 2, highlight: false },
