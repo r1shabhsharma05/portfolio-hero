@@ -71,7 +71,7 @@ completeness and robots policy.
 
 **Facts only.** Every number on the site is verified: LeetCode 221 solved (92 Easy, 102 Medium, 27 Hard; 19 Nov 2026),
 1,875 GitHub contributions in 2026 (19 Nov 2026), 24 merged / 7 open OSS PRs, reel view
-counts (total 7,121 across 19 reels; the 2 newest counts are Rishabh's own figures, IG connector down 2026-11-13; 3 more reels + 1 Learn post added 20 Nov 2026, unposted, no counts). Never invent employment,
+counts (total 7,000 across 20 reels; the 2 newest counts are Rishabh's own figures, IG connector down 2026-11-13; 5 more reels added 20–22 Nov 2026 + 1 Learn post 20 Nov, unposted, no counts; "Trending model" removed 22 Nov). Never invent employment,
 internships, credentials or follower counts. The LeetCode/GitHub/PR numbers are **live**:
 `api/_stats.js` fetches them from the public sources (hourly cache, last-verified fallback)
 and fills `{{TOKENS}}` in the texts; `GET /api/v1/stats` exposes them. Never hard-code

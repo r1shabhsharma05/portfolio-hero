@@ -33,7 +33,8 @@ export interface Reel {
  *  One Prompt draft, tag NEW, no views), the posted "7 day Macbook" reel (7 views),
  *  and 2 more Drive reels added 2026-11-13: "Muse motion reel" (1,000 views) and
  *  "Kalyani — Lyric video" (5,000 views) — counts as stated by Rishabh (IG connector
- *  down, unverified); total reel views now 7,121. Posters: IG CDN thumbs for
+ *  down, unverified); total reel views now 7,000 ("Trending model", 121 views,
+ *  removed 2026-11-22 on his word). Posters: IG CDN thumbs for
  *  poster-only reels; frames cut from the Drive videos for the live ones. The 2 new
  *  videos are letterboxed 16:9 inside a 9:16 frame — posters/previews use a
  *  blurred-fill treatment so the cards read clean. 2 more Drive reels added
@@ -42,11 +43,13 @@ export interface Reel {
  *  (Claude Sheets / Whiteboards / Meetings / Plans explainer). 3 more Drive reels
  *  added 2026-11-20 (tag NEW, no views): "See this clip? Made by a skill" (clipping
  *  skill), "Create a digital product for your audience" (Claude business reel) and
- *  "Only One Skill" (altura website skill). Total 19 reels. */
+ *  "Only One Skill" (altura website skill). 2 more Drive reels added
+ *  2026-11-22 (tag NEW, no views): "Stop paying for AI videos" (free AI video
+ *  tool) and "What is ROI?" (marketing/ROI explainer, landscape source,
+ *  blurred-fill poster/preview). Total 20 reels. */
 export const REELS: Reel[] = [
   { id: "DfEjg7Hjghl", title: "100+ LLM apps sitting FREE on GitHub right now.", views: "206", viewsRaw: 206, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfEjg7Hjghl/", thumb: "/reels/llm-apps-206.jpg", preview: null },
   { id: "DfVSuL7zIhi", title: "Gemini 4 argon ....", views: "127", viewsRaw: 127, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfVSuL7zIhi/", thumb: "/reels/gemini.webp", preview: "/reels/gemini-preview.mp4" },
-  { id: "De6U9LDtLVf", title: "Trending model", views: "121", viewsRaw: 121, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/De6U9LDtLVf/", thumb: "/reels/trending-121.jpg", preview: null },
   { id: "De194H9DvUY", title: "PHP itself just got a remote-shell bug. No login, no plugin — one plain HTTP request.", views: "119", viewsRaw: 119, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/De194H9DvUY/", thumb: "/reels/php-119.jpg", preview: null },
   { id: "Dfmk0MQPvFn", title: "Free claude skill", views: "117", viewsRaw: 117, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/Dfmk0MQPvFn/", thumb: "/reels/claude-skill.webp", preview: "/reels/claude-skill-preview.mp4" },
   { id: "DfGwobiFElT", title: "Someone just turned Claude into a day-trading desk. And it's FREE.", views: "116", viewsRaw: 116, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfGwobiFElT/", thumb: "/reels/trading-116.jpg", preview: null },
@@ -63,6 +66,8 @@ export const REELS: Reel[] = [
   { id: "clipping-skill", title: "See this clip? Made by a skill", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/clipping-skill.webp", preview: "/reels/clipping-skill-preview.mp4" },
   { id: "digital-product", title: "Create a digital product for your audience", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/digital-product.webp", preview: "/reels/digital-product-preview.mp4" },
   { id: "only-one-skill", title: "Only One Skill", views: null, viewsRaw: null, world: "build", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/only-one-skill.webp", preview: "/reels/only-one-skill-preview.mp4" },
+  { id: "free-ai-videos", title: "Stop paying for AI videos", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/free-ai-videos.webp", preview: "/reels/free-ai-videos-preview.mp4" },
+  { id: "marketing-roi", title: "What is ROI?", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/marketing-roi.webp", preview: "/reels/marketing-roi-preview.mp4" },
 ];
 
 export const STATS = [
@@ -187,7 +192,7 @@ export const HOME_PERSONAS: HomePersona[] = [
       },
       {
         lead: "Who watches.",
-        text: "7,121 views across 19 Reels on @cod.ehx, mostly students and early-career developers in India. [1][2]",
+        text: "7,000 views across 20 Reels on @cod.ehx, mostly students and early-career developers in India. [1][2]",
       },
     ],
     quote: "Hi Rishabh, we're [brand] and want a Reel for [launch] in [month]. What would you make?",
@@ -327,7 +332,7 @@ export const HOME_AGENT_DOES = {
     },
     {
       title: "Brand: the media kit",
-      body: "Tech Reels on @cod.ehx — 19 reels, 7,121 views: motion type, lyric videos, and AI builds on camera.",
+      body: "Tech Reels on @cod.ehx — 20 reels, 7,000 views: motion type, lyric videos, and AI builds on camera.",
     },
     {
       title: "Learn: free resources",

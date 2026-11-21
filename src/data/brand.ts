@@ -64,7 +64,7 @@ export const BRAND_HERO = {
   /** Global stickers around the fan — a fourth, per-Reel "This Reel" sticker
    *  is rendered by the component from the front Reel. */
   stickers: [
-    { k: "Views", v: "7,121" },
+    { k: "Views", v: "7,000" },
     { k: "Instagram", v: "@cod.ehx" },
     { k: "Reels", v: "16" },
   ],
@@ -77,8 +77,8 @@ export const BRAND_NUMBERS = {
   left: {
     label: "All time",
     rows: [
-      { label: "Views", value: 7121, highlight: true },
-      { label: "Reels", value: 19, highlight: false },
+      { label: "Views", value: 7000, highlight: true },
+      { label: "Reels", value: 20, highlight: false },
       { label: "Most-watched Reel", value: 5000, highlight: false },
       { label: "Views, top 6 Reels", value: 6573, highlight: false },
       { label: "Reels over 1K views", value: 2, highlight: false },
@@ -92,14 +92,14 @@ export const BRAND_NUMBERS = {
       { label: "Muse motion reel", value: 1000 },
       { label: "100+ LLM apps", value: 206 },
       { label: "Gemini 4", value: 127 },
-      { label: "Trending model", value: 121 },
+      { label: "PHP remote-shell bug", value: 119 },
     ],
   },
   /** Arithmetic on the verified totals above. */
   derived: [
-    { value: 70.2, decimals: 1, suffix: "%", label: "of views from the top Reel" },
-    { value: 92.3, decimals: 1, suffix: "%", label: "of views from the top 6 Reels" },
-    { value: 445, decimals: 0, suffix: "", label: "average views per Reel" },
+    { value: 71.4, decimals: 1, suffix: "%", label: "of views from the top Reel" },
+    { value: 93.8, decimals: 1, suffix: "%", label: "of views from the top 6 Reels" },
+    { value: 350, decimals: 0, suffix: "", label: "average views per Reel" },
     { value: 12.5, decimals: 1, suffix: "%", label: "of Reels over 1,000 views" },
   ],
 };
