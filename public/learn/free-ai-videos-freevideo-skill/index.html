@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo | Rishabh Sharma</title>
+<meta name="description" content="The reel says stop paying for AI videos — this is the tool behind it. FreeVideo runs the MiniMax H3 video model on your own computer, free, from 8 GB of VRAM. H" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/free-ai-videos-freevideo-skill/" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+* { box-sizing:border-box; }
+body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
+/* Paper grain, kept faint (low opacity). */
+body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
+a { color:inherit; text-decoration:none; }
+#progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
+.site-head { max-width:1240px; margin:0 auto; padding:20px clamp(16px,4vw,48px); display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+.logo { font-family:var(--serif); font-size:22px; }
+.worlds { display:flex; gap:10px; align-items:baseline; font-family:var(--serif); font-size:18px; }
+.worlds .sep { color:var(--ink-soft); }
+.worlds a[aria-current="page"] { border-bottom:3px solid var(--learn); padding-bottom:2px; }
+.view-toggle { display:flex; gap:14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+.view-toggle .on { border-bottom:2px solid var(--learn); padding-bottom:2px; }
+.view-toggle a { color:var(--ink-soft); }
+.wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:clamp(32px,5vw,80px); max-width:1240px; margin:0 auto; padding:36px clamp(16px,4vw,48px) 0; }
+.meta { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin:0 0 14px; }
+.meta a { color:var(--ink); }
+.meta a:hover { text-underline-offset:3px; text-decoration:underline; }
+.title { font-family:var(--serif); letter-spacing:-.03em; margin:14px 0 0; font-size:clamp(40px,5vw,72px); font-weight:400; line-height:1; text-wrap:balance; }
+.lede { max-width:720px; color:var(--ink-soft); margin:20px 0 0; font-size:19px; line-height:1.6; }
+.output { max-width:760px; margin:32px 0 0; }
+.output figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink); display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; font-size:11px; }
+.outputUrl { color:var(--ink-soft); text-transform:none; letter-spacing:.02em; }
+.outputWindow { aspect-ratio:1440/900; background:var(--paper-deep) var(--grain); box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.outputCardUrl { font-family:var(--mono); font-size:13px; letter-spacing:.02em; color:var(--ink-soft); }
+.outputOpen { background:var(--ink); color:var(--paper); border-radius:8px; padding:9px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); position:absolute; bottom:12px; right:12px; }
+.outputWindow:hover .outputOpen { transform:translateY(-2px); }
+.post { max-width:760px; margin-top:36px; color:var(--ink); font-family:var(--sans); line-height:1.7; }
+.post a { color:var(--tech); }
+.post h1 { font-size:1.6rem; margin-bottom:.5rem; line-height:1.25; }
+.post h2 { font-family:var(--serif); letter-spacing:-.02em; font-size:clamp(28px,2.6vw,38px); font-weight:400; line-height:1.1; margin-top:2.5rem; padding-bottom:8px; scroll-margin-top:24px; background:linear-gradient(var(--learn),var(--learn)) 0 100%/0 4px no-repeat; transition:background-size .7s cubic-bezier(.22,1,.36,1); }
+.post h2[data-current] { background-size:64px 4px; }
+.post h3 { font-family:var(--serif); letter-spacing:-.01em; font-size:24px; font-weight:400; margin-top:1.75rem; margin-bottom:.25rem; }
+.post p { margin:1rem 0; }
+.post ul, .post ol { margin:1rem 0; padding-left:1.4rem; }
+.post li { margin:.5rem 0; }
+.post code { background:#11111114; background:color-mix(in srgb, var(--ink) 8%, transparent); border-radius:4px; padding:1px 5px; font-family:var(--mono); font-size:.9em; }
+.post pre { color:#e0e0e0; background:#1a1a1a; border-radius:8px; padding:20px; font-size:.88rem; line-height:1.6; overflow-x:auto; }
+.post pre code { color:inherit; background:transparent; padding:0; }
+.post .prompt, .post .code { color:#e6e6e6; white-space:pre-wrap; background:#1a1a1a; border-radius:10px; margin:1.5rem 0; padding:20px 22px; font-family:var(--mono); font-size:.78rem; line-height:1.6; overflow-x:auto; }
+.post .promptbox { margin:1.5rem 0; position:relative; }
+.post .promptbox .prompt { margin:0; padding-top:52px; }
+.post .copybtn { z-index:2; position:absolute; top:10px; right:10px; letter-spacing:.08em; text-transform:uppercase; color:#e6e6e6; cursor:pointer; background:#2b2b2b; border:1px solid #3d3d3d; border-radius:6px; min-height:34px; padding:9px 14px; font:600 .72rem/1 var(--mono); }
+.post .copybtn:hover { background:#3a3a3a; }
+.post .copybtn.done { color:#7ee39a; border-color:#2f6b41; }
+.post .highlight, .post blockquote { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post blockquote { color:#333; padding:4px 20px; font-style:italic; }
+.post .tldr { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post .card { background:#f8f8f8; border-left:4px solid #000; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card { background:#f8f8f8; border-left:4px solid #06c; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card h3 { margin:0 0 8px; font-size:1.3rem; }
+.post .stat { color:#06c; font-weight:700; }
+.post .stars { letter-spacing:.06em; color:#444; vertical-align:middle; background:#f2f2f2; border:1px solid #e2e2e2; border-radius:6px; margin-left:6px; padding:5px 9px; font:600 .72rem/1 var(--mono); }
+.post .tag { color:#1a56db; background:#e8f0fe; border-radius:12px; margin:2px; padding:2px 10px; font-size:.8rem; display:inline-block; }
+.post .tier-note { color:#666; margin-top:-.25rem; font-style:italic; }
+.post .signal, .post .check { color:#0a7d33; font-weight:600; }
+.post .signal { margin:.5rem 0 0; }
+.post .check { margin:.75rem 0 0; }
+.post .qnum { color:#06c; font-variant-numeric:tabular-nums; }
+.post .q { border-left:3px solid #e8e8e8; margin:1.6rem 0; padding-left:14px; }
+.post .q p { margin:.4rem 0; }
+.post .q .ask { font-size:1.02rem; font-weight:600; }
+.post .q .prep { color:#444; font-size:.95rem; }
+.post .q .prep strong { color:#1a1a1a; }
+.post .week { margin:1.1rem 0; }
+.post .src { font-size:.9rem; }
+.post .repo-link { word-break:break-all; font-family:var(--mono); font-size:.85rem; }
+.post .tech-stack { flex-wrap:wrap; gap:8px; margin:1rem 0; display:flex; }
+.post .tech-stack span { background:#f0f0f0; border-radius:20px; padding:4px 12px; font-size:.85rem; font-weight:500; }
+.post .sw { vertical-align:-1px; border-radius:2px; width:10px; height:10px; margin-right:8px; display:inline-block; }
+.post .tablewrap { margin:1.5rem 0; overflow-x:auto; }
+.post table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.9rem; }
+.post th { text-align:left; background:#f0f0f0; color:#444; font-weight:600; padding:10px 14px; }
+.post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
+.post img, .post video { max-width:100%; height:auto; border-radius:12px; }
+.reel { margin:0 0 22px; }
+.reel video { width:100%; display:block; border-radius:12px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reel figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-top:10px; }
+.reelLink { display:flex; flex-direction:column; gap:10px; background:#1a1a1a; color:#f3f3f1; border-radius:12px; padding:22px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reelLinkHook { font-family:var(--serif); font-size:24px; line-height:1.2; }
+.reelLinkOpen { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--learn); }
+.aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
+.toc { flex-direction:column; gap:6px; display:flex; }
+.toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
+.toc ol { list-style:none; margin:0; padding:0; }
+.toc a { border-top:1px solid var(--line); grid-template-columns:30px 1fr; align-items:baseline; padding:10px 0; display:grid; }
+.toc i { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-style:normal; }
+.toc b { font-family:var(--serif); background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; justify-self:start; margin:0 -.12em; padding:0 .12em; font-size:20px; font-weight:400; line-height:1.2; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.toc a:hover b, .toc a[aria-current] b { background-size:100% 100%; }
+.keep { max-width:1240px; margin:72px auto 0; padding:28px clamp(16px,4vw,48px) 0; }
+.keep h2 { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-weight:400; margin:0; }
+.keep ul { margin-top:10px; list-style:none; padding:0; }
+.keep li a { border-top:1px solid var(--line); font-family:var(--serif); padding:14px 0; font-size:26px; line-height:1.2; display:block; }
+.keep li a span { background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; margin:0 -.12em; padding:0 .12em; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.keep li a:hover span { background-size:100% 100%; }
+footer { max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,48px); border-top:1px solid var(--line); display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px; }
+footer .f-col { display:flex; flex-direction:column; gap:6px; }
+footer strong { font-family:var(--serif); font-size:20px; font-weight:400; }
+footer .f-label { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-bottom:4px; }
+footer span, footer a { font-size:14px; }
+footer a:hover { text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:860px) {
+  .site-head { padding-left:12px; padding-right:12px; gap:16px; }
+  .wrap { grid-template-columns:1fr; }
+  .aside { order:-1; max-height:none; position:static; }
+  .toc { display:none; }
+  .toc b, .keep li a span { transition:none; }
+  .outputOpen { transition:none; }
+  footer { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<header class="site-head">
+<a class="logo" href="/">Rishabh.</a>
+<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
+</header>
+<div class="wrap">
+<main>
+<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 22 NOVEMBER 2026 &middot; 10 min</p>
+<h1 class="title">Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo</h1>
+<p class="lede">The reel says stop paying for AI videos — this is the tool behind it. FreeVideo runs the MiniMax H3 video model on your own computer, free, from 8 GB of VRAM. Here is how to install it, make your first video, and the agent skill that drives it.</p>
+
+<div class="post">
+<p>&quot;Stop paying for AI videos. This tool...&quot; — that is the hook of the reel on this page, and the tool is <strong>FreeVideo</strong>, an open-source project by FlashML-org. It runs a real AI video model on the computer you already own, so a generation costs you electricity, not credits. Here is the full breakdown: what it is, how to install it, how to make your first video, and the agent skill that can drive it for you.</p>
+<h2 id="what-freevideo-actually-is">What FreeVideo actually is</h2>
+<p>FreeVideo is a local inference engine for <strong>MiniMax H3</strong>, a text-to-video model, rebuilt to run on consumer GPUs. The headline number: it runs in as little as <strong>8 GB of VRAM and 16 GB of RAM</strong> — a normal gaming laptop, not a datacenter. It adapts to your hardware automatically: weight format (int8 on GeForce and RTX 30-series cards, FP8 on workstation cards), weight streaming and chunked computation to keep memory low, and whichever attention kernels your GPU supports.</p>
+<p>It runs as a <strong>ComfyUI plugin</strong> with launchers for Windows, macOS and Linux, and it takes more than text prompts: first and last frames, plus image, video and audio references. There are four quality levels (Light, Medium, High, Max), videos can run over a minute long, and the newer H3 Image mode makes pictures up to 16 MP locally.</p>
+<h2 id="step-1-install-it-one-click">Step 1 — Install it (one click)</h2>
+<ol>
+<li>Download the launcher for your system from the <a href="https://github.com/FlashML-org/FreeVideo" target="_blank" rel="noreferrer">FreeVideo GitHub repo</a> — <code>FreeVideo.exe</code> on Windows, a <code>.dmg</code> on macOS (Apple silicon), an AppImage on Linux.</li>
+<li>Run it and pick an existing ComfyUI folder, or let it install a fresh one. Existing model folders are reused; anything missing downloads automatically.</li>
+<li>Click <strong>Install &amp; launch</strong>. ComfyUI opens in your browser with the FreeVideo workspace ready.</li>
+</ol>
+<p>That is the whole setup. No API keys, no subscriptions, no per-video billing — the model lives on your disk.</p>
+<h2 id="step-2-make-your-first-video">Step 2 — Make your first video</h2>
+<ul>
+<li><strong>Write a prompt.</strong> Describe the shot: subject, action, camera, mood. Short and concrete beats long and poetic.</li>
+<li><strong>Pick a quality level.</strong> Light for quick drafts, Max when the shot matters. Higher levels look better and take longer — that is the only trade-off.</li>
+<li><strong>Preview first.</strong> FreeVideo can render a half-resolution preview before the full finish, so you only spend GPU time completing videos you actually like.</li>
+<li><strong>Start or end on a picture.</strong> Generate a still first (H3 Image), then pass it as the first or last frame and let the model animate between them.</li>
+</ul>
+<p>Your finished videos carry their workflow inside them — drop one back onto the ComfyUI canvas later and its prompt, seed and settings come back with it.</p>
+<h2 id="step-3-push-it-further">Step 3 — Push it further</h2>
+<ul>
+<li><strong>References:</strong> feed an image, a video or an audio clip as a reference to steer style, character or motion.</li>
+<li><strong>Community LoRAs:</strong> MiniMax H3 LoRAs plug straight into the workflow for specific styles.</li>
+<li><strong>Batch generation:</strong> queue several shots at once and join them in order.</li>
+<li><strong>Timeline editing:</strong> the editing view lets you cut generated clips on a timeline inside the same workspace.</li>
+<li><strong>Minute-long videos:</strong> long jobs are automatically split into parts and joined, so length is a patience question, not a hard wall.</li>
+</ul>
+<h2 id="copy-the-skill">Copy the skill</h2>
+<p>FreeVideo ships with an agent skill — a <code>SKILL.md</code> that teaches an AI agent (Claude Code, Codex, Cursor, Gemini CLI) to drive FreeVideo through its MCP tools: check status, read the prompt guide, plan the job with a time estimate, generate, and look at the result before reporting it. Copy it below, or grab it from the <a href="https://github.com/FlashML-org/FreeVideo/tree/main/freevideo_engine/agent/skill/freevideo" target="_blank" rel="noreferrer">repo</a>.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy skill</button>
+<div class="prompt">
+---<br>
+name: freevideo<br>
+description: Make videos and pictures with the user&#x27;s local FreeVideo through its MCP tools or the `freevideo agent` command line. Use when the user asks to generate or continue a video, make or edit a picture, cut a timeline or make a multi-shot film in FreeVideo.<br>
+---<br>
+<br>
+# FreeVideo<br>
+<br>
+FreeVideo runs on the user&#x27;s own computer. Everything below goes through its MCP server (tools named `freevideo_*`) or the same operations from a shell: `./freevideo agent &lt;command&gt;` (Windows: `freevideo.cmd agent`).<br>
+<br>
+## Before anything else<br>
+<br>
+1. Call `freevideo_status`. If it is not ready, tell the user what is missing; do not retry in a loop.<br>
+2. Before writing a video prompt, read `freevideo_prompt_guide` once (not needed for a picture alone). Prompts are English sections; dialogue and on-screen text stay in the user&#x27;s language.<br>
+3. Before a video, call `freevideo_plan` with the job you intend to run (it plans videos only). It returns the real frame count, the number of parts and a time estimate for this computer. Tell the user the estimate before a long run.<br>
+4. The user sees the same work in the FreeVideo window. A tool may answer `needs_confirmation`: wait for the user (`freevideo_wait` without an id), then repeat the identical call once approved. If the user declines, stop and say so; do not retry with a changed reference.<br>
+<br>
+## Pick the right task<br>
+<br>
+- Only a picture asked for (a drawing, a poster, a character, a scene, no motion): one `freevideo_generate_image` call and stop. No video prompt guide, no plan, no video job; report where the picture is. Several pictures are several calls, or one `freevideo_submit_batch`.<br>
+- One video, up to 60 seconds: `freevideo_generate`. Longer than the device can do in one run is cut into parts and joined automatically. The device limit is a hard cap, not a target: aim for 15 to 20 seconds per generation.<br>
+- Start from or end on a picture: pass it as first or last frame. Make the picture first with `freevideo_generate_image`.<br>
+- A story, scene or short drama: follow &quot;Making a short drama&quot; below. Several shots to choose between: the `freevideo_drama_*` tools; see `references/film.md`.<br>
+- Existing footage on a timeline: the editing project tools. See `references/edit.md`.<br>
+- A picture to change: `freevideo_edit_image` for a quick change, the `freevideo_image_*` tools for layered edits. See `references/image.md`.<br>
+- Several independent jobs, or storyboard shots that do not depend on each other: put all of them in a single `freevideo_submit_batch` call, one job per shot with its own `ref`, then join the results in order. A shot that starts from the previous shot&#x27;s last frame waits until that shot is done. Shots cut inside one generation with `[Shot N]` markers are one job.<br>
+- What this computer can make: read the limits from `freevideo_capabilities` and report them as given (maximum width and height, shortest and longest seconds, frame rate). Do not answer from memory or round them.<br>
+<br>
+## Making a short drama<br>
+<br>
+Step one is the story, before any generation: a one-page outline with the lead&#x27;s goal, the opponent&#x27;s moves, the escalation, the low point, the reversal and the ending, each beat causing the next. The user confirms it; only then write dialogue and generate. Famous scenes may decorate a story, never replace it.<br>
+<br>
+One generation or several shots (the recommended length decides, not the device cap; `freevideo_capabilities` reports the cap as given):<br>
+1. One `freevideo_generate` with `[Shot N]` cuts inside it (four to six cuts) when the whole piece is about 20 seconds or less, stays in one place, has at most three speakers and needs no shot to be chosen or reshot separately.<br>
+2. Otherwise the `freevideo_drama_*` tools, even when this computer can make 60 seconds in one run. Each shot is one generation of 15 to 20 seconds, cut inside with `[Shot N]`; a shot with a cast card or reference pictures is at most 15 seconds, and longer content goes into the next shot with continue=true; a plan that is refused for length is shortened to that limit, never forced; never write 3 to 6 second shots. When the computer&#x27;s limit is below 15 seconds, use that limit. A continuous action across two beats (a kick and its catch, a handover) stays in the same shot. Move from shot to shot through the story (someone arrives, looks, answers), not by forcing the last frame onto the next shot. Independent shots go in one batch; a shot that continues the previous one waits for it.<br>
+3. When unsure, choose the drama tools.<br>
+<br>
+The short version, for every model (a small model can rely on point 7 alone): (1) story outline first; (2) about 20 seconds or less in one place with up to three people is one generation, longer is the drama tools; (3) cuts of 2 to 4 seconds in `[Shot N]`; (4) six sections in order: `subject_definitions:`, `summary:`, `retention_analysis:`, `detailed_description:`, `overall_soundscape:`, `non_diegetic_music:`; (5) people tagged `&lt;Subject N&gt;` with speakers numbered (S1), (S2) by first spoken line in that video; (6) say what is there and keep negation words out; (7) with the `freevideo_drama_*` tools, fill the structure fields (characters, `outline`, `blocking`, `continuity`, and per shot its `scene` and the cuts with `at`, `framing`, `action`, `camera`, `lines`) and leave `prompt` empty: the tool writes the six sections and the (S#) numbers itself; (8) the full example and the rest are in `references/film-script.md`.<br>
+<br>
+Before each generation: one card per person (`freevideo_cast_list` first), clothes fixed for the whole film, a seating or standing plan for every beat, only what is seen and heard in the prompt (say what is there, never what is not), dialogue word for word, speaker numbers by order of first line in the video. Rules and examples for each of these, and the five faults to check before generating (stray lettering, small faces in wide shots, text under 14 pixels, third-party marks, voice references), are in `references/film-script.md`; the rest of the checks are in `references/film.md`. Generate two seeds of the first shot, look at them at full size, and only then continue. Whoever makes a shot looks at every take before choosing it.<br>
+<br>
+## Running jobs<br>
+<br>
+- A job takes minutes. Call `freevideo_wait` with the job id; it returns after at most 25 seconds. If the job is still active, call it again with the same id. Never submit the same job twice.<br>
+- A failed or interrupted generation is continued with `freevideo_resume`; only unfinished parts run. When a generation fails with `retryable` true, resume it once yourself; if it fails again, tell the user what happened.<br>
+- An `invalid_request` about size or length lists what is allowed. Resubmit once with the legal value nearest to what the user asked for (on a tie, the smaller one) and change nothing else; then tell the user which size was used.<br>
+- `freevideo_cancel` only for a job you started and the user wants stopped.<br>
+- Look at a result before reporting it: `freevideo_look` (a frame or a contact sheet).<br>
+- Report what you made with the saved-video id (`freevideo_library`), not a local path.<br>
+<br>
+## Rules<br>
+<br>
+- Do not start a second generation while one for the same request is running; the computer has one GPU.<br>
+- Never claim a video is good without looking at it.<br>
+- Keep your own chat short; the user is watching progress in FreeVideo.
+</div>
+</div><h2 id="how-the-skill-works">How the skill works</h2>
+<p>The skill is a strict little operating manual. Its flow, in order:</p>
+<ol>
+<li><strong>Check before anything.</strong> <code>freevideo_status</code> first — if the engine is not ready, the agent reports what is missing instead of retrying in a loop.</li>
+<li><strong>Read the prompt guide once.</strong> Video prompts are written in English sections; dialogue and on-screen text stay in your language.</li>
+<li><strong>Plan before generating.</strong> <code>freevideo_plan</code> returns the real frame count, the number of parts and a time estimate for your machine — you hear the estimate before a long run starts.</li>
+<li><strong>Pick the right task.</strong> A picture is one image call. One video up to 60 seconds is one generation (aim 15–20 seconds per generation, the device cap is a ceiling, not a target). A story becomes a short-drama flow: outline first, your confirmation, then shots.</li>
+<li><strong>Run jobs properly.</strong> Wait on the job id, never submit twice, resume failed generations instead of restarting, and always <em>look</em> at the result (<code>freevideo_look</code>) before claiming it is good.</li>
+</ol>
+<p>The rules at the end are the whole philosophy in three lines: one GPU means one generation at a time, never claim a video is good without looking at it, and keep the chat short — you are watching progress in FreeVideo itself.</p>
+<h2 id="why-this-works">Why this works</h2>
+<p>Paid AI video tools charge per generation because the GPU is theirs. FreeVideo moves the GPU to your desk: the model is open, the engine is open, and the only cost left is time. That changes how you work — you can afford ten drafts of a shot, a preview pass before every finish, and a skill-driven agent that plans, generates and checks while you watch. The reel&#39;s claim is simple because the math is simple: stop renting the GPU, and the videos stop costing money.</p>
+
+</div>
+</main>
+<aside class="aside">
+<figure class="reel"><video src="/reels/free-ai-videos-preview.mp4" poster="/reels/free-ai-videos.webp" muted loop autoplay playsinline controls preload="metadata"></video><figcaption>Stop paying for AI videos</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#what-freevideo-actually-is"><i>01</i><b>What FreeVideo actually is</b></a></li><li><a href="#step-1-install-it-one-click"><i>02</i><b>Step 1 — Install it (one click)</b></a></li><li><a href="#step-2-make-your-first-video"><i>03</i><b>Step 2 — Make your first video</b></a></li><li><a href="#step-3-push-it-further"><i>04</i><b>Step 3 — Push it further</b></a></li><li><a href="#copy-the-skill"><i>05</i><b>Copy the skill</b></a></li><li><a href="#how-the-skill-works"><i>06</i><b>How the skill works</b></a></li><li><a href="#why-this-works"><i>07</i><b>Why this works</b></a></li></ol></nav>
+</aside>
+</div>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/how-i-made-a-trending-song-lyric-video-with-ai/"><span>How I Made a Trending Song's Lyric Video with AI</span></a></li><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li><li><a href="/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/"><span>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</span></a></li></ul></aside>
+<footer>
+<div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+</footer>
+<script>
+(function () {
+  var bar = document.getElementById("progress");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var f = max > 0 ? h.scrollTop / max : 0;
+    bar.style.width = Math.max(24, f * window.innerWidth) + "px";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  // Scroll-spy: TOC highlight + the H2's yellow underline.
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var heads = links.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && heads.length) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.removeAttribute("data-current");
+          current = e.target;
+          current.setAttribute("data-current", "");
+          links.forEach(function (a) {
+            if (a.getAttribute("href") === "#" + current.id) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+          });
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+  // Reel video: play when first scrolled into view (autoplay can be
+  // blocked in some browsers), then leave it to the user (native controls).
+  var reelVideo = document.querySelector(".reel video");
+  if (reelVideo && "IntersectionObserver" in window) {
+    var reelPlayed = false;
+    var ro = new IntersectionObserver(function (entries) {
+      if (!reelPlayed && entries[0].isIntersecting) {
+        reelPlayed = true;
+        var p = reelVideo.play();
+        if (p) p.catch(function () {});
+        ro.disconnect();
+      }
+    }, { threshold: 0.25 });
+    ro.observe(reelVideo);
+  }
+  // COPY buttons in prompt boxes.
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = btn.closest(".promptbox");
+      var prompt = box && box.querySelector(".prompt");
+      if (!prompt) return;
+      var done = function () {
+        btn.textContent = "Copied ✓";
+        btn.classList.add("done");
+        setTimeout(function () { btn.textContent = btn.dataset.label || "Copy prompt"; btn.classList.remove("done"); }, 2000);
+      };
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(prompt.textContent.trim()).then(done, done);
+      } else done();
+    });
+  });
+})();
+</script>
+</body>
+</html>
