@@ -133,14 +133,57 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 </header>
 <div class="wrap">
 <main>
-<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; BUILD &middot; 20 NOVEMBER 2026 &middot; 4 min</p>
+<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; BUILD &middot; 20 NOVEMBER 2026 &middot; 7 min</p>
 <h1 class="title">One Skill, Ten Clips: How My GTA 6 Clipper Turns One Long Video Into Vertical Shorts</h1>
 <p class="lede">Give it any link — a GTA 6 stream, a podcast, a long gameplay video. My GTA 6 Clipper skill finds the 10 loudest reaction moments, builds the 65/35 split layout, syncs MrBeast-style captions word by word, and posts the best 1–2. Here is the full pipeline, step by step.</p>
 
 <div class="post">
 <p>Give it any link — a GTA 6 stream, a podcast, a long gameplay video — and one skill does the rest. This is <strong>GTA 6 Clipper</strong>: a skill I built that takes one long creator video (iShowSpeed, Techno Gamerz, CarryMinati, or any facecam gameplay video) and turns it into vertical shorts.</p>
 <p>Input: one long video file or a YouTube link, the creator&#39;s name and credit handle, and a caption language — English, in my case. Output: up to 10 vertical shorts, with the best 1–2 posted to Instagram and YouTube. The reel on this page is this skill in action. Here is exactly how it works.</p>
-<h2 id="step-1-find-the-10-moments">Step 1 — Find the 10 moments</h2>
+<h2 id="copy-the-skill">Copy the skill</h2>
+<p>This is the full skill, cleaned up for public use. Copy it, save it as <code>gta6-clipper/SKILL.md</code>, and your agent can run the same pipeline.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy skill</button>
+<div class="prompt">
+---<br>
+name: gta6-clipper<br>
+description: Turn one long GTA 6 creator video (iShowSpeed / Techno Gamerz / CarryMinati or any facecam gameplay video) into vertical shorts — find the 10 best reaction moments, build the 65/35 gameplay+face split layout with smart A-roll/B-roll full-screen cuts, MrBeast-style word-synced captions, and post the best 1–2 to Instagram + YouTube. Use when given a GTA 6 video/YouTube link and asked for shorts/clips.<br>
+---<br>
+<br>
+# GTA 6 Clipper<br>
+<br>
+Input: one long video file or YouTube link, creator name + credit handle, caption language (standing choice: English captions). Output: up to 10 vertical shorts; post the best 1–2 to Instagram + YouTube — posting needs approval first; YouTube upload via Studio.<br>
+<br>
+## Step 1 — Find 10 moments (STOP for approval)<br>
+- Download with yt-dlp at best quality ≤1080p into the project folder.<br>
+- Transcribe the full video with faster-whisper, word timestamps on.<br>
+- Score moments on REACTION + CAUSE: find loudness peaks (voice jumps ~6 dB+ over normal, shouting/laughing/screaming, sudden silence, face leaning in) from an RMS/loudness curve; go back 2–5 s in the gameplay for the cause (crash, kill, reveal, fail). A great clip has cause → reaction.<br>
+- Each clip 25–55 s, starts on the hook (first 1 s grabs), ends on the punchline, never fades out.<br>
+- Present a table: # | start | end | hook line | why viral | cuts (planned switches). Wait for approval before rendering.<br>
+<br>
+## Step 2 — Layout (1080×1920, 30 fps, H.264, AAC)<br>
+- TOP 65% (y 0–1248): gameplay, cropped around the action, full width, never a black bar.<br>
+- BOTTOM 35% (y 1248–1920): creator face — crop the webcam box, scale to fill; whole face, both eyes, mouth and hands in frame; follow the face smoothly if they move; never cut off the head.<br>
+- No facecam → gameplay full screen over a blurred copy of itself darkened 30%.<br>
+- Thin 4 px white line on the join at y 1248.<br>
+<br>
+## Step 3 — Smart A-roll / B-roll cuts<br>
+- Views: SPLIT (default 65/35), B-ROLL FULL (gameplay fills 9:16; blurred copy behind if needed), A-ROLL FULL (face fills 9:16, head-and-shoulders zoom).<br>
+- Around every big moment the order is: SPLIT → B-ROLL FULL (cause, 1–3 s) → A-ROLL FULL (reaction peak, 1–2.5 s, cut in 0.1 s before the peak) → SPLIT.<br>
+- Never a view shorter than 0.8 s, max 4 switches per 30 s, never cut mid-word. Add a 6% zoom pop on each cut. No-facecam clips: 10% zoom punch on the reaction instead of A-ROLL FULL.<br>
+<br>
+## Step 4 — MrBeast captions (word-synced, hard-burned)<br>
+- From the word timestamps; spot-check 3 words against the audio, fix any >0.05 s off.<br>
+- 1–3 words at a time, ALL CAPS, at the join (y ≈ 1080–1230), Komika Axis (~110 px), white fill, 12 px black outline, 6 px soft shadow, current word #FFE600, hype word (WOW/NO WAY/WHAT) #2BFF5A, pop 70% → 110% → 100% in 0.12 s. Safe x 130–950, never over the face's mouth.<br>
+<br>
+## Step 5 — Polish<br>
+- Game audio −12 dB under the voice, no music, no watermark, 8% face zoom punch on the peak, creator credit line (~y 320) in the first 3 s.<br>
+<br>
+## Step 6 — Output<br>
+- First clip only: export 3 frames (split, b-roll full, a-roll full) for approval before rendering all 10.<br>
+- Clips: clips/[creator]-gta6-01..10.mp4, each with a hook-title + hashtag .txt. Post the best 1–2 to Instagram + YouTube (needs approval first).
+</div>
+</div><h2 id="step-1-find-the-10-moments">Step 1 — Find the 10 moments</h2>
 <p>Nothing gets rendered before the moments are approved. This step is only about finding them.</p>
 <ul>
 <li>Download the video with yt-dlp at best quality up to 1080p.</li>
@@ -195,7 +238,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 </div>
 </main>
 <aside class="aside">
-<figure class="reel"><video src="/reels/clipping-skill-preview.mp4" poster="/reels/clipping-skill.webp" muted loop autoplay playsinline controls preload="metadata"></video><figcaption>See this clip? Made by a skill</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#step-1-find-the-10-moments"><i>01</i><b>Step 1 — Find the 10 moments</b></a></li><li><a href="#step-2-the-65-35-layout"><i>02</i><b>Step 2 — The 65/35 layout</b></a></li><li><a href="#step-3-smart-a-roll-b-roll-cuts"><i>03</i><b>Step 3 — Smart A-roll / B-roll cuts</b></a></li><li><a href="#step-4-mrbeast-style-captions-perfectly-synced"><i>04</i><b>Step 4 — MrBeast-style captions, perfectly synced</b></a></li><li><a href="#step-5-polish"><i>05</i><b>Step 5 — Polish</b></a></li><li><a href="#step-6-output"><i>06</i><b>Step 6 — Output</b></a></li><li><a href="#why-this-works"><i>07</i><b>Why this works</b></a></li></ol></nav>
+<figure class="reel"><video src="/reels/clipping-skill-preview.mp4" poster="/reels/clipping-skill.webp" muted loop autoplay playsinline controls preload="metadata"></video><figcaption>See this clip? Made by a skill</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#copy-the-skill"><i>01</i><b>Copy the skill</b></a></li><li><a href="#step-1-find-the-10-moments"><i>02</i><b>Step 1 — Find the 10 moments</b></a></li><li><a href="#step-2-the-65-35-layout"><i>03</i><b>Step 2 — The 65/35 layout</b></a></li><li><a href="#step-3-smart-a-roll-b-roll-cuts"><i>04</i><b>Step 3 — Smart A-roll / B-roll cuts</b></a></li><li><a href="#step-4-mrbeast-style-captions-perfectly-synced"><i>05</i><b>Step 4 — MrBeast-style captions, perfectly synced</b></a></li><li><a href="#step-5-polish"><i>06</i><b>Step 5 — Polish</b></a></li><li><a href="#step-6-output"><i>07</i><b>Step 6 — Output</b></a></li><li><a href="#why-this-works"><i>08</i><b>Why this works</b></a></li></ol></nav>
 </aside>
 </div>
 <aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/how-i-made-a-trending-song-lyric-video-with-ai/"><span>How I Made a Trending Song's Lyric Video with AI</span></a></li><li><a href="/learn/round-up-micro-savings-app-india/"><span>Someone Please Build This in India: The Round-Up Micro-Savings App</span></a></li><li><a href="/learn/265-topics-to-master-ai-engineering/"><span>265 Topics to Master AI Engineering (and the 6-Week Order I'd Learn Them In)</span></a></li></ul></aside>
