@@ -46,7 +46,9 @@ export interface Reel {
  *  "Only One Skill" (altura website skill). 2 more Drive reels added
  *  2026-11-22 (tag NEW, no views): "Stop paying for AI videos" (free AI video
  *  tool) and "What is ROI?" (marketing/ROI explainer, landscape source,
- *  blurred-fill poster/preview). Total 20 reels. */
+ *  blurred-fill poster/preview). 1 more Drive reel added 2026-11-22 (tag NEW,
+ *  no views): "Stop paying $200 a month for AI coding" (Devin Max free via
+ *  Poke). Total 21 reels. */
 export const REELS: Reel[] = [
   { id: "DfEjg7Hjghl", title: "100+ LLM apps sitting FREE on GitHub right now.", views: "206", viewsRaw: 206, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfEjg7Hjghl/", thumb: "/reels/llm-apps-206.jpg", preview: null },
   { id: "DfVSuL7zIhi", title: "Gemini 4 argon ....", views: "127", viewsRaw: 127, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfVSuL7zIhi/", thumb: "/reels/gemini.webp", preview: "/reels/gemini-preview.mp4" },
@@ -68,6 +70,7 @@ export const REELS: Reel[] = [
   { id: "only-one-skill", title: "Only One Skill", views: null, viewsRaw: null, world: "build", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/only-one-skill.webp", preview: "/reels/only-one-skill-preview.mp4" },
   { id: "free-ai-videos", title: "Stop paying for AI videos", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/free-ai-videos.webp", preview: "/reels/free-ai-videos-preview.mp4" },
   { id: "marketing-roi", title: "What is ROI?", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/marketing-roi.webp", preview: "/reels/marketing-roi-preview.mp4" },
+  { id: "devin-free", title: "Stop paying $200 a month for AI coding", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/devin-free.webp", preview: "/reels/devin-free-preview.mp4" },
 ];
 
 export const STATS = [
@@ -192,7 +195,7 @@ export const HOME_PERSONAS: HomePersona[] = [
       },
       {
         lead: "Who watches.",
-        text: "7,000 views across 20 Reels on @cod.ehx, mostly students and early-career developers in India. [1][2]",
+        text: "7,000 views across 21 Reels on @cod.ehx, mostly students and early-career developers in India. [1][2]",
       },
     ],
     quote: "Hi Rishabh, we're [brand] and want a Reel for [launch] in [month]. What would you make?",
@@ -332,7 +335,7 @@ export const HOME_AGENT_DOES = {
     },
     {
       title: "Brand: the media kit",
-      body: "Tech Reels on @cod.ehx — 20 reels, 7,000 views: motion type, lyric videos, and AI builds on camera.",
+      body: "Tech Reels on @cod.ehx — 21 reels, 7,000 views: motion type, lyric videos, and AI builds on camera.",
     },
     {
       title: "Learn: free resources",

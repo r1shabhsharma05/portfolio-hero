@@ -198,6 +198,7 @@ const REELS = {
   "kalyani-lyric": { video: "/reels/kalyani-lyric-preview.mp4", poster: "/reels/kalyani-lyric.webp", caption: "Kalyani — Lyric video · 5,000 views" },
   "clipping-skill": { video: "/reels/clipping-skill-preview.mp4", poster: "/reels/clipping-skill.webp", caption: "See this clip? Made by a skill" },
   "free-ai-videos": { video: "/reels/free-ai-videos-preview.mp4", poster: "/reels/free-ai-videos.webp", caption: "Stop paying for AI videos" },
+  "devin-free": { video: "/reels/devin-free-preview.mp4", poster: "/reels/devin-free.webp", caption: "Stop paying $200 a month for AI coding" },
 };
 function reelHtml(fm) {
   const r = fm.reel && REELS[fm.reel];

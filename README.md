@@ -40,7 +40,7 @@ to 10 requests per IP per minute.
 ## Verified facts on the site
 
 LeetCode 221 solved · 1,875 GitHub contributions in 2026 · 24 merged / 7 open
-OSS PRs (19 Nov 2026) · reel view counts from the Instagram connector (2026-11-12; total 7,000 across 20 reels — newest 5 added 20–22 Nov 2026, unposted, no counts yet; "Trending model" removed 22 Nov). No
+OSS PRs (19 Nov 2026) · reel view counts from the Instagram connector (2026-11-12; total 7,000 across 21 reels — newest 6 added 20–22 Nov 2026, unposted, no counts yet; "Trending model" removed 22 Nov). No
 follower count is shown — it is unconfirmed. The LeetCode, GitHub-contribution and
 PR numbers update themselves: `api/_stats.js` fetches them live (hourly cache,
 last-verified fallback) and fills every surface — hero stats, Build stats, agent

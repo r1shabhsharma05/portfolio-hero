@@ -1,4 +1,4 @@
-/** Learn page data — 41 posts (roadmaps, prompts, career, case studies,
+/** Learn page data — 42 posts (roadmaps, prompts, career, case studies,
  *  about, business ideas; Build posts removed 18 Nov 2026 on Rishabh's
  *  order, plus the two single-developer profile listicles the same day),
  *  with Rishabh's name
@@ -25,6 +25,8 @@ export interface LearnPost {
 }
 
 export const LEARN_POSTS: LearnPost[] = [
+  // Rishabh's own post (22 Nov 2026): Devin Max free via Poke, exact steps.
+  { date: "22 Nov", type: "Roadmap", title: "Devin's $200 Max Plan, Free: The Exact Steps from the Reel", url: "/learn/devin-max-free-poke-roadmap/", hasReel: true },
   // Rishabh's own post (22 Nov 2026): the FreeVideo free AI video tool + skill.
   { date: "22 Nov", type: "Prompt", title: "Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo", url: "/learn/free-ai-videos-freevideo-skill/", hasReel: true },
   // Rishabh's own post (20 Nov 2026): the GTA 6 Clipper skill, step by step.
