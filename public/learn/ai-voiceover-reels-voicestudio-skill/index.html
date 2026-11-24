@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>This Voice-Over Sounds Real — It's 100% AI: How I Make It | Rishabh Sharma</title>
+<meta name="description" content="The voice-over in the reel on this page sounds completely real — but it's 100% AI. Script in, voice out, unlimited. Here are all the steps from the reel, plus h" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/ai-voiceover-reels-voicestudio-skill/" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root { --paper:#f3f3f1; --paper-deep:#e7e7e3; --ink:#111; --ink-soft:#6e6e73; --learn:#ffc81a; --line:#1111111a; --surface:#fff; --tech:#2f55ff; --serif:"Instrument Serif",Georgia,"Times New Roman",serif; --sans:"Geist",Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+* { box-sizing:border-box; }
+body { margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.7; }
+/* Paper grain, kept faint (low opacity). */
+body::before { content:""; position:fixed; inset:0; z-index:100; pointer-events:none; background-image:var(--grain); opacity:.3; }
+a { color:inherit; text-decoration:none; }
+#progress { position:fixed; top:0; left:0; height:3px; background:var(--learn); width:0; z-index:50; }
+.site-head { max-width:1240px; margin:0 auto; padding:20px clamp(16px,4vw,48px); display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+.logo { font-family:var(--serif); font-size:22px; }
+.worlds { display:flex; gap:10px; align-items:baseline; font-family:var(--serif); font-size:18px; }
+.worlds .sep { color:var(--ink-soft); }
+.worlds a[aria-current="page"] { border-bottom:3px solid var(--learn); padding-bottom:2px; }
+.view-toggle { display:flex; gap:14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+.view-toggle .on { border-bottom:2px solid var(--learn); padding-bottom:2px; }
+.view-toggle a { color:var(--ink-soft); }
+.wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:clamp(32px,5vw,80px); max-width:1240px; margin:0 auto; padding:36px clamp(16px,4vw,48px) 0; }
+.meta { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin:0 0 14px; }
+.meta a { color:var(--ink); }
+.meta a:hover { text-underline-offset:3px; text-decoration:underline; }
+.title { font-family:var(--serif); letter-spacing:-.03em; margin:14px 0 0; font-size:clamp(40px,5vw,72px); font-weight:400; line-height:1; text-wrap:balance; }
+.lede { max-width:720px; color:var(--ink-soft); margin:20px 0 0; font-size:19px; line-height:1.6; }
+.output { max-width:760px; margin:32px 0 0; }
+.output figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink); display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; font-size:11px; }
+.outputUrl { color:var(--ink-soft); text-transform:none; letter-spacing:.02em; }
+.outputWindow { aspect-ratio:1440/900; background:var(--paper-deep) var(--grain); box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.outputCardUrl { font-family:var(--mono); font-size:13px; letter-spacing:.02em; color:var(--ink-soft); }
+.outputOpen { background:var(--ink); color:var(--paper); border-radius:8px; padding:9px 14px; font-size:13px; font-weight:500; transition:transform .3s cubic-bezier(.22,1,.36,1); position:absolute; bottom:12px; right:12px; }
+.outputWindow:hover .outputOpen { transform:translateY(-2px); }
+.post { max-width:760px; margin-top:36px; color:var(--ink); font-family:var(--sans); line-height:1.7; }
+.post a { color:var(--tech); }
+.post h1 { font-size:1.6rem; margin-bottom:.5rem; line-height:1.25; }
+.post h2 { font-family:var(--serif); letter-spacing:-.02em; font-size:clamp(28px,2.6vw,38px); font-weight:400; line-height:1.1; margin-top:2.5rem; padding-bottom:8px; scroll-margin-top:24px; background:linear-gradient(var(--learn),var(--learn)) 0 100%/0 4px no-repeat; transition:background-size .7s cubic-bezier(.22,1,.36,1); }
+.post h2[data-current] { background-size:64px 4px; }
+.post h3 { font-family:var(--serif); letter-spacing:-.01em; font-size:24px; font-weight:400; margin-top:1.75rem; margin-bottom:.25rem; }
+.post p { margin:1rem 0; }
+.post ul, .post ol { margin:1rem 0; padding-left:1.4rem; }
+.post li { margin:.5rem 0; }
+.post code { background:#11111114; background:color-mix(in srgb, var(--ink) 8%, transparent); border-radius:4px; padding:1px 5px; font-family:var(--mono); font-size:.9em; }
+.post pre { color:#e0e0e0; background:#1a1a1a; border-radius:8px; padding:20px; font-size:.88rem; line-height:1.6; overflow-x:auto; }
+.post pre code { color:inherit; background:transparent; padding:0; }
+.post .prompt, .post .code { color:#e6e6e6; white-space:pre-wrap; background:#1a1a1a; border-radius:10px; margin:1.5rem 0; padding:20px 22px; font-family:var(--mono); font-size:.78rem; line-height:1.6; overflow-x:auto; }
+.post .promptbox { margin:1.5rem 0; position:relative; }
+.post .promptbox .prompt { margin:0; padding-top:52px; }
+.post .copybtn { z-index:2; position:absolute; top:10px; right:10px; letter-spacing:.08em; text-transform:uppercase; color:#e6e6e6; cursor:pointer; background:#2b2b2b; border:1px solid #3d3d3d; border-radius:6px; min-height:34px; padding:9px 14px; font:600 .72rem/1 var(--mono); }
+.post .copybtn:hover { background:#3a3a3a; }
+.post .copybtn.done { color:#7ee39a; border-color:#2f6b41; }
+.post .highlight, .post blockquote { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post blockquote { color:#333; padding:4px 20px; font-style:italic; }
+.post .tldr { background:var(--paper-deep); border-left:4px solid var(--learn); border-radius:0 8px 8px 0; margin:1.5rem 0; padding:16px 20px; }
+.post .card { background:#f8f8f8; border-left:4px solid #000; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card { background:#f8f8f8; border-left:4px solid #06c; border-radius:0 8px 8px 0; margin:24px 0; padding:20px 24px; }
+.post .developer-card h3 { margin:0 0 8px; font-size:1.3rem; }
+.post .stat { color:#06c; font-weight:700; }
+.post .stars { letter-spacing:.06em; color:#444; vertical-align:middle; background:#f2f2f2; border:1px solid #e2e2e2; border-radius:6px; margin-left:6px; padding:5px 9px; font:600 .72rem/1 var(--mono); }
+.post .tag { color:#1a56db; background:#e8f0fe; border-radius:12px; margin:2px; padding:2px 10px; font-size:.8rem; display:inline-block; }
+.post .tier-note { color:#666; margin-top:-.25rem; font-style:italic; }
+.post .signal, .post .check { color:#0a7d33; font-weight:600; }
+.post .signal { margin:.5rem 0 0; }
+.post .check { margin:.75rem 0 0; }
+.post .qnum { color:#06c; font-variant-numeric:tabular-nums; }
+.post .q { border-left:3px solid #e8e8e8; margin:1.6rem 0; padding-left:14px; }
+.post .q p { margin:.4rem 0; }
+.post .q .ask { font-size:1.02rem; font-weight:600; }
+.post .q .prep { color:#444; font-size:.95rem; }
+.post .q .prep strong { color:#1a1a1a; }
+.post .week { margin:1.1rem 0; }
+.post .src { font-size:.9rem; }
+.post .repo-link { word-break:break-all; font-family:var(--mono); font-size:.85rem; }
+.post .tech-stack { flex-wrap:wrap; gap:8px; margin:1rem 0; display:flex; }
+.post .tech-stack span { background:#f0f0f0; border-radius:20px; padding:4px 12px; font-size:.85rem; font-weight:500; }
+.post .sw { vertical-align:-1px; border-radius:2px; width:10px; height:10px; margin-right:8px; display:inline-block; }
+.post .tablewrap { margin:1.5rem 0; overflow-x:auto; }
+.post table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.9rem; }
+.post th { text-align:left; background:#f0f0f0; color:#444; font-weight:600; padding:10px 14px; }
+.post td { text-align:left; vertical-align:top; border-bottom:1px solid #eee; padding:10px 14px; }
+.post img, .post video { max-width:100%; height:auto; border-radius:12px; }
+.reel { margin:0 0 22px; }
+.reel video { width:100%; display:block; border-radius:12px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reel figcaption { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-top:10px; }
+.reelLink { display:flex; flex-direction:column; gap:10px; background:#1a1a1a; color:#f3f3f1; border-radius:12px; padding:22px; box-shadow:0 0 0 1px var(--line),0 30px 60px -30px #0007; }
+.reelLinkHook { font-family:var(--serif); font-size:24px; line-height:1.2; }
+.reelLinkOpen { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--learn); }
+.aside { scrollbar-width:none; flex-direction:column; align-self:start; gap:22px; max-height:calc(100svh - 48px); display:flex; position:sticky; top:24px; overflow-y:auto; }
+.toc { flex-direction:column; gap:6px; display:flex; }
+.toc > span { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; }
+.toc ol { list-style:none; margin:0; padding:0; }
+.toc a { border-top:1px solid var(--line); grid-template-columns:30px 1fr; align-items:baseline; padding:10px 0; display:grid; }
+.toc i { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-style:normal; }
+.toc b { font-family:var(--serif); background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; justify-self:start; margin:0 -.12em; padding:0 .12em; font-size:20px; font-weight:400; line-height:1.2; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.toc a:hover b, .toc a[aria-current] b { background-size:100% 100%; }
+.keep { max-width:1240px; margin:72px auto 0; padding:28px clamp(16px,4vw,48px) 0; }
+.keep h2 { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; font-weight:400; margin:0; }
+.keep ul { margin-top:10px; list-style:none; padding:0; }
+.keep li a { border-top:1px solid var(--line); font-family:var(--serif); padding:14px 0; font-size:26px; line-height:1.2; display:block; }
+.keep li a span { background:linear-gradient(var(--learn),var(--learn)) 0 0/0 100% no-repeat; margin:0 -.12em; padding:0 .12em; transition:background-size .5s cubic-bezier(.22,1,.36,1); }
+.keep li a:hover span { background-size:100% 100%; }
+footer { max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,48px); border-top:1px solid var(--line); display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px; }
+footer .f-col { display:flex; flex-direction:column; gap:6px; }
+footer strong { font-family:var(--serif); font-size:20px; font-weight:400; }
+footer .f-label { font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-size:11px; margin-bottom:4px; }
+footer span, footer a { font-size:14px; }
+footer a:hover { text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:860px) {
+  .site-head { padding-left:12px; padding-right:12px; gap:16px; }
+  .wrap { grid-template-columns:1fr; }
+  .aside { order:-1; max-height:none; position:static; }
+  .toc { display:none; }
+  .toc b, .keep li a span { transition:none; }
+  .outputOpen { transition:none; }
+  footer { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<header class="site-head">
+<a class="logo" href="/">Rishabh.</a>
+<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
+</header>
+<div class="wrap">
+<main>
+<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; VOICE &middot; 24 NOVEMBER 2026 &middot; 6 min</p>
+<h1 class="title">This Voice-Over Sounds Real — It's 100% AI: How I Make It</h1>
+<p class="lede">The voice-over in the reel on this page sounds completely real — but it's 100% AI. Script in, voice out, unlimited. Here are all the steps from the reel, plus how I do the same thing locally with VoiceStudio and my own cloned voice.</p>
+
+<div class="post">
+<p>&quot;Ye jo voice-over sun rahe ho na? Bilkul real lagta hai, lekin ye poora AI hai — 100%.&quot; That is the hook of the reel on this page. No mic, no recording room, no retakes. A script goes in, a voice-over comes out, and nobody listening can tell the difference. Here are all the steps, exactly as the reel shows them.</p>
+<h2 id="the-process-step-by-step">The process, step by step</h2>
+<h3>Step 1 — Write the script</h3>
+<p>Everything starts on paper. Write what the voice should say, word for word, the way you&#39;d actually speak it — short lines, natural pauses, no essay language. A good voice-over is a good script first; the AI only reads what you give it.</p>
+<h3>Step 2 — Generate the voice-over</h3>
+<p>Paste the script into a voice tool and generate. In the reel I use <strong>ElevenLabs</strong>: pick a voice, paste the script, hit generate, and the voice-over is ready in seconds. Same script, as many takes as you want — change the voice, the pace, the emphasis, regenerate.</p>
+<h3>Step 3 — Unlimited, on repeat</h3>
+<p>That is the whole trick: the voice-over is <strong>unlimited</strong>. One script becomes one voice-over; ten scripts become ten. No booking a studio, no re-recording because you coughed in take three. Short videos, step by step, same pipeline every time.</p>
+<h2 id="if-you-want-this-voice-over-on-your-reels">If you want this voice-over on your reels</h2>
+<p>The reel&#39;s own offer: if you want a voice-over like mine on your reels, the full video walks through the whole thing — script to finished voice-over — step by step. Follow <a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">@cod.ehx</a> for the link and a new free AI tool every week.</p>
+<h2 id="my-local-route-voicestudio">My local route: VoiceStudio</h2>
+<p>ElevenLabs is the fast route. My local route is <strong>VoiceStudio</strong> — the open-source voice studio that runs on my own computer. Same idea, no per-minute billing: it generates speech with saved or designed voices, transcribes audio, and can clone a voice from a short reference clip. My own voice is saved in it as a profile, so I can generate narration in my own voice without recording a word.</p>
+<p>How a generation works:</p>
+<ol>
+<li><strong>Check the backend</strong> — VoiceStudio&#39;s backend runs locally on port 3900. <code>GET /health</code> says if it&#39;s up; <code>GET /v1/audio/voices</code> lists the voices, including saved profiles.</li>
+<li><strong>Pick a voice</strong> — a saved profile (like my own cloned voice) for repeatable narration, or a built-in alias for a quick test.</li>
+<li><strong>Send the script</strong> — one POST to <code>/v1/audio/speech</code> with the model, the voice and the text. The audio comes back as a file.</li>
+<li><strong>Listen before you ship</strong> — check the file&#39;s duration and format, and actually listen to it. Never claim a voice-over is good without hearing it.</li>
+</ol>
+<h2 id="copy-the-skill">Copy the skill</h2>
+<p>This is the VoiceStudio skill — the operating manual I use to drive the backend: health checks, voice discovery, speech generation, transcription, cloning, dubbing and the MCP endpoint. Copy it below.</p>
+<div class="promptbox">
+<button class="copybtn" type="button" data-copy>Copy skill</button>
+<div class="prompt">
+---<br>
+name: voicestudio<br>
+description: Generate local speech with saved or designed voices, transcribe audio, and automate dubbing or narration workflows through VoiceStudio&#x27;s REST API or MCP server. Use when the user wants to work with VoiceStudio audio or connect it to an agent or automation.<br>
+---<br>
+<br>
+# VoiceStudio<br>
+<br>
+Use the user&#x27;s running [VoiceStudio](https://github.com/debpalash/VoiceStudio) backend. Prefer local processing; cloud translation, model downloads, remote-backend connections, and external integrations require the user&#x27;s choice. Installed models can run offline; do not promise that every configured workflow is offline.<br>
+<br>
+## Connect and discover<br>
+<br>
+The default backend is `http://localhost:3900`; honor the user&#x27;s configured address. Electron&#x27;s renderer and development proxy are separate services, not the public backend API.<br>
+<br>
+1. Check `GET /health`.<br>
+2. Discover the running version&#x27;s contracts with `GET /openapi.json`, and voices/engines with `GET /v1/audio/voices`. Do not invent profile IDs or infer installed models from a catalog listing.<br>
+3. If unavailable, launch the installed app. For an existing source checkout, follow its Electron README (`bun install`, `bun run setup:api`, then `bun run dev` from the repository root). Do not install a second backend or overwrite an existing checkout.<br>
+4. Local configurations may permit unauthenticated calls; protected deployments require the configured credentials. Treat 401/403 as authentication failures, not permission to disable auth. Never print tokens or use a placeholder key as if it were a real credential.<br>
+<br>
+## Generate speech<br>
+<br>
+Save this JSON to `speech-request.json`, replacing `voice` with a discovered profile ID when the user selected a voice:<br>
+<br>
+```json<br>
+{&quot;model&quot;:&quot;tts-1&quot;,&quot;voice&quot;:&quot;alloy&quot;,&quot;input&quot;:&quot;Every voice has a story. Let&#x27;s tell yours.&quot;,&quot;response_format&quot;:&quot;wav&quot;}<br>
+```<br>
+<br>
+```sh<br>
+curl --fail-with-body --show-error http://localhost:3900/v1/audio/speech \<br>
+  -H &#x27;Content-Type: application/json&#x27; --data-binary @speech-request.json \<br>
+  --output speech.wav<br>
+```<br>
+<br>
+`tts-1` and `tts-1-hd` are aliases, not quality guarantees. OpenAI voice names are compatibility aliases, not those providers&#x27; actual voices. Prefer a discovered saved voice for repeatable narration. Check the installed engine&#x27;s language and voice-design capabilities before promising a result.<br>
+<br>
+Check the HTTP status and decode/probe the output before calling it audio: an error response can be written to the output path. Report the saved path and actual duration/format. Never fabricate a successful generation, transcript, or job completion.<br>
+<br>
+## Transcribe<br>
+<br>
+```sh<br>
+curl --fail-with-body --show-error http://localhost:3900/v1/audio/transcriptions \<br>
+  -F file=@clip.wav -F model=whisper-1 -F response_format=verbose_json<br>
+```<br>
+<br>
+Use `json` or `text` for plain transcripts, `verbose_json` for timestamps, and `srt`/`vtt` for subtitles when supported by the running schema. Check transcription-model readiness before long recordings; explain a missing model and obtain download authorization rather than silently installing it.<br>
+<br>
+## Cloning, design, dubbing, and longer workflows<br>
+<br>
+Use the installed OpenAPI schema to discover profile creation, reference uploads, generation, dubbing, and long-form job operations. Their native endpoints are broader than the OpenAI compatibility API and evolve independently.<br>
+<br>
+- Clone only voices the user is authorized to use. Preserve reference files and existing profiles.<br>
+- For design, capture the requested tone, delivery, language, and sample text; check engine support.<br>
+- For dubbing, retain original media, speaker assignments, segment timing, and background-audio intent. Translation completion is not rendered-dub completion.<br>
+- For asynchronous work, use returned job IDs and documented progress/status endpoints. Inspect terminal errors; avoid blindly resubmitting timed-out generation.<br>
+- Return usable files and honest limitations, including missing models or unavailable capabilities.<br>
+<br>
+## MCP and automation<br>
+<br>
+The running backend mounts an MCP endpoint at `http://localhost:3900/mcp`. Use the client&#x27;s supported HTTP transport and discover its tools at runtime. Reuse an existing connection rather than spawning another service. For stdio-only clients, consult the project&#x27;s [MCP guide](https://github.com/debpalash/VoiceStudio/blob/main/docs/mcp.md) for its shim.<br>
+<br>
+For n8n, calling agents, containers, or other hosts, make the backend address reachable from that environment: container `localhost` refers to the container. Keep authentication and explicit remote-routing choices intact. An integration-directory listing does not mean the integration is connected.<br>
+<br>
+On errors, read the response body, distinguish unavailable backend, missing model, unsupported capability, authentication, and busy hardware. Fix the reported condition; do not switch to a hosted provider or download a model without authorization.<br>
+<br>
+## Desktop workflows and readiness<br>
+<br>
+The Electron app includes voice cloning and design, saved profiles and gallery,<br>
+stories/audiobooks, dubbing projects, transcription, tools, and integrations.<br>
+Prefer its existing project and voice identifiers over creating duplicates.<br>
+For desktop automation, inspect the actual UI and current Settings shortcuts;<br>
+do not assume shortcut bindings or microphone permissions are the same on every host.<br>
+<br>
+Before dictation, verify an installed speech-to-text model and a working input<br>
+device. Distinguish recording, paused recording, transcription processing, and<br>
+completed text. Copying a transcript and inserting it into another app are different<br>
+operations; confirm the intended target before typing and preserve clipboard content<br>
+where supported. Never report text delivered just because transcription completed.<br>
+<br>
+For dubbing, inspect missing/failed segments and timing overflow before export.<br>
+Preserve music and non-speech audio when requested; do not silently replace the<br>
+whole soundtrack. Preserve the source and make the output a separate artifact.<br>
+Translation style prompts belong to the selected translation operation, and remote<br>
+agent translation requires the user&#x27;s configured provider choice.<br>
+<br>
+Use the integrations directory as discovery and setup guidance, not proof of a<br>
+working connector. Verify actual credentials, endpoint reachability, and supported<br>
+operations before describing a connection as ready. Container deployments need<br>
+persistent data volumes and a backend URL reachable by the calling client.
+</div>
+</div><h2 id="why-this-works">Why this works</h2>
+<p>A faceless reel lives or dies on its voice. A flat robotic read kills retention; a natural voice-over carries it. AI voices crossed that line a while ago — the reel proves it, because you were listening to one before you knew it. The only real work left is the script. Write it like you talk, generate the voice, and the voice-over stops being the bottleneck.</p>
+
+</div>
+</main>
+<aside class="aside">
+<figure class="reel"><video src="/reels/creator-voice-preview.mp4" poster="/reels/creator-voice.webp" muted loop autoplay playsinline controls preload="metadata"></video><figcaption>This voice-over sounds real — it's 100% AI</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#the-process-step-by-step"><i>01</i><b>The process, step by step</b></a></li><li><a href="#if-you-want-this-voice-over-on-your-reels"><i>02</i><b>If you want this voice-over on your reels</b></a></li><li><a href="#my-local-route-voicestudio"><i>03</i><b>My local route: VoiceStudio</b></a></li><li><a href="#copy-the-skill"><i>04</i><b>Copy the skill</b></a></li><li><a href="#why-this-works"><i>05</i><b>Why this works</b></a></li></ol></nav>
+</aside>
+</div>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/free-ai-videos-freevideo-skill/"><span>Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo</span></a></li><li><a href="/learn/devin-max-free-poke-roadmap/"><span>Devin's $200 Max Plan, Free: The Exact Steps from the Reel</span></a></li><li><a href="/learn/gta6-clipper-skill-one-video-ten-shorts/"><span>One Skill, Ten Clips: How My GTA 6 Clipper Turns One Long Video Into Vertical Shorts</span></a></li></ul></aside>
+<footer>
+<div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+</footer>
+<script>
+(function () {
+  var bar = document.getElementById("progress");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var f = max > 0 ? h.scrollTop / max : 0;
+    bar.style.width = Math.max(24, f * window.innerWidth) + "px";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  // Scroll-spy: TOC highlight + the H2's yellow underline.
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var heads = links.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && heads.length) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.removeAttribute("data-current");
+          current = e.target;
+          current.setAttribute("data-current", "");
+          links.forEach(function (a) {
+            if (a.getAttribute("href") === "#" + current.id) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+          });
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+  // Reel video: play when first scrolled into view (autoplay can be
+  // blocked in some browsers), then leave it to the user (native controls).
+  var reelVideo = document.querySelector(".reel video");
+  if (reelVideo && "IntersectionObserver" in window) {
+    var reelPlayed = false;
+    var ro = new IntersectionObserver(function (entries) {
+      if (!reelPlayed && entries[0].isIntersecting) {
+        reelPlayed = true;
+        var p = reelVideo.play();
+        if (p) p.catch(function () {});
+        ro.disconnect();
+      }
+    }, { threshold: 0.25 });
+    ro.observe(reelVideo);
+  }
+  // COPY buttons in prompt boxes.
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = btn.closest(".promptbox");
+      var prompt = box && box.querySelector(".prompt");
+      if (!prompt) return;
+      var done = function () {
+        btn.textContent = "Copied ✓";
+        btn.classList.add("done");
+        setTimeout(function () { btn.textContent = btn.dataset.label || "Copy prompt"; btn.classList.remove("done"); }, 2000);
+      };
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(prompt.textContent.trim()).then(done, done);
+      } else done();
+    });
+  });
+})();
+</script>
+</body>
+</html>

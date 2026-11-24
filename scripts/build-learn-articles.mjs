@@ -199,6 +199,7 @@ const REELS = {
   "clipping-skill": { video: "/reels/clipping-skill-preview.mp4", poster: "/reels/clipping-skill.webp", caption: "See this clip? Made by a skill" },
   "free-ai-videos": { video: "/reels/free-ai-videos-preview.mp4", poster: "/reels/free-ai-videos.webp", caption: "Stop paying for AI videos" },
   "devin-free": { video: "/reels/devin-free-preview.mp4", poster: "/reels/devin-free.webp", caption: "Stop paying $200 a month for AI coding" },
+  "creator-voice": { video: "/reels/creator-voice-preview.mp4", poster: "/reels/creator-voice.webp", caption: "This voice-over sounds real — it's 100% AI" },
 };
 function reelHtml(fm) {
   const r = fm.reel && REELS[fm.reel];

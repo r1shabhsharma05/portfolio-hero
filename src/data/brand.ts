@@ -78,7 +78,7 @@ export const BRAND_NUMBERS = {
     label: "All time",
     rows: [
       { label: "Views", value: 7000, highlight: true },
-      { label: "Reels", value: 21, highlight: false },
+      { label: "Reels", value: 22, highlight: false },
       { label: "Most-watched Reel", value: 5000, highlight: false },
       { label: "Views, top 6 Reels", value: 6573, highlight: false },
       { label: "Reels over 1K views", value: 2, highlight: false },

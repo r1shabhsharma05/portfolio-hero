@@ -1,4 +1,4 @@
-/** Learn page data — 42 posts (roadmaps, prompts, career, case studies,
+/** Learn page data — 43 posts (roadmaps, prompts, career, case studies,
  *  about, business ideas; Build posts removed 18 Nov 2026 on Rishabh's
  *  order, plus the two single-developer profile listicles the same day),
  *  with Rishabh's name
@@ -12,7 +12,8 @@ export type LearnPostType =
   | "Case study"
   | "About"
   | "Business idea series"
-  | "Build";
+  | "Build"
+  | "Voice";
 
 export interface LearnPost {
   /** As shown on the list, e.g. "15 Nov". */
@@ -25,6 +26,8 @@ export interface LearnPost {
 }
 
 export const LEARN_POSTS: LearnPost[] = [
+  // Rishabh's own post (24 Nov 2026): AI voice-over, VoiceStudio skill.
+  { date: "24 Nov", type: "Voice", title: "This Voice-Over Sounds Real — It's 100% AI: How I Make It", url: "/learn/ai-voiceover-reels-voicestudio-skill/", hasReel: true },
   // Rishabh's own post (22 Nov 2026): Devin Max free via Poke, exact steps.
   { date: "22 Nov", type: "Roadmap", title: "Devin's $200 Max Plan, Free: The Exact Steps from the Reel", url: "/learn/devin-max-free-poke-roadmap/", hasReel: true },
   // Rishabh's own post (22 Nov 2026): the FreeVideo free AI video tool + skill.

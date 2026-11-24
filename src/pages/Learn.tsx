@@ -25,6 +25,7 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: "Career", label: "Career" },
   { id: "Business idea series", label: "Business ideas" },
   { id: "Build", label: "Builds" },
+  { id: "Voice", label: "Voices" },
 ];
 
 const DONE_KEY = "learn-done-v1";
@@ -74,6 +75,7 @@ export default function Learn() {
       About: 0,
       "Business idea series": 0,
       Build: 0,
+      Voice: 0,
     };
     for (const p of LEARN_POSTS) c[p.type] += 1;
     return c;
