@@ -19,6 +19,20 @@
 
 * { box-sizing: border-box; }
 
+/* Screen-reader-only heading: keeps the H1 for crawlers/assistive tech
+ * without changing the visual hero. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 body {
   margin: 0;
   background: var(--color-paper);
@@ -1485,7 +1499,7 @@ body[data-phase="leaving"] .site-header .mode-switch {
   margin: 0 16px;
   padding: 40px clamp(24px, 4vw, 56px);
   border-radius: 28px;
-  background: var(--color-paper-deep) url("/brand-seascape.jpg") 50% 88% / cover;
+  background: var(--color-paper-deep) url("/brand-seascape.webp") 50% 88% / cover;
 }
 
 /* Scroll zoom (the reference's --hero-p): the seascape grows to 1.3x and sinks 22%
@@ -1705,7 +1719,7 @@ body[data-phase="leaving"] .site-header .mode-switch {
   margin-top: 8px;
 }
 .brand-article-fan {
-  background: var(--color-paper-deep) url("/brand-seascape.jpg") 50% 30% / cover;
+  background: var(--color-paper-deep) url("/brand-seascape.webp") 50% 30% / cover;
   padding: 32px 24px 24px;
   display: flex;
   flex-direction: column;
@@ -1820,7 +1834,7 @@ body[data-phase="leaving"] .site-header .mode-switch {
 .brand-reach-head .section-title { margin: 0; }
 .brand-reach-note { color: var(--color-ink-soft); font-family: var(--font-mono); font-size: 12px; line-height: 1.6; margin: 0; text-align: right; }
 .brand-reach-banner {
-  background: var(--color-paper-deep) url("/brand-seascape.jpg") 50% 30% / cover;
+  background: var(--color-paper-deep) url("/brand-seascape.webp") 50% 30% / cover;
   border-radius: 22px;
   padding: 64px clamp(16px, 4vw, 56px) 60px;
   display: flex;
@@ -1909,7 +1923,7 @@ body[data-phase="leaving"] .site-header .mode-switch {
 
 /* Campaign CTA — seascape panel, centred white card, sentence form. */
 .brand-cta {
-  background: var(--color-paper-deep) url("/brand-seascape.jpg") 50% 60% / cover;
+  background: var(--color-paper-deep) url("/brand-seascape.webp") 50% 60% / cover;
   border-radius: 28px;
   padding: 48px clamp(24px, 4vw, 56px);
 }

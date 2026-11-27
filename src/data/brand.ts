@@ -43,20 +43,20 @@ export const BRAND_WORK = [
   },
   {
     reel: BRAND_TOP_REELS[4],
-    wanted: "The trending model, explained in one Reel.",
-    made: "A Reel on the trending model.",
+    wanted: "A PHP remote-shell bug, explained in one Reel.",
+    made: "A Reel on the PHP bug — no login, no plugin, one plain HTTP request.",
     pills: ["Instagram Reel"],
   },
   {
     reel: BRAND_TOP_REELS[5],
-    wanted: "A PHP remote-shell bug, explained in one Reel.",
-    made: "A Reel on the PHP bug — no login, no plugin, one plain HTTP request.",
+    wanted: "A free Claude skill, explained in one Reel.",
+    made: "A Reel on a free Claude skill.",
     pills: ["Instagram Reel"],
   },
 ];
 
 export const BRAND_HERO = {
-  label: "Brand: Media Kit · 16 November 2026",
+  label: "Brand: Media Kit",
   headline: "Brands don't just get a Reel. They get the product, on camera.",
   sub1: "I build the thing first, then film it. That's why it lands.",
   sub2: "My Reels are free builds — real tools, on camera, start to finish. Your product could be next.",
@@ -66,21 +66,21 @@ export const BRAND_HERO = {
   stickers: [
     { k: "Views", v: "7,000" },
     { k: "Instagram", v: "@editsbyhx" },
-    { k: "Reels", v: "16" },
+    { k: "Reels", v: "22" },
   ],
   caption:
     "Every Reel I made myself, dealt as a hand of cards with its numbers from @editsbyhx.",
 };
 
 export const BRAND_NUMBERS = {
-  note: "Running totals from @editsbyhx, added up on 16 November 2026. Each check adds the new days on top, so they only go up.",
+  note: "Running totals from @editsbyhx, added up on 27 November 2026. Each check adds the new days on top, so they only go up.",
   left: {
     label: "All time",
     rows: [
       { label: "Views", value: 7000, highlight: true },
       { label: "Reels", value: 22, highlight: false },
       { label: "Most-watched Reel", value: 5000, highlight: false },
-      { label: "Views, top 6 Reels", value: 6573, highlight: false },
+      { label: "Views, top 6 Reels", value: 6569, highlight: false },
       { label: "Reels over 1K views", value: 2, highlight: false },
     ],
   },
@@ -99,8 +99,8 @@ export const BRAND_NUMBERS = {
   derived: [
     { value: 71.4, decimals: 1, suffix: "%", label: "of views from the top Reel" },
     { value: 93.8, decimals: 1, suffix: "%", label: "of views from the top 6 Reels" },
-    { value: 350, decimals: 0, suffix: "", label: "average views per Reel" },
-    { value: 12.5, decimals: 1, suffix: "%", label: "of Reels over 1,000 views" },
+    { value: 318, decimals: 0, suffix: "", label: "average views per Reel" },
+    { value: 9.1, decimals: 1, suffix: "%", label: "of Reels with 1,000+ views" },
   ],
 };
 
@@ -113,7 +113,7 @@ export const BRAND_AUDIENCE = {
 export const BRAND_FORMATS = [
   {
     title: "Build-along Reel",
-    body: "A real project from empty file to shipped, with your tool on camera. My best format, and the one brands ask for again.",
+    body: "A real project from empty file to shipped, with your tool on camera. My best format for a brand launch.",
   },
   {
     title: "Workflow integration",
@@ -133,7 +133,7 @@ export const BRAND_FORMATS = [
   },
   {
     title: "Cross-posts",
-    body: "The same Reel on YouTube Shorts and LinkedIn.",
+    body: "The same Reel cut for YouTube Shorts and LinkedIn on request.",
   },
 ];
 

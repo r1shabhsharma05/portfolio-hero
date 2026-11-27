@@ -23,6 +23,8 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: "Roadmap", label: "Roadmaps" },
   { id: "Prompt", label: "Prompts" },
   { id: "Career", label: "Career" },
+  { id: "Case study", label: "Case studies" },
+  { id: "About", label: "About" },
   { id: "Business idea series", label: "Business ideas" },
   { id: "Build", label: "Builds" },
   { id: "Voice", label: "Voices" },
@@ -40,7 +42,7 @@ function loadDone(): Set<string> {
 }
 
 function postUrl(title: string): string {
-  return LEARN_POSTS.find((p) => p.title === title)?.url ?? "/learn/";
+  return LEARN_POSTS.find((p) => p.title === title)?.url ?? "/learn";
 }
 
 const LEAVES = [8, 22, 38, 55, 70, 84];
@@ -49,8 +51,13 @@ export default function Learn() {
   const [showTransition] = useState(() => shouldShowWorldTransition());
   const [view, setView] = useState<View>("human");
   const [goal, setGoal] = useState(LEARN_GOALS[0].id);
-  const [filter, setFilter] = useState<Filter>("all");
-  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<Filter>(() => {
+    const t = new URLSearchParams(window.location.search).get("type");
+    return (FILTERS.some((f) => f.id === t) ? t : "all") as Filter;
+  });
+  const [query, setQuery] = useState(
+    () => new URLSearchParams(window.location.search).get("q") ?? ""
+  );
   const [done, setDone] = useState<Set<string>>(() => loadDone());
   const [activeRow, setActiveRow] = useState<string | null>(null);
 
@@ -64,6 +71,19 @@ export default function Learn() {
     // Mount-only: the reveal runs once, on arrival.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Filter + search live in the URL (?type=…&q=…) so a filtered view is shareable.
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (filter !== "all") params.set("type", filter);
+    if (query.trim() !== "") params.set("q", query.trim());
+    const qs = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      qs ? `${window.location.pathname}?${qs}` : window.location.pathname
+    );
+  }, [filter, query]);
 
   const counts = useMemo(() => {
     const c: Record<Filter, number> = {
@@ -86,7 +106,10 @@ export default function Learn() {
     return LEARN_POSTS.filter(
       (p) =>
         (filter === "all" || p.type === filter) &&
-        (q === "" || p.title.toLowerCase().includes(q))
+        (q === "" ||
+          p.title.toLowerCase().includes(q) ||
+          p.type.toLowerCase().includes(q) ||
+          p.url.toLowerCase().includes(q))
     );
   }, [filter, query]);
 
@@ -191,7 +214,7 @@ export default function Learn() {
               type="button"
               aria-pressed={view === "agent"}
               onClick={() => { if (view !== "agent") openAgentTransition(() => setView("agent")); }}
-              onMouseEnter={() => preloadWorldScene("/sky-agent.jpg")}
+              onMouseEnter={() => preloadWorldScene("/sky-agent.webp")}
             >
               Agent
             </button>
@@ -216,7 +239,7 @@ export default function Learn() {
               ))}
               <div className="learn-hero-copy">
                 <p className="learn-kicker">
-                  LEARN · 39 FREE ROADMAPS, PROMPTS AND BUSINESS IDEAS
+                  LEARN · {LEARN_POSTS.length} FREE ROADMAPS, PROMPTS AND BUSINESS IDEAS
                 </p>
                 <h1>Tell me where you&rsquo;re headed.</h1>
                 <p className="learn-sub">
@@ -361,7 +384,18 @@ export default function Learn() {
                     );
                   })}
                   {shown.length === 0 && (
-                    <li className="learn-empty">No posts match.</li>
+                    <li className="learn-empty">
+                      No posts match.{" "}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFilter("all");
+                          setQuery("");
+                        }}
+                      >
+                        Show all posts
+                      </button>
+                    </li>
                   )}
                 </ul>
                 <aside className="learn-panel" aria-label="Featured reel">

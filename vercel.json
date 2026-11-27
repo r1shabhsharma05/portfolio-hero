@@ -8,12 +8,22 @@
   "redirects": [
     {
       "source": "/blog",
-      "destination": "/learn/",
+      "destination": "/learn",
       "permanent": true
     },
     {
       "source": "/blog/:path*",
-      "destination": "/learn/",
+      "destination": "/learn",
+      "permanent": true
+    },
+    {
+      "source": "/learn/201-free-system-design-lessons",
+      "destination": "/learn/1173-free-system-design-lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learn/201-free-system-design-lessons/",
+      "destination": "/learn/1173-free-system-design-lessons",
       "permanent": true
     }
   ],
@@ -40,13 +50,25 @@
           "value": "Accept, User-Agent, Accept-Encoding"
         },
         {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
           "key": "Link",
           "value": "</llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"LLM context\", </sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\", </developers>; rel=\"help\"; title=\"Developer portal\""
         }
       ]
     },
     {
-      "source": "/:page(about|contact|privacy|developers)",
+      "source": "/:page(about|contact|privacy|developers|projects|brands|learn)",
       "headers": [
         {
           "key": "Link",

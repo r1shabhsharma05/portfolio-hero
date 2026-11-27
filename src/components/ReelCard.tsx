@@ -26,7 +26,7 @@ export default function ReelCard({ reel, style }: { reel: Reel; style?: React.CS
   return (
     <a
       className="reel-card"
-      href={reel.url}
+      href={`/reels/${reel.id}`}
       target="_blank"
       rel="noreferrer"
       data-card=""
@@ -37,7 +37,7 @@ export default function ReelCard({ reel, style }: { reel: Reel; style?: React.CS
       onFocus={play}
       onBlur={stop}
     >
-      <img className="reel-poster" src={reel.thumb} alt={reel.title} loading="lazy" draggable={false} />
+      <img className="reel-poster" src={reel.thumb} alt={reel.title} width={720} height={1280} loading="lazy" decoding="async" draggable={false} />
       {reel.preview && (
         <video
           ref={videoRef}

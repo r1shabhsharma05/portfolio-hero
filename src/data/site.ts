@@ -26,6 +26,8 @@ export interface Reel {
   thumb: string;
   /** Hover-play preview clip; null = poster-only card (no Drive video available). */
   preview: string | null;
+  /** Date the reel was added (YYYY-MM-DD) — sitemap lastmod + VideoObject uploadDate. */
+  added: string;
 }
 
 /** Top 8 @editsbyhx reels by lifetime views, verified via Instagram connector 2026-11-12
@@ -52,28 +54,28 @@ export interface Reel {
  *  voice-over sounds real — it's 100% AI" (AI voice-over via ElevenLabs).
  *  Total 22 reels. */
 export const REELS: Reel[] = [
-  { id: "DfEjg7Hjghl", title: "100+ LLM apps sitting FREE on GitHub right now.", views: "206", viewsRaw: 206, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfEjg7Hjghl/", thumb: "/reels/llm-apps-206.jpg", preview: null },
-  { id: "DfVSuL7zIhi", title: "Gemini 4 argon ....", views: "127", viewsRaw: 127, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfVSuL7zIhi/", thumb: "/reels/gemini.webp", preview: "/reels/gemini-preview.mp4" },
-  { id: "De194H9DvUY", title: "PHP itself just got a remote-shell bug. No login, no plugin — one plain HTTP request.", views: "119", viewsRaw: 119, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/De194H9DvUY/", thumb: "/reels/php-119.jpg", preview: null },
-  { id: "Dfmk0MQPvFn", title: "Free claude skill", views: "117", viewsRaw: 117, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/Dfmk0MQPvFn/", thumb: "/reels/claude-skill.webp", preview: "/reels/claude-skill-preview.mp4" },
-  { id: "DfGwobiFElT", title: "Someone just turned Claude into a day-trading desk. And it's FREE.", views: "116", viewsRaw: 116, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfGwobiFElT/", thumb: "/reels/trading-116.jpg", preview: null },
-  { id: "DfnAhmGhVxY", title: "Claude made this one prompt", views: "108", viewsRaw: 108, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfnAhmGhVxY/", thumb: "/reels/claude-prompt-108.jpg", preview: null },
-  { id: "DfFAweQH_TG", title: "One prompt. Every LLM. Side by side.", views: "83", viewsRaw: 83, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfFAweQH_TG/", thumb: "/reels/llm-comparison.webp", preview: "/reels/llm-comparison-preview.mp4" },
-  { id: "github-prompt", title: "Upgrade your GitHub using this single prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/github-prompt.webp", preview: "/reels/github-prompt-preview.mp4" },
-  { id: "one-prompt", title: "One Prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/one-prompt.webp", preview: "/reels/one-prompt-preview.mp4" },
-  { id: "macbook-7day", title: "7 day Macbook", views: "7", viewsRaw: 7, world: "learn", tag: "LEARN", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/macbook-7day.webp", preview: "/reels/macbook-7day-preview.mp4" },
-  { id: "alfaaz-single-prompt", title: "Alfaaz — Single prompt", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/alfaaz-prompt.webp", preview: "/reels/alfaaz-prompt-preview.mp4" },
-  { id: "muse-motion", title: "Muse motion reel", views: "1,000", viewsRaw: 1000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/muse-motion.webp", preview: "/reels/muse-motion-preview.mp4" },
-  { id: "kalyani-lyric", title: "Kalyani — Lyric video", views: "5,000", viewsRaw: 5000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/kalyani-lyric.webp", preview: "/reels/kalyani-lyric-preview.mp4" },
-  { id: "portfolio-reel", title: "Portfolio reel", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/portfolio-reel.webp", preview: "/reels/portfolio-reel-preview.mp4" },
-  { id: "claude-five-launches", title: "Claude dropped five launches", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/claude-five-launches.webp", preview: "/reels/claude-five-launches-preview.mp4" },
-  { id: "clipping-skill", title: "See this clip? Made by a skill", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/clipping-skill.webp", preview: "/reels/clipping-skill-preview.mp4" },
-  { id: "digital-product", title: "Create a digital product for your audience", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/digital-product.webp", preview: "/reels/digital-product-preview.mp4" },
-  { id: "only-one-skill", title: "Only One Skill", views: null, viewsRaw: null, world: "build", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/only-one-skill.webp", preview: "/reels/only-one-skill-preview.mp4" },
-  { id: "free-ai-videos", title: "Stop paying for AI videos", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/free-ai-videos.webp", preview: "/reels/free-ai-videos-preview.mp4" },
-  { id: "marketing-roi", title: "What is ROI?", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/marketing-roi.webp", preview: "/reels/marketing-roi-preview.mp4" },
-  { id: "devin-free", title: "Stop paying $200 a month for AI coding", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/devin-free.webp", preview: "/reels/devin-free-preview.mp4" },
-  { id: "creator-voice", title: "This voice-over sounds real — it's 100% AI", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/creator-voice.webp", preview: "/reels/creator-voice-preview.mp4" },
+  { id: "DfEjg7Hjghl", title: "100+ LLM apps sitting FREE on GitHub right now.", views: "206", viewsRaw: 206, world: "learn", tag: "LEARN", added: "2026-11-12", url: "https://www.instagram.com/reel/DfEjg7Hjghl/", thumb: "/reels/llm-apps.webp", preview: null },
+  { id: "DfVSuL7zIhi", title: "Gemini 4 argon ....", views: "127", viewsRaw: 127, world: "learn", tag: "LEARN", added: "2026-11-12", url: "https://www.instagram.com/reel/DfVSuL7zIhi/", thumb: "/reels/gemini.webp", preview: "/reels/gemini-preview.mp4" },
+  { id: "De194H9DvUY", title: "PHP itself just got a remote-shell bug. No login, no plugin — one plain HTTP request.", views: "119", viewsRaw: 119, world: "learn", tag: "LEARN", added: "2026-11-12", url: "https://www.instagram.com/reel/De194H9DvUY/", thumb: "/reels/php-remote-shell.webp", preview: null },
+  { id: "Dfmk0MQPvFn", title: "Free Claude skill", views: "117", viewsRaw: 117, world: "learn", tag: "LEARN", added: "2026-11-12", url: "https://www.instagram.com/reel/Dfmk0MQPvFn/", thumb: "/reels/claude-skill.webp", preview: "/reels/claude-skill-preview.mp4" },
+  { id: "DfGwobiFElT", title: "Someone just turned Claude into a day-trading desk. And it's FREE.", views: "116", viewsRaw: 116, world: "learn", tag: "LEARN", added: "2026-11-12", url: "https://www.instagram.com/reel/DfGwobiFElT/", thumb: "/reels/claude-day-trading.webp", preview: null },
+  { id: "DfnAhmGhVxY", title: "Claude made this one prompt", views: "108", viewsRaw: 108, world: "learn", tag: "LEARN", added: "2026-11-12", url: "https://www.instagram.com/reel/DfnAhmGhVxY/", thumb: "/reels/claude-one-prompt.webp", preview: null },
+  { id: "DfFAweQH_TG", title: "One prompt. Every LLM. Side by side.", views: "83", viewsRaw: 83, world: "learn", tag: "LEARN", added: "2026-11-12", url: "https://www.instagram.com/reel/DfFAweQH_TG/", thumb: "/reels/llm-comparison.webp", preview: "/reels/llm-comparison-preview.mp4" },
+  { id: "github-prompt", title: "Upgrade your GitHub using this single prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", added: "2026-11-12", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/github-prompt.webp", preview: "/reels/github-prompt-preview.mp4" },
+  { id: "one-prompt", title: "One Prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", added: "2026-11-12", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/one-prompt.webp", preview: "/reels/one-prompt-preview.mp4" },
+  { id: "macbook-7day", title: "7 day Macbook", views: "7", viewsRaw: 7, world: "learn", tag: "LEARN", added: "2026-11-12", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/macbook-7day.webp", preview: "/reels/macbook-7day-preview.mp4" },
+  { id: "alfaaz-single-prompt", title: "Alfaaz — Single prompt", views: null, viewsRaw: null, world: "learn", tag: "NEW", added: "2026-11-12", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/alfaaz-prompt.webp", preview: "/reels/alfaaz-prompt-preview.mp4" },
+  { id: "muse-motion", title: "Muse motion reel", views: "1,000", viewsRaw: 1000, world: "learn", tag: "LEARN", added: "2026-11-13", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/muse-motion.webp", preview: "/reels/muse-motion-preview.mp4" },
+  { id: "kalyani-lyric", title: "Kalyani — Lyric video", views: "5,000", viewsRaw: 5000, world: "learn", tag: "LEARN", added: "2026-11-13", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/kalyani-lyric.webp", preview: "/reels/kalyani-lyric-preview.mp4" },
+  { id: "portfolio-reel", title: "Portfolio reel", views: null, viewsRaw: null, world: "learn", tag: "NEW", added: "2026-11-16", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/portfolio-reel.webp", preview: "/reels/portfolio-reel-preview.mp4" },
+  { id: "claude-five-launches", title: "Claude dropped five launches", views: null, viewsRaw: null, world: "learn", tag: "NEW", added: "2026-11-16", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/claude-five-launches.webp", preview: "/reels/claude-five-launches-preview.mp4" },
+  { id: "clipping-skill", title: "See this clip? Made by a skill", views: null, viewsRaw: null, world: "learn", tag: "NEW", added: "2026-11-20", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/clipping-skill.webp", preview: "/reels/clipping-skill-preview.mp4" },
+  { id: "digital-product", title: "Create a digital product for your audience", views: null, viewsRaw: null, world: "brand", tag: "NEW", added: "2026-11-20", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/digital-product.webp", preview: "/reels/digital-product-preview.mp4" },
+  { id: "only-one-skill", title: "Only One Skill", views: null, viewsRaw: null, world: "build", tag: "NEW", added: "2026-11-20", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/only-one-skill.webp", preview: "/reels/only-one-skill-preview.mp4" },
+  { id: "free-ai-videos", title: "Stop paying for AI videos", views: null, viewsRaw: null, world: "learn", tag: "NEW", added: "2026-11-22", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/free-ai-videos.webp", preview: "/reels/free-ai-videos-preview.mp4" },
+  { id: "marketing-roi", title: "What is ROI?", views: null, viewsRaw: null, world: "brand", tag: "NEW", added: "2026-11-22", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/marketing-roi.webp", preview: "/reels/marketing-roi-preview.mp4" },
+  { id: "devin-free", title: "Stop paying $200 a month for AI coding", views: null, viewsRaw: null, world: "learn", tag: "NEW", added: "2026-11-22", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/devin-free.webp", preview: "/reels/devin-free-preview.mp4" },
+  { id: "creator-voice", title: "This voice-over sounds real — it's 100% AI", views: null, viewsRaw: null, world: "learn", tag: "NEW", added: "2026-11-24", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/creator-voice.webp", preview: "/reels/creator-voice-preview.mp4" },
 ];
 
 export const STATS = [
@@ -92,14 +94,14 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
-  { name: "SecureGaurd", tagline: "Find the risk. Fix what matters.", description: "Application security for every repository.", image: "/projects/secureguard.jpg", live: "https://secureguard-main.vercel.app", repo: "https://github.com/r1shabhsharma05/SecureGaurd" },
-  { name: "SafeLife", tagline: "Emergency help, faster and closer.", description: "A safety companion that connects you to nearby hospitals, emergency services and guardians.", image: "/projects/safelife.jpg", live: "https://safelife-ai.vercel.app", repo: "https://github.com/r1shabhsharma05/Saftey-App" },
-  { name: "RailSync 2.0", tagline: "AI-powered railway block planning.", description: "Data-driven train block scheduling.", image: "/projects/railsync.jpg", live: "https://railsync2-frontend.pages.dev/", repo: "https://github.com/r1shabhsharma05/RailSync" },
-  { name: "Farmer Marketplace", tagline: "From farm to market. Without barriers.", description: "Empowering farmers, connecting markets. Escrow payments, listings, profiles.", image: "/projects/farmer.jpg", live: "https://farmer-market-place-six.vercel.app", repo: "https://github.com/r1shabhsharma05/Farmer-Market-Place" },
-  { name: "LocalKart", tagline: "Good finds. Right on campus.", description: "Buy and sell pre-loved essentials within your college.", image: "/projects/localkart.jpg", live: "https://localkart-jet.vercel.app", repo: "https://github.com/r1shabhsharma05/LocalKart" },
-  { name: "Healthcare Hub", tagline: "Connected healthcare for everyone.", description: "A unified digital health platform. Your health, all in one place.", image: "/projects/healthcare.jpg", repo: "https://github.com/r1shabhsharma05" },
-  { name: "MorphAI", tagline: "AI-powered content tooling.", description: "Modern AI APIs for creators.", image: "/projects/morphai.jpg", repo: "https://github.com/r1shabhsharma05/MorphAi" },
-  { name: "Rkhshak", tagline: "Master security skills.", description: "Master security skills — complete production-readiness security audit + minimal-code fixes. Nothing partial.", image: "/projects/rkhshak.jpg", repo: "https://github.com/r1shabhsharma05/Rkhshak" },
+  { name: "SecureGaurd", tagline: "Find the risk. Fix what matters.", description: "Application security for every repository.", image: "/projects/secureguard.webp", live: "https://secureguard-main.vercel.app", repo: "https://github.com/r1shabhsharma05/SecureGaurd" },
+  { name: "SafeLife", tagline: "Emergency help, faster and closer.", description: "A safety companion that connects you to nearby hospitals, emergency services and guardians.", image: "/projects/safelife.webp", live: "https://safelife-ai.vercel.app", repo: "https://github.com/r1shabhsharma05/Saftey-App" },
+  { name: "RailSync 2.0", tagline: "AI-powered railway block planning.", description: "Data-driven train block scheduling.", image: "/projects/railsync.webp", live: "https://railsync2-frontend.pages.dev/", repo: "https://github.com/r1shabhsharma05/RailSync" },
+  { name: "Farmer Marketplace", tagline: "From farm to market. Without barriers.", description: "Empowering farmers, connecting markets. Escrow payments, listings, profiles.", image: "/projects/farmer.webp", live: "https://farmer-market-place-six.vercel.app", repo: "https://github.com/r1shabhsharma05/Farmer-Market-Place" },
+  { name: "LocalKart", tagline: "Good finds. Right on campus.", description: "Buy and sell pre-loved essentials within your college.", image: "/projects/localkart.webp", live: "https://localkart-jet.vercel.app", repo: "https://github.com/r1shabhsharma05/LocalKart" },
+  { name: "Healthcare Hub", tagline: "Connected healthcare for everyone.", description: "A unified digital health platform. Your health, all in one place.", image: "/projects/healthcare.webp", repo: "https://github.com/r1shabhsharma05" },
+  { name: "MorphAI", tagline: "AI-powered content tooling.", description: "Modern AI APIs for creators.", image: "/projects/morphai.webp", repo: "https://github.com/r1shabhsharma05/MorphAi" },
+  { name: "Rkhshak", tagline: "Master security skills.", description: "Master security skills — complete production-readiness security audit + minimal-code fixes. Nothing partial.", image: "/projects/rkhshak.webp", repo: "https://github.com/r1shabhsharma05/Rkhshak" },
 ];
 
 export const WORLDS = [
@@ -107,37 +109,31 @@ export const WORLDS = [
     id: "build",
     title: "Build: products for everyone",
     body: "Idea to launch for real products: the eight products he shipped, from an AI railway planner to an emergency SOS app.",
-    link: "/projects/",
+    link: "/projects",
     linkLabel: "See the products ↗",
   },
   {
     id: "brand",
     title: "Brand: campaigns on camera",
     body: "Real tools, built on camera — the @editsbyhx Reels brands see first. A media kit for campaigns: reach, formats, and how a collaboration works.",
-    link: "/brands/",
+    link: "/brands",
     linkLabel: "See the media kit ↗",
   },
   {
     id: "learn",
     title: "Learn: free resources",
     body: "Roadmaps, prompts and build write-ups, each with the Reel it came from — everything he learns, shared for free.",
-    link: "/learn/",
+    link: "/learn",
     linkLabel: "Read the write-ups ↗",
   },
 ];
 
 /** Header nav worlds — Build / Brand / Learn (the reference's three worlds). */
 export const NAV_WORLDS = [
-  { id: "build", label: "Build", color: "#2F55FF", text: "#ffffff", href: "/projects/" },
-  { id: "brand", label: "Brand", color: "#EF3B2D", text: "#ffffff", href: "/brands/" },
-  { id: "learn", label: "Learn", color: "#FFC81A", text: "#111111", href: "/learn/" },
+  { id: "build", label: "Build", color: "#2F55FF", text: "#ffffff", href: "/projects" },
+  { id: "brand", label: "Brand", color: "#EF3B2D", text: "#ffffff", href: "/brands" },
+  { id: "learn", label: "Learn", color: "#FFC81A", text: "#111111", href: "/learn" },
 ] as const;
-
-export const LEARN_POSTS = [
-  { slug: "how-i-made-a-trending-song-lyric-video-with-ai", title: "How I Made a Trending Song's Lyric Video with AI", tag: "PROMPT" },
-  { slug: "round-up-micro-savings-app-india", title: "Someone Please Build This in India: The Round-Up Micro-Savings App", tag: "BUSINESS IDEA" },
-  { slug: "who-is-rishabh-sharma", title: "Who is Rishabh Sharma?", tag: "ABOUT" },
-];
 
 /** Home Agent view — the 5 personas, prompt builder, endpoints and
  *  "Plug this site into your agent" section. Mirrors the reference's
@@ -181,7 +177,7 @@ export const HOME_PERSONAS: HomePersona[] = [
     quote: "Hi Rishabh, I'm building [your product] and want a first version by [date]. Could we talk?",
     footnotes: ["1 /LLMS.TXT", "2 /PROJECTS"],
     readLabel: "See his projects",
-    readHref: "/projects/",
+    readHref: "/projects",
   },
   {
     id: "brand",
@@ -204,7 +200,7 @@ export const HOME_PERSONAS: HomePersona[] = [
     quote: "Hi Rishabh, we're [brand] and want a Reel for [launch] in [month]. What would you make?",
     footnotes: ["1 /LLMS.TXT", "2 /BRANDS"],
     readLabel: "See the media kit",
-    readHref: "/brands/",
+    readHref: "/brands",
   },
   {
     id: "student",
@@ -226,7 +222,7 @@ export const HOME_PERSONAS: HomePersona[] = [
     ],
     footnotes: ["1 /LLMS.TXT", "2 /LEARN"],
     readLabel: "Browse the roadmaps",
-    readHref: "/learn/",
+    readHref: "/learn",
   },
   {
     id: "curious",
@@ -248,7 +244,7 @@ export const HOME_PERSONAS: HomePersona[] = [
     ],
     footnotes: ["1 /LLMS.TXT", "2 /ABOUT"],
     readLabel: "Read about Rishabh",
-    readHref: "/about/",
+    readHref: "/about",
   },
   {
     id: "developer",
@@ -267,7 +263,7 @@ export const HOME_PERSONAS: HomePersona[] = [
     curl: '$ curl "https://portfolio-hero-psi-lemon.vercel.app/openapi.json"',
     footnotes: ["1 /LLMS.TXT", "2 /OPENAPI.JSON"],
     readLabel: "Open the developer page",
-    readHref: "/developers/",
+    readHref: "/developers",
   },
 ];
 
@@ -302,14 +298,14 @@ export const HOME_AGENT_ENDPOINTS: {
   {
     group: "LEARN",
     rows: [
-      { method: "GET", path: "/learn/", desc: "The roadmaps, prompts and business ideas" },
+      { method: "GET", path: "/learn", desc: "The roadmaps, prompts and business ideas" },
     ],
   },
   {
     group: "BUILD",
     rows: [
-      { method: "GET", path: "/projects/", desc: "The shipped work" },
-      { method: "GET", path: "/brands/", desc: "The media kit" },
+      { method: "GET", path: "/projects", desc: "The shipped work" },
+      { method: "GET", path: "/brands", desc: "The media kit" },
     ],
   },
   {
@@ -342,7 +338,7 @@ export const HOME_AGENT_DOES = {
     },
     {
       title: "Learn: free resources",
-      body: "39 free roadmaps, prompts and business ideas for students learning to code.",
+      body: "42 free roadmaps, prompts and business ideas for students learning to code.",
     },
   ],
 };

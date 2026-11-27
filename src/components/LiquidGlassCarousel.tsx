@@ -44,12 +44,12 @@ export interface LiquidGlassCarouselProps {
 }
 
 export const liquidGlassCarouselDefaultItems: LiquidGlassCarouselItem[] = [
-  { title: "RailSync 2.0", src: "/projects/railsync.jpg", aspect: 1600 / 900 },
-  { title: "LocalKart", src: "/projects/localkart.jpg", aspect: 1536 / 1024 },
-  { title: "Healthcare Hub", src: "/projects/healthcare.jpg", aspect: 1536 / 1024 },
-  { title: "MorphAI", src: "/projects/morphai.jpg", aspect: 1536 / 1024 },
-  { title: "SecureGaurd", src: "/projects/secureguard.jpg", aspect: 1600 / 900 },
-  { title: "Farmer Marketplace", src: "/projects/farmer.jpg", aspect: 1600 / 900 },
+  { title: "RailSync 2.0", src: "/projects/railsync.webp", aspect: 1600 / 900 },
+  { title: "LocalKart", src: "/projects/localkart.webp", aspect: 1536 / 1024 },
+  { title: "Healthcare Hub", src: "/projects/healthcare.webp", aspect: 1536 / 1024 },
+  { title: "MorphAI", src: "/projects/morphai.webp", aspect: 1536 / 1024 },
+  { title: "SecureGaurd", src: "/projects/secureguard.webp", aspect: 1600 / 900 },
+  { title: "Farmer Marketplace", src: "/projects/farmer.webp", aspect: 1600 / 900 },
 ];
 
 const LENS = {

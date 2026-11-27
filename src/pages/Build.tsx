@@ -43,9 +43,9 @@ const SHIPPED: ShipItem[] = [
     ...PROJECTS[0],
     period: "2026 · Solo",
     images: [
-      "/projects/secureguard.jpg",
-      "/projects/secureguard-landing.jpg",
-      "/projects/secureguard-dashboard.jpg",
+      "/projects/secureguard.webp",
+      "/projects/secureguard-landing.webp",
+      "/projects/secureguard-dashboard.webp",
     ],
     stats: [
       { value: "25", label: "security fixes shipped" },
@@ -582,7 +582,7 @@ export default function Build() {
             <button
               type="button"
               aria-pressed={view === "agent"}
-              onClick={() => { if (view !== "agent") openAgentTransition(() => setView("agent")); }} onMouseEnter={() => preloadWorldScene("/sky-agent.jpg")}
+              onClick={() => { if (view !== "agent") openAgentTransition(() => setView("agent")); }} onMouseEnter={() => preloadWorldScene("/sky-agent.webp")}
             >
               Agent
             </button>
@@ -616,8 +616,8 @@ export default function Build() {
           <BriefForm />
         </section>
 
-        <section className="build-worked" aria-label="Worked at">
-          <p className="section-label">Worked at</p>
+        <section className="build-worked" aria-label="Shipped, end to end">
+          <p className="section-label">Shipped, end to end</p>
           <div className="worked-row">
             {WORKED_AT.map((w) => (
               <a
@@ -721,16 +721,17 @@ export default function Build() {
             the build, the prompt or the code, explained in 60 seconds.
           </p>
           <p>
-            <a className="experiments-link" href="/learn/">
+            <a className="experiments-link" href="/learn">
               All of them on Learn ↗
             </a>
           </p>
           <div className="experiments-panel">
             <img
               className="experiments-sky"
-              src="/sky.jpg"
+              src="/sky.webp"
               alt=""
               aria-hidden="true"
+              loading="lazy"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
               }}

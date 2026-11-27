@@ -160,7 +160,7 @@ export default function AgentView() {
     <>
       <section className="home-agent-hero" aria-label="For AI agents">
         <div className="home-agent-sky" aria-hidden="true">
-          <img src="/sky-agent.jpg" alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+          <img src="/sky-agent.webp" alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} />
           <Petals />
         </div>
         <div className="home-agent-copy">
@@ -199,7 +199,7 @@ export default function AgentView() {
                   <span className="home-agent-persona-name">{p.name}</span>
                   <span className="home-agent-persona-tag">{p.tagline}</span>
                   <span className="home-agent-persona-thumb" aria-hidden="true">
-                    <img src="/sky.jpg" alt="" />
+                    <img src="/sky.webp" alt="" />
                   </span>
                   <span className="home-agent-persona-toggle">{open ? "CLOSE" : "OPEN"}</span>
                 </button>
@@ -276,7 +276,7 @@ export default function AgentView() {
                       )}
                     </div>
                     <div className="home-agent-panel-right">
-                      <img className="home-agent-panel-photo" src="/sky.jpg" alt="" aria-hidden="true" />
+                      <img className="home-agent-panel-photo" src="/sky.webp" alt="" aria-hidden="true" />
                       <div className="home-agent-photo-head">
                         <p className="home-agent-step">3 · YOU GET</p>
                         <div className="home-agent-photo-kickers">

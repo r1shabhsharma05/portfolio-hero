@@ -10,13 +10,13 @@
  *  hero image wipes in with the world name). */
 export const WORLD_SCENES = {
   build: { scene: "/build-sky.webp", name: "Build" },
-  brand: { scene: "/brand-seascape.jpg", name: "Brand" },
+  brand: { scene: "/brand-seascape.webp", name: "Brand" },
   learn: { scene: "/build-sky.webp", name: "Learn" },
 } as const;
 export type WorldId = keyof typeof WORLD_SCENES;
 export const WORLD_SCENE = WORLD_SCENES.build.scene;
 export const WORLD_NAME = WORLD_SCENES.build.name;
-export const WORLD_HREF = "/projects/";
+export const WORLD_HREF = "/projects";
 
 const EASE_COVER = "cubic-bezier(.65,0,.35,1)";
 const EASE_SOFT = "cubic-bezier(.22,1,.36,1)";
@@ -192,7 +192,7 @@ export function openAgentTransition(onCovered: () => void): void {
   const d = document.createElement("div");
   d.className = "world-transition";
   d.setAttribute("aria-hidden", "true");
-  d.style.setProperty("--scene", `url("/sky-agent.jpg")`);
+  d.style.setProperty("--scene", `url("/sky-agent.webp")`);
   const c = document.createElement("div");
   c.className = "world-transition-scene";
   const u = document.createElement("i");

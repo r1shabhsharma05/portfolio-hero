@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import {
-  LEARN_POSTS,
   PROFILE,
   PROJECTS,
   REELS,
   STATS,
   WORLDS,
 } from "../data/site";
+import { LEARN_POSTS } from "../data/learn";
 import ReelCard from "../components/ReelCard";
 import AgentView, { DevPortal, Petals } from "../components/AgentView";
 import { useLiveStats } from "../hooks/useLiveStats";
@@ -206,7 +206,7 @@ function SentencePreview({
               preload="auto"
             />
           ) : (
-            <img src={displayed.p.image} alt="" />
+            <img src={displayed.p.image} alt={displayed.p.world} />
           )}
           {displayed.p.views ? <span className="sentence-preview-views">&bull; {displayed.p.views}</span> : null}
         </div>
@@ -229,9 +229,9 @@ function SentencePreview({
 }
 
 const SENTENCE_CHOICES: Choice[] = [
-  { label: "founders", sup: "01", world: "#2F55FF", on: "#FFFFFF", href: "/projects/" },
-  { label: "campaigns for brands", sup: "02", world: "#EF3B2D", on: "#FFFFFF", href: "/brands/", lastWordOnly: true },
-  { label: "students", sup: "03", world: "#FFC81A", on: "#111111", href: "/learn/" },
+  { label: "founders", sup: "01", world: "#2F55FF", on: "#FFFFFF", href: "/projects" },
+  { label: "campaigns for brands", sup: "02", world: "#EF3B2D", on: "#FFFFFF", href: "/brands", lastWordOnly: true },
+  { label: "students", sup: "03", world: "#FFC81A", on: "#111111", href: "/learn" },
   { label: "talk to my AI", sup: "04", world: "var(--color-ink)", on: "var(--color-paper)", action: "chat" },
 ];
 
@@ -260,7 +260,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
   // Featured card per sentence word — the live site shows a curated card
   // per world, not a wall reel. Views only where verified.
   const PREVIEWS: Record<string, PreviewEntry | null> = {
-    "01": { world: "BUILD", color: "#2F55FF", image: "/projects/secureguard.jpg", video: null, views: null, caption: "SecureGaurd · SafeLife · RailSync — 8 products, shipped." },
+    "01": { world: "BUILD", color: "#2F55FF", image: "/projects/secureguard.webp", video: null, views: null, caption: "SecureGaurd · SafeLife · RailSync — 8 products, shipped." },
     "02": { world: "BRAND", color: "#EF3B2D", image: "/reels/portfolio-reel.webp", video: "/reels/portfolio-reel-preview.mp4", views: null, caption: "The @editsbyhx showreel — motion type, lyric videos, AI builds on camera." },
     "03": { world: "LEARN", color: "#FFC81A", image: "/reels/gemini.webp", video: "/reels/gemini-preview.mp4", views: "127", caption: "Free roadmaps, prompts and build write-ups." },
     "04": null,
@@ -360,15 +360,15 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
           <nav className="world-nav" aria-label="Worlds">
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#2F55FF", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/projects/" onMouseEnter={() => { setNavWorld("build"); preloadWorldScene(); }} onMouseLeave={() => setNavWorld(null)} onClick={(e) => { e.preventDefault(); openWorldTransition("/projects/"); }}>Build</a>
+              <a className="world-link" style={{ "--world": "#2F55FF", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/projects" onMouseEnter={() => { setNavWorld("build"); preloadWorldScene(); }} onMouseLeave={() => setNavWorld(null)} onClick={(e) => { e.preventDefault(); openWorldTransition("/projects"); }}>Build</a>
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#EF3B2D", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/brands/" onMouseEnter={() => { setNavWorld("brand"); preloadWorldScene(WORLD_SCENES.brand.scene); }} onMouseLeave={() => setNavWorld(null)} onClick={(e) => { e.preventDefault(); openWorldTransition("/brands/", "brand"); }}>Brand</a>
+              <a className="world-link" style={{ "--world": "#EF3B2D", "--world-on": "#FFFFFF" } as React.CSSProperties} href="/brands" onMouseEnter={() => { setNavWorld("brand"); preloadWorldScene(WORLD_SCENES.brand.scene); }} onMouseLeave={() => setNavWorld(null)} onClick={(e) => { e.preventDefault(); openWorldTransition("/brands", "brand"); }}>Brand</a>
             </span>
             <span className="world-option">
               <span className="mode-slash" aria-hidden="true">/</span>
-              <a className="world-link" style={{ "--world": "#FFC81A", "--world-on": "#111111" } as React.CSSProperties} href="/learn/" onMouseEnter={() => { setNavWorld("learn"); preloadWorldScene(WORLD_SCENES.learn.scene); }} onMouseLeave={() => setNavWorld(null)} onClick={(e) => { e.preventDefault(); openWorldTransition("/learn/", "learn"); }}>Learn</a>
+              <a className="world-link" style={{ "--world": "#FFC81A", "--world-on": "#111111" } as React.CSSProperties} href="/learn" onMouseEnter={() => { setNavWorld("learn"); preloadWorldScene(WORLD_SCENES.learn.scene); }} onMouseLeave={() => setNavWorld(null)} onClick={(e) => { e.preventDefault(); openWorldTransition("/learn", "learn"); }}>Learn</a>
             </span>
           </nav>
         </div>
@@ -391,7 +391,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
               type="button"
               aria-pressed={view === "agent"}
               onClick={() => { if (view !== "agent") openAgentTransition(() => setView("agent")); }}
-              onMouseEnter={() => preloadWorldScene("/sky-agent.jpg")}
+              onMouseEnter={() => preloadWorldScene("/sky-agent.webp")}
             >
               Agent
             </button>
@@ -400,13 +400,14 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
       </header>
 
       <main>
+        <h1 className="visually-hidden">Rishabh Sharma — Full-stack Developer &amp; Creator</h1>
         {view === "human" ? (
           <>
         {/* hero — one viewport: sky wall + sentence strip, like the live site */}
         <section className="stage" data-stage data-focus={focusWorld ?? undefined} aria-label="Intro">
           <div className="world-frame" ref={frameRef}>
             <div className="sky-layer">
-              <img src="/sky.jpg" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+              <img src="/sky.webp" srcSet="/sky-sm.webp 960w, /sky.webp 2352w" sizes="100vw" width={2352} height={1008} fetchPriority="high" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
             </div>
             <div className="cloud-layer" aria-hidden="true" />
             <Petals />
@@ -488,7 +489,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
           <div className="projects-grid">
             {PROJECTS.map((p) => (
               <article key={p.name} className="project-card">
-                <img src={p.image} alt={p.name} loading="lazy" />
+                <img src={p.image} alt={`${p.name} — ${p.tagline}`} loading="lazy" decoding="async" />
                 <div className="body">
                   <h3>{p.name}</h3>
                   <p className="tagline">{p.tagline}</p>
@@ -512,12 +513,12 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
           <p className="section-label">Learn — write-ups</p>
           <h2 className="section-title">What I learned, written down.</h2>
           <div className="projects-grid">
-            {LEARN_POSTS.map((post) => (
-              <article key={post.slug} className="project-card">
+            {LEARN_POSTS.slice(0, 6).map((post) => (
+              <article key={post.url} className="project-card">
                 <div className="body">
-                  <p className="tagline">{post.tag}</p>
+                  <p className="tagline">{post.type}</p>
                   <h3>{post.title}</h3>
-                  <a href={`/learn/${post.slug}/`}>Read the write-up ↗</a>
+                  <a href={post.url}>Read the write-up ↗</a>
                 </div>
               </article>
             ))}

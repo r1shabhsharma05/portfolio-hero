@@ -215,16 +215,16 @@ function FanCarousel() {
                 loop
                 playsInline
                 autoPlay
-                preload="auto"
+                preload="metadata"
               />
             ) : (
-              <img src={r.thumb} alt="" loading="lazy" />
+              <img src={r.thumb} alt={r.title} width={720} height={1280} loading="lazy" decoding="async" />
             );
           return offset === 0 ? (
             <a
               key={r.id}
               className="brand-fan-card is-front"
-              href={r.url}
+              href={`/reels/${r.id}`}
               target="_blank"
               rel="noreferrer"
               data-cursor="PLAY"
@@ -286,7 +286,7 @@ function ArticleFan({ reel }: { reel: Reel }) {
   return (
     <div className="brand-article-fan">
       <a
-        href={reel.url}
+        href={`/reels/${reel.id}`}
         target="_blank"
         rel="noreferrer"
         className="brand-article-fan-card is-front"
@@ -296,7 +296,7 @@ function ArticleFan({ reel }: { reel: Reel }) {
         {reel.preview && !reducedMotion() ? (
           <video src={reel.preview} muted loop playsInline autoPlay preload="metadata" />
         ) : (
-          <img src={reel.thumb} alt="" loading="lazy" />
+          <img src={reel.thumb} alt={reel.title} width={720} height={1280} loading="lazy" decoding="async" />
         )}
       </a>
       <p className="brand-article-fan-caption">
@@ -324,7 +324,7 @@ function ReachCard({ reel }: { reel: Reel }) {
   return (
     <a
       className="brand-reach-card"
-      href={reel.url}
+      href={`/reels/${reel.id}`}
       target="_blank"
       rel="noreferrer"
       data-cursor="▶ PLAY"
@@ -341,10 +341,10 @@ function ReachCard({ reel }: { reel: Reel }) {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
           />
         ) : (
-          <img src={reel.thumb} alt="" loading="lazy" />
+          <img src={reel.thumb} alt={reel.title} width={720} height={1280} loading="lazy" decoding="async" />
         )}
       </span>
       <span className="brand-reach-line">
@@ -488,7 +488,7 @@ export default function Brand() {
             <span className="mode-slash" aria-hidden="true">
               /
             </span>
-            <button type="button" aria-pressed={view === "agent"} onClick={() => { if (view !== "agent") openAgentTransition(() => setView("agent")); }} onMouseEnter={() => preloadWorldScene("/sky-agent.jpg")}>
+            <button type="button" aria-pressed={view === "agent"} onClick={() => { if (view !== "agent") openAgentTransition(() => setView("agent")); }} onMouseEnter={() => preloadWorldScene("/sky-agent.webp")}>
               Agent
             </button>
           </span>
@@ -518,7 +518,7 @@ export default function Brand() {
 
         {/* case studies — one article per top Reel, his own numbers */}
         <section className="section" id="selected-work" aria-label="Selected work">
-          <h2 className="section-title">What they wanted, what I made, what happened.</h2>
+          <h2 className="section-title">What I set out to make, what I made.</h2>
           <p className="section-body">
             Every Reel below is something I built and filmed myself — no client briefs yet, no
             staged demos. Each one dealt as a hand of cards, with its numbers from @editsbyhx.
@@ -527,7 +527,7 @@ export default function Brand() {
             {BRAND_WORK.map(({ reel, wanted, made, pills }) => (
               <article key={reel.id} className="brand-article" id={reel.id}>
                 <div className="brand-article-top">
-                  <img src={reel.thumb} alt="" loading="lazy" className="brand-article-logo" />
+                  <img src={reel.thumb} alt={reel.title} width={720} height={1280} loading="lazy" decoding="async" className="brand-article-logo" />
                   <h3 className="brand-article-title">
                     <span>{reel.title}</span>
                   </h3>
@@ -781,7 +781,7 @@ export default function Brand() {
             <p className="brand-cta-below">
               Prefer email? <a href={`mailto:${BRAND_CTA_EMAIL}`}>{BRAND_CTA_EMAIL}</a> · Based in
               India, working with brands anywhere · All brand content is on{" "}
-              <a href="/brands/">/brands</a>
+              <a href="/brands">/brands</a>
             </p>
           </div>
         </section>
