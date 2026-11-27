@@ -29,7 +29,7 @@
 
 ## Verified facts on the site
 
-LeetCode 221 solved (92 Easy, 102 Medium, 27 Hard) · 1,875 GitHub contributions in 2026 · 24 merged / 7 open OSS PRs (19 Nov 2026) · reel views total 7,000 across 22 reels (newest 7 added 20–24 Nov 2026, unposted, no counts yet; "Trending model" removed 22 Nov). No follower count is shown — it is unconfirmed. Never invent employment, internships, credentials or follower counts.
+LeetCode 231 solved (95 Easy, 107 Medium, 29 Hard) · 1,961 GitHub contributions in 2026 · 25 merged / 9 open OSS PRs (27 Nov 2026) · reel views total 7,000 across 22 reels (newest 7 added 20–24 Nov 2026, unposted, no counts yet; "Trending model" removed 22 Nov). No follower count is shown — it is unconfirmed. Never invent employment, internships, credentials or follower counts.
 
 ## Run it
 
@@ -102,14 +102,11 @@ npm run preview    # serve the production build
 npm run verify:agentic -- https://portfolio-hero-psi-lemon.vercel.app
 ```
 
-It checks 404 behaviour, no-JS content, markdown negotiation, `Vary` headers, trust-anchor pages, JSON-LD completeness and robots policy. Latest run: **69 passed, 0 failed** (27 Nov 2026, live baseline — SEO changes local only, not yet deployed).
+It checks 404 behaviour, no-JS content, markdown negotiation, `Vary` headers, trust-anchor pages, JSON-LD completeness and robots policy. Latest run: **69 passed, 0 failed** (27 Nov 2026).
 
-## GitHub stats
+## Live stats
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=r1shabhsharma05&show_icons=true&theme=dark&hide_border=true&bg_color=0d1117&title_color=B8FF29&icon_color=B8FF29" alt="GitHub stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=r1shabhsharma05&layout=compact&theme=dark&hide_border=true&bg_color=0d1117&title_color=B8FF29" alt="Top languages" />
-</p>
+No third-party stats card — the numbers above are a dated snapshot. The live numbers are always current at `GET /api/v1/stats` (LeetCode, GitHub contributions and OSS PR counts, hourly cache, last-verified fallback); the site itself never hard-codes them — `api/_stats.js` fills them into every surface.
 
 ## Links
 
