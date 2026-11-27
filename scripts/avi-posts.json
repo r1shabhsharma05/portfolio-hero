@@ -1,0 +1,1494 @@
+{
+  "apiVersion": "v1",
+  "data": [
+    {
+      "slug": "265-topics-to-master-ai-engineering",
+      "title": "265 Topics to Master AI Engineering (and the 6-Week Order I'd Learn Them In)",
+      "description": "265 AI engineering topics from roadmap.sh's AI Engineer (189) and AI Agents (100) roadmaps, deduped, plus the 6-week order to learn them and what to build each week.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-11-15",
+      "tags": [
+        "ai engineering",
+        "roadmap",
+        "llms",
+        "rag",
+        "mcp",
+        "agents",
+        "evals"
+      ],
+      "url": "https://www.avivashishta.com/blog/265-topics-to-master-ai-engineering",
+      "markdownUrl": "https://www.avivashishta.com/blog/265-topics-to-master-ai-engineering.md"
+    },
+    {
+      "slug": "github-contribution-sweater",
+      "title": "I Knitted My GitHub Into a Christmas Sweater (and You Can Make Yours)",
+      "description": "Type a GitHub username and your last year of contributions gets knitted into a Christmas jumper, shown in six real-looking product photos. How the canvas knitting works, and how a Codex photo shoot became a shop that knits anyone's graph into the wool.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-15",
+      "updated": "2026-11-16",
+      "tags": [
+        "github",
+        "contribution graph",
+        "canvas",
+        "creative coding",
+        "codex",
+        "image generation",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/github-contribution-sweater",
+      "markdownUrl": "https://www.avivashishta.com/blog/github-contribution-sweater.md",
+      "output": "https://www.avivashishta.com/lab/sweater"
+    },
+    {
+      "slug": "made-of-things-type-motion",
+      "title": "Made of Things: My Name Where Every Letter Turns Into Something From My Life",
+      "description": "Type motion where each letter of my name turns into a glossy 3D thing: my laptop, a rocket for the YC startups, my coffee and a 3D emoji of me, made with Codex. Six modes (lens, pop, shuffle, wave, sticker, burst), one spring per letter, no libraries.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-14",
+      "tags": [
+        "type motion",
+        "text animation",
+        "codex",
+        "image generation",
+        "creative coding",
+        "react",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/made-of-things-type-motion",
+      "markdownUrl": "https://www.avivashishta.com/blog/made-of-things-type-motion.md",
+      "output": "https://www.avivashishta.com/lab/things"
+    },
+    {
+      "slug": "ascii-reels-eye-roses-sunflower-python",
+      "title": "ASCII Reels in Python: an Eye That Zooms Into a Heart, Roses Rising and a Golden-Angle Sunflower",
+      "description": "How I took apart a viral ASCII eye reel and rebuilt it in Python with NumPy and ffmpeg, then made two more: roses that grow and bloom, and a sunflower drawn with the golden angle.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "python",
+        "numpy",
+        "ascii art",
+        "reels",
+        "ffmpeg",
+        "generative art"
+      ],
+      "url": "https://www.avivashishta.com/blog/ascii-reels-eye-roses-sunflower-python",
+      "markdownUrl": "https://www.avivashishta.com/blog/ascii-reels-eye-roses-sunflower-python.md"
+    },
+    {
+      "slug": "exploded-a-shoe-in-five-parts",
+      "title": "Exploded: A Shoe Store Where the Scroll Takes the Shoe Apart",
+      "description": "How I built a running shoe page that comes apart into its five parts as you scroll, each with a callout and a price, and lets you recolour any part before it snaps back together. All from one Codex picture and six Codex edits.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "css 3d",
+        "scroll",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/exploded-a-shoe-in-five-parts",
+      "markdownUrl": "https://www.avivashishta.com/blog/exploded-a-shoe-in-five-parts.md",
+      "output": "https://www.avivashishta.com/lab/exploded"
+    },
+    {
+      "slug": "front-row-a-store-on-the-runway",
+      "title": "Front Row: A Fashion Store Where the Scroll Walks the Show",
+      "description": "How I built a fashion store where you sit at the end of the catwalk: scroll and the looks walk toward you, the one that stops at the front is for sale and the cameras go off. One Codex catwalk, one Codex model, seven Codex outfit edits and a little perspective maths.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "scroll",
+        "perspective",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/front-row-a-store-on-the-runway",
+      "markdownUrl": "https://www.avivashishta.com/blog/front-row-a-store-on-the-runway.md",
+      "output": "https://www.avivashishta.com/lab/runway"
+    },
+    {
+      "slug": "movement-a-watch-you-wind-by-scrolling",
+      "title": "Movement: A Watch Store Where the Scroll Is Time",
+      "description": "How I built a watch page where the hands are set to your time and tick like a real movement, and scrolling winds them forward while the dial clears to show the gears. A Codex watch with no hands, three Codex edits, drawn hands and a loupe.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "svg",
+        "scroll",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/movement-a-watch-you-wind-by-scrolling",
+      "markdownUrl": "https://www.avivashishta.com/blog/movement-a-watch-you-wind-by-scrolling.md",
+      "output": "https://www.avivashishta.com/lab/watch"
+    },
+    {
+      "slug": "paint-job-drop-a-fabric",
+      "title": "Paint Job: A Sofa You Re-Upholster by Dropping a Swatch on It",
+      "description": "How I built a furniture store where you drag a fabric swatch onto the sofa and the new fabric soaks in from where it lands. Seven Codex photos of one room, a mask worked out from where they differ, and one WebGL shader. Prompts and code inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "webgl",
+        "shader",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/paint-job-drop-a-fabric",
+      "markdownUrl": "https://www.avivashishta.com/blog/paint-job-drop-a-fabric.md",
+      "output": "https://www.avivashishta.com/lab/paint"
+    },
+    {
+      "slug": "receipt-a-shop-that-prints",
+      "title": "Receipt: A Grocery Shop That Prints Itself as You Scroll",
+      "description": "How I built a corner grocer whose whole shop is one thermal receipt coming out of a printer as you scroll: a Codex printer, sixteen Codex groceries dithered to thermal dots, and a page where only the paper moves. Prompts and code inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "dithering",
+        "scroll",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/receipt-a-shop-that-prints",
+      "markdownUrl": "https://www.avivashishta.com/blog/receipt-a-shop-that-prints.md",
+      "output": "https://www.avivashishta.com/lab/receipt"
+    },
+    {
+      "slug": "scent-cloud-see-a-perfume",
+      "title": "Scent Cloud: A Perfume Store Where You Can See the Spray",
+      "description": "How I built a perfume page where holding the bottle sprays a cloud of particles that drifts on a breeze, gathers into the names of the notes and fades the way a scent does, top notes first. Codex bottles and about a hundred lines of canvas.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "particles",
+        "canvas",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/scent-cloud-see-a-perfume",
+      "markdownUrl": "https://www.avivashishta.com/blog/scent-cloud-see-a-perfume.md",
+      "output": "https://www.avivashishta.com/lab/scent"
+    },
+    {
+      "slug": "the-claw-a-store-you-win",
+      "title": "The Claw: A Toy Store Where You Win the Toys",
+      "description": "How I built a toy store whose hero is a claw machine: a Codex photo of an empty cabinet, ten Codex toys cut out with macOS Vision, Matter.js bodies shaped like each toy, and a claw that holds on (sometimes). Prompts and code inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "matter.js",
+        "physics",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/the-claw-a-store-you-win",
+      "markdownUrl": "https://www.avivashishta.com/blog/the-claw-a-store-you-win.md",
+      "output": "https://www.avivashishta.com/lab/claw"
+    },
+    {
+      "slug": "the-tank-skincare-under-water",
+      "title": "The Tank: A Skincare Store Under Water",
+      "description": "How I built a skincare store where the products drift in a tank of water: stir it with the pointer, click a bottle and it rises through the bubbles with its ingredients floating up beside it. Codex photos, a 2D canvas and one WebGL water pass.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "webgl",
+        "shader",
+        "canvas",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/the-tank-skincare-under-water",
+      "markdownUrl": "https://www.avivashishta.com/blog/the-tank-skincare-under-water.md",
+      "output": "https://www.avivashishta.com/lab/tank"
+    },
+    {
+      "slug": "throw-it-on-a-magnet-wardrobe",
+      "title": "Throw It On: A Streetwear Store Where the Clothes Snap Onto the Model",
+      "description": "How I built a store where the clothes float round the model and snap onto her when you fling them. One Codex model, one Codex edit per piece, and a prep script that turns each edit into a layer so any top goes with any bottom.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "physics",
+        "interaction",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/throw-it-on-a-magnet-wardrobe",
+      "markdownUrl": "https://www.avivashishta.com/blog/throw-it-on-a-magnet-wardrobe.md",
+      "output": "https://www.avivashishta.com/lab/outfit"
+    },
+    {
+      "slug": "unboxing-a-store-that-arrives",
+      "title": "Unboxing: A Headphone Store Whose Hero Is the Delivery",
+      "description": "How I built a product page you open like a parcel: drag across the tape to slice it, the flaps open from the cut, and you pull the headphones up out of the tissue. A Codex box, the same box opened, and the headphones in three colours.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-13",
+      "tags": [
+        "interaction",
+        "css",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/unboxing-a-store-that-arrives",
+      "markdownUrl": "https://www.avivashishta.com/blog/unboxing-a-store-that-arrives.md",
+      "output": "https://www.avivashishta.com/lab/unbox"
+    },
+    {
+      "slug": "perseverance-mission-scroll-cad-drawing",
+      "title": "Mission: NASA's Perseverance Rover, Flown to Mars by Your Scroll",
+      "description": "How I turned NASA's public Perseverance 3D model into a scroll-driven CAD drawing: designed, assembled, launched on an Atlas V, landed in Jezero and driven. Three.js, hidden lines, prompts inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-12",
+      "tags": [
+        "three.js",
+        "webgl",
+        "scroll animation",
+        "nasa",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/perseverance-mission-scroll-cad-drawing",
+      "markdownUrl": "https://www.avivashishta.com/blog/perseverance-mission-scroll-cad-drawing.md",
+      "output": "https://www.avivashishta.com/lab/mission"
+    },
+    {
+      "slug": "toran-indian-doorways-matter-js",
+      "title": "Toran: Five Indian Doorways You Can Walk Through",
+      "description": "How I built /lab/toran: Codex-generated doorway lintels, Matter.js strands made of each region's welcome in its own script, and bells that ring when you swipe.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-12",
+      "tags": [
+        "matter.js",
+        "physics",
+        "codex",
+        "image generation",
+        "creative coding",
+        "web audio",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/toran-indian-doorways-matter-js",
+      "markdownUrl": "https://www.avivashishta.com/blog/toran-indian-doorways-matter-js.md",
+      "output": "https://www.avivashishta.com/lab/toran"
+    },
+    {
+      "slug": "try-on-one-model-every-bag",
+      "title": "Try On: A Bag Store Where One Model Wears Every Bag",
+      "description": "How I built a luxury bag store where you pick a bag, it flies onto the model and the new look ripples out from where she wears it. Codex for the model and the bags, macOS Vision for the cut-outs, one WebGL shader. Prompts and code inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-12",
+      "tags": [
+        "webgl",
+        "shader",
+        "codex",
+        "image generation",
+        "ecommerce",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/try-on-one-model-every-bag",
+      "markdownUrl": "https://www.avivashishta.com/blog/try-on-one-model-every-bag.md",
+      "output": "https://www.avivashishta.com/lab/try-on"
+    },
+    {
+      "slug": "entangled-particles-across-two-browser-windows",
+      "title": "Entangled: Particles That Flow Between Two Browser Windows",
+      "description": "Open the page in two windows and their particle orbs pull on each other, joined by streams that cross the gap and follow the windows as you drag them. No server: BroadcastChannel, screen coordinates and Three.js. Code and prompt inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-09",
+      "tags": [
+        "creative coding",
+        "webgl",
+        "threejs",
+        "particles",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/entangled-particles-across-two-browser-windows",
+      "markdownUrl": "https://www.avivashishta.com/blog/entangled-particles-across-two-browser-windows.md",
+      "output": "https://www.avivashishta.com/lab/entangled"
+    },
+    {
+      "slug": "github-profile-readme-animated-svg-cards",
+      "title": "I Redesigned My GitHub Profile README With Animated SVG Cards",
+      "description": "My GitHub README now matches my site: a hero with an ASCII portrait that prints in, three world tiles, a monthly chart and a blue contribution graph. All SVG, refreshed daily.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-09",
+      "tags": [
+        "github",
+        "svg",
+        "animation",
+        "design",
+        "claude",
+        "github actions"
+      ],
+      "url": "https://www.avivashishta.com/blog/github-profile-readme-animated-svg-cards",
+      "markdownUrl": "https://www.avivashishta.com/blog/github-profile-readme-animated-svg-cards.md"
+    },
+    {
+      "slug": "agent-crews-48-cursors-build-a-page",
+      "title": "Agent Crews: 48 Cursors, a Queue and a Crew for Every Block",
+      "description": "My page that builds itself, scaled up: 48 named agent cursors wait in a queue, every block gets a crew, the headline is carried in letter by letter and a reviewer sends work back. Code and prompt inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-07",
+      "tags": [
+        "animation",
+        "creative coding",
+        "agents",
+        "claude",
+        "nextjs",
+        "css"
+      ],
+      "url": "https://www.avivashishta.com/blog/agent-crews-48-cursors-build-a-page",
+      "markdownUrl": "https://www.avivashishta.com/blog/agent-crews-48-cursors-build-a-page.md",
+      "output": "https://www.avivashishta.com/lab/agent-crews"
+    },
+    {
+      "slug": "agent-sheet-a-portfolio-spreadsheet-agents-fill-in",
+      "title": "Agent Sheet: A Portfolio as a Spreadsheet My Agents Fill In",
+      "description": "My Reel numbers as a spreadsheet that ten named agent cursors fill in at once: titles typed, stats pulled, a formula dragged down, a heat map and a chart. Real data, real HTML, code and prompt inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-07",
+      "tags": [
+        "animation",
+        "creative coding",
+        "agents",
+        "claude",
+        "data",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/agent-sheet-a-portfolio-spreadsheet-agents-fill-in",
+      "markdownUrl": "https://www.avivashishta.com/blog/agent-sheet-a-portfolio-spreadsheet-agents-fill-in.md",
+      "output": "https://www.avivashishta.com/lab/agent-sheet"
+    },
+    {
+      "slug": "how-nvidia-built-a-5-trillion-dollar-empire",
+      "title": "How a Gaming Chip Built a $5 Trillion Empire: The True Story of Nvidia and CUDA",
+      "description": "Nvidia put a feature nobody used into every chip it sold, and Wall Street ignored it for years. Then two gaming cards in a Toronto bedroom changed everything.",
+      "type": "case-study",
+      "label": "Case study",
+      "date": "2026-11-06",
+      "tags": [
+        "nvidia",
+        "cuda",
+        "jensen huang",
+        "alexnet",
+        "ai history",
+        "tech stories",
+        "startup stories"
+      ],
+      "url": "https://www.avivashishta.com/blog/how-nvidia-built-a-5-trillion-dollar-empire",
+      "markdownUrl": "https://www.avivashishta.com/blog/how-nvidia-built-a-5-trillion-dollar-empire.md"
+    },
+    {
+      "slug": "robot-hero-follows-your-cursor-media-io",
+      "title": "A Robot Hero That Follows Your Cursor, Made From One AI Video",
+      "description": "How I made a hero section where a retro robot turns its head to follow your cursor: a Media.io image, one Kling video clip, transparent frames and a bit of eye tracking.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-04",
+      "tags": [
+        "ai video",
+        "media.io",
+        "kling",
+        "creative coding",
+        "canvas",
+        "image generation"
+      ],
+      "url": "https://www.avivashishta.com/blog/robot-hero-follows-your-cursor-media-io",
+      "markdownUrl": "https://www.avivashishta.com/blog/robot-hero-follows-your-cursor-media-io.md",
+      "output": "https://www.avivashishta.com/lab/robot-hero"
+    },
+    {
+      "slug": "agents-at-work-a-page-that-builds-itself",
+      "title": "Agents at Work: A Page That Builds Itself, Block by Block",
+      "description": "How I made a page that a swarm of named agent cursors builds live: a blue marquee, a grey skeleton, then the real thing, typed headlines and pixel fills. Code and prompt inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-11-03",
+      "tags": [
+        "animation",
+        "creative coding",
+        "agents",
+        "codex",
+        "nextjs",
+        "css"
+      ],
+      "url": "https://www.avivashishta.com/blog/agents-at-work-a-page-that-builds-itself",
+      "markdownUrl": "https://www.avivashishta.com/blog/agents-at-work-a-page-that-builds-itself.md",
+      "output": "https://www.avivashishta.com/lab/agents-at-work"
+    },
+    {
+      "slug": "claude-101-matrix-desk-animation",
+      "title": "Claude 101: How I Made the Matrix Desk Animation",
+      "description": "The 3x3 grid reveal edit from my reel, broken down frame by frame. Exact timings, the flash recipe, how to shoot it, and the prompt I used to get Claude to edit it for me.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-31",
+      "tags": [
+        "video editing",
+        "claude",
+        "reels",
+        "desk setup",
+        "ffmpeg"
+      ],
+      "url": "https://www.avivashishta.com/blog/claude-101-matrix-desk-animation",
+      "markdownUrl": "https://www.avivashishta.com/blog/claude-101-matrix-desk-animation.md"
+    },
+    {
+      "slug": "wet-paint-gallery-paintings-that-soak-in",
+      "title": "Wet Paint: A Gallery Where Each Painting Soaks In Over the Last",
+      "description": "How I made a full-screen gallery of the world's best views as oil paintings, where each new one soaks in from the top like wet paint: Codex for the paintings, one canvas, a noise field, a blurred wash and drips. Prompts and code inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-30",
+      "tags": [
+        "canvas",
+        "creative coding",
+        "codex",
+        "image generation",
+        "gallery",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/wet-paint-gallery-paintings-that-soak-in",
+      "markdownUrl": "https://www.avivashishta.com/blog/wet-paint-gallery-paintings-that-soak-in.md",
+      "output": "https://www.avivashishta.com/lab/wet-paint"
+    },
+    {
+      "slug": "floating-phones-a24-style-3d-iphone-carousel",
+      "title": "Floating Phones: an A24-Style 3D iPhone Carousel for My Reels",
+      "description": "How I built a Three.js carousel of floating iPhones that play my most watched Reels, with a foldable intro, a Codex poster to zoom through and a hand-drawn hover loop. Code and prompts inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-27",
+      "tags": [
+        "threejs",
+        "webgl",
+        "3d",
+        "gltf",
+        "codex",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/floating-phones-a24-style-3d-iphone-carousel",
+      "markdownUrl": "https://www.avivashishta.com/blog/floating-phones-a24-style-3d-iphone-carousel.md",
+      "output": "https://www.avivashishta.com/lab/phones"
+    },
+    {
+      "slug": "animate-github-contribution-graph-portfolio",
+      "title": "6 Ways to Put Your GitHub Graph on Your Portfolio (Animated, With Real Data)",
+      "description": "Pull your real GitHub contribution calendar with one GraphQL query and animate it six ways on canvas: the grid, a 3D skyline of commits, a weekly pulse, a year clock, your streak and a terminal. Code and a prompt inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-25",
+      "tags": [
+        "github",
+        "canvas",
+        "graphql",
+        "portfolio",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/animate-github-contribution-graph-portfolio",
+      "markdownUrl": "https://www.avivashishta.com/blog/animate-github-contribution-graph-portfolio.md",
+      "output": "https://www.avivashishta.com/lab/commits"
+    },
+    {
+      "slug": "blueprint-buildings-that-draw-themselves",
+      "title": "Buildings That Draw Themselves: Line Art That Soaks Into an Image, Like Heron's Hero",
+      "description": "How I made a full-screen carousel of buildings that draw line by line, then fill in like ink: Codex for the drawings, OpenCV to trace their lines, SVG for the draw and a canvas dissolve. Prompts and code inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-25",
+      "tags": [
+        "svg animation",
+        "canvas",
+        "opencv",
+        "codex",
+        "creative coding",
+        "nextjs"
+      ],
+      "url": "https://www.avivashishta.com/blog/blueprint-buildings-that-draw-themselves",
+      "markdownUrl": "https://www.avivashishta.com/blog/blueprint-buildings-that-draw-themselves.md",
+      "output": "https://www.avivashishta.com/lab/blueprint"
+    },
+    {
+      "slug": "made-of-dots-webgl-point-cloud-portrait",
+      "title": "I Turned Myself Into 66,000 Dots: a WebGL Point Cloud Portrait With a Real Loader",
+      "description": "How I built a point cloud bust of myself in Three.js: one photo, Codex for a clay version of me, Higgsfield to turn it into 3D, dots baked into one binary file, a loader that is the real download, and a cursor that is a light. Prompts and code inside.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-24",
+      "tags": [
+        "threejs",
+        "webgl",
+        "point cloud",
+        "image to 3d",
+        "codex",
+        "higgsfield",
+        "creative coding"
+      ],
+      "url": "https://www.avivashishta.com/blog/made-of-dots-webgl-point-cloud-portrait",
+      "markdownUrl": "https://www.avivashishta.com/blog/made-of-dots-webgl-point-cloud-portrait.md",
+      "output": "https://www.avivashishta.com/lab/made-of-dots"
+    },
+    {
+      "slug": "taj-mahal-3d-character-tripo-threejs",
+      "title": "I turned myself into a 3D character and explored the Taj Mahal",
+      "description": "Avatar to rigged 3D character in Tripo, monuments from one line of text, and a playable world built with Opus 5.5. Every prompt, step and code snippet, plus free Tripo credits.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-24",
+      "tags": [
+        "3d character",
+        "tripo ai",
+        "opus 5.5",
+        "threejs",
+        "game dev",
+        "taj mahal"
+      ],
+      "url": "https://www.avivashishta.com/blog/taj-mahal-3d-character-tripo-threejs",
+      "markdownUrl": "https://www.avivashishta.com/blog/taj-mahal-3d-character-tripo-threejs.md"
+    },
+    {
+      "slug": "live-whoop-fitness-dashboard-nextjs",
+      "title": "I Put My WHOOP Data on My Portfolio: the WHOOP API, Explained by Building a Live Dashboard",
+      "description": "How I built /fitness from the WHOOP API: OAuth with rotating refresh tokens, the data model, webhooks, rate limits, the heartbeat intro, and the full prompt.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-23",
+      "tags": [
+        "whoop",
+        "api",
+        "oauth",
+        "nextjs",
+        "dataviz",
+        "motion"
+      ],
+      "url": "https://www.avivashishta.com/blog/live-whoop-fitness-dashboard-nextjs",
+      "markdownUrl": "https://www.avivashishta.com/blog/live-whoop-fitness-dashboard-nextjs.md",
+      "output": "https://www.avivashishta.com/fitness"
+    },
+    {
+      "slug": "tripo-apple-style-3d-website-ramen",
+      "title": "Turn Anything into an Apple-Style 3D Website (I Did It with a Bowl of Ramen)",
+      "description": "The full workflow: Tripo for the 3D models, Opus 5.5 for the code. Prompts, code snippets and the free credits link.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-23",
+      "tags": [
+        "3d website",
+        "tripo ai",
+        "opus 5.5",
+        "threejs",
+        "web design",
+        "creative coding"
+      ],
+      "url": "https://www.avivashishta.com/blog/tripo-apple-style-3d-website-ramen",
+      "markdownUrl": "https://www.avivashishta.com/blog/tripo-apple-style-3d-website-ramen.md"
+    },
+    {
+      "slug": "prompt-vox-style-explainer-page-codex-paper-assets",
+      "title": "The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You",
+      "description": "How I turned my portfolio into a scroll-driven Vox explainer: Codex generated the paper, tape, marker and halftone assets, and one CSS variable per chapter runs every animation.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-10-22",
+      "tags": [
+        "motion",
+        "react",
+        "css",
+        "codex",
+        "scroll",
+        "collage"
+      ],
+      "url": "https://www.avivashishta.com/blog/prompt-vox-style-explainer-page-codex-paper-assets",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-vox-style-explainer-page-codex-paper-assets.md",
+      "output": "https://www.avivashishta.com/lab/explained"
+    },
+    {
+      "slug": "prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel",
+      "title": "The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel",
+      "description": "A copy-pasteable prompt and the code concepts behind the Deal hero: Reel cards dealt face down, flipped into a fan while the loader counts, then lifted into a wheel of playing videos rising out of the clouds.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-10-19",
+      "tags": [
+        "css-3d",
+        "motion",
+        "react",
+        "hero",
+        "loader",
+        "carousel"
+      ],
+      "url": "https://www.avivashishta.com/blog/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel.md",
+      "output": "https://www.avivashishta.com/lab/deal-hero"
+    },
+    {
+      "slug": "prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero",
+      "title": "The Prompt Behind My Homepage: A Loader That Deals Cards Into a Ring, Then Opens Into the 3D Carousel Hero",
+      "description": "A copy-pasteable prompt and the code concepts behind avivashishta.com: Reel cards dealt around a small tilted ring while a counter loads, then the same cards expand into the full-screen carousel. One pose function, no handoff, no second scene.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-10-18",
+      "tags": [
+        "css-3d",
+        "motion",
+        "react",
+        "hero",
+        "loader",
+        "carousel"
+      ],
+      "url": "https://www.avivashishta.com/blog/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-reel-ring-loader-that-opens-into-a-3d-carousel-hero.md",
+      "output": "https://www.avivashishta.com/"
+    },
+    {
+      "slug": "502-python-interview-questions",
+      "title": "502 Python Interview Questions to Crack Placements in 2027",
+      "description": "502 free Python interview questions: 338 questions with answers in 22 topics, 100 coding exercises with solutions and 64 tricky output snippets, from three GitHub repos with 68K+ stars between them. Plus the 4 topics to start with and 3 things to build.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-10-05",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/502-python-interview-questions",
+      "markdownUrl": "https://www.avivashishta.com/blog/502-python-interview-questions.md"
+    },
+    {
+      "slug": "550-frontend-interview-questions-html-css-javascript",
+      "title": "550 Frontend Interview Questions (HTML, CSS and JavaScript) for 2027",
+      "description": "550 free frontend interview questions: 183 HTML and 212 CSS questions with answers, plus 155 JavaScript \"what's the output?\" questions from lydiahallie/javascript-questions (65K stars). With the 4 topics to start with and 3 things to build.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-10-05",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/550-frontend-interview-questions-html-css-javascript",
+      "markdownUrl": "https://www.avivashishta.com/blog/550-frontend-interview-questions-html-css-javascript.md"
+    },
+    {
+      "slug": "518-javascript-interview-questions",
+      "title": "518 JavaScript Interview Questions to Crack Placements in 2027",
+      "description": "518 JavaScript interview questions with written answers, sorted into 11 topics: closures, hoisting, promises, the event loop, prototypes, the DOM and more, plus 87 output-based coding exercises. From sudheerj/javascript-interview-questions (27K stars), with the 4 topics to start with and 3 things to build.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-10-02",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/518-javascript-interview-questions",
+      "markdownUrl": "https://www.avivashishta.com/blog/518-javascript-interview-questions.md",
+      "reel": {
+        "id": "Dd_I84ZylmF",
+        "url": "https://www.instagram.com/reel/Dd_I84ZylmF/"
+      }
+    },
+    {
+      "slug": "446-react-interview-questions",
+      "title": "446 React Interview Questions to Crack Frontend Placements",
+      "description": "446 React interview questions for frontend placements, each linked to a full written answer with code: hooks, React 18/19 features, core React, Router, Redux and testing. 354 current plus 92 legacy, from sudheerj/reactjs-interview-questions (45K stars, MIT licensed).",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-10-01",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/446-react-interview-questions",
+      "markdownUrl": "https://www.avivashishta.com/blog/446-react-interview-questions.md"
+    },
+    {
+      "slug": "at-my-desk-interactive-3d-desk-website-replit",
+      "title": "At My Desk: I Turned My Real Desk Into an Interactive 3D Website With Replit",
+      "description": "At My Desk is my actual desk setup rebuilt as a 3D website: lamps you can switch on and off, a monitor and laptop you can type on, a globe, a plant to water and a phone that becomes a focus timer. How the scene, the camera, the lights and the live screens work, built with Replit Agent, React Three Fiber and Drei.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-10-01",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/at-my-desk-interactive-3d-desk-website-replit",
+      "markdownUrl": "https://www.avivashishta.com/blog/at-my-desk-interactive-3d-desk-website-replit.md",
+      "reel": {
+        "id": "Dd9N_S8SgCV",
+        "url": "https://www.instagram.com/reel/Dd9N_S8SgCV/"
+      }
+    },
+    {
+      "slug": "stacking-reel-trend-edit-with-claude-code",
+      "title": "How I Made the \"Dumb Dumb Dumb\" Stacking Reel With Claude Code, in Full 4K HDR",
+      "description": "The prompt I used to have Claude Code edit the viral stacking Reel trend from raw iPhone clips: beat timings measured from the reference, objects cut out with SAM and clean plates, copies that stay live video, and a 4K 60fps HDR master. Plus what went wrong first.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-30",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/stacking-reel-trend-edit-with-claude-code",
+      "markdownUrl": "https://www.avivashishta.com/blog/stacking-reel-trend-edit-with-claude-code.md"
+    },
+    {
+      "slug": "1401-free-cs-courses-mit-stanford-iit",
+      "title": "1,401 Free CS Courses from MIT, Stanford and IITs to Learn by 2027",
+      "description": "1,401 free university computer science courses with video lectures from MIT, Stanford, Harvard, CMU and IITs, across 25 subjects, including 410 machine learning and AI courses. From cs-video-courses (83K stars, MIT licensed), plus the 4 I'd start with for an AI engineer job.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-09-29",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/1401-free-cs-courses-mit-stanford-iit",
+      "markdownUrl": "https://www.avivashishta.com/blog/1401-free-cs-courses-mit-stanford-iit.md"
+    },
+    {
+      "slug": "760-companies-that-hire-without-leetcode",
+      "title": "760 Companies That Hire Without LeetCode in 2027",
+      "description": "760 companies that hire software engineers without LeetCode or whiteboard rounds, with each one's real interview process: take-homes, pair programming and conversations about real work. 248 hire remote and 46 are in India. From Hiring Without Whiteboards (52K stars, MIT licensed).",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-09-29",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/760-companies-that-hire-without-leetcode",
+      "markdownUrl": "https://www.avivashishta.com/blog/760-companies-that-hire-without-leetcode.md"
+    },
+    {
+      "slug": "the-descent-infinite-zoom-book-webgl-replit",
+      "title": "The Descent: A Replit Site Where Scrolling Falls Through Seven Worlds Hidden Inside a Book",
+      "description": "A scroll-driven infinite zoom through 15 nested illustrations, from a bookshop into a book, a ship, a snow globe and out to a star, then back again. How the hand-written WebGL shader, the slow-down at each world, the loader and the ink-reveal type work, what I removed, and what still has seams.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-29",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/the-descent-infinite-zoom-book-webgl-replit",
+      "markdownUrl": "https://www.avivashishta.com/blog/the-descent-infinite-zoom-book-webgl-replit.md"
+    },
+    {
+      "slug": "1173-free-system-design-lessons",
+      "title": "1,173 Free System Design Lessons to Crack SDE Interviews in 2027",
+      "description": "1,173 free system design lessons from the System Design Primer (372K stars), Awesome System Design Resources (41.8K stars) and Awesome Scalability (74K stars): core concepts, 57 interview problems, classic papers and 860+ real engineering write-ups from Netflix, Uber, Discord and more. Every link checked 28 September 2026.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-09-28",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/1173-free-system-design-lessons",
+      "markdownUrl": "https://www.avivashishta.com/blog/1173-free-system-design-lessons.md"
+    },
+    {
+      "slug": "740-build-your-own-x-tutorials",
+      "title": "740 Free Tutorials to Build Git, Redis and Docker From Scratch Before 2027",
+      "description": "740 free tutorials to build real technology from scratch: your own Git, Redis, database, shell, Docker, operating system, programming language and neural network, from build-your-own-x (550K stars) and project-based-learning (285K stars).",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-09-28",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/740-build-your-own-x-tutorials",
+      "markdownUrl": "https://www.avivashishta.com/blog/740-build-your-own-x-tutorials.md"
+    },
+    {
+      "slug": "106-ai-startups-to-cold-email-for-internship",
+      "title": "106 AI Startups to Cold Email for an Internship (India, Remote and Live Openings)",
+      "description": "106 AI startups to cold email for an internship: India YC startups, India AI intern listings, live Summer 2027 postings, and early-stage remote-friendly YC AI teams. Links to each startup, how to find the founder, and the exact cold email I would send.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-09-27",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/106-ai-startups-to-cold-email-for-internship",
+      "markdownUrl": "https://www.avivashishta.com/blog/106-ai-startups-to-cold-email-for-internship.md"
+    },
+    {
+      "slug": "209-free-ai-projects-to-build",
+      "title": "209 Free AI Projects to Build Before 2027 (Every Link, Sorted by Level)",
+      "description": "All 209 free AI projects from awesome-llm-apps (140K stars) and ai-engineering-hub (38K stars), with a checked link for each: RAG, agents, MCP, voice, fine-tuning, sorted from beginner to advanced, plus the 10 I would build first.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-09-27",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/209-free-ai-projects-to-build",
+      "markdownUrl": "https://www.avivashishta.com/blog/209-free-ai-projects-to-build.md"
+    },
+    {
+      "slug": "ai-engineering-from-scratch-free-course",
+      "title": "AI Engineering from Scratch: 523 Free Lessons, and the 4 Phases I'd Do First",
+      "description": "AI Engineering from Scratch (58K GitHub stars, MIT) is a free, open-source course with 523 lessons across 20 phases, where every lesson ships a prompt, skill, agent or MCP server. Three ways to start, the four phases I'd do first for an AI app developer job, what to ship after each, and which capstone to build.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-26",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/ai-engineering-from-scratch-free-course",
+      "markdownUrl": "https://www.avivashishta.com/blog/ai-engineering-from-scratch-free-course.md",
+      "reel": {
+        "id": "Ddwlg5gSOvf",
+        "url": "https://www.instagram.com/reel/Ddwlg5gSOvf/"
+      }
+    },
+    {
+      "slug": "career-ops-open-source-ai-job-search",
+      "title": "career-ops: The Open-Source Repo That Runs Your Job Search",
+      "description": "career-ops (72.5K GitHub stars, MIT) runs inside Claude Code or Codex to score job listings against your CV, flag ghost jobs, and draft tailored CVs and cover letters without ever applying for you. Setup, India job boards to point it at, and how to use it well when only 5.9% of Indian tech postings are entry level.",
+      "type": "career",
+      "label": "Career",
+      "date": "2026-09-24",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/career-ops-open-source-ai-job-search",
+      "markdownUrl": "https://www.avivashishta.com/blog/career-ops-open-source-ai-job-search.md"
+    },
+    {
+      "slug": "claude-opus-5-5-vs-gpt-6-sol-coding",
+      "title": "Claude Opus 5.5 vs GPT-6 Sol: Which One to Use for Coding",
+      "description": "Claude Opus 5.5 and GPT-6 Sol launched the same day. Pricing, context windows and benchmarks from the official pages, why the launch benchmarks can't be compared, the cheap GPT-6 Luna option, and a 20-minute test to pick your own default. Checked 24 September 2026.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-24",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/claude-opus-5-5-vs-gpt-6-sol-coding",
+      "markdownUrl": "https://www.avivashishta.com/blog/claude-opus-5-5-vs-gpt-6-sol-coding.md"
+    },
+    {
+      "slug": "cosmo-3d-robot-companion-threejs-replit",
+      "title": "Cosmo: The Replit Prompt I Used to Polish a 3D Robot Companion (and What Actually Shipped)",
+      "description": "A single-file Three.js robot you can boop, pet, throw and upset, with 11 moods, two hidden meters, spring physics, synthesised sound and a MediaPipe webcam Mirror mode. The full Replit polish prompt, which parts shipped and which were cut, and the tail-clipping and emote-timing fixes.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-24",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/cosmo-3d-robot-companion-threejs-replit",
+      "markdownUrl": "https://www.avivashishta.com/blog/cosmo-3d-robot-companion-threejs-replit.md",
+      "reel": {
+        "id": "DdrVLTlSYj_",
+        "url": "https://www.instagram.com/reel/DdrVLTlSYj_/"
+      }
+    },
+    {
+      "slug": "yc-summer-2027-internships-where-to-apply",
+      "title": "YC Summer 2027 Internships: Where to Apply (and What to Do From India)",
+      "description": "Y Combinator's Summer 2027 internship page is live. The official page, three more boards that track YC and startup intern roles, India AI internship listings you can apply to now, and how to write an application a small startup will actually read. Checked 24 September 2026.",
+      "type": "career",
+      "label": "Career",
+      "date": "2026-09-24",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/yc-summer-2027-internships-where-to-apply",
+      "markdownUrl": "https://www.avivashishta.com/blog/yc-summer-2027-internships-where-to-apply.md"
+    },
+    {
+      "slug": "github-repos-that-make-claude-code-better",
+      "title": "8 GitHub Repos That Make Claude Code 10x Better",
+      "description": "Eight open-source repos that change how Claude Code behaves: a skills framework, an agent harness optimizer, tool-output trimming, git worktree management, a parallel-agent fleet runner, cross-tool memory, an anti-over-engineering ruleset, and an answer-first output skill. Star counts verified 23 September 2026.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-23",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/github-repos-that-make-claude-code-better",
+      "markdownUrl": "https://www.avivashishta.com/blog/github-repos-that-make-claude-code-better.md"
+    },
+    {
+      "slug": "replit-ai-video-desk-photo-agent-command-center",
+      "title": "One Desk Photo, Three AI Clips: Building a Cinematic Agent Command Center With Replit's Video Generator",
+      "description": "How one rear-view desk photo became a 24-second cinematic sequence of AI agent terminals using Replit's video generator: why the second clip changed direction instead of polishing the first, why a named palette and a 'do not include' list beat mood words, how chaining clips from the last frame keeps the scene continuous, the generator's limits, and three copy-pasteable prompts.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-23",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/replit-ai-video-desk-photo-agent-command-center",
+      "markdownUrl": "https://www.avivashishta.com/blog/replit-ai-video-desk-photo-agent-command-center.md"
+    },
+    {
+      "slug": "what-2027-interviews-will-actually-ask",
+      "title": "What 2027 Interviews Will Actually Ask You",
+      "description": "Fifteen questions software engineering interviews are moving toward in 2027 \u2014 working alongside an AI assistant, reading unfamiliar code, defending your own architecture decisions, and explaining AI systems \u2014 with what to prepare for each, and a four-week plan. Sourced from Google's AI-assisted pilot, Meta's AI-enabled format, HackerRank's interview modes and CoderPad's 2026 hiring survey.",
+      "type": "career",
+      "label": "Career",
+      "date": "2026-09-23",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/what-2027-interviews-will-actually-ask",
+      "markdownUrl": "https://www.avivashishta.com/blog/what-2027-interviews-will-actually-ask.md"
+    },
+    {
+      "slug": "ascii-studio-replit-image-3d-webcam-ascii-art",
+      "title": "ASCII Studio: Images, 3D Models and a Live Webcam Turned Into Editable ASCII",
+      "description": "A browser studio that converts images, GLB/OBJ models and a live camera feed into ASCII you can edit in real time. Why every source has to collapse into one converter, why density is a cell size and not a character count, why monospace cells are not square, how the three exports are three different problems, and the full Replit Agent brief.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-22",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/ascii-studio-replit-image-3d-webcam-ascii-art",
+      "markdownUrl": "https://www.avivashishta.com/blog/ascii-studio-replit-image-3d-webcam-ascii-art.md",
+      "reel": {
+        "id": "Ddl31Bgyspg",
+        "url": "https://www.instagram.com/reel/Ddl31Bgyspg/"
+      }
+    },
+    {
+      "slug": "prompt-scroll-scrubbed-cinematic-site-webgl-replit",
+      "title": "The Prompt I Used to Build a pear.no-Style Scroll-Scrubbed Cinematic Site on Replit (WebP Frames, Not Video)",
+      "description": "A copy-pasteable Replit Agent prompt for a single-page cinematic WebGL site in the style of pear.no \u2014 one sticky stage 60 viewports tall, one normalized progress number, scroll-scrubbed WebP frame sequences instead of seeking a video, a halving-stride loader that never shows a blank frame, six shader transitions, and an asset pipeline that generates motion first and decomposes it with ffmpeg.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-09-17",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-scroll-scrubbed-cinematic-site-webgl-replit",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-scroll-scrubbed-cinematic-site-webgl-replit.md",
+      "reel": {
+        "id": "DdY9E6oSoWe",
+        "url": "https://www.instagram.com/reel/DdY9E6oSoWe/"
+      }
+    },
+    {
+      "slug": "prompt-premium-property-site-scroll-choreography-replit",
+      "title": "The Prompt I Used to Build a Premium Property Site on Replit (Scroll as the Medium)",
+      "description": "A copy-pasteable Replit Agent prompt for a luxury property site where scroll is the medium \u2014 a masked arch preloader, a sticky hero dive, a word-spacing spread, a horizontal track sized from its own content, clip-path curtains, a page that clips into a card at the footer, and six reveal primitives that each have a mirrored exit.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-09-10",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-premium-property-site-scroll-choreography-replit",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-premium-property-site-scroll-choreography-replit.md",
+      "reel": {
+        "id": "DdG4XZqyh6e",
+        "url": "https://www.instagram.com/reel/DdG4XZqyh6e/"
+      }
+    },
+    {
+      "slug": "rain-splashing-off-your-body-mediapipe-python",
+      "title": "Making Rain Splash Off Your Body in Real Time",
+      "description": "A webcam effect where rain falls and bursts the instant it touches your silhouette. The whole thing is a rising-edge test against a segmentation mask \u2014 plus three bugs, including one where heavier rain produced fewer splashes.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-09",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/rain-splashing-off-your-body-mediapipe-python",
+      "markdownUrl": "https://www.avivashishta.com/blog/rain-splashing-off-your-body-mediapipe-python.md"
+    },
+    {
+      "slug": "era-residence-scroll-choreography-design-language",
+      "title": "The Design Language of Era Residence: Scroll as Choreography",
+      "description": "A breakdown of era-residence.com: split-text reveals with matching exits, a different parallax per section built on sticky rather than pin, viewport-gated video, continuous theme swapping, and a logo whose spin speed tracks your scroll velocity.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-07",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/era-residence-scroll-choreography-design-language",
+      "markdownUrl": "https://www.avivashishta.com/blog/era-residence-scroll-choreography-design-language.md",
+      "reel": {
+        "id": "Dc_j0pKyugR",
+        "url": "https://www.instagram.com/reel/Dc_j0pKyugR/"
+      }
+    },
+    {
+      "slug": "3d-car-dealership-tripo-ai-threejs",
+      "title": "I Built a 3D Car Dealership Without Opening Blender",
+      "description": "Generating every vehicle from a single photo with Tripo AI, then shipping it on the web: the file:// CORS wall, the over-compression mistake that ruined the meshes, weld() before simplify, a 164-part exploded view, and a refraction cursor shader.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-09-04",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/3d-car-dealership-tripo-ai-threejs",
+      "markdownUrl": "https://www.avivashishta.com/blog/3d-car-dealership-tripo-ai-threejs.md",
+      "reel": {
+        "id": "Dc3nzPMSIRD",
+        "url": "https://www.instagram.com/reel/Dc3nzPMSIRD/"
+      }
+    },
+    {
+      "slug": "liquid-metal-webcam-python-opencv",
+      "title": "Turning Your Webcam Into Liquid Metal With 400 Lines of Python",
+      "description": "A real-time mercury/chrome webcam effect at 77 fps without TouchDesigner and without a GPU: a three-line wave equation, gradient-driven refraction, specular lighting from the same gradient, and a feedback loop that makes the image melt.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-04",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/liquid-metal-webcam-python-opencv",
+      "markdownUrl": "https://www.avivashishta.com/blog/liquid-metal-webcam-python-opencv.md",
+      "reel": {
+        "id": "Dc21GMYyApV",
+        "url": "https://www.instagram.com/reel/Dc21GMYyApV/"
+      }
+    },
+    {
+      "slug": "rubiks-cube-solver-three-js-claude",
+      "title": "I Built a Rubik\u2019s Cube Solver in One HTML File with Claude (Three.js, a Layer-by-Layer Solver, and Photo Scanning)",
+      "description": "Cube Lab is a single HTML file: a Three.js 3x3 you can drag-turn, a layer-by-layer solver written from scratch with IDDFS and conjugated generators, and a scanner that reads your real cube from six photos or your webcam.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-09-01",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/rubiks-cube-solver-three-js-claude",
+      "markdownUrl": "https://www.avivashishta.com/blog/rubiks-cube-solver-three-js-claude.md",
+      "reel": {
+        "id": "DcvCfoRSJ_4",
+        "url": "https://www.instagram.com/reel/DcvCfoRSJ_4/"
+      }
+    },
+    {
+      "slug": "prompt-fake-old-hardware-crt-device-replit",
+      "title": "The Prompt I Used to Build a Fake Old Computer on Replit (Beige Plastic, a CRT Screen, and Buttons That Actually Travel)",
+      "description": "A copy-pasteable Replit Agent prompt for a skeuomorphic site where the whole page is one piece of 90s beige hardware \u2014 chunky bezel, green phosphor CRT with scanlines and bloom, a fake POST boot sequence, and knobs, switches and buttons that physically move.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-08-29",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-fake-old-hardware-crt-device-replit",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-fake-old-hardware-crt-device-replit.md",
+      "reel": {
+        "id": "DcpulL0y4SH",
+        "url": "https://www.instagram.com/reel/DcpulL0y4SH/"
+      }
+    },
+    {
+      "slug": "pinch-time-travel-scrub-video-with-your-fingers-mediapipe",
+      "title": "Pinch Time Travel: Scrubbing Video With Your Fingers in 300 Lines of Python",
+      "description": "Spread your fingers and a timelapse runs forward; squeeze and it rewinds. How Avi Vashishta built a pinch-to-scrub video player with MediaPipe hand tracking and OpenCV \u2014 including the four bugs that only show up in front of a real camera.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-08-28",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/pinch-time-travel-scrub-video-with-your-fingers-mediapipe",
+      "markdownUrl": "https://www.avivashishta.com/blog/pinch-time-travel-scrub-video-with-your-fingers-mediapipe.md",
+      "reel": {
+        "id": "DckuSzOSP0e",
+        "url": "https://www.instagram.com/reel/DckuSzOSP0e/"
+      }
+    },
+    {
+      "slug": "top-5-design-trends-website-10x-2026",
+      "title": "Top 5 Design Trends To Make Your Website 10x (Product and E-commerce, 2026)",
+      "description": "Brand story before product, hyperrealism over AI minimalism, walkthroughs and trials instead of demo forms, Gen-Z-fication, and trust signals built for humans and AI shopping agents. Five design trends for product and e-commerce websites in 2026, with the numbers behind each one.",
+      "type": "profile",
+      "label": "About",
+      "date": "2026-08-27",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/top-5-design-trends-website-10x-2026",
+      "markdownUrl": "https://www.avivashishta.com/blog/top-5-design-trends-website-10x-2026.md"
+    },
+    {
+      "slug": "motion-gallery-gesture-controlled-3d-painting-orb",
+      "title": "Motion Gallery: A 3D Painting Orb You Rotate With Your Hands (MediaPipe + React Three Fiber)",
+      "description": "Thirteen famous paintings on a Fibonacci sphere you spin by pinching the air. The object-fit: cover maths for Three.js textures, pinch-and-drag and two-hand-zoom gesture handling with MediaPipe, an alpha WebGL canvas over a live webcam, and the CSS fallback for when there is no WebGL context.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-08-25",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/motion-gallery-gesture-controlled-3d-painting-orb",
+      "markdownUrl": "https://www.avivashishta.com/blog/motion-gallery-gesture-controlled-3d-painting-orb.md",
+      "reel": {
+        "id": "DcbYKEHSjxC",
+        "url": "https://www.instagram.com/reel/DcbYKEHSjxC/"
+      }
+    },
+    {
+      "slug": "prompt-luma-floor-lamp-lit-hero-replit",
+      "title": "The Prompt I Used to Build the Luma Floor Lamp Hero on Replit (A Brass Switch That Lights the Whole Page)",
+      "description": "A copy-pasteable Replit Agent prompt for an editorial product hero on pure black \u2014 a photoreal floor lamp you switch on with a real brass inline switch, a halo behind the shade, a warm floor bounce, copy that dims when the room goes dark, and a pool of light that follows your cursor.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-08-19",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-luma-floor-lamp-lit-hero-replit",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-luma-floor-lamp-lit-hero-replit.md",
+      "reel": {
+        "id": "DcQRFgRyNKU",
+        "url": "https://www.instagram.com/reel/DcQRFgRyNKU/"
+      }
+    },
+    {
+      "slug": "prompt-lumina-interactive-light-gallery-replit",
+      "title": "The Prompt I Used to Build Lumina, an Interactive Light Gallery on Replit (Pull-Chain Physics, Drag-to-Dim, Hold-to-Ignite)",
+      "description": "A copy-pasteable Replit Agent prompt for a pure-black fullscreen gallery of three photoreal lamps, each turned on by a different physical mechanic \u2014 a Matter.js pull chain, a drag-to-dim paper lantern, and a hold-to-ignite neon tube. Edge-masked photos, procedural Web Audio, no sound files.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-08-18",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-lumina-interactive-light-gallery-replit",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-lumina-interactive-light-gallery-replit.md",
+      "reel": {
+        "id": "DcLNaxqycUv",
+        "url": "https://www.instagram.com/reel/DcLNaxqycUv/"
+      }
+    },
+    {
+      "slug": "turning-yourself-into-spiderman-in-react",
+      "title": "Turning Yourself Into Spider-Man in React (MediaPipe Pose \u2192 a Mixamo Rig in React Three Fiber)",
+      "description": "A webcam, a 368 MB Spider-Man GLB and React Three Fiber: capture your empty room, walk back in, and the suit is standing where you are \u2014 your size, your pose, your fingers. The full retargeting maths and the five bugs that each looked like something else.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-08-13",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/turning-yourself-into-spiderman-in-react",
+      "markdownUrl": "https://www.avivashishta.com/blog/turning-yourself-into-spiderman-in-react.md"
+    },
+    {
+      "slug": "prompt-hook-lab-instagram-hook-generator-emergent",
+      "title": "The Prompt I Used to Build Hook Lab in Emergent (20 Scored Instagram Hooks, Biased Toward What Already Worked)",
+      "description": "A copy-pasteable Emergent prompt for a full-stack hook-writing app \u2014 20 tagged and scored hooks per topic, a two-second red flag computed in code, caption generation with per-section regeneration, and a feedback loop that learns which hook formats actually perform on your account.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-08-12",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-hook-lab-instagram-hook-generator-emergent",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-hook-lab-instagram-hook-generator-emergent.md"
+    },
+    {
+      "slug": "prompt-threejs-ice-wall-punch-shatter-hero-reveal",
+      "title": "The Prompt I Used to Build a Punch-Through Ice Wall in Three.js (Voronoi Shatter + Refracted Hero Reveal)",
+      "description": "A copy-pasteable prompt for a landing page sealed behind frosted mint ice \u2014 punch it five times and the wall fractures into ~90 real Voronoi shards that tumble past the camera, refracting the hero text as they fly. Two-pass render target refraction, hand-rolled fracture, no physics engine.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-08-10",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-threejs-ice-wall-punch-shatter-hero-reveal",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-threejs-ice-wall-punch-shatter-hero-reveal.md",
+      "reel": {
+        "id": "Db3VNa3SQsb",
+        "url": "https://www.instagram.com/reel/Db3VNa3SQsb/"
+      }
+    },
+    {
+      "slug": "prompt-kinetic-wind-wall-threejs-vertex-shader",
+      "title": "The Prompt I Used to Build a Kinetic Wind Wall in Three.js (2,000 Metal Blades, All Moved in the Vertex Shader)",
+      "description": "A copy-pasteable prompt for a wall of ~2,000 metal louvres that ripples with a procedural wind field and parts around the cursor \u2014 all motion in an onBeforeCompile patch on MeshPhysicalMaterial, reflections from a procedural PMREM studio, zero texture or HDR files. Plus the three silent bugs that cost me an evening.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-08-05",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-kinetic-wind-wall-threejs-vertex-shader",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-kinetic-wind-wall-threejs-vertex-shader.md"
+    },
+    {
+      "slug": "prompt-hover-reveal-spaceship-scanner-higgsfield",
+      "title": "The Prompt I Used to Build a Hover-Reveal Spaceship Scanner, with Higgsfield-Generated Hull Layers",
+      "description": "A copy-pasteable prompt for a landing page where the cursor acts as an X-ray torch \u2014 sweeping it across a dead, powered-down starship lights that part of the hull up with plasma conduits and lit engine bells. Two pixel-aligned 4K layers generated with Higgsfield, a CSS mask as the reveal, and a parallax debris field of keyed cutouts.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-08-04",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-hover-reveal-spaceship-scanner-higgsfield",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-hover-reveal-spaceship-scanner-higgsfield.md"
+    },
+    {
+      "slug": "25-projects-to-build-to-get-hired-2026",
+      "title": "25 Projects To Build To Get Hired in 2026",
+      "description": "25 portfolio projects reverse-engineered from what YC and Accel are funding in 2026 \u2014 MCP servers, eval harnesses, agent infrastructure, and physical-world data. Ranked beginner to hard, with the hiring signal each one sends.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-08-01",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/25-projects-to-build-to-get-hired-2026",
+      "markdownUrl": "https://www.avivashishta.com/blog/25-projects-to-build-to-get-hired-2026.md"
+    },
+    {
+      "slug": "prompt-pin-board-sticky-notes-single-file",
+      "title": "The Prompt I Used to Build Pin Board, a Single-File Sticky-Notes App (No Backend, No Build Step)",
+      "description": "A copy-pasteable prompt for a draggable, resizable sticky-notes board with per-note colour, font and checklist modes \u2014 one HTML file, vanilla JS, everything persisted to localStorage. Plus why each clause is in the prompt.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-07-30",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-pin-board-sticky-notes-single-file",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-pin-board-sticky-notes-single-file.md"
+    },
+    {
+      "slug": "prompt-fluid-ink-reveal-wordmark-higgsfield",
+      "title": "The Prompt I Used to Build a Fluid Ink-Reveal Homepage, with a Higgsfield-Generated Wordmark Video",
+      "description": "A copy-pasteable prompt for a homepage where dragging the cursor spreads ink that punches through the page to a looping video of the same word morphing through 3D materials \u2014 a WebGL Navier-Stokes fluid as the mask, and the video generated with the Higgsfield MCP.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-07-29",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-fluid-ink-reveal-wordmark-higgsfield",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-fluid-ink-reveal-wordmark-higgsfield.md",
+      "reel": {
+        "id": "DbYR8HdBdml",
+        "url": "https://www.instagram.com/reel/DbYR8HdBdml/"
+      }
+    },
+    {
+      "slug": "3d-ascii-wordmark-svg-github-readme",
+      "title": "How I Rendered a Rotating 3D ASCII Wordmark That Animates on GitHub (No JavaScript)",
+      "description": "Extruding a glyph mask into a 3D surface, splatting it to a character grid with a z-buffer, and shipping twenty rotated frames as a single 38 KB SVG that animates on GitHub with SMIL and no JavaScript \u2014 plus the three geometry bugs that looked like rendering faults.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-07-27",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/3d-ascii-wordmark-svg-github-readme",
+      "markdownUrl": "https://www.avivashishta.com/blog/3d-ascii-wordmark-svg-github-readme.md"
+    },
+    {
+      "slug": "prompt-frosted-glass-refraction-cube-webgl",
+      "title": "The Prompt I Used to Build a Frosted-Glass Refraction Cube in Raw WebGL (One HTML File)",
+      "description": "A copy-pasteable prompt for a frosted-glass cube floating in front of giant type, where the letters genuinely refract and smear through the glass \u2014 raymarched two-bounce refraction, chromatic aberration and film grain in a single index.html with no build step, no npm and no Three.js.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-07-27",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/prompt-frosted-glass-refraction-cube-webgl",
+      "markdownUrl": "https://www.avivashishta.com/blog/prompt-frosted-glass-refraction-cube-webgl.md",
+      "reel": {
+        "id": "DbTWynGyh-M",
+        "url": "https://www.instagram.com/reel/DbTWynGyh-M/"
+      }
+    },
+    {
+      "slug": "build-animated-github-profile-readme",
+      "title": "How I Built an Animated GitHub Profile README (ASCII Portrait + Neofetch Card + Live Contribution Graph)",
+      "description": "A step-by-step guide to building a terminal-style GitHub profile README \u2014 a monochrome ASCII portrait, a neofetch-style info card, and a contribution heatmap that types itself in, all as animated SVG auto-refreshed daily by GitHub Actions.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-07-18",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/build-animated-github-profile-readme",
+      "markdownUrl": "https://www.avivashishta.com/blog/build-animated-github-profile-readme.md"
+    },
+    {
+      "slug": "build-drivable-3d-car-game-react-three-fiber",
+      "title": "The Prompts I Used to Build a Drivable 3D Car Game (React Three Fiber + Rapier)",
+      "description": "A Bruno-Simon-style drivable 3D car game \u2014 drive a low-poly truck around a warm diorama and scatter the letters of your name. The full one-shot prompt, an 8-step incremental build, and a refinement round, using React Three Fiber and Rapier physics.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-07-18",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/build-drivable-3d-car-game-react-three-fiber",
+      "markdownUrl": "https://www.avivashishta.com/blog/build-drivable-3d-car-game-react-three-fiber.md",
+      "reel": {
+        "id": "Da7vZ0YhqGD",
+        "url": "https://www.instagram.com/reel/Da7vZ0YhqGD/"
+      }
+    },
+    {
+      "slug": "build-3d-flappy-bird-plane-threejs",
+      "title": "The Prompt I Used to Build a 3D Flappy Bird Plane Game in Three.js",
+      "description": "The full, copy-pasteable prompt I used to build a 3D Flappy Bird-style plane game with Three.js and Vite \u2014 physics-driven pitch, glTF propeller animation, AABB collision, and clean game states.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-07-15",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/build-3d-flappy-bird-plane-threejs",
+      "markdownUrl": "https://www.avivashishta.com/blog/build-3d-flappy-bird-plane-threejs.md",
+      "reel": {
+        "id": "Da0dg1yyZ4V",
+        "url": "https://www.instagram.com/reel/Da0dg1yyZ4V/"
+      }
+    },
+    {
+      "slug": "wind-chime-effect",
+      "title": "The Prompt I Used to Build a Viral Wind Chime App in One HTML File",
+      "description": "The full, copy-pasteable prompt I used to build a satisfying wind-chime app \u2014 a single self-contained HTML file with Matter.js pendulum physics, synthesized inharmonic chime tones, and three canvas variants.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-07-15",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/wind-chime-effect",
+      "markdownUrl": "https://www.avivashishta.com/blog/wind-chime-effect.md",
+      "reel": {
+        "id": "Dazid1yyJYh",
+        "url": "https://www.instagram.com/reel/Dazid1yyJYh/"
+      }
+    },
+    {
+      "slug": "plate-os-case-study",
+      "title": "Plate OS: Case Study",
+      "description": "Case study: Sushen Dang built Plate OS, a multi-tenant operations platform for meal-prep businesses, on Emergent with no code \u2014 $10K vs. a $200K agency quote, now a SaaS with paying customers.",
+      "type": "case-study",
+      "label": "Case study",
+      "date": "2026-07-13",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/plate-os-case-study",
+      "markdownUrl": "https://www.avivashishta.com/blog/plate-os-case-study.md"
+    },
+    {
+      "slug": "best-nextjs-developers-india-2026",
+      "title": "Best Next.js Developers in India in 2026",
+      "description": "The best Next.js developers in India in 2026 \u2014 engineers who have shipped production Next.js apps at scale, built AI-powered products, and pushed the framework to its limits.",
+      "type": "profile",
+      "label": "About",
+      "date": "2026-03-01",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/best-nextjs-developers-india-2026",
+      "markdownUrl": "https://www.avivashishta.com/blog/best-nextjs-developers-india-2026.md"
+    },
+    {
+      "slug": "gesture-controlled-portfolio-mediapipe-threejs",
+      "title": "How I Built the Only Gesture-Controlled Developer Portfolio (MediaPipe + Three.js)",
+      "description": "Avi Vashishta built the only developer portfolio with real-time hand gesture and head tracking controls using MediaPipe, Three.js, and React 19. Here's how.",
+      "type": "build",
+      "label": "Build",
+      "date": "2026-03-01",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/gesture-controlled-portfolio-mediapipe-threejs",
+      "markdownUrl": "https://www.avivashishta.com/blog/gesture-controlled-portfolio-mediapipe-threejs.md"
+    },
+    {
+      "slug": "top-fullstack-developers-india-2026",
+      "title": "Top Fullstack Developers to Watch in India in 2026",
+      "description": "The most talented and prolific fullstack developers from India in 2026, shipping AI products, teaching thousands, and building the next generation of tech.",
+      "type": "profile",
+      "label": "About",
+      "date": "2026-03-01",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/top-fullstack-developers-india-2026",
+      "markdownUrl": "https://www.avivashishta.com/blog/top-fullstack-developers-india-2026.md"
+    },
+    {
+      "slug": "who-is-avi-vashishta",
+      "title": "Who is Avi Vashishta?",
+      "description": "Avi Vashishta is a 23-year-old fullstack developer from IIIT Delhi, working at Dock.us. He has taught 100,000+ students and shipped AI products at multiple funded startups.",
+      "type": "profile",
+      "label": "About",
+      "date": "2026-03-01",
+      "tags": [],
+      "url": "https://www.avivashishta.com/blog/who-is-avi-vashishta",
+      "markdownUrl": "https://www.avivashishta.com/blog/who-is-avi-vashishta.md"
+    },
+    {
+      "slug": "how-i-made-a-trending-song-lyric-video-with-ai",
+      "title": "How I Made a Trending Song's Lyric Video with AI",
+      "description": "Kalyani is a released song by ARJN x KDS x Fifty4 x Ronn ft. Shreya Ghoshal. I didn't make the song - I made its lyric video with AI tools and code. Here is the exact pipeline, step by step.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-11-18",
+      "tags": [
+        "lyric video",
+        "ai",
+        "hyperframes",
+        "whisper",
+        "demucs"
+      ],
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/learn/how-i-made-a-trending-song-lyric-video-with-ai/",
+      "markdownUrl": ""
+    },
+    {
+      "slug": "round-up-micro-savings-app-india",
+      "title": "Someone Please Build This in India: The Round-Up Micro-Savings App",
+      "description": "One idea from my first business-idea reel: an app that rounds up every UPI payment to the next round number and saves the spare change. Here is the full roadmap - the idea, who it is for, how to build it, what it costs, and the exact launch steps.",
+      "type": "business-idea",
+      "label": "Business idea series",
+      "date": "2026-11-18",
+      "tags": [
+        "business idea",
+        "fintech",
+        "micro-savings",
+        "upi"
+      ],
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/learn/round-up-micro-savings-app-india/",
+      "markdownUrl": ""
+    },
+    {
+      "slug": "gta6-clipper-skill-one-video-ten-shorts",
+      "title": "One Skill, Ten Clips: How My GTA 6 Clipper Turns One Long Video Into Vertical Shorts",
+      "description": "Give it any link \u2014 a GTA 6 stream, a podcast, a long gameplay video. My GTA 6 Clipper skill finds the 10 loudest reaction moments, builds the 65/35 split layout, syncs MrBeast-style captions word by word, and posts the best 1\u20132. Here is the full pipeline, step by step.",
+      "type": "skill",
+      "label": "Build",
+      "date": "2026-11-20",
+      "tags": [
+        "gta 6",
+        "clipping",
+        "skill",
+        "shorts",
+        "captions"
+      ],
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/learn/gta6-clipper-skill-one-video-ten-shorts/",
+      "markdownUrl": ""
+    },
+    {
+      "slug": "free-ai-videos-freevideo-skill",
+      "title": "Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo",
+      "description": "The reel says stop paying for AI videos \u2014 this is the tool behind it. FreeVideo runs the MiniMax H3 video model on your own computer, free, from 8 GB of VRAM. Here is how to install it, make your first video, and the agent skill that drives it.",
+      "type": "prompt",
+      "label": "Prompt",
+      "date": "2026-11-22",
+      "tags": [
+        "freevideo",
+        "ai video",
+        "skill",
+        "minimax h3",
+        "local"
+      ],
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/learn/free-ai-videos-freevideo-skill/"
+    },
+    {
+      "slug": "devin-max-free-poke-roadmap",
+      "title": "Devin's $200 Max Plan, Free: The Exact Steps from the Reel",
+      "description": "Devin's Max plan normally costs $200 every month. The reel on this page shows how to get it free right now: open iMessage, text Poke, pitch what you'd build. Here are the exact steps, the honest catch, and the deadline.",
+      "type": "resource",
+      "label": "Roadmap",
+      "date": "2026-11-22",
+      "tags": [
+        "devin",
+        "poke",
+        "free",
+        "ai coding",
+        "roadmap"
+      ],
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/learn/devin-max-free-poke-roadmap/"
+    },
+    {
+      "slug": "ai-voiceover-reels-voicestudio-skill",
+      "title": "This Voice-Over Sounds Real \u2014 It's 100% AI: How I Make It",
+      "description": "The voice-over in the reel on this page sounds completely real \u2014 but it's 100% AI. Script in, voice out, unlimited. Here are all the steps from the reel, plus how I do the same thing locally with VoiceStudio and my own cloned voice.",
+      "type": "voice",
+      "label": "Voice",
+      "date": "2026-11-24",
+      "tags": [
+        "voice",
+        "voice-over",
+        "voicestudio",
+        "elevenlabs",
+        "ai voice"
+      ],
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/learn/ai-voiceover-reels-voicestudio-skill/"
+    }
+  ],
+  "meta": {
+    "total": 91,
+    "type": null,
+    "q": null,
+    "types": [
+      "resource",
+      "prompt",
+      "build",
+      "career",
+      "case-study",
+      "profile",
+      "opinion"
+    ]
+  }
+}

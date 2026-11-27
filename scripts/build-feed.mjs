@@ -9,7 +9,12 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://portfolio-hero-psi-lemon.vercel.app";
 const META = JSON.parse(
-  readFileSync("/home/hatch/workspace/tmp-work/avi-posts.json", "utf8")
+  // Repo-committed copy of the Learn meta (scripts/avi-posts.json).
+  // Never read the local ~/workspace/tmp-work/avi-posts.json here — Vercel
+  // has no access to that path, and the absolute path broke every deploy
+  // on 27 Nov 2026 (ENOENT in build-feed.mjs). After changing the Learn
+  // meta, refresh the copy: cp ~/workspace/tmp-work/avi-posts.json scripts/avi-posts.json
+  readFileSync(join(ROOT, "scripts/avi-posts.json"), "utf8")
 );
 const SLUG_RENAME = { "who-is-avi-vashishta": "who-is-rishabh-sharma" };
 const REMOVED = new Set([

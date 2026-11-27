@@ -69,6 +69,14 @@ crawlers and no-JS clients only. Do not make it visible to normal visitors.
 content, markdown negotiation, `Vary` headers, trust-anchor pages, JSON-LD
 completeness and robots policy.
 
+**Feed meta lives in the repo.** `scripts/build-feed.mjs` reads the committed
+copy `scripts/avi-posts.json`, not the local
+`~/workspace/tmp-work/avi-posts.json` — Vercel has no access to that path,
+and the absolute path broke every deploy on 27 Nov 2026 (ENOENT in
+build-feed.mjs). After changing the Learn meta, refresh the copy
+(`cp ~/workspace/tmp-work/avi-posts.json scripts/avi-posts.json`) and commit
+it with the articles.
+
 **Facts only.** Every number on the site is verified: LeetCode 221 solved (92 Easy, 102 Medium, 27 Hard; 19 Nov 2026),
 1,875 GitHub contributions in 2026 (19 Nov 2026), 24 merged / 7 open OSS PRs, reel view
 counts (total 7,000 across 22 reels; the 2 newest counts are Rishabh's own figures, IG connector down 2026-11-13; 7 more reels added 20–24 Nov 2026 + Learn posts 20–24 Nov, unposted, no counts; "Trending model" removed 22 Nov). Never invent employment,
