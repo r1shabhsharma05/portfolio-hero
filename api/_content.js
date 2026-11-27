@@ -18,6 +18,9 @@ Machine-readable index for this site:
 - Full context: ${SITE}/llms.txt
 - Sitemap: ${SITE}/sitemap.xml
 - Developer portal: ${SITE}/developers
+- Projects: ${SITE}/projects
+- Brand: ${SITE}/brands
+- Learn: ${SITE}/learn
 
 Every page listed above also responds to \`Accept: text/markdown\`.
 `;
@@ -34,7 +37,7 @@ I build production web and mobile products end to end — React and Next.js on
 the front, Node.js and FastAPI on the back, with Supabase and PostgreSQL for
 data. I have shipped eight products, from an AI railway block planner to an
 emergency SOS app, and I contribute to open source: {{PRS_MERGED}} pull requests merged
-and 8 open across Jenkins, WordPress/Gutenberg and other projects.
+and {{PRS_OPEN}} open across Jenkins, WordPress/Gutenberg and other projects.
 
 Alongside engineering, I create. I make tech Reels about AI tools and coding
 as @editsbyhx, and I have solved {{LEETCODE}} LeetCode problems.
@@ -46,6 +49,13 @@ as @editsbyhx, and I have solved {{LEETCODE}} LeetCode problems.
 - **8 products shipped** — RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI, Rkhshak
 - **SafeLife** — emergency SOS app with live location tracking and guardian alerts
 - **Tech creator** — Reels about AI tools and coding as @editsbyhx
+
+## Reels
+
+22 tech Reels as @editsbyhx, 7,000 views in total — AI tools, open source,
+and what is actually happening in tech, explained in 60 seconds. The newest:
+the 100% AI voice-over reel, Devin Max free via Poke, free AI videos with
+FreeVideo, the GTA 6 Clipper skill, and Claude's five launches.
 
 ## This website
 
@@ -94,6 +104,31 @@ tech Reels as @editsbyhx.
 
 Internships, open-source collaboration, and freelance web development work.
 The quickest way in is a short note to rishabhsharma14426@gmail.com.
+
+## Questions, answered
+
+**Who is Rishabh Sharma?** A 19-year-old full-stack developer and B.Tech
+Computer Science student at GLA University, Mathura, who ships real products
+— an emergency SOS app, a campus marketplace, an escrow-backed farmer
+platform — and contributes to open source across Jenkins and
+WordPress/Gutenberg.
+
+**Has he worked at a company?** No. He has no internship and no full-time
+employment yet. Everything here is built, not claimed: eight products shipped
+end to end, plus {{PRS_MERGED}} open-source pull requests merged across
+Jenkins, WordPress/Gutenberg and other projects, and {{LEETCODE}} LeetCode
+problems solved.
+
+**What does he make on Instagram?** Tech Reels as @editsbyhx — AI tools,
+open source and tech news, explained in 60 seconds. 22 Reels and 7,000 views
+in total, including the AI voice-over reel, the Devin Max free plan
+walkthrough, and the GTA 6 Clipper skill. He also runs a faceless history
+channel on YouTube, @UntoldHx.
+
+**How can I reach him?** Email rishabhsharma14426@gmail.com — he replies
+himself. For internships, open-source collaboration, or freelance web work,
+a short note with what you need is the quickest way in. LinkedIn, GitHub,
+Instagram and YouTube are all linked from the homepage.
 ${FOOTER}`;
 
 const CONTACT = `# Contact Rishabh Sharma
@@ -147,15 +182,15 @@ ${FOOTER}`;
 
 const DEVELOPERS = `# Developer Portal — portfolio-hero-psi-lemon.vercel.app
 
-Machine-readable interfaces to this site: llms.txt, sitemap, RSS, the
-/api/chat endpoint, and content negotiation.
+Machine-readable interfaces to this site: llms.txt, sitemap, RSS feed
+(/feed.xml), the /api/chat endpoint, and content negotiation.
 
 ## Endpoints
 
 | Endpoint | Method | Returns |
 | --- | --- | --- |
 | \`/llms.txt\` | GET | Structured context about Rishabh Sharma |
-| \`/index.md\`, \`/about.md\`, \`/contact.md\`, \`/privacy.md\`, \`/developers.md\` | GET | Markdown with YAML frontmatter |
+| \`/index.md\`, \`/about.md\`, \`/contact.md\`, \`/privacy.md\`, \`/developers.md\`, \`/projects.md\`, \`/brands.md\`, \`/learn.md\` | GET | Markdown with YAML frontmatter |
 | \`/sitemap.xml\` | GET | Every canonical URL |
 | \`/openapi.json\` | GET | OpenAPI 3.1 description of this API |
 | \`/.well-known/ai-catalog.json\` | GET | Agentic Resource Discovery catalog |
@@ -193,6 +228,57 @@ verified facts about Rishabh. It is not a trained or fine-tuned model.
 Bugs, questions or integration help: rishabhsharma14426@gmail.com.
 ${FOOTER}`;
 
+const PROJECTS = `# Build — Products for Founders | Rishabh Sharma
+
+Eight products shipped by Rishabh Sharma, end to end.
+
+- **SecureGaurd** — application security for every repository. https://secureguard-main.vercel.app
+- **SafeLife** — emergency SOS app with live location tracking and guardian alerts. https://safelife-ai.vercel.app
+- **RailSync 2.0** — AI-powered railway block planning. https://railsync2-frontend.pages.dev/
+- **Farmer Marketplace** — farm-to-market platform with escrow payments. https://farmer-market-place-six.vercel.app
+- **LocalKart** — campus marketplace for pre-loved essentials. https://localkart-jet.vercel.app
+- **Healthcare Hub** — connected healthcare platform.
+- **MorphAI** — AI-powered content tooling.
+- **Rkhshak** — master security skills: complete production-readiness security audit and minimal-code fixes. https://github.com/r1shabhsharma05/Rkhshak
+
+Each product is built by Rishabh alone, end to end — front end, back end,
+and deployment. The reels behind them are on the homepage.
+${FOOTER}`;
+
+const BRANDS = `# Brand — Media Kit | Rishabh Sharma
+
+Rishabh Sharma builds the thing first, then films it — tech Reels as
+@editsbyhx: 22 Reels, 7,000 views.
+
+## What brands get
+
+- **Build-along Reels** — the product, on camera, built live.
+- **Workflow integrations** — the tool inside a real workflow, not a slide.
+- **Story series** — the same Reel cut for YouTube Shorts and LinkedIn on request.
+
+## Reach
+
+22 Reels, 7,000 views in total on @editsbyhx. The best-performing format
+for a brand launch is a build-along Reel. Rates on request —
+rishabhsharma14426@gmail.com.
+${FOOTER}`;
+
+const LEARN = `# Learn — Free Roadmaps and Prompts | Rishabh Sharma
+
+42 free posts: roadmaps, prompts and business ideas. Pick a goal and the
+roadmaps line up in order: placements, frontend jobs, AI projects,
+internships.
+
+## Clusters
+
+- **Interview and placements** — DSA roadmaps and system design questions.
+- **AI engineering** — prompts, AI tools, and building with AI.
+- **Prompt-to-build** — one prompt, one working thing.
+- **Career and internships** — what to learn next, and how to get in.
+
+Tick each post off as you go; your place is saved in your browser.
+${FOOTER}`;
+
 /** @type {Record<string, { title: string, description: string, markdown: string }>} */
 export const PAGES = {
   "/": {
@@ -222,13 +308,31 @@ export const PAGES = {
   "/developers": {
     title: "Developer Portal — portfolio-hero-psi-lemon.vercel.app",
     description:
-      "Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS, the /api/chat endpoint, and content negotiation.",
+      "Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS feed (/feed.xml), the /api/chat endpoint, and content negotiation.",
     markdown: DEVELOPERS,
+  },
+  "/projects": {
+    title: "Build — Products for Founders | Rishabh Sharma",
+    description:
+      "Eight products shipped by Rishabh Sharma — SecureGaurd, SafeLife, RailSync 2.0, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI, Rkhshak.",
+    markdown: PROJECTS,
+  },
+  "/brands": {
+    title: "Brand — Media Kit | Rishabh Sharma",
+    description:
+      "Rishabh Sharma's brand media kit — 22 Reels, 7,000 views on @editsbyhx. Campaigns for brands: build-along Reels, workflow integrations, story series. Rates on request.",
+    markdown: BRANDS,
+  },
+  "/learn": {
+    title: "Learn — Free Roadmaps and Prompts | Rishabh Sharma",
+    description:
+      "Rishabh Sharma's Learn page — 42 free roadmaps, prompts and business ideas. Pick a goal and the roadmaps line up in order: placements, frontend jobs, AI projects, internships.",
+    markdown: LEARN,
   },
 };
 
 /** ISO date the page content was last reviewed. */
-export const LAST_UPDATED = "2026-11-12";
+export const LAST_UPDATED = "2026-11-27";
 
 const yaml = (s) => `"${String(s).replace(/"/g, '\\"')}"`;
 
@@ -277,7 +381,7 @@ Start from one of these instead:
 - All canonical URLs: ${SITE}/sitemap.xml
 - Developer portal and API docs: ${SITE}/developers
 - Homepage: ${SITE}/
-- Learn: ${SITE}/learn/
+- Learn: ${SITE}/learn
 
 Canonical pages also respond to \`Accept: text/markdown\`.
 `;

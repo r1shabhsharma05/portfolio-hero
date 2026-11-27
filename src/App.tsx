@@ -11,7 +11,7 @@ import { REELS } from "./data/site";
  *  the paper, and the brand flies onto the header wordmark as the paper
  *  fades. Reduced-motion skips the loader entirely. The hero renders
  *  underneath from the start, like the live site. */
-const ASSETS = [...REELS.map((r) => r.thumb), "/sky.jpg", "/sky-agent.jpg"];
+const ASSETS = [...REELS.map((r) => r.thumb), "/sky.webp", "/sky-agent.webp"];
 
 export default function App() {
   const [chatOpen, setChatOpen] = useState(false);

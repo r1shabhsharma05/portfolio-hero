@@ -13,7 +13,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 
-import { PAGES, SITE } from "../api/_content.js";
+import { PAGES, SITE, LAST_UPDATED } from "../api/_content.js";
 import { applyStats, getLiveStats } from "../api/_stats.js";
 
 const STATS = await getLiveStats();
@@ -28,7 +28,8 @@ const STATIC_PAGES = ["/about", "/contact", "/privacy", "/developers"];
 const PERSON_ID = `${SITE}/#person`;
 const ORG_ID = `${SITE}/#organization`;
 
-/** Organization node — carries contactPoint + address for schema completeness. */
+/** Organization node — one personal contact point; no business address,
+ *  no support/sales departments (this is a personal portfolio, not a company). */
 const ORGANIZATION = {
   "@type": "Organization",
   "@id": ORG_ID,
@@ -41,43 +42,19 @@ const ORGANIZATION = {
   description:
     "Full-stack development practice of Rishabh Sharma — production web and mobile products, open source, and tech education.",
   founder: { "@id": PERSON_ID },
-  foundingDate: "2025-07",
-  knowsLanguage: ["en", "hi"],
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Mathura",
-    addressRegion: "Uttar Pradesh",
-    addressCountry: "IN",
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "personal",
+    email: "rishabhsharma14426@gmail.com",
+    url: `${SITE}/contact`,
+    availableLanguage: ["English", "Hindi"],
+    areaServed: "Worldwide",
   },
-  contactPoint: [
-    {
-      "@type": "ContactPoint",
-      contactType: "customer support",
-      email: "rishabhsharma14426@gmail.com",
-      url: `${SITE}/contact`,
-      availableLanguage: ["English", "Hindi"],
-      areaServed: "Worldwide",
-    },
-    {
-      "@type": "ContactPoint",
-      contactType: "sales",
-      email: "rishabhsharma14426@gmail.com",
-      url: `${SITE}/contact`,
-      availableLanguage: ["English", "Hindi"],
-      areaServed: "Worldwide",
-    },
-    {
-      "@type": "ContactPoint",
-      contactType: "technical support",
-      email: "rishabhsharma14426@gmail.com",
-      url: `${SITE}/developers`,
-      availableLanguage: ["English"],
-      areaServed: "Worldwide",
-    },
-  ],
   sameAs: [
     "https://www.linkedin.com/in/rishabh-sharma-342575438/",
     "https://github.com/r1shabhsharma05",
+    "https://www.instagram.com/editsbyhx",
+    "https://www.youtube.com/@UntoldHx",
   ],
 };
 
@@ -119,7 +96,8 @@ const STYLES = `
 
 const NAV = `<nav>
       <a href="/">Home</a><a href="/about">About</a><a href="/contact">Contact</a>
-      <a href="/developers">Developers</a><a href="/learn/">Learn</a>
+      <a href="/projects">Build</a><a href="/brands">Brand</a><a href="/learn">Learn</a>
+      <a href="/developers">Developers</a>
       <a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a>
     </nav>`;
 
@@ -144,7 +122,8 @@ function pageSchema(slug, page) {
         url,
         name: page.title,
         description: page.description,
-        inLanguage: "en-US",
+        inLanguage: "en",
+        dateModified: LAST_UPDATED,
         isPartOf: { "@id": `${SITE}/#website` },
         about: { "@id": PERSON_ID },
         publisher: { "@id": ORG_ID },
@@ -171,20 +150,23 @@ function renderPage(slug, page) {
     <meta property="og:url" content="${url}" />
     <meta property="og:title" content="${escape(page.title)}" />
     <meta property="og:description" content="${escape(page.description)}" />
-    <meta property="og:image" content="${SITE}/og-image.png" />
+    <meta property="og:image" content="${SITE}/og-image.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="I build cool things with AI and show you how — Rishabh Sharma" />
     <meta property="og:site_name" content="Rishabh Sharma" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@editsbyhx" />
+    <meta name="twitter:creator" content="@editsbyhx" />
     <meta name="twitter:title" content="${escape(page.title)}" />
     <meta name="twitter:description" content="${escape(page.description)}" />
-    <meta name="twitter:image" content="${SITE}/og-image.png" />
+    <meta name="twitter:image" content="${SITE}/og-image.webp" />
     <meta name="twitter:image:alt" content="I build cool things with AI and show you how — Rishabh Sharma" />
     <script type="application/ld+json">
 ${JSON.stringify(pageSchema(slug, page), null, 2)}
     </script>
     <style>${STYLES}</style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
   </head>
   <body>
     <div class="wrap">
@@ -226,7 +208,8 @@ async function injectHomepage() {
     <div id="static-content">
 ${renderMarkdown(fill(PAGES["/"].markdown))}
       <p><a href="/about">About</a> · <a href="/contact">Contact</a> ·
-         <a href="/developers">Developers</a> · <a href="/learn/">Learn</a> ·
+         <a href="/developers">Developers</a> · <a href="/projects">Build</a> ·
+         <a href="/brands">Brand</a> · <a href="/learn">Learn</a> ·
          <a href="/privacy">Privacy</a> · <a href="/llms.txt">llms.txt</a></p>
     </div>
     <script>

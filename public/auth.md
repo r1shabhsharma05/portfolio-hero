@@ -23,7 +23,7 @@ directly:
 | `/llms.txt` | GET | Structured context about Rishabh Sharma |
 | `/index.md`, `/about.md`, `/contact.md`, `/privacy.md`, `/developers.md` | GET | Markdown with YAML frontmatter |
 | `/sitemap.xml` | GET | Every canonical URL |
-| `/blog/feed.xml` | GET | RSS feed of blog posts |
+| `/feed.xml` | GET | RSS feed of Learn posts |
 | `/openapi.json` | GET | OpenAPI 3.1 description of this API |
 | `/.well-known/ai-catalog.json` | GET | Agentic Resource Discovery catalog |
 | `/.well-known/api-catalog` | GET | RFC 9727 linkset |

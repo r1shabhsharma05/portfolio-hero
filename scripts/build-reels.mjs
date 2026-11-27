@@ -38,6 +38,7 @@ for (const m of block.matchAll(/\{\s*id:\s*"([^"]+)"([\s\S]*?)\}/g)) {
     tag: get("tag"),
     url: get("url"),
     thumb: get("thumb"),
+    added: get("added"),
     preview,
   });
 }
@@ -51,12 +52,25 @@ function page(reel, prev, next) {
   // verified 18 Nov 2026 on two reels. Play the local preview clip where
   // one exists; otherwise show the poster and link out to Instagram.
   const player = reel.preview
-    ? `<video src="${esc(reel.preview)}" poster="${esc(reel.thumb)}" autoplay muted loop playsinline controls preload="metadata"></video>`
+    ? `<video src="${esc(reel.preview)}" poster="${esc(reel.thumb)}" autoplay muted loop playsinline controls preload="metadata" aria-label="${esc(reel.title)} — reel by Rishabh Sharma (@editsbyhx)"></video>`
     : `<img src="${esc(reel.thumb)}" alt="${esc(reel.title)}" />`;
-  const watchLink = `<a class="reel-watch" href="${esc(reel.url)}" target="_blank" rel="noreferrer">Watch the full reel on Instagram ↗</a>`;
+  // Specific reel URL -> watch that reel; profile URL -> see more reels.
+  const watchLink = reel.url.includes("/reel/")
+    ? `<a class="reel-watch" href="${esc(reel.url)}" target="_blank" rel="noreferrer">Watch the full reel on Instagram ↗</a>`
+    : `<a class="reel-watch" href="${esc(reel.url)}" target="_blank" rel="noreferrer">See more reels on Instagram ↗</a>`;
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: reel.title,
+    description: `${reel.title} — a Reel by Rishabh Sharma (@editsbyhx).`,
+    thumbnailUrl: `${SITE}${reel.thumb}`,
+    uploadDate: reel.added || undefined,
+    ...(reel.preview ? { contentUrl: `${SITE}${reel.preview}` } : {}),
+    author: { "@type": "Person", name: "Rishabh Sharma", url: `${SITE}/learn/who-is-rishabh-sharma` },
+  }).replace(/<\//g, "<\\/");
   const nav = (r, label) =>
     r
-      ? `<a class="reel-nav" href="/reels/${esc(r.id)}/"><span>${label}</span><b>${esc(r.title)}</b></a>`
+      ? `<a class="reel-nav" href="/reels/${esc(r.id)}"><span>${label}</span><b>${esc(r.title)}</b></a>`
       : `<span class="reel-nav is-empty"></span>`;
   return `<!doctype html>
 <html lang="en">
@@ -65,7 +79,24 @@ function page(reel, prev, next) {
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${esc(reel.title)} — Reel | Rishabh Sharma</title>
 <meta name="description" content="${esc(reel.title)} — a Reel by Rishabh Sharma (@editsbyhx)${reel.views ? ` · ${esc(reel.views)} views` : ""}." />
-<link rel="canonical" href="${SITE}/reels/${esc(reel.id)}/" />
+<link rel="canonical" href="${SITE}/reels/${esc(reel.id)}" />
+<meta property="og:type" content="video.other" />
+<meta property="og:title" content="${esc(reel.title)} — Reel | Rishabh Sharma" />
+<meta property="og:description" content="${esc(reel.title)} — a Reel by Rishabh Sharma (@editsbyhx)." />
+<meta property="og:url" content="${SITE}/reels/${esc(reel.id)}" />
+<meta property="og:site_name" content="Rishabh Sharma" />
+<meta property="og:image" content="${SITE}${esc(reel.thumb)}" />
+<meta property="og:image:width" content="720" />
+<meta property="og:image:height" content="1280" />
+<meta property="og:image:alt" content="${esc(reel.title)}" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@editsbyhx" />
+<meta name="twitter:creator" content="@editsbyhx" />
+<meta name="twitter:title" content="${esc(reel.title)} — Reel | Rishabh Sharma" />
+<meta name="twitter:description" content="${esc(reel.title)} — a Reel by Rishabh Sharma (@editsbyhx)." />
+<meta name="twitter:image" content="${SITE}${esc(reel.thumb)}" />
+<meta name="author" content="Rishabh Sharma" />
+<script type="application/ld+json">${jsonLd}</script>
 <link rel="icon" href="/favicon.ico" />
 <style>
   :root { --paper: #f3f3f1; --ink: #111; --ink-soft: #6e6e73; --line: rgba(17,17,17,.12); }
@@ -84,7 +115,7 @@ function page(reel, prev, next) {
   .meta { max-width: 540px; margin: 28px auto 0; }
   .meta h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; margin: 0; }
   .meta .stats { display: flex; gap: 16px; align-items: baseline; margin-top: 14px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
-  .meta .tag { background: #111; color: #fff; border-radius: 999px; padding: 3px 10px; font-size: 11px; }
+  .meta .about { margin-top: 16px; font-size: 15px; line-height: 1.6; color: var(--ink-soft); }
   .reel-watch { display: inline-block; margin-top: 20px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; }
   .pager { display: flex; gap: 24px; max-width: 900px; margin: 64px auto 0; border-top: 1px solid var(--line); padding-top: 24px; }
   .reel-nav { flex: 1; min-width: 0; text-decoration: none; }
@@ -94,11 +125,12 @@ function page(reel, prev, next) {
   .foot { border-top: 1px solid var(--line); padding: 20px 48px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; letter-spacing: .08em; color: var(--ink-soft); display: flex; justify-content: space-between; }
   @media (max-width: 700px) { .head, .wrap, .foot { padding-left: 20px; padding-right: 20px; } .pager { flex-direction: column; } }
 </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
 </head>
 <body>
 <header class="head">
   <a class="mark" href="/">Rishabh Sharma.</a>
-  <nav><a href="/projects/">Build</a> / <a href="/brands/">Brand</a> / <a href="/learn/">Learn</a></nav>
+  <nav><a href="/projects">Build</a> / <a href="/brands">Brand</a> / <a href="/learn">Learn</a></nav>
 </header>
 <main class="wrap">
   <a class="crumb" href="/">← Home · Reels — @editsbyhx</a>
@@ -106,11 +138,12 @@ function page(reel, prev, next) {
   <div class="meta">
     <h1>${esc(reel.title)}</h1>
     <p class="stats">${reel.tag ? `<span class="tag">${esc(reel.tag)}</span>` : ""}${reel.views ? `<span>${esc(reel.views)} views</span>` : ""}<span>@editsbyhx</span></p>
+    <p class="about">Tech, explained in 60 seconds — a Reel by Rishabh Sharma (@editsbyhx) on AI tools, open source and what is actually happening in tech.</p>
     ${watchLink}
   </div>
   <nav class="pager">${nav(prev, "← Previous reel")}${nav(next, "Next reel →")}</nav>
 </main>
-<footer class="foot"><span>© 2026 Rishabh Sharma</span><span><a href="/">Home</a> · <a href="/brands/">Brand</a> · <a href="/learn/">Learn</a></span></footer>
+<footer class="foot"><span>© 2026 Rishabh Sharma</span><span><a href="/">Home</a> · <a href="/brands">Brand</a> · <a href="/learn">Learn</a></span></footer>
 </body>
 </html>
 `;
@@ -130,7 +163,7 @@ let sm = readFileSync(smPath, "utf8");
 sm = sm.replace(/  <!-- reels -->[\s\S]*?  <!-- \/reels -->\n?/g, "");
 const reelsBlock =
   "  <!-- reels -->\n" +
-  REELS.map((r) => `  <url><loc>${SITE}/reels/${r.id}/</loc></url>`).join("\n") +
+  REELS.map((r) => `  <url><loc>${SITE}/reels/${r.id}</loc>${r.added ? `<lastmod>${r.added}</lastmod>` : ""}</url>`).join("\n") +
   "\n  <!-- /reels -->\n";
 sm = sm.replace("</urlset>", reelsBlock + "</urlset>");
 writeFileSync(smPath, sm);

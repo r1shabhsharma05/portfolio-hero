@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Developer Portal — portfolio-hero-psi-lemon.vercel.app</title>
-    <meta name="description" content="Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS, the /api/chat endpoint, and content negotiation." />
+    <meta name="description" content="Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS feed (/feed.xml), the /api/chat endpoint, and content negotiation." />
     <link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/developers" />
     <meta name="author" content="Rishabh Sharma" />
     <link rel="icon" href="/favicon.ico" />
@@ -13,16 +13,18 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://portfolio-hero-psi-lemon.vercel.app/developers" />
     <meta property="og:title" content="Developer Portal — portfolio-hero-psi-lemon.vercel.app" />
-    <meta property="og:description" content="Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS, the /api/chat endpoint, and content negotiation." />
-    <meta property="og:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.png" />
+    <meta property="og:description" content="Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS feed (/feed.xml), the /api/chat endpoint, and content negotiation." />
+    <meta property="og:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="I build cool things with AI and show you how — Rishabh Sharma" />
     <meta property="og:site_name" content="Rishabh Sharma" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@editsbyhx" />
+    <meta name="twitter:creator" content="@editsbyhx" />
     <meta name="twitter:title" content="Developer Portal — portfolio-hero-psi-lemon.vercel.app" />
-    <meta name="twitter:description" content="Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS, the /api/chat endpoint, and content negotiation." />
-    <meta name="twitter:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.png" />
+    <meta name="twitter:description" content="Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS feed (/feed.xml), the /api/chat endpoint, and content negotiation." />
+    <meta name="twitter:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
     <meta name="twitter:image:alt" content="I build cool things with AI and show you how — Rishabh Sharma" />
     <script type="application/ld+json">
 {
@@ -41,54 +43,22 @@
       "founder": {
         "@id": "https://portfolio-hero-psi-lemon.vercel.app/#person"
       },
-      "foundingDate": "2025-07",
-      "knowsLanguage": [
-        "en",
-        "hi"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Mathura",
-        "addressRegion": "Uttar Pradesh",
-        "addressCountry": "IN"
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "personal",
+        "email": "rishabhsharma14426@gmail.com",
+        "url": "https://portfolio-hero-psi-lemon.vercel.app/contact",
+        "availableLanguage": [
+          "English",
+          "Hindi"
+        ],
+        "areaServed": "Worldwide"
       },
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "contactType": "customer support",
-          "email": "rishabhsharma14426@gmail.com",
-          "url": "https://portfolio-hero-psi-lemon.vercel.app/contact",
-          "availableLanguage": [
-            "English",
-            "Hindi"
-          ],
-          "areaServed": "Worldwide"
-        },
-        {
-          "@type": "ContactPoint",
-          "contactType": "sales",
-          "email": "rishabhsharma14426@gmail.com",
-          "url": "https://portfolio-hero-psi-lemon.vercel.app/contact",
-          "availableLanguage": [
-            "English",
-            "Hindi"
-          ],
-          "areaServed": "Worldwide"
-        },
-        {
-          "@type": "ContactPoint",
-          "contactType": "technical support",
-          "email": "rishabhsharma14426@gmail.com",
-          "url": "https://portfolio-hero-psi-lemon.vercel.app/developers",
-          "availableLanguage": [
-            "English"
-          ],
-          "areaServed": "Worldwide"
-        }
-      ],
       "sameAs": [
         "https://www.linkedin.com/in/rishabh-sharma-342575438/",
-        "https://github.com/r1shabhsharma05"
+        "https://github.com/r1shabhsharma05",
+        "https://www.instagram.com/editsbyhx",
+        "https://www.youtube.com/@UntoldHx"
       ]
     },
     {
@@ -96,8 +66,9 @@
       "@id": "https://portfolio-hero-psi-lemon.vercel.app/developers#webpage",
       "url": "https://portfolio-hero-psi-lemon.vercel.app/developers",
       "name": "Developer Portal — portfolio-hero-psi-lemon.vercel.app",
-      "description": "Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS, the /api/chat endpoint, and content negotiation.",
-      "inLanguage": "en-US",
+      "description": "Machine-readable interfaces to portfolio-hero-psi-lemon.vercel.app: llms.txt, sitemap, RSS feed (/feed.xml), the /api/chat endpoint, and content negotiation.",
+      "inLanguage": "en",
+      "dateModified": "2026-11-27",
       "isPartOf": {
         "@id": "https://portfolio-hero-psi-lemon.vercel.app/#website"
       },
@@ -143,18 +114,20 @@
   footer { margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--line);
            color:var(--muted); font-size:.9rem; }
 </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
   </head>
   <body>
     <div class="wrap">
     <nav>
       <a href="/">Home</a><a href="/about">About</a><a href="/contact">Contact</a>
-      <a href="/developers">Developers</a><a href="/learn/">Learn</a>
+      <a href="/projects">Build</a><a href="/brands">Brand</a><a href="/learn">Learn</a>
+      <a href="/developers">Developers</a>
       <a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a>
     </nav>
     <main>
 <h1>Developer Portal — portfolio-hero-psi-lemon.vercel.app</h1>
-<p>Machine-readable interfaces to this site: llms.txt, sitemap, RSS, the
-/api/chat endpoint, and content negotiation.</p>
+<p>Machine-readable interfaces to this site: llms.txt, sitemap, RSS feed
+(/feed.xml), the /api/chat endpoint, and content negotiation.</p>
 <h2>Endpoints</h2>
 <div class="tablewrap"><table>
 <thead>
@@ -170,7 +143,7 @@
 <td>Structured context about Rishabh Sharma</td>
 </tr>
 <tr>
-<td><code>/index.md</code>, <code>/about.md</code>, <code>/contact.md</code>, <code>/privacy.md</code>, <code>/developers.md</code></td>
+<td><code>/index.md</code>, <code>/about.md</code>, <code>/contact.md</code>, <code>/privacy.md</code>, <code>/developers.md</code>, <code>/projects.md</code>, <code>/brands.md</code>, <code>/learn.md</code></td>
 <td>GET</td>
 <td>Markdown with YAML frontmatter</td>
 </tr>
@@ -243,6 +216,9 @@ verified facts about Rishabh. It is not a trained or fine-tuned model.</p>
 <li>Full context: <a href="https://portfolio-hero-psi-lemon.vercel.app/llms.txt">https://portfolio-hero-psi-lemon.vercel.app/llms.txt</a></li>
 <li>Sitemap: <a href="https://portfolio-hero-psi-lemon.vercel.app/sitemap.xml">https://portfolio-hero-psi-lemon.vercel.app/sitemap.xml</a></li>
 <li>Developer portal: <a href="https://portfolio-hero-psi-lemon.vercel.app/developers">https://portfolio-hero-psi-lemon.vercel.app/developers</a></li>
+<li>Projects: <a href="https://portfolio-hero-psi-lemon.vercel.app/projects">https://portfolio-hero-psi-lemon.vercel.app/projects</a></li>
+<li>Brand: <a href="https://portfolio-hero-psi-lemon.vercel.app/brands">https://portfolio-hero-psi-lemon.vercel.app/brands</a></li>
+<li>Learn: <a href="https://portfolio-hero-psi-lemon.vercel.app/learn">https://portfolio-hero-psi-lemon.vercel.app/learn</a></li>
 </ul>
 <p>Every page listed above also responds to <code>Accept: text/markdown</code>.</p>
 

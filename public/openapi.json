@@ -43,7 +43,7 @@
           "profile"
         ],
         "summary": "Get Rishabh Sharma's full profile",
-        "description": "Returns the complete structured profile: name, headline, summary, location and timezone, education, current role, full employment history, skills grouped by discipline, career highlights, availability for work, and canonical links. Use this to answer any factual question about who Rishabh is or what he has done.",
+        "description": "Returns the complete structured profile: name, headline, summary, location and timezone, education, open-source contribution history, skills grouped by discipline, career highlights, availability for work, and canonical links. Use this to answer any factual question about who Rishabh is or what he has done.",
         "responses": {
           "200": {
             "description": "The profile.",
@@ -87,8 +87,8 @@
         "tags": [
           "profile"
         ],
-        "summary": "List employment history",
-        "description": "Returns Rishabh's roles, newest first, each with title, company, start and end dates (`endDate` is null for the current role), a summary of what he did, and the technologies used. Pass `current=true` to get only the role he holds now.",
+        "summary": "List open-source contributions",
+        "description": "Returns Rishabh's open-source contributions, newest first, each with title, project, start and end dates (`endDate` is null for an ongoing contribution), a summary of what he did, and the technologies used. Pass `current=true` for ongoing contributions only.",
         "parameters": [
           {
             "name": "current",
@@ -359,7 +359,14 @@
         "description": "LeetCode solved counts, GitHub contributions for the current year, and merged/open open-source PR counts. Refreshed hourly from the public sources.",
         "responses": {
           "200": {
-            "description": "Live stats"
+            "description": "Live stats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatsResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "getStats"
@@ -667,7 +674,7 @@
       },
       "Role": {
         "type": "object",
-        "description": "One position in Rishabh's employment history.",
+        "description": "One open-source contribution.",
         "required": [
           "title",
           "company",
@@ -678,13 +685,13 @@
           "title": {
             "type": "string",
             "examples": [
-              "Founding Engineer"
+              "Open Source Contributor"
             ]
           },
           "company": {
             "type": "string",
             "examples": [
-              "SafeLife"
+              "WordPress / Gutenberg"
             ]
           },
           "companyNote": {
@@ -1044,6 +1051,66 @@
                 "items": {
                   "type": "string"
                 }
+              }
+            }
+          }
+        }
+      },
+      "StatsResponse": {
+        "type": "object",
+        "required": [
+          "apiVersion",
+          "data"
+        ],
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "const": "v1"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "leetcode",
+              "leetcodeEasy",
+              "leetcodeMedium",
+              "leetcodeHard",
+              "contributions",
+              "prsMerged",
+              "prsOpen",
+              "year"
+            ],
+            "properties": {
+              "leetcode": {
+                "type": "integer",
+                "description": "LeetCode problems solved, all difficulties."
+              },
+              "leetcodeEasy": {
+                "type": "integer",
+                "description": "Easy LeetCode problems solved."
+              },
+              "leetcodeMedium": {
+                "type": "integer",
+                "description": "Medium LeetCode problems solved."
+              },
+              "leetcodeHard": {
+                "type": "integer",
+                "description": "Hard LeetCode problems solved."
+              },
+              "contributions": {
+                "type": "integer",
+                "description": "GitHub contributions in the current year."
+              },
+              "prsMerged": {
+                "type": "integer",
+                "description": "Open-source pull requests merged."
+              },
+              "prsOpen": {
+                "type": "integer",
+                "description": "Open-source pull requests open."
+              },
+              "year": {
+                "type": "integer",
+                "description": "Year the contributions count covers."
               }
             }
           }

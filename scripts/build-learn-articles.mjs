@@ -47,7 +47,7 @@ const GRAIN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 // List titles (learn.ts) are the source of truth for H1s.
 const learnTs = readFileSync(join(ROOT, "src/data/learn.ts"), "utf8");
 const listTitles = new Map();
-for (const m of learnTs.matchAll(/title: "(.*)", url: "\/learn\/([^"]+)\/"/g)) {
+for (const m of learnTs.matchAll(/title: "(.*)", url: "\/learn\/([^"/]+)\/?"/g)) {
   listTitles.set(m[2], m[1].replace(/\\"/g, '"'));
 }
 // API order, for stable same-date ordering in Keep Reading.
@@ -85,18 +85,18 @@ function rewriteLinks(t) {
     // the live site may link to the source site (Rishabh's order, 18 Nov).
     .replace(/\[([^\]]+)\]\((?:https?:\/\/[^/]+)?\/?(?:lab|fitness|avi-vashishta)[^)\s]*\)/g, "$1")
     .replace(/<a[^>]*href="(?:https?:\/\/[^/]+)?\/?(?:lab|fitness|avi-vashishta)[^"]*"[^>]*>([\s\S]*?)<\/a>/g, "$1")
-    .replace(/https:\/\/www\.avivashishta\.com\/blog\/([a-z0-9-]+)\.md/g, "/learn/$1/")
-    .replace(/https:\/\/www\.avivashishta\.com\/blog\/([a-z0-9-]+)/g, "/learn/$1/")
-    .replace(/https:\/\/www\.avivashishta\.com\/blog/g, "/learn/")
-    .replace(/https:\/\/www\.avivashishta\.com\/brands/g, "/brands/")
-    .replace(/https:\/\/www\.avivashishta\.com\/projects/g, "/projects/")
+    .replace(/https:\/\/www\.avivashishta\.com\/blog\/([a-z0-9-]+)\.md/g, "/learn/$1")
+    .replace(/https:\/\/www\.avivashishta\.com\/blog\/([a-z0-9-]+)/g, "/learn/$1")
+    .replace(/https:\/\/www\.avivashishta\.com\/blog/g, "/learn")
+    .replace(/https:\/\/www\.avivashishta\.com\/brands/g, "/brands")
+    .replace(/https:\/\/www\.avivashishta\.com\/projects/g, "/projects")
     .replace(/https:\/\/www\.avivashishta\.com/g, SITE)
     .replace(/https:\/\/avivashishta\.com/g, SITE)
     .replace(/linkedin\.com\/in\/avivashishta/g, "linkedin.com/in/rishabh-sharma-342575438")
     // relative /blog/ links (markdown + raw html)
-    .replace(/(\]\(|href=")\/blog\/([a-z0-9-]+)/g, "$1/learn/$2/")
-    .replace(/(\]\(|href=")\/blog\/?(?=[")\s])/g, "$1/learn/")
-    .replace(/\/learn\/who-is-avi-vashishta\//g, "/learn/who-is-rishabh-sharma/")
+    .replace(/(\]\(|href=")\/blog\/([a-z0-9-]+)/g, "$1/learn/$2")
+    .replace(/(\]\(|href=")\/blog\/?(?=[")\s])/g, "$1/learn")
+    .replace(/\/learn\/who-is-avi-vashishta\/?/g, "/learn/who-is-rishabh-sharma")
     // Any remaining mention of the source domain as link text (e.g. a
     // homepage link whose href was already re-pointed) shows his domain.
     .replace(/avivashishta\.com/g, "portfolio-hero-psi-lemon.vercel.app");
@@ -134,6 +134,24 @@ function transformBody(md) {
 
 function esc(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+// Truncate at a word boundary so meta descriptions never cut mid-word.
+function truncateAtWord(s, max) {
+  const t = String(s).replace(/\s+/g, " ").trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max);
+  const last = cut.lastIndexOf(" ");
+  return (last > max * 0.5 ? cut.slice(0, last) : cut).replace(/[.,;:!?-]+$/, "");
+}
+
+// Short <title> (<=60 chars) at a word boundary; the H1 keeps the full title.
+function shortTitle(s, max = 60) {
+  const t = String(s).replace(/\s+/g, " ").trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max);
+  const last = cut.lastIndexOf(" ");
+  return last > max * 0.5 ? cut.slice(0, last) : cut;
 }
 
 function fmtDate(iso) {
@@ -204,7 +222,7 @@ const REELS = {
 function reelHtml(fm) {
   const r = fm.reel && REELS[fm.reel];
   if (!r) return "";
-  return `<figure class="reel"><video src="${r.video}" poster="${r.poster}" muted loop autoplay playsinline controls preload="metadata"></video><figcaption>${esc(r.caption)}</figcaption></figure>`;
+  return `<figure class="reel"><video src="${r.video}" poster="${r.poster}" muted loop autoplay playsinline controls preload="metadata" aria-label="${esc(r.caption)} — reel by Rishabh Sharma (@editsbyhx)"></video><figcaption>${esc(r.caption)}</figcaption></figure>`;
 }
 
 // A link card to Rishabh's own Instagram reel (frontmatter `reelLink:`),
@@ -221,20 +239,50 @@ function tocHtml(toc) {
   return `<nav class="toc" aria-label="On this page"><span>On this page</span><ol>${items}</ol></nav>`;
 }
 
-function pageHtml({ title, description, label, date, mins, bodyHtml, slug, toc, keep, output, reel, reelLink }) {
-  const canon = `${SITE}/learn/${slug}/`;
+function pageHtml({ title, headTitle, description, label, date, dateISO, mins, bodyHtml, slug, toc, keep, output, reel, reelLink, curated }) {
+  const canon = `${SITE}/learn/${slug}`;
+  const metaDesc = truncateAtWord(description, 155);
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description: metaDesc,
+    author: { "@type": "Person", name: "Rishabh Sharma", url: `${SITE}/learn/who-is-rishabh-sharma` },
+    datePublished: dateISO,
+    dateModified: dateISO,
+    mainEntityOfPage: canon,
+    image: `${SITE}/og-image.webp`,
+    publisher: { "@type": "Person", name: "Rishabh Sharma" },
+  }).replace(/<\//g, "<\\/");
   const keepItems = keep.map((p) => {
     const t = listTitles.get(SLUG_RENAME[p.slug] ?? p.slug) ?? swapNames(p.title);
-    return `<li><a href="/learn/${SLUG_RENAME[p.slug] ?? p.slug}/"><span>${esc(t)}</span></a></li>`;
+    return `<li><a href="/learn/${SLUG_RENAME[p.slug] ?? p.slug}"><span>${esc(t)}</span></a></li>`;
   }).join("");
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>${esc(title)} | Rishabh Sharma</title>
-<meta name="description" content="${esc(description.slice(0, 160))}" />
+<title>${esc(headTitle)} | Rishabh Sharma</title>
+<meta name="description" content="${esc(metaDesc)}" />
 <link rel="canonical" href="${canon}" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="${esc(headTitle)}" />
+<meta property="og:description" content="${esc(metaDesc)}" />
+<meta property="og:url" content="${canon}" />
+<meta property="og:site_name" content="Rishabh Sharma" />
+<meta property="og:image" content="${SITE}/og-image.webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Rishabh Sharma — portfolio" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@editsbyhx" />
+<meta name="twitter:creator" content="@editsbyhx" />
+<meta name="twitter:title" content="${esc(headTitle)}" />
+<meta name="twitter:description" content="${esc(metaDesc)}" />
+<meta name="twitter:image" content="${SITE}/og-image.webp" />
+<meta name="author" content="Rishabh Sharma" />
+<script type="application/ld+json">${jsonLd}</script>
 <link rel="icon" href="/favicon.ico" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -352,17 +400,18 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   footer { grid-template-columns:1fr; }
 }
 </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
 </head>
 <body>
 <div id="progress"></div>
 <header class="site-head">
 <a class="logo" href="/">Rishabh.</a>
-<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<nav class="worlds"><span class="sep">/</span><a href="/projects">Build</a><span class="sep">/</span><a href="/brands">Brand</a><span class="sep">/</span><a href="/learn" aria-current="page">Learn</a></nav>
 <div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
 </header>
 <div class="wrap">
 <main>
-<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; ${esc(label.toUpperCase())} &middot; ${esc(date)} &middot; ${mins} min</p>
+<p class="meta"><a href="/learn">&larr; Learn</a> &middot; ${esc(label.toUpperCase())} &middot; <time datetime="${dateISO}">${esc(date)}</time> &middot; ${mins} min &middot; ${curated ? "Compiled by" : "By"} <a href="/learn/who-is-rishabh-sharma">Rishabh Sharma</a></p>
 <h1 class="title">${esc(title)}</h1>
 <p class="lede">${esc(description)}</p>
 ${output}
@@ -378,7 +427,7 @@ ${reel}${reelLink}${toc}
 <footer>
 <div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
 <div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/editsbyhx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
-<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy">Privacy</a><a href="/developers">Developers</a></div>
 </footer>
 <script>
 (function () {
@@ -461,6 +510,7 @@ for (const post of POSTS) {
   if (!existsSync(file)) { missing.push(slug); continue; }
   const { fm, body } = parseFrontmatter(readFileSync(file, "utf8"));
   const title = listTitles.get(outSlug) ?? swapNames(fm.title ?? post.title);
+  const headTitle = shortTitle(swapNames(fm.seoTitle ?? fm.title ?? post.title));
   if (fm.title && listTitles.get(outSlug) && fm.title !== listTitles.get(outSlug)) {
     mismatchedTitles.push(slug);
   }
@@ -474,7 +524,7 @@ for (const post of POSTS) {
   );
   // Links to removed Build posts become plain text (no dead links).
   const removedRe = new RegExp(
-    `<a href="/learn/(${[...REMOVED].join("|")})/"[^>]*>([\\s\\S]*?)</a>`,
+    `<a href="/learn/(${[...REMOVED].join("|")})/?"[^>]*>([\\s\\S]*?)</a>`,
     "g"
   );
   html = html.replace(removedRe, "$2");
@@ -489,9 +539,11 @@ for (const post of POSTS) {
     join(outDir, "index.html"),
     pageHtml({
       title,
+      headTitle,
       description,
       label: post.label ?? fm.type ?? "Build",
       date: fmtDate(post.date ?? fm.date),
+      dateISO: post.date ?? fm.date,
       mins,
       bodyHtml,
       slug: outSlug,
@@ -500,6 +552,7 @@ for (const post of POSTS) {
       output: outputHtml(fm),
       reel: reelHtml(fm),
       reelLink: reelLinkHtml(fm),
+      curated: fm.curated === "true",
     })
   );
   written++;
@@ -508,10 +561,10 @@ for (const post of POSTS) {
 // Sitemap: replace any existing /learn/<slug>/ entries, then add the current posts.
 const sitemapPath = join(ROOT, "public/sitemap.xml");
 let sitemap = readFileSync(sitemapPath, "utf8");
-sitemap = sitemap.replace(/  <url>\n    <loc>[^<]*\/learn\/[^<]+\/<\/loc>\n    <lastmod>[^<]*<\/lastmod>\n    <changefreq>[^<]*<\/changefreq>\n    <priority>[^<]*<\/priority>\n  <\/url>\n/g, "");
+sitemap = sitemap.replace(/  <url>\n    <loc>[^<]*\/learn\/[^<]*\/?<\/loc>\n    <lastmod>[^<]*<\/lastmod>\n    <changefreq>[^<]*<\/changefreq>\n    <priority>[^<]*<\/priority>\n  <\/url>\n/g, "");
 const entries = POSTS.map((post) => {
   const outSlug = SLUG_RENAME[post.slug] ?? post.slug;
-  return `  <url>\n    <loc>${SITE}/learn/${outSlug}/</loc>\n    <lastmod>${post.date}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`;
+  return `  <url>\n    <loc>${SITE}/learn/${outSlug}</loc>\n    <lastmod>${post.date}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`;
 }).join("\n");
 sitemap = sitemap.replace("</urlset>", `${entries}\n</urlset>`);
 writeFileSync(sitemapPath, sitemap);

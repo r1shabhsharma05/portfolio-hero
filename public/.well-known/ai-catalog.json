@@ -10,7 +10,7 @@
       "displayName": "llms.txt — structured context about Rishabh Sharma",
       "type": "text/plain",
       "url": "https://portfolio-hero-psi-lemon.vercel.app/llms.txt",
-      "description": "Full structured background on Rishabh Sharma: biography, work history, skills, projects, teaching, FAQ, and explicit when-to-use guidance for agents deciding whether this site answers a query."
+      "description": "Full structured background on Rishabh Sharma: biography, open-source history, skills, projects, teaching, and explicit when-to-use guidance for agents deciding whether this site answers a query."
     },
     {
       "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:api:chat",
@@ -38,7 +38,7 @@
       "displayName": "About Rishabh Sharma",
       "type": "text/markdown",
       "url": "https://portfolio-hero-psi-lemon.vercel.app/about.md",
-      "description": "Verified background, employment history with dates, education, teaching record and technical focus. The authoritative source for 'who is Rishabh Sharma' questions."
+      "description": "Verified background, open-source contribution history, education, teaching record and technical focus. The authoritative source for 'who is Rishabh Sharma' questions."
     },
     {
       "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:doc:contact",
@@ -48,11 +48,53 @@
       "description": "How to reach Rishabh Sharma, what to reach out about, expected response time, and guidance for agents performing outreach."
     },
     {
-      "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:feed:blog",
-      "displayName": "Blog RSS feed",
+      "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:feed:learn",
+      "displayName": "Learn RSS feed",
       "type": "application/rss+xml",
-      "url": "https://portfolio-hero-psi-lemon.vercel.app/blog/feed.xml",
-      "description": "Technical build write-ups covering Three.js, WebGL, React Three Fiber, MediaPipe gesture control and AI-assisted UI, most with full source code."
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/feed.xml",
+      "description": "Free roadmaps, prompts and business ideas, plus build write-ups — new posts as they are published."
+    },
+    {
+      "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:doc:learn",
+      "displayName": "Learn — free roadmaps and prompts",
+      "type": "text/markdown",
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/learn.md",
+      "description": "43 free roadmaps, prompts and business ideas: placements, frontend jobs, AI projects, internships. Also reachable at /learn with Accept: text/markdown."
+    },
+    {
+      "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:api:profile",
+      "displayName": "Profile API",
+      "type": "application/json",
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/api/v1/profile",
+      "description": "Structured profile facts: name, headline, summary, location, timezone, education, open-source contribution history, skills and availability."
+    },
+    {
+      "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:api:projects",
+      "displayName": "Projects API",
+      "type": "application/json",
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/api/v1/projects",
+      "description": "The eight products Rishabh Sharma shipped, with live links and repositories."
+    },
+    {
+      "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:api:skills",
+      "displayName": "Skills API",
+      "type": "application/json",
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/api/v1/skills",
+      "description": "Skills grouped by discipline, with proficiency notes."
+    },
+    {
+      "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:api:experience",
+      "displayName": "Experience API",
+      "type": "application/json",
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/api/v1/experience",
+      "description": "Open-source contribution history (no employment): merged pull requests across Jenkins, WordPress/Gutenberg and other projects."
+    },
+    {
+      "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:api:stats",
+      "displayName": "Live stats API",
+      "type": "application/json",
+      "url": "https://portfolio-hero-psi-lemon.vercel.app/api/v1/stats",
+      "description": "Live LeetCode, GitHub contributions and open-source PR counts, fetched from the public sources."
     },
     {
       "identifier": "urn:ai:portfolio-hero-psi-lemon.vercel.app:index:sitemap",

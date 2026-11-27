@@ -29,6 +29,7 @@ const HTML = `<!DOCTYPE html>
   ul { line-height:2; padding-left:1.1rem; }
   a { color:inherit; }
 </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
 </head>
 <body>
 <main>
@@ -38,7 +39,7 @@ const HTML = `<!DOCTYPE html>
     <li><a href="/">Homepage</a></li>
     <li><a href="/about">About</a></li>
     <li><a href="/developers">Developer portal &amp; API docs</a></li>
-    <li><a href="/learn/">Learn</a></li>
+    <li><a href="/learn">Learn</a></li>
     <li><a href="/llms.txt">llms.txt</a> — full context for AI agents</li>
     <li><a href="/sitemap.xml">sitemap.xml</a> — every canonical URL</li>
   </ul>

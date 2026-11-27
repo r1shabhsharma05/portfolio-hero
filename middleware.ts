@@ -23,11 +23,17 @@ export const config = {
     "/contact",
     "/privacy",
     "/developers",
+    "/projects",
+    "/brands",
+    "/learn",
     "/index.md",
     "/about.md",
     "/contact.md",
     "/privacy.md",
     "/developers.md",
+    "/projects.md",
+    "/brands.md",
+    "/learn.md",
   ],
 };
 
@@ -37,13 +43,16 @@ const NEGOTIABLE = new Set([
   "/contact",
   "/privacy",
   "/developers",
+  "/projects",
+  "/brands",
+  "/learn",
 ]);
 
 const VARY = "Accept, User-Agent, Accept-Encoding";
 
 /** Crawlers that feed answer engines — they get markdown by default. */
 const AI_BOTS =
-  /(GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-Web|anthropic-ai|PerplexityBot|Perplexity-User|Google-Extended|Applebot-Extended|DeepSeekBot|ora-agent|CCBot|Bytespider|Amazonbot|MistralAI-User|cohere-ai|YouBot|Diffbot)/i;
+  /(GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-Web|anthropic-ai|PerplexityBot|Perplexity-User|Google-Extended|Applebot-Extended|DeepSeekBot|ora-agent|Amazonbot|MistralAI-User|cohere-ai|YouBot)/i;
 
 export default function middleware(request: Request) {
   const url = new URL(request.url);
