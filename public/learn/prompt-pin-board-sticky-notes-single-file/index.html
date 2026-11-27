@@ -3,9 +3,26 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The Prompt I Used to Build Pin Board, a Single-File Sticky-Notes App (No Backend, No Build Step) | Rishabh Sharma</title>
-<meta name="description" content="A copy-pasteable prompt for a draggable, resizable sticky-notes board with per-note colour, font and checklist modes — one HTML file, vanilla JS, everything per" />
-<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-pin-board-sticky-notes-single-file/" />
+<title>The Prompt I Used to Build Pin Board, a Single-File | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable prompt for a draggable, resizable sticky-notes board with per-note colour, font and checklist modes — one HTML file, vanilla JS" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-pin-board-sticky-notes-single-file" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The Prompt I Used to Build Pin Board, a Single-File" />
+<meta property="og:description" content="A copy-pasteable prompt for a draggable, resizable sticky-notes board with per-note colour, font and checklist modes — one HTML file, vanilla JS" />
+<meta property="og:url" content="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-pin-board-sticky-notes-single-file" />
+<meta property="og:site_name" content="Rishabh Sharma" />
+<meta property="og:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Rishabh Sharma — portfolio" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@editsbyhx" />
+<meta name="twitter:creator" content="@editsbyhx" />
+<meta name="twitter:title" content="The Prompt I Used to Build Pin Board, a Single-File" />
+<meta name="twitter:description" content="A copy-pasteable prompt for a draggable, resizable sticky-notes board with per-note colour, font and checklist modes — one HTML file, vanilla JS" />
+<meta name="twitter:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta name="author" content="Rishabh Sharma" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"The Prompt I Used to Build Pin Board, a Single-File Sticky-Notes App (No Backend, No Build Step)","description":"A copy-pasteable prompt for a draggable, resizable sticky-notes board with per-note colour, font and checklist modes — one HTML file, vanilla JS","author":{"@type":"Person","name":"Rishabh Sharma","url":"https://portfolio-hero-psi-lemon.vercel.app/learn/who-is-rishabh-sharma"},"datePublished":"2026-07-30","dateModified":"2026-07-30","mainEntityOfPage":"https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-pin-board-sticky-notes-single-file","image":"https://portfolio-hero-psi-lemon.vercel.app/og-image.webp","publisher":{"@type":"Person","name":"Rishabh Sharma"}}</script>
 <link rel="icon" href="/favicon.ico" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -123,21 +140,25 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   footer { grid-template-columns:1fr; }
 }
 </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
 </head>
 <body>
 <div id="progress"></div>
 <header class="site-head">
 <a class="logo" href="/">Rishabh.</a>
-<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<nav class="worlds"><span class="sep">/</span><a href="/projects">Build</a><span class="sep">/</span><a href="/brands">Brand</a><span class="sep">/</span><a href="/learn" aria-current="page">Learn</a></nav>
 <div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
 </header>
 <div class="wrap">
 <main>
-<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 30 JULY 2026 &middot; 10 min</p>
+<p class="meta"><a href="/learn">&larr; Learn</a> &middot; PROMPT &middot; <time datetime="2026-07-30">30 JULY 2026</time> &middot; 10 min &middot; Compiled by <a href="/learn/who-is-rishabh-sharma">Rishabh Sharma</a></p>
 <h1 class="title">The Prompt I Used to Build Pin Board, a Single-File Sticky-Notes App (No Backend, No Build Step)</h1>
 <p class="lede">A copy-pasteable prompt for a draggable, resizable sticky-notes board with per-note colour, font and checklist modes — one HTML file, vanilla JS, everything persisted to localStorage. Plus why each clause is in the prompt.</p>
 
 <div class="post">
+<blockquote>
+<p>A curated collection of public resources, compiled for you — verify details before applying.</p>
+</blockquote>
 <h2 id="overview">Overview</h2>
 <p>
         A kraft-paper board covered in sticky notes you can drag around, resize,
@@ -430,9 +451,9 @@ Fixed, centered near the bottom: a dark rounded pill containing &quot;ADD A NOTE
 </li>
 </ul><p>
         If you want more prompts in this shape, there is
-<a href="/learn/prompt-fluid-ink-reveal-wordmark-higgsfield/"
+<a href="/learn/prompt-fluid-ink-reveal-wordmark-higgsfield"
           >a fluid ink-reveal homepage</a>,
-<a href="/learn/prompt-frosted-glass-refraction-cube-webgl/"
+<a href="/learn/prompt-frosted-glass-refraction-cube-webgl"
           >a frosted-glass refraction cube in raw WebGL</a>, and
 a wind chime app in one HTML file.
 </p>
@@ -443,11 +464,11 @@ a wind chime app in one HTML file.
 <nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#the-prompt"><i>02</i><b>The prompt</b></a></li><li><a href="#why-the-prompt-is-written-this-way"><i>03</i><b>Why the prompt is written this way</b></a></li><li><a href="#the-physicality-is-three-details"><i>04</i><b>The physicality is three details</b></a></li><li><a href="#knobs-to-turn-first"><i>05</i><b>Knobs to turn first</b></a></li><li><a href="#if-it-comes-out-wrong"><i>06</i><b>If it comes out wrong</b></a></li><li><a href="#recap"><i>07</i><b>Recap</b></a></li></ol></nav>
 </aside>
 </div>
-<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/free-ai-videos-freevideo-skill/"><span>Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo</span></a></li><li><a href="/learn/how-i-made-a-trending-song-lyric-video-with-ai/"><span>How I Made a Trending Song's Lyric Video with AI</span></a></li><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li></ul></aside>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/free-ai-videos-freevideo-skill"><span>Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo</span></a></li><li><a href="/learn/how-i-made-a-trending-song-lyric-video-with-ai"><span>How I Made a Trending Song's Lyric Video with AI</span></a></li><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li></ul></aside>
 <footer>
 <div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
 <div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/editsbyhx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
-<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy">Privacy</a><a href="/developers">Developers</a></div>
 </footer>
 <script>
 (function () {
