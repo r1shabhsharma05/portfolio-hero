@@ -65,15 +65,15 @@ export const BRAND_HERO = {
    *  is rendered by the component from the front Reel. */
   stickers: [
     { k: "Views", v: "7,000" },
-    { k: "Instagram", v: "@cod.ehx" },
+    { k: "Instagram", v: "@editsbyhx" },
     { k: "Reels", v: "16" },
   ],
   caption:
-    "Every Reel I made myself, dealt as a hand of cards with its numbers from @cod.ehx.",
+    "Every Reel I made myself, dealt as a hand of cards with its numbers from @editsbyhx.",
 };
 
 export const BRAND_NUMBERS = {
-  note: "Running totals from @cod.ehx, added up on 16 November 2026. Each check adds the new days on top, so they only go up.",
+  note: "Running totals from @editsbyhx, added up on 16 November 2026. Each check adds the new days on top, so they only go up.",
   left: {
     label: "All time",
     rows: [
@@ -161,7 +161,7 @@ export const BRAND_STEPS = [
 ];
 
 export const BRAND_INCLUDED = [
-  "A dedicated Reel on @cod.ehx",
+  "A dedicated Reel on @editsbyhx",
   "Story frames with a link sticker",
   "A performance report after 7 and 30 days",
 ];

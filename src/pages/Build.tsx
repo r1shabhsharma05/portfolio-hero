@@ -777,7 +777,7 @@ export default function Build() {
           <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">
             LinkedIn
           </a>
-          <a href="https://www.instagram.com/cod.ehx">Instagram</a>
+          <a href="https://www.instagram.com/editsbyhx">Instagram</a>
           <a href="https://www.youtube.com/@UntoldHx">YouTube</a>
           <a href={`mailto:${PROFILE.email}`}>Email</a>
           <a href="/about">About</a>

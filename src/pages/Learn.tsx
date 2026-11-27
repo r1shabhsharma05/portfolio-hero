@@ -389,7 +389,7 @@ export default function Learn() {
       <footer className="site-footer build-footer">
         <span>© 2026 Rishabh Sharma</span>
         <nav aria-label="Footer">
-          <a href="https://www.instagram.com/cod.ehx">Instagram</a>
+          <a href="https://www.instagram.com/editsbyhx">Instagram</a>
           <a href="https://www.youtube.com/@UntoldHx">YouTube</a>
           <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">LinkedIn</a>
           <a href="https://github.com/r1shabhsharma05">GitHub</a>

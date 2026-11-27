@@ -72,7 +72,7 @@ About Rishabh:
   - Healthcare Hub — connected healthcare platform
   - MorphAI — AI-powered content tooling
   - Rkhshak — master security skills: complete production-readiness security audit + minimal-code fixes (https://github.com/r1shabhsharma05/Rkhshak)
-- Tech creator: makes tech Reels about AI tools and coding as @cod.ehx on Instagram (https://www.instagram.com/cod.ehx). Runs a faceless history YouTube channel @UntoldHx.
+- Tech creator: makes tech Reels about AI tools and coding as @editsbyhx on Instagram (https://www.instagram.com/editsbyhx). Runs a faceless history YouTube channel @UntoldHx.
 - Skills include Video Editing (tech Reels).
 - Contact: rishabhsharma14426@gmail.com | LinkedIn: linkedin.com/in/rishabh-sharma-342575438 | GitHub: github.com/r1shabhsharma05
 - Open to: internships, open-source collaboration, freelance web development.

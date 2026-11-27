@@ -1,8 +1,8 @@
 # Rishabh Sharma — Portfolio
 
 <p align="center">
-  <a href="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=B8FF29&center=true&vCenter=true&width=600&lines=Rishabh+Sharma;React+%E2%80%A2+TypeScript+%E2%80%A2+Node.js;Open+Source+%E2%80%A2+AI+%E2%80%A2+Reels;Building+in+public+%40cod.ehx">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=B8FF29&center=true&vCenter=true&width=600&lines=Rishabh+Sharma;React+%E2%80%A2+TypeScript+%E2%80%A2+Node.js;Open+Source+%E2%80%A2+AI+%E2%80%A2+Reels;Building+in+public+%40cod.ehx" alt="Rishabh Sharma — typing animation" />
+  <a href="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=B8FF29&center=true&vCenter=true&width=600&lines=Rishabh+Sharma;React+%E2%80%A2+TypeScript+%E2%80%A2+Node.js;Open+Source+%E2%80%A2+AI+%E2%80%A2+Reels;Building+in+public+%40editsbyhx">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=B8FF29&center=true&vCenter=true&width=600&lines=Rishabh+Sharma;React+%E2%80%A2+TypeScript+%E2%80%A2+Node.js;Open+Source+%E2%80%A2+AI+%E2%80%A2+Reels;Building+in+public+%40editsbyhx" alt="Rishabh Sharma — typing animation" />
   </a>
 </p>
 
@@ -19,7 +19,7 @@
 
 ## What it is
 
-- **Home `/`** — sky hero, reel wall (Instagram [@cod.ehx](https://www.instagram.com/cod.ehx)), stats, shipped projects, experiments.
+- **Home `/`** — sky hero, reel wall (Instagram [@editsbyhx](https://www.instagram.com/editsbyhx)), stats, shipped projects, experiments.
 - **Build `/projects/`** — shipped work + open-source contributions, with live PR counts.
 - **Brand `/brands/`** — media kit: reels, reach, and what a brand gets.
 - **Learn `/learn/`** — 43 long-form posts: roadmaps, prompts, skills, career notes, case studies. Every post can carry its reel in a sticky side player.
@@ -106,6 +106,6 @@ It checks 404 behaviour, no-JS content, markdown negotiation, `Vary` headers, tr
 ## Links
 
 - Live site: https://portfolio-hero-psi-lemon.vercel.app
-- Instagram (reels): https://www.instagram.com/cod.ehx
+- Instagram (reels): https://www.instagram.com/editsbyhx
 - YouTube (faceless history): https://www.youtube.com/@UntoldHx
 - GitHub: https://github.com/r1shabhsharma05

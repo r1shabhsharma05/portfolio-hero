@@ -16,7 +16,7 @@ export const PROFILE = {
   name: "Rishabh Sharma",
   headline: "Full-stack Developer | Open Source Contributor | Tech Creator",
   summary:
-    "Full-stack developer and B.Tech Computer Science student at GLA University, Mathura (2025–2028). Builds and ships real products for web and mobile, contributes to open source, and makes tech Reels as @cod.ehx. LeetCode {{LEETCODE}} solved.",
+    "Full-stack developer and B.Tech Computer Science student at GLA University, Mathura (2025–2028). Builds and ships real products for web and mobile, contributes to open source, and makes tech Reels as @editsbyhx. LeetCode {{LEETCODE}} solved.",
   url: "https://portfolio-hero-psi-lemon.vercel.app",
   email: "rishabhsharma14426@gmail.com",
   location: {
@@ -109,7 +109,7 @@ export const PROFILE = {
     "{{PRS_MERGED}} pull requests merged and {{PRS_OPEN}} open across Jenkins, WordPress/Gutenberg and other projects",
     "{{LEETCODE}} LeetCode problems solved ({{LEETCODE_EASY}} Easy, {{LEETCODE_MEDIUM}} Medium, {{LEETCODE_HARD}} Hard)",
     "Shipped 8 products: RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI, Rkhshak",
-    "Tech creator — Reels about AI tools and coding as @cod.ehx",
+    "Tech creator — Reels about AI tools and coding as @editsbyhx",
     "Built SafeLife: emergency SOS app with live location tracking and guardian alerts",
   ],
   availability: {
@@ -127,7 +127,7 @@ export const PROFILE = {
     website: "https://portfolio-hero-psi-lemon.vercel.app",
     github: "https://github.com/r1shabhsharma05",
     linkedin: "https://www.linkedin.com/in/rishabh-sharma-342575438/",
-    instagram: "https://www.instagram.com/cod.ehx",
+    instagram: "https://www.instagram.com/editsbyhx",
     youtube: "https://www.youtube.com/@UntoldHx",
     llmsTxt: "https://portfolio-hero-psi-lemon.vercel.app/llms.txt",
     blog: "https://portfolio-hero-psi-lemon.vercel.app/learn/",

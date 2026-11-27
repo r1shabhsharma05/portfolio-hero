@@ -1,4 +1,4 @@
-// Generate the Reel viewer pages: one static page per @cod.ehx reel.
+// Generate the Reel viewer pages: one static page per @editsbyhx reel.
 // Clicking a hero reel opens /reels/<id>/ in a new tab and the full reel
 // plays there (no Instagram redirect from the hero).
 // - Reels with a specific Instagram reel URL embed the reel (full video)
@@ -64,7 +64,7 @@ function page(reel, prev, next) {
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${esc(reel.title)} — Reel | Rishabh Sharma</title>
-<meta name="description" content="${esc(reel.title)} — a Reel by Rishabh Sharma (@cod.ehx)${reel.views ? ` · ${esc(reel.views)} views` : ""}." />
+<meta name="description" content="${esc(reel.title)} — a Reel by Rishabh Sharma (@editsbyhx)${reel.views ? ` · ${esc(reel.views)} views` : ""}." />
 <link rel="canonical" href="${SITE}/reels/${esc(reel.id)}/" />
 <link rel="icon" href="/favicon.ico" />
 <style>
@@ -101,11 +101,11 @@ function page(reel, prev, next) {
   <nav><a href="/projects/">Build</a> / <a href="/brands/">Brand</a> / <a href="/learn/">Learn</a></nav>
 </header>
 <main class="wrap">
-  <a class="crumb" href="/">← Home · Reels — @cod.ehx</a>
+  <a class="crumb" href="/">← Home · Reels — @editsbyhx</a>
   <div class="player">${player}</div>
   <div class="meta">
     <h1>${esc(reel.title)}</h1>
-    <p class="stats">${reel.tag ? `<span class="tag">${esc(reel.tag)}</span>` : ""}${reel.views ? `<span>${esc(reel.views)} views</span>` : ""}<span>@cod.ehx</span></p>
+    <p class="stats">${reel.tag ? `<span class="tag">${esc(reel.tag)}</span>` : ""}${reel.views ? `<span>${esc(reel.views)} views</span>` : ""}<span>@editsbyhx</span></p>
     ${watchLink}
   </div>
   <nav class="pager">${nav(prev, "← Previous reel")}${nav(next, "Next reel →")}</nav>

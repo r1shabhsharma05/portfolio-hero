@@ -9,7 +9,7 @@ export const PROFILE = {
   email: "rishabhsharma14426@gmail.com",
   github: "https://github.com/r1shabhsharma05",
   linkedin: "https://www.linkedin.com/in/rishabh-sharma-342575438/",
-  instagram: "https://www.instagram.com/cod.ehx",
+  instagram: "https://www.instagram.com/editsbyhx",
   youtube: "https://www.youtube.com/@UntoldHx",
 };
 
@@ -28,7 +28,7 @@ export interface Reel {
   preview: string | null;
 }
 
-/** Top 8 @cod.ehx reels by lifetime views, verified via Instagram connector 2026-11-12
+/** Top 8 @editsbyhx reels by lifetime views, verified via Instagram connector 2026-11-12
  *  (total reel views 1,121 then), plus the 2 unposted Drive videos (GitHub prompt +
  *  One Prompt draft, tag NEW, no views), the posted "7 day Macbook" reel (7 views),
  *  and 2 more Drive reels added 2026-11-13: "Muse motion reel" (1,000 views) and
@@ -59,21 +59,21 @@ export const REELS: Reel[] = [
   { id: "DfGwobiFElT", title: "Someone just turned Claude into a day-trading desk. And it's FREE.", views: "116", viewsRaw: 116, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfGwobiFElT/", thumb: "/reels/trading-116.jpg", preview: null },
   { id: "DfnAhmGhVxY", title: "Claude made this one prompt", views: "108", viewsRaw: 108, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfnAhmGhVxY/", thumb: "/reels/claude-prompt-108.jpg", preview: null },
   { id: "DfFAweQH_TG", title: "One prompt. Every LLM. Side by side.", views: "83", viewsRaw: 83, world: "learn", tag: "LEARN", url: "https://www.instagram.com/reel/DfFAweQH_TG/", thumb: "/reels/llm-comparison.webp", preview: "/reels/llm-comparison-preview.mp4" },
-  { id: "github-prompt", title: "Upgrade your GitHub using this single prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/github-prompt.webp", preview: "/reels/github-prompt-preview.mp4" },
-  { id: "one-prompt", title: "One Prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/one-prompt.webp", preview: "/reels/one-prompt-preview.mp4" },
-  { id: "macbook-7day", title: "7 day Macbook", views: "7", viewsRaw: 7, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/macbook-7day.webp", preview: "/reels/macbook-7day-preview.mp4" },
-  { id: "alfaaz-single-prompt", title: "Alfaaz — Single prompt", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/alfaaz-prompt.webp", preview: "/reels/alfaaz-prompt-preview.mp4" },
-  { id: "muse-motion", title: "Muse motion reel", views: "1,000", viewsRaw: 1000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/muse-motion.webp", preview: "/reels/muse-motion-preview.mp4" },
-  { id: "kalyani-lyric", title: "Kalyani — Lyric video", views: "5,000", viewsRaw: 5000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/kalyani-lyric.webp", preview: "/reels/kalyani-lyric-preview.mp4" },
-  { id: "portfolio-reel", title: "Portfolio reel", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/portfolio-reel.webp", preview: "/reels/portfolio-reel-preview.mp4" },
-  { id: "claude-five-launches", title: "Claude dropped five launches", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/claude-five-launches.webp", preview: "/reels/claude-five-launches-preview.mp4" },
-  { id: "clipping-skill", title: "See this clip? Made by a skill", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/clipping-skill.webp", preview: "/reels/clipping-skill-preview.mp4" },
-  { id: "digital-product", title: "Create a digital product for your audience", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/digital-product.webp", preview: "/reels/digital-product-preview.mp4" },
-  { id: "only-one-skill", title: "Only One Skill", views: null, viewsRaw: null, world: "build", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/only-one-skill.webp", preview: "/reels/only-one-skill-preview.mp4" },
-  { id: "free-ai-videos", title: "Stop paying for AI videos", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/free-ai-videos.webp", preview: "/reels/free-ai-videos-preview.mp4" },
-  { id: "marketing-roi", title: "What is ROI?", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/marketing-roi.webp", preview: "/reels/marketing-roi-preview.mp4" },
-  { id: "devin-free", title: "Stop paying $200 a month for AI coding", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/devin-free.webp", preview: "/reels/devin-free-preview.mp4" },
-  { id: "creator-voice", title: "This voice-over sounds real — it's 100% AI", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/cod.ehx", thumb: "/reels/creator-voice.webp", preview: "/reels/creator-voice-preview.mp4" },
+  { id: "github-prompt", title: "Upgrade your GitHub using this single prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/github-prompt.webp", preview: "/reels/github-prompt-preview.mp4" },
+  { id: "one-prompt", title: "One Prompt", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/one-prompt.webp", preview: "/reels/one-prompt-preview.mp4" },
+  { id: "macbook-7day", title: "7 day Macbook", views: "7", viewsRaw: 7, world: "learn", tag: "LEARN", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/macbook-7day.webp", preview: "/reels/macbook-7day-preview.mp4" },
+  { id: "alfaaz-single-prompt", title: "Alfaaz — Single prompt", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/alfaaz-prompt.webp", preview: "/reels/alfaaz-prompt-preview.mp4" },
+  { id: "muse-motion", title: "Muse motion reel", views: "1,000", viewsRaw: 1000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/muse-motion.webp", preview: "/reels/muse-motion-preview.mp4" },
+  { id: "kalyani-lyric", title: "Kalyani — Lyric video", views: "5,000", viewsRaw: 5000, world: "learn", tag: "LEARN", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/kalyani-lyric.webp", preview: "/reels/kalyani-lyric-preview.mp4" },
+  { id: "portfolio-reel", title: "Portfolio reel", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/portfolio-reel.webp", preview: "/reels/portfolio-reel-preview.mp4" },
+  { id: "claude-five-launches", title: "Claude dropped five launches", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/claude-five-launches.webp", preview: "/reels/claude-five-launches-preview.mp4" },
+  { id: "clipping-skill", title: "See this clip? Made by a skill", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/clipping-skill.webp", preview: "/reels/clipping-skill-preview.mp4" },
+  { id: "digital-product", title: "Create a digital product for your audience", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/digital-product.webp", preview: "/reels/digital-product-preview.mp4" },
+  { id: "only-one-skill", title: "Only One Skill", views: null, viewsRaw: null, world: "build", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/only-one-skill.webp", preview: "/reels/only-one-skill-preview.mp4" },
+  { id: "free-ai-videos", title: "Stop paying for AI videos", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/free-ai-videos.webp", preview: "/reels/free-ai-videos-preview.mp4" },
+  { id: "marketing-roi", title: "What is ROI?", views: null, viewsRaw: null, world: "brand", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/marketing-roi.webp", preview: "/reels/marketing-roi-preview.mp4" },
+  { id: "devin-free", title: "Stop paying $200 a month for AI coding", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/devin-free.webp", preview: "/reels/devin-free-preview.mp4" },
+  { id: "creator-voice", title: "This voice-over sounds real — it's 100% AI", views: null, viewsRaw: null, world: "learn", tag: "NEW", url: "https://www.instagram.com/editsbyhx", thumb: "/reels/creator-voice.webp", preview: "/reels/creator-voice-preview.mp4" },
 ];
 
 export const STATS = [
@@ -113,7 +113,7 @@ export const WORLDS = [
   {
     id: "brand",
     title: "Brand: campaigns on camera",
-    body: "Real tools, built on camera — the @cod.ehx Reels brands see first. A media kit for campaigns: reach, formats, and how a collaboration works.",
+    body: "Real tools, built on camera — the @editsbyhx Reels brands see first. A media kit for campaigns: reach, formats, and how a collaboration works.",
     link: "/brands/",
     linkLabel: "See the media kit ↗",
   },
@@ -198,7 +198,7 @@ export const HOME_PERSONAS: HomePersona[] = [
       },
       {
         lead: "Who watches.",
-        text: "7,000 views across 22 Reels on @cod.ehx, mostly students and early-career developers in India. [1][2]",
+        text: "7,000 views across 22 Reels on @editsbyhx, mostly students and early-career developers in India. [1][2]",
       },
     ],
     quote: "Hi Rishabh, we're [brand] and want a Reel for [launch] in [month]. What would you make?",
@@ -338,7 +338,7 @@ export const HOME_AGENT_DOES = {
     },
     {
       title: "Brand: the media kit",
-      body: "Tech Reels on @cod.ehx — 22 reels, 7,000 views: motion type, lyric videos, and AI builds on camera.",
+      body: "Tech Reels on @editsbyhx — 22 reels, 7,000 views: motion type, lyric videos, and AI builds on camera.",
     },
     {
       title: "Learn: free resources",

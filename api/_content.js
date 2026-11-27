@@ -26,7 +26,7 @@ const HOME = `# Rishabh Sharma — Full-stack Developer, Open Source Contributor
 
 Full-stack developer and B.Tech Computer Science student at GLA University,
 Mathura (2025–2028). Builds and ships real products for web and mobile,
-contributes to open source, and makes tech Reels as @cod.ehx.
+contributes to open source, and makes tech Reels as @editsbyhx.
 
 ## What I do
 
@@ -37,7 +37,7 @@ emergency SOS app, and I contribute to open source: {{PRS_MERGED}} pull requests
 and 8 open across Jenkins, WordPress/Gutenberg and other projects.
 
 Alongside engineering, I create. I make tech Reels about AI tools and coding
-as @cod.ehx, and I have solved {{LEETCODE}} LeetCode problems.
+as @editsbyhx, and I have solved {{LEETCODE}} LeetCode problems.
 
 ## Highlights
 
@@ -45,7 +45,7 @@ as @cod.ehx, and I have solved {{LEETCODE}} LeetCode problems.
 - **{{LEETCODE}} LeetCode problems solved** ({{LEETCODE_EASY}} Easy, {{LEETCODE_MEDIUM}} Medium, {{LEETCODE_HARD}} Hard)
 - **8 products shipped** — RailSync, SecureGaurd, SafeLife, Farmer Marketplace, LocalKart, Healthcare Hub, MorphAI, Rkhshak
 - **SafeLife** — emergency SOS app with live location tracking and guardian alerts
-- **Tech creator** — Reels about AI tools and coding as @cod.ehx
+- **Tech creator** — Reels about AI tools and coding as @editsbyhx
 
 ## This website
 
@@ -59,7 +59,7 @@ answers questions about Rishabh.
 - Email: <a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a>
 - GitHub: <a href="https://github.com/r1shabhsharma05">https://github.com/r1shabhsharma05</a>
 - LinkedIn: <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">https://www.linkedin.com/in/rishabh-sharma-342575438/</a>
-- Instagram: <a href="https://www.instagram.com/cod.ehx">https://www.instagram.com/cod.ehx</a>
+- Instagram: <a href="https://www.instagram.com/editsbyhx">https://www.instagram.com/editsbyhx</a>
 - YouTube: <a href="https://www.youtube.com/@UntoldHx">https://www.youtube.com/@UntoldHx</a>
 ${FOOTER}`;
 
@@ -68,7 +68,7 @@ const ABOUT = `# About Rishabh Sharma
 Rishabh Sharma is a 19-year-old full-stack developer and B.Tech Computer
 Science student at GLA University, Mathura (2025–2028). He builds and ships
 real products for the web and mobile, contributes to open source, and makes
-tech Reels as @cod.ehx.
+tech Reels as @editsbyhx.
 
 ## Background
 
@@ -78,7 +78,7 @@ tech Reels as @cod.ehx.
 - Open source: {{PRS_MERGED}} pull requests merged and {{PRS_OPEN}} open across Jenkins,
   WordPress/Gutenberg and other projects.
 - LeetCode: {{LEETCODE}} problems solved ({{LEETCODE_EASY}} Easy, {{LEETCODE_MEDIUM}} Medium, {{LEETCODE_HARD}} Hard).
-- Creator: tech Reels as @cod.ehx; faceless history YouTube channel @UntoldHx.
+- Creator: tech Reels as @editsbyhx; faceless history YouTube channel @UntoldHx.
 
 ## Products
 
@@ -103,7 +103,7 @@ The quickest way to reach Rishabh is email. He replies himself.
 - Email: rishabhsharma14426@gmail.com
 - LinkedIn: https://www.linkedin.com/in/rishabh-sharma-342575438/
 - GitHub: https://github.com/r1shabhsharma05
-- Instagram: https://www.instagram.com/cod.ehx
+- Instagram: https://www.instagram.com/editsbyhx
 - YouTube: https://www.youtube.com/@UntoldHx
 
 ## What to reach out about
@@ -198,7 +198,7 @@ export const PAGES = {
   "/": {
     title: "Rishabh Sharma — Full-stack Developer",
     description:
-      "Full-stack developer and B.Tech CS student at GLA University. {{PRS_MERGED}} OSS PRs merged, LeetCode {{LEETCODE}} solved, 8 products shipped, tech Reels as @cod.ehx.",
+      "Full-stack developer and B.Tech CS student at GLA University. {{PRS_MERGED}} OSS PRs merged, LeetCode {{LEETCODE}} solved, 8 products shipped, tech Reels as @editsbyhx.",
     markdown: HOME,
   },
   "/about": {

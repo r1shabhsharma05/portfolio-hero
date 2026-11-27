@@ -85,7 +85,7 @@ function HeroScene({ focus, frameRef }: { focus: string | null; frameRef: React.
     >
       <CurvedLensCarousel
         slides={slides}
-        label="Reels — @cod.ehx"
+        label="Reels — @editsbyhx"
         background="transparent"
         ink="#111111"
         height="100%"
@@ -261,7 +261,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
   // per world, not a wall reel. Views only where verified.
   const PREVIEWS: Record<string, PreviewEntry | null> = {
     "01": { world: "BUILD", color: "#2F55FF", image: "/projects/secureguard.jpg", video: null, views: null, caption: "SecureGaurd · SafeLife · RailSync — 8 products, shipped." },
-    "02": { world: "BRAND", color: "#EF3B2D", image: "/reels/portfolio-reel.webp", video: "/reels/portfolio-reel-preview.mp4", views: null, caption: "The @cod.ehx showreel — motion type, lyric videos, AI builds on camera." },
+    "02": { world: "BRAND", color: "#EF3B2D", image: "/reels/portfolio-reel.webp", video: "/reels/portfolio-reel-preview.mp4", views: null, caption: "The @editsbyhx showreel — motion type, lyric videos, AI builds on camera." },
     "03": { world: "LEARN", color: "#FFC81A", image: "/reels/gemini.webp", video: "/reels/gemini-preview.mp4", views: "127", caption: "Free roadmaps, prompts and build write-ups." },
     "04": null,
   };
@@ -432,7 +432,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
 
         {/* reels grid */}
         <section className="section" id="reels" aria-label="Reels">
-          <p className="section-label">Reels — @cod.ehx</p>
+          <p className="section-label">Reels — @editsbyhx</p>
           <h2 className="section-title">Tech, explained in 60 seconds.</h2>
           <p className="section-body">
             Short Reels on AI tools, open source and what is actually happening in tech — view
@@ -454,7 +454,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
             University, Mathura. He ships real products — a safety app with live SOS, a campus
             marketplace, an escrow-backed farmer platform — and contributes to open source:{" "}
             <strong>{live.prsMerged} pull requests merged</strong> across Jenkins, WordPress/Gutenberg and
-            more. He also makes tech Reels as <strong>@cod.ehx</strong> and runs a faceless
+            more. He also makes tech Reels as <strong>@editsbyhx</strong> and runs a faceless
             history channel on YouTube. No internship yet — everything here is built, not claimed.
           </p>
         </section>
@@ -550,7 +550,7 @@ export default function Home({ onOpenChat, entered }: { onOpenChat: () => void; 
         <nav aria-label="Footer">
           <a href="https://github.com/r1shabhsharma05">GitHub</a>
           <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">LinkedIn</a>
-          <a href="https://www.instagram.com/cod.ehx">Instagram</a>
+          <a href="https://www.instagram.com/editsbyhx">Instagram</a>
           <a href="https://www.youtube.com/@UntoldHx">YouTube</a>
           <a href="/privacy">Privacy</a>
         </nav>

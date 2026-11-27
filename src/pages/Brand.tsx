@@ -521,7 +521,7 @@ export default function Brand() {
           <h2 className="section-title">What they wanted, what I made, what happened.</h2>
           <p className="section-body">
             Every Reel below is something I built and filmed myself — no client briefs yet, no
-            staged demos. Each one dealt as a hand of cards, with its numbers from @cod.ehx.
+            staged demos. Each one dealt as a hand of cards, with its numbers from @editsbyhx.
           </p>
           <div className="brand-articles">
             {BRAND_WORK.map(({ reel, wanted, made, pills }) => (
@@ -631,7 +631,7 @@ export default function Brand() {
             <p className="brand-reach-note">
               My three most watched Reels of the last 6 months.
               <br />
-              @cod.ehx
+              @editsbyhx
             </p>
           </div>
           <div className="brand-reach-banner">
@@ -795,7 +795,7 @@ export default function Brand() {
       <footer className="site-footer build-footer">
         <span>© 2026 Rishabh Sharma</span>
         <nav aria-label="Footer">
-          <a href="https://www.instagram.com/cod.ehx">Instagram</a>
+          <a href="https://www.instagram.com/editsbyhx">Instagram</a>
           <a href="https://www.youtube.com/@UntoldHx">YouTube</a>
           <a href="https://www.linkedin.com/in/rishabh-sharma-342575438/">LinkedIn</a>
           <a href="https://github.com/r1shabhsharma05">GitHub</a>

@@ -9,7 +9,7 @@
 // Output: public/learn/<slug>/index.html, one static page per post.
 // Name swap (per Rishabh's order): the source author's name -> Rishabh
 // Sharma, standalone first name -> Rishabh, the source author's IG handle
-// -> @cod.ehx, applied to prose only (fenced code untouched).
+// -> @editsbyhx, applied to prose only (fenced code untouched).
 // Links: /blog/<slug> -> /learn/<slug>/; the source site's /lab/* demos +
 // /fitness pages are dropped (their links become plain text, 18 Nov 2026).
 // No reels are shown on article pages (removed 18 Nov 2026, Rishabh's
@@ -72,7 +72,7 @@ function swapNames(t) {
     .replace(/AVI VASHISHTA/g, "RISHABH SHARMA")
     .replace(/\bAVI\b/g, "RISHABH")
     .replace(/AVIVASHISHTA29/g, "r1shabhsharma05")
-    .replace(/avi_vashishta29/g, "cod.ehx")
+    .replace(/avi_vashishta29/g, "editsbyhx")
     // The 3D-ASCII wordmark spells the author's name; the new name is one
     // character longer, so the article's character count follows it.
     .replace(/thirteen characters/g, "fourteen characters");
@@ -377,7 +377,7 @@ ${reel}${reelLink}${toc}
 <aside class="keep"><h2>Keep reading</h2><ul>${keepItems}</ul></aside>
 <footer>
 <div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
-<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/cod.ehx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
+<div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/editsbyhx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
 <div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
 </footer>
 <script>
