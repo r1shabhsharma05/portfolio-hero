@@ -28,8 +28,9 @@ const STATIC_PAGES = ["/about", "/contact", "/privacy", "/developers"];
 const PERSON_ID = `${SITE}/#person`;
 const ORG_ID = `${SITE}/#organization`;
 
-/** Organization node — one personal contact point; no business address,
- *  no support/sales departments (this is a personal portfolio, not a company). */
+/** Organization node — one personal contact point; country-only address
+ *  (no street/city — this is a personal portfolio, not a company, and no
+ *  business address exists to publish). */
 const ORGANIZATION = {
   "@type": "Organization",
   "@id": ORG_ID,
@@ -42,6 +43,7 @@ const ORGANIZATION = {
   description:
     "Full-stack development practice of Rishabh Sharma — production web and mobile products, open source, and tech education.",
   founder: { "@id": PERSON_ID },
+  address: { "@type": "PostalAddress", addressCountry: "IN" },
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "personal",
