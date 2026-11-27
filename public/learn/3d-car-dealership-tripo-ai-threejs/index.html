@@ -3,9 +3,26 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>I Built a 3D Car Dealership Without Opening Blender | Rishabh Sharma</title>
-<meta name="description" content="Generating every vehicle from a single photo with Tripo AI, then shipping it on the web: the file:// CORS wall, the over-compression mistake that ruined the mes" />
-<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/3d-car-dealership-tripo-ai-threejs/" />
+<title>I Built a 3D Car Dealership Without Opening Blender (Tripo | Rishabh Sharma</title>
+<meta name="description" content="Generating every vehicle from a single photo with Tripo AI, then shipping it on the web: the file:// CORS wall, the over-compression mistake that ruined" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/3d-car-dealership-tripo-ai-threejs" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="I Built a 3D Car Dealership Without Opening Blender (Tripo" />
+<meta property="og:description" content="Generating every vehicle from a single photo with Tripo AI, then shipping it on the web: the file:// CORS wall, the over-compression mistake that ruined" />
+<meta property="og:url" content="https://portfolio-hero-psi-lemon.vercel.app/learn/3d-car-dealership-tripo-ai-threejs" />
+<meta property="og:site_name" content="Rishabh Sharma" />
+<meta property="og:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Rishabh Sharma — portfolio" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@editsbyhx" />
+<meta name="twitter:creator" content="@editsbyhx" />
+<meta name="twitter:title" content="I Built a 3D Car Dealership Without Opening Blender (Tripo" />
+<meta name="twitter:description" content="Generating every vehicle from a single photo with Tripo AI, then shipping it on the web: the file:// CORS wall, the over-compression mistake that ruined" />
+<meta name="twitter:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta name="author" content="Rishabh Sharma" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"I Built a 3D Car Dealership Without Opening Blender","description":"Generating every vehicle from a single photo with Tripo AI, then shipping it on the web: the file:// CORS wall, the over-compression mistake that ruined","author":{"@type":"Person","name":"Rishabh Sharma","url":"https://portfolio-hero-psi-lemon.vercel.app/learn/who-is-rishabh-sharma"},"datePublished":"2026-09-04","dateModified":"2026-09-04","mainEntityOfPage":"https://portfolio-hero-psi-lemon.vercel.app/learn/3d-car-dealership-tripo-ai-threejs","image":"https://portfolio-hero-psi-lemon.vercel.app/og-image.webp","publisher":{"@type":"Person","name":"Rishabh Sharma"}}</script>
 <link rel="icon" href="/favicon.ico" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -123,21 +140,25 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   footer { grid-template-columns:1fr; }
 }
 </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
 </head>
 <body>
 <div id="progress"></div>
 <header class="site-head">
 <a class="logo" href="/">Rishabh.</a>
-<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<nav class="worlds"><span class="sep">/</span><a href="/projects">Build</a><span class="sep">/</span><a href="/brands">Brand</a><span class="sep">/</span><a href="/learn" aria-current="page">Learn</a></nav>
 <div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
 </header>
 <div class="wrap">
 <main>
-<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; ROADMAP &middot; 4 SEPTEMBER 2026 &middot; 14 min</p>
+<p class="meta"><a href="/learn">&larr; Learn</a> &middot; ROADMAP &middot; <time datetime="2026-09-04">4 SEPTEMBER 2026</time> &middot; 14 min &middot; Compiled by <a href="/learn/who-is-rishabh-sharma">Rishabh Sharma</a></p>
 <h1 class="title">I Built a 3D Car Dealership Without Opening Blender</h1>
 <p class="lede">Generating every vehicle from a single photo with Tripo AI, then shipping it on the web: the file:// CORS wall, the over-compression mistake that ruined the meshes, weld() before simplify, a 164-part exploded view, and a refraction cursor shader.</p>
 
 <div class="post">
+<blockquote>
+<p>A curated collection of public resources, compiled for you — verify details before applying.</p>
+</blockquote>
 <h2 id="overview">Overview</h2>
 <p>
         There are two ways a web developer has historically got 3D onto a page.
@@ -146,26 +167,24 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
         and ship geometry that was never really yours.
 </p>
 <p>
-        I wanted a car dealership site with a configurator and an exploded view. I
-        can&rsquo;t model. So I generated every vehicle from a single photograph
+        The goal: a car dealership site with a configurator and an exploded view, built without modelling anything by hand. Every vehicle was generated from a single photograph
         with <a href="https://www.tripo3d.ai/" target="_blank" rel="noreferrer">Tripo AI</a>, dropped the meshes
         into Three.js, and shipped it.
 </p>
 <p>
         This is what actually happened, including the parts that went wrong
-        &mdash; the mesh I destroyed by over-compressing, the models that loaded
-        sideways, and the browser rule that cost me an afternoon.
+        &mdash; the mesh destroyed by over-compression, the models that loaded
+        sideways, and the browser rule that cost an afternoon.
 </p><h2 id="what-tripo-gives-you">What Tripo gives you</h2>
 <p>
         Tripo is image-to-3D and text-to-3D. You give it a reference photo, it
-        returns a mesh you can export as GLB, FBX, OBJ, STL or USDZ. The parts I
-        used:
+        returns a mesh you can export as GLB, FBX, OBJ, STL or USDZ. The parts used:
 </p><div class="tablewrap"><table>
 <thead>
 <tr>
 <th>Feature</th>
 <th>What it does</th>
-<th>Where I used it</th>
+<th>Where it's used</th>
 </tr>
 </thead>
 <tbody>
@@ -196,7 +215,7 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 </tr>
 </tbody>
 </table></div><p>
-        The segmentation is the one that surprised me. I expected to hand-author
+        The segmentation is the surprising part. The expectation was to hand-author
         the exploded view in code. Tripo shipped a car that already knew it was
 <strong>164 separate parts</strong> &mdash; panels, wheels, mirrors,
         grille, spoiler &mdash; each a distinct mesh in the GLB. There&rsquo;s a
@@ -208,10 +227,10 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <li><a href="https://studio.tripo3d.ai/3d-model-gallery/" target="_blank" rel="noreferrer">3D model gallery</a> &mdash; community models, free to download</li>
 <li><a href="https://studio.tripo3d.ai/3d-model-gallery/sports-car?moegmented" target="_blank" rel="noreferrer">Sports cars filtered to <em>Segmented</em></a> &mdash; the ones that explode</li>
 <li><a href="https://studio.tripo3d.ai/3d-model-gallery/sports-car?model_type=smart_low_poly" target="_blank" rel="noreferrer">Sports cars filtered to <em>Smart Mesh</em></a> &mdash; the browser-friendly ones</li>
-<li><a href="https://studio.tripo3d.ai/3d-model/sleek-sports-car-with-aero-kit-carbon-fiber-accents-large-rear-wing-b398521d-658d-4410-9b22-22f63d9d9448" target="_blank" rel="noreferrer">The segmented car I used</a></li>
+<li><a href="https://studio.tripo3d.ai/3d-model/sleek-sports-car-with-aero-kit-carbon-fiber-accents-large-rear-wing-b398521d-658d-4410-9b22-22f63d9d9448" target="_blank" rel="noreferrer">The segmented car used</a></li>
 </ul><h2 id="the-first-wall-browsers-won-rsquo-t-load-meshes-from-file">The first wall: browsers won&rsquo;t load meshes from <code>file://</code></h2>
 <p>
-        I exported five cars, dropped <code>index.html</code> next to a
+        Five cars exported, <code>index.html</code> dropped next to a
 <code>models/</code> folder, double-clicked it, and got nothing.
 </p>
 <p>
@@ -231,14 +250,13 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 </ol>
 <p>
         Inlining is genuinely nice for a self-contained demo &mdash; one file, no
-        setup, works offline. It&rsquo;s what I did first. But at full quality my
+        setup, works offline. It&rsquo;s the obvious first attempt. But at full quality the
         five cars were <strong>238MB</strong>, which is not going in an HTML file.
         So: server.
 </p><div class="code"># from the folder containing index.html
 python3 -m http.server 8756
 # &rarr; http://localhost:8756</div><p>
-        I wrapped that in a double-clickable <code>.command</code> so I&rsquo;d
-        stop opening the wrong file:
+        Wrapped in a double-clickable <code>.command</code> to stop opening the wrong file:
 </p><div class="code">#!/bin/bash
 cd "$(dirname "$0")/site" || exit 1<p>PORT=8756
 while nc -z 127.0.0.1 $PORT &gt;/dev/null 2&gt;&amp;1; do PORT=$((PORT+1)); done</p>
@@ -261,14 +279,14 @@ http.createServer((q,s)=&gt;{
 }).listen(port);&#39; $PORT
 fi</div></p>
 <p>
-        I also moved <code>index.html</code> into a <code>site/</code> subfolder so
-        it couldn&rsquo;t be double-clicked by accident. Sounds petty. Saved me
+<code>index.html</code> also moved into a <code>site/</code> subfolder so
+        it couldn&rsquo;t be double-clicked by accident. Sounds petty. It saves
         three more rounds of confusion.
-</p><h2 id="the-mistake-worth-writing-down-i-over-compressed-the-meshes">The mistake worth writing down: I over-compressed the meshes</h2>
+</p><h2 id="the-mistake-worth-writing-down-over-compressed-meshes">The mistake worth writing down: over-compressed meshes</h2>
 <p>
         Tripo&rsquo;s full-detail exports are <strong>~1.9M triangles and
-        46&ndash;55MB each</strong>. That&rsquo;s a lot for a web page, so I ran
-        them through a decimator at a 1.2% ratio &mdash; 1.9M down to
+        46&ndash;55MB each</strong>. That&rsquo;s a lot for a web page, so they went
+        through a decimator at a 1.2% ratio &mdash; 1.9M down to
 <strong>30,906 triangles</strong>, 45MB down to 750KB.
 </p>
 <p>The file size was beautiful. The cars looked terrible.</p>
@@ -276,8 +294,8 @@ fi</div></p>
         Car bodies are large, smooth, continuous surfaces. That&rsquo;s exactly the
         geometry a decimator eats first, because a flat panel &ldquo;wastes&rdquo;
         triangles by its metric. At 1.5% you get faceted door skins, dented roofs,
-        and creases that read as crash damage. Then I put a high-metalness paint
-        material on top, which turns every one of those ripples into a specular
+        and creases that read as crash damage. Then a high-metalness paint
+        material went on top, which turns every one of those ripples into a specular
         highlight. Two mistakes compounding.
 </p>
 <p>
@@ -309,8 +327,8 @@ await MeshoptSimplifier.ready;</p>
 <strong><code>weld()</code> first is not optional.</strong> Skip it and the
         simplifier returns a non-indexed mesh &mdash; every triangle gets its own
         three vertices, no shared normals. Three.js then shades it flat, and you
-        get a faceted car that looks like origami. I lost an hour to this because
-        my triangle counter read <code>getIndices()</code>, which returns
+        get a faceted car that looks like origami. An hour went to this because
+        the triangle counter read <code>getIndices()</code>, which returns
 <code>null</code> on unindexed geometry, so the pipeline cheerfully
         reported <em>zero triangles</em> on a file that was clearly full of them.
 </p><p>The results:</p>
@@ -337,7 +355,7 @@ import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.j
 <h2 id="normalising-models-you-didn-rsquo-t-make">Normalising models you didn&rsquo;t make</h2>
 <p>
         Generated meshes don&rsquo;t agree on scale, origin, or which way the
-        object faces. One of my cars ran along X while the rest ran along Z, so it
+        object faces. One car ran along X while the rest ran along Z, so it
         loaded broadside to the camera.
 </p>
 <p>
@@ -378,7 +396,7 @@ scene.add(car);</div></p>
         as an assembly diagram rather than an explosion.
 </p>
 <p>
-        The second bug was subtler. I measured each part&rsquo;s centroid in
+        The second bug was subtler. Each part&rsquo;s centroid was measured in
 <strong>world</strong> space and applied the offset in <strong>local</strong>
         space. Fine until a model gets rotated by the normaliser &mdash; then every
         direction is wrong. Measure in the same space you apply:
@@ -435,7 +453,7 @@ exAmt = damp(exAmt, exTarget, 5.5, dt);<p>if (parts.length &gt; 1 &amp;&amp; exA
         through the door skin.
 </p>
 <p>
-        I also tried a toon-shaded &ldquo;sketch&rdquo; mode with an inverted-hull
+        A toon-shaded &ldquo;sketch&rdquo; mode was also tried, with an inverted-hull
         outline. One gotcha if you go there: <code>MeshBasicMaterial</code> does
 <strong>not</strong> declare <code>objectNormal</code> in its vertex shader,
         so the usual normal-offset hack throws a compile error. Use the
@@ -476,7 +494,7 @@ exAmt = damp(exAmt, exTarget, 5.5, dt);<p>if (parts.length &gt; 1 &amp;&amp; exA
         alone.
 </p>
 <p>
-        One tuning note: keep <strong>metalness low</strong>. I started at 0.9
+        One tuning note: keep <strong>metalness low</strong>. Starting at 0.9
         because &ldquo;car paint is shiny&rdquo;, and it turned every surface
         imperfection in a generated mesh into a highlight. Around 0.3&ndash;0.5
         metalness with 0.3&ndash;0.4 roughness reads as clearcoat and is far more
@@ -514,7 +532,7 @@ exAmt = damp(exAmt, exTarget, 5.5, dt);<p>if (parts.length &gt; 1 &amp;&amp; exA
 </p><h3>The bug that made this look broken</h3>
 <p>
         Smooth scrolling with a transformed wrapper needs a spacer element to give
-        the document its height. I measured that height once on load &mdash; before
+        the document its height. That height was measured once on load &mdash; before
         the fonts had loaded and the cards were laid out &mdash; so it came out too
         short, the browser clamped <code>scrollTo()</code>, and the camera silently
         desynced from the copy. Every beat showed the wrong text.
@@ -541,8 +559,8 @@ document.fonts?.ready.then(measure);</div></p>
         canvas before you touch the controls config.
 </p><h2 id="a-liquid-cursor-and-what-not-to-copy">A liquid cursor, and what not to copy</h2>
 <p>
-        I wanted the <a href="https://buttermax.net/" target="_blank" rel="noreferrer">buttermax</a> cursor &mdash;
-        that fluid trail that inverts the page as it passes. My first attempt
+        The target was the <a href="https://buttermax.net/" target="_blank" rel="noreferrer">buttermax</a> cursor &mdash;
+        that fluid trail that inverts the page as it passes. The first attempt
         copied it literally: a density buffer used as a mask, inverting colour
         inside the blob.
 </p>
@@ -552,7 +570,7 @@ document.fonts?.ready.then(measure);</div></p>
         photoreal render and you get a milky white smear.
 </p>
 <p>
-        So I kept the mechanism and changed what it does. The density field&rsquo;s
+        So the mechanism stayed and what it does changed. The density field&rsquo;s
 <strong>gradient</strong> is treated as a surface slope, and the frame is
         refracted through it &mdash; the image bends and splits into RGB along the
         trail, and nothing brightens:
@@ -571,7 +589,7 @@ c.b = texture2D(uScene, vUv + disp * 0.76).b;</p>
 <p>c += pow(edge, 1.5) * vec3(0.55, 0.76, 1.0) * 0.20 * uAmt;
 c *= 1.0 + mask * 0.045 * uAmt;</div></p>
 <p>
-        That epsilon comment cost me a debugging round. I sized the gradient step to
+        That epsilon comment cost a debugging round. The gradient step was sized to
         the screen resolution while sampling a 320px buffer, so it read sub-pixel
         and returned near-zero. The effect could only express itself as brightness
         because the <em>shape</em> information wasn&rsquo;t there.
@@ -599,13 +617,13 @@ float splat = exp(-dot(d, d) / uRadius) * 0.62 * speed * (uDt * 60.0);</div><p>D
         upload shouldn&rsquo;t permanently degrade the page. And it flips the button
         state so the user can see it happened rather than wondering why the effect
         stopped.
-</p><h2 id="what-i-rsquo-d-tell-you-before-you-start">What I&rsquo;d tell you before you start</h2>
+</p><h2 id="what-to-know-before-you-start">What to know before you start</h2>
 <ul>
 <li>
 <strong>Pick the right generation mode for the destination.</strong> H3.1
           at 2M triangles is for renders and 3D printing. For the web, Smart Mesh
           gets you clean low-poly in about two seconds and skips the entire
-          decimation problem I created for myself.
+          decimation problem.
 </li>
 <li>
 <strong><code>weld()</code> before you simplify.</strong> Always.
@@ -613,7 +631,7 @@ float splat = exp(-dot(d, d) / uRadius) * 0.62 * speed * (uDt * 60.0);</div><p>D
 </li>
 <li>
 <strong>Compress the encoding, not the geometry.</strong> Meshopt plus
-          WebP textures got me 35&times; with no visual cost. Decimation is the last
+          WebP textures give 35&times; with no visual cost. Decimation is the last
           resort, not the first.
 </li>
 <li>
@@ -656,19 +674,20 @@ float splat = exp(-dot(d, d) / uRadius) * 0.62 * speed * (uDt * 60.0);</div><p>D
 </ul><p>
 <em>If you want to try Tripo, new accounts get bonus credits with invite
         code <code>J0SG4G</code>.</em>
-</p>
+</p><h2 id="keep-going">Keep going</h2>
+<p>If this helped, read next: <a href="/learn/3d-ascii-wordmark-svg-github-readme">How I Rendered a Rotating 3D ASCII Wordmark That Animates on GitHub (No JavaScript)</a> and <a href="/learn/prompt-frosted-glass-refraction-cube-webgl">The Prompt I Used to Build a Frosted-Glass Refraction Cube in Raw WebGL (One HTML File)</a>.</p>
 
 </div>
 </main>
 <aside class="aside">
-<nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#what-tripo-gives-you"><i>02</i><b>What Tripo gives you</b></a></li><li><a href="#the-first-wall-browsers-won-rsquo-t-load-meshes-from-file"><i>03</i><b>The first wall: browsers won&amp;rsquo;t load meshes from file://</b></a></li><li><a href="#the-mistake-worth-writing-down-i-over-compressed-the-meshes"><i>04</i><b>The mistake worth writing down: I over-compressed the meshes</b></a></li><li><a href="#normalising-models-you-didn-rsquo-t-make"><i>05</i><b>Normalising models you didn&amp;rsquo;t make</b></a></li><li><a href="#the-exploded-view"><i>06</i><b>The exploded view</b></a></li><li><a href="#render-modes"><i>07</i><b>Render modes</b></a></li><li><a href="#paint-without-destroying-the-original"><i>08</i><b>Paint, without destroying the original</b></a></li><li><a href="#scroll-driven-camera"><i>09</i><b>Scroll-driven camera</b></a></li><li><a href="#a-liquid-cursor-and-what-not-to-copy"><i>10</i><b>A liquid cursor, and what not to copy</b></a></li><li><a href="#don-rsquo-t-let-the-chrome-outrun-the-mesh"><i>11</i><b>Don&amp;rsquo;t let the chrome outrun the mesh</b></a></li><li><a href="#what-i-rsquo-d-tell-you-before-you-start"><i>12</i><b>What I&amp;rsquo;d tell you before you start</b></a></li><li><a href="#links"><i>13</i><b>Links</b></a></li></ol></nav>
+<nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#what-tripo-gives-you"><i>02</i><b>What Tripo gives you</b></a></li><li><a href="#the-first-wall-browsers-won-rsquo-t-load-meshes-from-file"><i>03</i><b>The first wall: browsers won&amp;rsquo;t load meshes from file://</b></a></li><li><a href="#the-mistake-worth-writing-down-over-compressed-meshes"><i>04</i><b>The mistake worth writing down: over-compressed meshes</b></a></li><li><a href="#normalising-models-you-didn-rsquo-t-make"><i>05</i><b>Normalising models you didn&amp;rsquo;t make</b></a></li><li><a href="#the-exploded-view"><i>06</i><b>The exploded view</b></a></li><li><a href="#render-modes"><i>07</i><b>Render modes</b></a></li><li><a href="#paint-without-destroying-the-original"><i>08</i><b>Paint, without destroying the original</b></a></li><li><a href="#scroll-driven-camera"><i>09</i><b>Scroll-driven camera</b></a></li><li><a href="#a-liquid-cursor-and-what-not-to-copy"><i>10</i><b>A liquid cursor, and what not to copy</b></a></li><li><a href="#don-rsquo-t-let-the-chrome-outrun-the-mesh"><i>11</i><b>Don&amp;rsquo;t let the chrome outrun the mesh</b></a></li><li><a href="#what-to-know-before-you-start"><i>12</i><b>What to know before you start</b></a></li><li><a href="#links"><i>13</i><b>Links</b></a></li><li><a href="#keep-going"><i>14</i><b>Keep going</b></a></li></ol></nav>
 </aside>
 </div>
-<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/devin-max-free-poke-roadmap/"><span>Devin's $200 Max Plan, Free: The Exact Steps from the Reel</span></a></li><li><a href="/learn/265-topics-to-master-ai-engineering/"><span>265 Topics to Master AI Engineering (and the 6-Week Order I'd Learn Them In)</span></a></li><li><a href="/learn/502-python-interview-questions/"><span>502 Python Interview Questions to Crack Placements in 2027</span></a></li></ul></aside>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/devin-max-free-poke-roadmap"><span>Devin's $200 Max Plan, Free: The Exact Steps from the Reel</span></a></li><li><a href="/learn/265-topics-to-master-ai-engineering"><span>265 Topics to Master AI Engineering (and the 6-Week Order I'd Learn Them In)</span></a></li><li><a href="/learn/502-python-interview-questions"><span>502 Python Interview Questions to Crack Placements in 2027</span></a></li></ul></aside>
 <footer>
 <div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
 <div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/editsbyhx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
-<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy">Privacy</a><a href="/developers">Developers</a></div>
 </footer>
 <script>
 (function () {

@@ -4,8 +4,25 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>How I Made a Trending Song's Lyric Video with AI | Rishabh Sharma</title>
-<meta name="description" content="Kalyani is a released song by ARJN × KDS × Fifty4 × Ronn ft. Shreya Ghoshal. I didn't make the song — I made its lyric video with AI tools and code. Here's the " />
-<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/how-i-made-a-trending-song-lyric-video-with-ai/" />
+<meta name="description" content="Kalyani is a released song by ARJN × KDS × Fifty4 × Ronn ft. Shreya Ghoshal. I didn't make the song — I made its lyric video with AI tools and code" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/how-i-made-a-trending-song-lyric-video-with-ai" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How I Made a Trending Song's Lyric Video with AI" />
+<meta property="og:description" content="Kalyani is a released song by ARJN × KDS × Fifty4 × Ronn ft. Shreya Ghoshal. I didn't make the song — I made its lyric video with AI tools and code" />
+<meta property="og:url" content="https://portfolio-hero-psi-lemon.vercel.app/learn/how-i-made-a-trending-song-lyric-video-with-ai" />
+<meta property="og:site_name" content="Rishabh Sharma" />
+<meta property="og:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Rishabh Sharma — portfolio" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@editsbyhx" />
+<meta name="twitter:creator" content="@editsbyhx" />
+<meta name="twitter:title" content="How I Made a Trending Song's Lyric Video with AI" />
+<meta name="twitter:description" content="Kalyani is a released song by ARJN × KDS × Fifty4 × Ronn ft. Shreya Ghoshal. I didn't make the song — I made its lyric video with AI tools and code" />
+<meta name="twitter:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta name="author" content="Rishabh Sharma" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How I Made a Trending Song's Lyric Video with AI","description":"Kalyani is a released song by ARJN × KDS × Fifty4 × Ronn ft. Shreya Ghoshal. I didn't make the song — I made its lyric video with AI tools and code","author":{"@type":"Person","name":"Rishabh Sharma","url":"https://portfolio-hero-psi-lemon.vercel.app/learn/who-is-rishabh-sharma"},"datePublished":"2026-11-18","dateModified":"2026-11-18","mainEntityOfPage":"https://portfolio-hero-psi-lemon.vercel.app/learn/how-i-made-a-trending-song-lyric-video-with-ai","image":"https://portfolio-hero-psi-lemon.vercel.app/og-image.webp","publisher":{"@type":"Person","name":"Rishabh Sharma"}}</script>
 <link rel="icon" href="/favicon.ico" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -123,17 +140,18 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   footer { grid-template-columns:1fr; }
 }
 </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
 </head>
 <body>
 <div id="progress"></div>
 <header class="site-head">
 <a class="logo" href="/">Rishabh.</a>
-<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<nav class="worlds"><span class="sep">/</span><a href="/projects">Build</a><span class="sep">/</span><a href="/brands">Brand</a><span class="sep">/</span><a href="/learn" aria-current="page">Learn</a></nav>
 <div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
 </header>
 <div class="wrap">
 <main>
-<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 18 NOVEMBER 2026 &middot; 5 min</p>
+<p class="meta"><a href="/learn">&larr; Learn</a> &middot; PROMPT &middot; <time datetime="2026-11-18">18 NOVEMBER 2026</time> &middot; 5 min &middot; By <a href="/learn/who-is-rishabh-sharma">Rishabh Sharma</a></p>
 <h1 class="title">How I Made a Trending Song's Lyric Video with AI</h1>
 <p class="lede">Kalyani is a released song by ARJN × KDS × Fifty4 × Ronn ft. Shreya Ghoshal. I didn't make the song — I made its lyric video with AI tools and code. Here's the exact pipeline, step by step.</p>
 
@@ -224,18 +242,20 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
 <div class="promptbox"><button class="copybtn" type="button" data-copy>Copy prompt</button><div class="prompt">Take this song MP3, its lyrics (.txt, one line per line) and 2 photos, and build a Spotify-style particle lyric video in 1920×1080 at 60fps. Steps: (1) Separate the vocals with Demucs. (2) Get word-level timestamps with faster-whisper large-v3 and correct the words against my provided lyrics — never show misheard words. (3) Detect tempo, beats and kick hits with librosa. (4) Map the song into 4 looks: a tilted glowing Spotify lyrics card with karaoke word highlighting and spark particles for the opening lines; a monochrome particle portrait made from photo 1 that morphs into photo 2, dancing on the kicks, for the verse; gold Playfair italic motion-graphic lyrics with fast blur word changes for the melodic hook; and a black-and-white rain-on-glass music player for the last line. (5) Build it as a HyperFrames composition driven entirely by the analysis data — no hand-typed timings. (6) Run the checker, snapshot every look, render at 60fps, then verify word sync from the rendered file at 4 timestamps before delivering.</div></div><h2 id="the-result">The result</h2>
 <p>A 54.68-second lyric video, 1920×1080 at 60fps, with the original audio untouched — every word on screen timed to ~0.1 seconds, the particle portrait morphing mid-song, and the gold motion graphics carrying the hook. The reel of it has 5,000 views on Instagram.</p>
 <p>And if you want the other version of this post — making a whole song with AI (lyrics + music + voice, like Suno) — that is a separate project. It gets its own post, built for real, when it is done.</p>
+<h2 id="keep-going">Keep going</h2>
+<p>If this helped, read next: <a href="/learn/ai-voiceover-reels-voicestudio-skill">This Voice-Over Sounds Real — It&#x27;s 100% AI: How I Make It</a> and <a href="/learn/gta6-clipper-skill-one-video-ten-shorts">One Skill, Ten Clips: How My GTA 6 Clipper Turns One Long Video Into Vertical Shorts</a>.</p>
 
 </div>
 </main>
 <aside class="aside">
-<figure class="reel"><video src="/reels/kalyani-lyric-preview.mp4" poster="/reels/kalyani-lyric.webp" muted loop autoplay playsinline controls preload="metadata"></video><figcaption>Kalyani — Lyric video · 5,000 views</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#first-the-correction"><i>01</i><b>First, the correction</b></a></li><li><a href="#the-tools"><i>02</i><b>The tools</b></a></li><li><a href="#the-exact-steps"><i>03</i><b>The exact steps</b></a></li><li><a href="#settings"><i>04</i><b>Settings</b></a></li><li><a href="#what-you-need-before-starting"><i>05</i><b>What you need before starting</b></a></li><li><a href="#the-copy-paste-prompt"><i>06</i><b>The copy-paste prompt</b></a></li><li><a href="#the-result"><i>07</i><b>The result</b></a></li></ol></nav>
+<figure class="reel"><video src="/reels/kalyani-lyric-preview.mp4" poster="/reels/kalyani-lyric.webp" muted loop autoplay playsinline controls preload="metadata" aria-label="Kalyani — Lyric video · 5,000 views — reel by Rishabh Sharma (@editsbyhx)"></video><figcaption>Kalyani — Lyric video · 5,000 views</figcaption></figure><nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#first-the-correction"><i>01</i><b>First, the correction</b></a></li><li><a href="#the-tools"><i>02</i><b>The tools</b></a></li><li><a href="#the-exact-steps"><i>03</i><b>The exact steps</b></a></li><li><a href="#settings"><i>04</i><b>Settings</b></a></li><li><a href="#what-you-need-before-starting"><i>05</i><b>What you need before starting</b></a></li><li><a href="#the-copy-paste-prompt"><i>06</i><b>The copy-paste prompt</b></a></li><li><a href="#the-result"><i>07</i><b>The result</b></a></li><li><a href="#keep-going"><i>08</i><b>Keep going</b></a></li></ol></nav>
 </aside>
 </div>
-<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/free-ai-videos-freevideo-skill/"><span>Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo</span></a></li><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li><li><a href="/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel/"><span>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</span></a></li></ul></aside>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/free-ai-videos-freevideo-skill"><span>Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo</span></a></li><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li><li><a href="/learn/prompt-deal-cards-hero-a-deck-that-lifts-into-a-wheel"><span>The Prompt Behind My Second Hero: A Deck of Reels Dealt Into a Fan That Lifts Into a Turning Wheel</span></a></li></ul></aside>
 <footer>
 <div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
 <div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/editsbyhx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
-<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy">Privacy</a><a href="/developers">Developers</a></div>
 </footer>
 <script>
 (function () {

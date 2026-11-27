@@ -3,9 +3,26 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The Prompt I Used to Build a Fluid Ink-Reveal Homepage, with a Higgsfield-Generated Wordmark Video | Rishabh Sharma</title>
-<meta name="description" content="A copy-pasteable prompt for a homepage where dragging the cursor spreads ink that punches through the page to a looping video of the same word morphing through " />
-<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-fluid-ink-reveal-wordmark-higgsfield/" />
+<title>The Prompt I Used to Build a Fluid Ink-Reveal Homepage, | Rishabh Sharma</title>
+<meta name="description" content="A copy-pasteable prompt for a homepage where dragging the cursor spreads ink that punches through the page to a looping video of the same word morphing" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-fluid-ink-reveal-wordmark-higgsfield" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The Prompt I Used to Build a Fluid Ink-Reveal Homepage," />
+<meta property="og:description" content="A copy-pasteable prompt for a homepage where dragging the cursor spreads ink that punches through the page to a looping video of the same word morphing" />
+<meta property="og:url" content="https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-fluid-ink-reveal-wordmark-higgsfield" />
+<meta property="og:site_name" content="Rishabh Sharma" />
+<meta property="og:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Rishabh Sharma — portfolio" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@editsbyhx" />
+<meta name="twitter:creator" content="@editsbyhx" />
+<meta name="twitter:title" content="The Prompt I Used to Build a Fluid Ink-Reveal Homepage," />
+<meta name="twitter:description" content="A copy-pasteable prompt for a homepage where dragging the cursor spreads ink that punches through the page to a looping video of the same word morphing" />
+<meta name="twitter:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta name="author" content="Rishabh Sharma" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"The Prompt I Used to Build a Fluid Ink-Reveal Homepage, with a Higgsfield-Generated Wordmark Video","description":"A copy-pasteable prompt for a homepage where dragging the cursor spreads ink that punches through the page to a looping video of the same word morphing","author":{"@type":"Person","name":"Rishabh Sharma","url":"https://portfolio-hero-psi-lemon.vercel.app/learn/who-is-rishabh-sharma"},"datePublished":"2026-07-29","dateModified":"2026-07-29","mainEntityOfPage":"https://portfolio-hero-psi-lemon.vercel.app/learn/prompt-fluid-ink-reveal-wordmark-higgsfield","image":"https://portfolio-hero-psi-lemon.vercel.app/og-image.webp","publisher":{"@type":"Person","name":"Rishabh Sharma"}}</script>
 <link rel="icon" href="/favicon.ico" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -123,21 +140,25 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   footer { grid-template-columns:1fr; }
 }
 </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
 </head>
 <body>
 <div id="progress"></div>
 <header class="site-head">
 <a class="logo" href="/">Rishabh.</a>
-<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<nav class="worlds"><span class="sep">/</span><a href="/projects">Build</a><span class="sep">/</span><a href="/brands">Brand</a><span class="sep">/</span><a href="/learn" aria-current="page">Learn</a></nav>
 <div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
 </header>
 <div class="wrap">
 <main>
-<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; PROMPT &middot; 29 JULY 2026 &middot; 16 min</p>
+<p class="meta"><a href="/learn">&larr; Learn</a> &middot; PROMPT &middot; <time datetime="2026-07-29">29 JULY 2026</time> &middot; 16 min &middot; Compiled by <a href="/learn/who-is-rishabh-sharma">Rishabh Sharma</a></p>
 <h1 class="title">The Prompt I Used to Build a Fluid Ink-Reveal Homepage, with a Higgsfield-Generated Wordmark Video</h1>
 <p class="lede">A copy-pasteable prompt for a homepage where dragging the cursor spreads ink that punches through the page to a looping video of the same word morphing through 3D materials — a WebGL Navier-Stokes fluid as the mask, and the video generated with the Higgsfield MCP.</p>
 
 <div class="post">
+<blockquote>
+<p>A curated collection of public resources, compiled for you — verify details before applying.</p>
+</blockquote>
 <h2 id="overview">Overview</h2>
 <p>
         A white page with one enormous black word on it. Move the cursor and ink
@@ -382,7 +403,7 @@ with a single in-page evaluate firing synthetic PointerEvents.</div></div></p>
         and splat every ~0.006 units and you get a continuous stroke.
 </p>
 <p>
-        My first version of this page did the opposite of instant: it spawned a
+        The first version of this page did the opposite of instant: it spawned a
         blob only every 14px of cursor travel and then eased each one in over
         260ms. It was <em>designed</em> to lag, and no amount of tuning fixed it
         — the fix was deleting the easing.
@@ -396,8 +417,7 @@ with a single in-page evaluate firing synthetic PointerEvents.</div></div></p>
 <p>
         In a canvas it falls apart: you are compositing an
 <strong>8-bit</strong> alpha channel over itself, so the smooth blur ramp
-        quantises into visible stair-steps. It looked like a driver bug when I
-        first saw it. It is arithmetic. Overlapping opaque arcs are already
+        quantises into visible stair-steps. It looks like a driver bug at first sight. It is arithmetic. Overlapping opaque arcs are already
         antialiased, already merge seamlessly, and cost a fraction as much — and
         a real fluid sim is better than either.
 </p><h3>Name the surface, never the object</h3>
@@ -419,7 +439,7 @@ with a single in-page evaluate firing synthetic PointerEvents.</div></div></p>
         so it passes review. Then you put the plate on a white page and the haze
         renders as a grey smudge floating in mid-air. Every one of
 <em>no smoke, no haze, no mist, no fog, no glow, no light rays, no
-        particles</em> is there because of a clip I had to throw away.
+        particles</em> is there because of a clip that had to be thrown away.
 </p><h2 id="making-it-loop-and-why-you-should-measure-it">Making it loop, and why you should measure it</h2>
 <p>
         Ask for a return to the opening material and you will get one — but not a
@@ -449,8 +469,8 @@ with a single in-page evaluate firing synthetic PointerEvents.</div></div></p>
 </li>
 <li>
 <strong>VELOCITY_DISSIPATION (1.4).</strong> Reach for this if ink
-          keeps flying past where you actually drew. My first pass had it at
-          0.28 and the dye ended up in a corner of the screen I had never
+          keeps flying past where you actually drew. The first pass had it at
+          0.28 and the dye ended up in a corner of the screen never
           touched.
 </li>
 <li>
@@ -528,10 +548,10 @@ with a single in-page evaluate firing synthetic PointerEvents.</div></div></p>
 </li>
 </ul><p>
         If you want more prompts in this shape, there is
-<a href="/learn/prompt-frosted-glass-refraction-cube-webgl/"
+<a href="/learn/prompt-frosted-glass-refraction-cube-webgl"
           >a frosted-glass refraction cube in raw WebGL</a>,
 a drivable 3D car game, and
-<a href="/learn/3d-ascii-wordmark-svg-github-readme/"
+<a href="/learn/3d-ascii-wordmark-svg-github-readme"
           >a rotating 3D ASCII wordmark with no JavaScript</a>.
 </p>
 
@@ -541,11 +561,11 @@ a drivable 3D car game, and
 <nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#prompt-1-the-wordmark-video"><i>02</i><b>Prompt 1 — the wordmark video</b></a></li><li><a href="#prompt-2-the-page"><i>03</i><b>Prompt 2 — the page</b></a></li><li><a href="#why-the-prompts-are-written-this-way"><i>04</i><b>Why the prompts are written this way</b></a></li><li><a href="#making-it-loop-and-why-you-should-measure-it"><i>05</i><b>Making it loop, and why you should measure it</b></a></li><li><a href="#knobs-to-turn-first"><i>06</i><b>Knobs to turn first</b></a></li><li><a href="#if-it-comes-out-wrong"><i>07</i><b>If it comes out wrong</b></a></li><li><a href="#recap"><i>08</i><b>Recap</b></a></li></ol></nav>
 </aside>
 </div>
-<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/free-ai-videos-freevideo-skill/"><span>Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo</span></a></li><li><a href="/learn/how-i-made-a-trending-song-lyric-video-with-ai/"><span>How I Made a Trending Song's Lyric Video with AI</span></a></li><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets/"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li></ul></aside>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/free-ai-videos-freevideo-skill"><span>Stop Paying for AI Videos: Make Them Free on Your Own GPU with FreeVideo</span></a></li><li><a href="/learn/how-i-made-a-trending-song-lyric-video-with-ai"><span>How I Made a Trending Song's Lyric Video with AI</span></a></li><li><a href="/learn/prompt-vox-style-explainer-page-codex-paper-assets"><span>The Prompt Behind My Vox-Style Portfolio Page: Paper, Highlighter and a Camera That Reads It for You</span></a></li></ul></aside>
 <footer>
 <div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
 <div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/editsbyhx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
-<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy">Privacy</a><a href="/developers">Developers</a></div>
 </footer>
 <script>
 (function () {

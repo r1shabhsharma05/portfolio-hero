@@ -3,9 +3,26 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>How I Rendered a Rotating 3D ASCII Wordmark That Animates on GitHub (No JavaScript) | Rishabh Sharma</title>
-<meta name="description" content="Extruding a glyph mask into a 3D surface, splatting it to a character grid with a z-buffer, and shipping twenty rotated frames as a single 38 KB SVG that animat" />
-<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/3d-ascii-wordmark-svg-github-readme/" />
+<title>How I Rendered a Rotating 3D ASCII Wordmark That Animates | Rishabh Sharma</title>
+<meta name="description" content="Extruding a glyph mask into a 3D surface, splatting it to a character grid with a z-buffer, and shipping twenty rotated frames as a single 38 KB SVG that" />
+<link rel="canonical" href="https://portfolio-hero-psi-lemon.vercel.app/learn/3d-ascii-wordmark-svg-github-readme" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How I Rendered a Rotating 3D ASCII Wordmark That Animates" />
+<meta property="og:description" content="Extruding a glyph mask into a 3D surface, splatting it to a character grid with a z-buffer, and shipping twenty rotated frames as a single 38 KB SVG that" />
+<meta property="og:url" content="https://portfolio-hero-psi-lemon.vercel.app/learn/3d-ascii-wordmark-svg-github-readme" />
+<meta property="og:site_name" content="Rishabh Sharma" />
+<meta property="og:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Rishabh Sharma — portfolio" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@editsbyhx" />
+<meta name="twitter:creator" content="@editsbyhx" />
+<meta name="twitter:title" content="How I Rendered a Rotating 3D ASCII Wordmark That Animates" />
+<meta name="twitter:description" content="Extruding a glyph mask into a 3D surface, splatting it to a character grid with a z-buffer, and shipping twenty rotated frames as a single 38 KB SVG that" />
+<meta name="twitter:image" content="https://portfolio-hero-psi-lemon.vercel.app/og-image.webp" />
+<meta name="author" content="Rishabh Sharma" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How I Rendered a Rotating 3D ASCII Wordmark That Animates on GitHub (No JavaScript)","description":"Extruding a glyph mask into a 3D surface, splatting it to a character grid with a z-buffer, and shipping twenty rotated frames as a single 38 KB SVG that","author":{"@type":"Person","name":"Rishabh Sharma","url":"https://portfolio-hero-psi-lemon.vercel.app/learn/who-is-rishabh-sharma"},"datePublished":"2026-07-27","dateModified":"2026-07-27","mainEntityOfPage":"https://portfolio-hero-psi-lemon.vercel.app/learn/3d-ascii-wordmark-svg-github-readme","image":"https://portfolio-hero-psi-lemon.vercel.app/og-image.webp","publisher":{"@type":"Person","name":"Rishabh Sharma"}}</script>
 <link rel="icon" href="/favicon.ico" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -123,24 +140,28 @@ footer a:hover { text-decoration:underline; text-underline-offset:3px; }
   footer { grid-template-columns:1fr; }
 }
 </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e12453f6-d34d-461a-ac41-00da046cdd5f"></script>
 </head>
 <body>
 <div id="progress"></div>
 <header class="site-head">
 <a class="logo" href="/">Rishabh.</a>
-<nav class="worlds"><span class="sep">/</span><a href="/projects/">Build</a><span class="sep">/</span><a href="/brands/">Brand</a><span class="sep">/</span><a href="/learn/" aria-current="page">Learn</a></nav>
+<nav class="worlds"><span class="sep">/</span><a href="/projects">Build</a><span class="sep">/</span><a href="/brands">Brand</a><span class="sep">/</span><a href="/learn" aria-current="page">Learn</a></nav>
 <div class="view-toggle"><span class="on">Human</span><a href="/llms.txt">Agent</a></div>
 </header>
 <div class="wrap">
 <main>
-<p class="meta"><a href="/learn/">&larr; Learn</a> &middot; ROADMAP &middot; 27 JULY 2026 &middot; 11 min</p>
+<p class="meta"><a href="/learn">&larr; Learn</a> &middot; ROADMAP &middot; <time datetime="2026-07-27">27 JULY 2026</time> &middot; 11 min &middot; Compiled by <a href="/learn/who-is-rishabh-sharma">Rishabh Sharma</a></p>
 <h1 class="title">How I Rendered a Rotating 3D ASCII Wordmark That Animates on GitHub (No JavaScript)</h1>
 <p class="lede">Extruding a glyph mask into a 3D surface, splatting it to a character grid with a z-buffer, and shipping twenty rotated frames as a single 38 KB SVG that animates on GitHub with SMIL and no JavaScript — plus the three geometry bugs that looked like rendering faults.</p>
 
 <div class="post">
+<blockquote>
+<p>A curated collection of public resources, compiled for you — verify details before applying.</p>
+</blockquote>
 <h2 id="overview">Overview</h2>
 <p>
-        My
+        The
 <a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub profile README</a>
         opens with the word <strong>RISHABH</strong> extruded into a 3D slab,
         rasterized to ASCII characters, wiping in left to right and then rocking
@@ -266,7 +287,7 @@ order = np.argsort(-z)                     # far -&gt; near, nearest wins
 grid[row[order], col[order]] = idx[order]</div><div class="highlight">
 <p style="margin-bottom: 0">
 <strong>Light placement is a real design decision, not a detail.</strong>
-          My first attempt lit the word from the upper left, which is the
+          The first attempt lit the word from the upper left, which is the
           conventional choice and completely wrong here. Side lighting makes the
 <em>extruded walls</em> brighter than the letter faces, so the glyphs
           dissolve into a mess of edge highlights. Keying the light close to the
@@ -385,9 +406,9 @@ grid[row[order], col[order]] = idx[order]</div><div class="highlight">
 </p>
 </div><h2 id="picking-the-typeface">Picking the typeface</h2>
 <p>
-        I started with Impact, on the reasonable-sounding theory that a heavier
-        face gives the shading ramp more area to work with. It looked wrong and
-        I couldn't immediately say why.
+        The starting point was Impact, on the reasonable-sounding theory that a heavier
+        face gives the shading ramp more area to work with. It looked wrong, and
+        the reason wasn't immediately obvious.
 </p>
 <p>
         The reason is that Impact's strokes are enormous relative to its
@@ -477,19 +498,20 @@ grid[row[order], col[order]] = idx[order]</div><div class="highlight">
         If you want the rest of the README — the self-typing ASCII portrait and
         the live contribution heatmap — that's covered in
 the earlier post on building the profile.
-</p>
+</p><h2 id="keep-going">Keep going</h2>
+<p>If this helped, read next: <a href="/learn/prompt-frosted-glass-refraction-cube-webgl">The Prompt I Used to Build a Frosted-Glass Refraction Cube in Raw WebGL (One HTML File)</a> and <a href="/learn/3d-car-dealership-tripo-ai-threejs">I Built a 3D Car Dealership Without Opening Blender</a>.</p>
 
 </div>
 </main>
 <aside class="aside">
-<nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#the-constraint-that-shapes-everything"><i>02</i><b>The constraint that shapes everything</b></a></li><li><a href="#the-pipeline"><i>03</i><b>The pipeline</b></a></li><li><a href="#three-bugs-that-were-actually-geometry"><i>04</i><b>Three bugs that were actually geometry</b></a></li><li><a href="#picking-the-typeface"><i>05</i><b>Picking the typeface</b></a></li><li><a href="#fitting-it-to-the-page"><i>06</i><b>Fitting it to the page</b></a></li><li><a href="#recap"><i>07</i><b>Recap</b></a></li></ol></nav>
+<nav class="toc" aria-label="On this page"><span>On this page</span><ol><li><a href="#overview"><i>01</i><b>Overview</b></a></li><li><a href="#the-constraint-that-shapes-everything"><i>02</i><b>The constraint that shapes everything</b></a></li><li><a href="#the-pipeline"><i>03</i><b>The pipeline</b></a></li><li><a href="#three-bugs-that-were-actually-geometry"><i>04</i><b>Three bugs that were actually geometry</b></a></li><li><a href="#picking-the-typeface"><i>05</i><b>Picking the typeface</b></a></li><li><a href="#fitting-it-to-the-page"><i>06</i><b>Fitting it to the page</b></a></li><li><a href="#recap"><i>07</i><b>Recap</b></a></li><li><a href="#keep-going"><i>08</i><b>Keep going</b></a></li></ol></nav>
 </aside>
 </div>
-<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/devin-max-free-poke-roadmap/"><span>Devin's $200 Max Plan, Free: The Exact Steps from the Reel</span></a></li><li><a href="/learn/265-topics-to-master-ai-engineering/"><span>265 Topics to Master AI Engineering (and the 6-Week Order I'd Learn Them In)</span></a></li><li><a href="/learn/502-python-interview-questions/"><span>502 Python Interview Questions to Crack Placements in 2027</span></a></li></ul></aside>
+<aside class="keep"><h2>Keep reading</h2><ul><li><a href="/learn/devin-max-free-poke-roadmap"><span>Devin's $200 Max Plan, Free: The Exact Steps from the Reel</span></a></li><li><a href="/learn/265-topics-to-master-ai-engineering"><span>265 Topics to Master AI Engineering (and the 6-Week Order I'd Learn Them In)</span></a></li><li><a href="/learn/502-python-interview-questions"><span>502 Python Interview Questions to Crack Placements in 2027</span></a></li></ul></aside>
 <footer>
 <div class="f-col"><strong>Rishabh Sharma</strong><span>Building in public.</span><span>&copy; 2026 Rishabh Sharma</span></div>
 <div class="f-col"><span class="f-label">Elsewhere</span><a href="https://www.instagram.com/editsbyhx" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@UntoldHx" target="_blank" rel="noreferrer">YouTube</a><a href="https://www.linkedin.com/in/rishabh-sharma-342575438/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/r1shabhsharma05" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:rishabhsharma14426@gmail.com">rishabhsharma14426@gmail.com</a></div>
-<div class="f-col"><span class="f-label">More</span><a href="/privacy/">Privacy</a><a href="/developers/">Developers</a></div>
+<div class="f-col"><span class="f-label">More</span><a href="/privacy">Privacy</a><a href="/developers">Developers</a></div>
 </footer>
 <script>
 (function () {
